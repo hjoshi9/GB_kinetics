@@ -1,7 +1,8 @@
 import numpy as np
 
-from src.create_disconnections import *
-from src.generate_gb_information import *
+from src.create_disconnections import generate_disconnection_images
+from src.generate_gb_information import gb_props
+from src.run_neb import run_neb_calc
 
 element = "Cu"                                   # Element 
 sigma = 13                                       # Sigma value of Gb under consideration
@@ -26,7 +27,9 @@ output_folder = "output/"             # Location of directory where output is to
 lammps_potential = "/opt/homebrew/Cellar/lammps/20240829-update1/share/lammps/potentials/Cu_mishin1.eam.alloy" # Full path to the potential to be used
 disp_along_gb = 0.0
 disp_along_tilt = -0.9
-a = generate_disconnection_images(gb_data,burgers_vector,step_height,lattice_parameter,lattice_vector,axis,size,element,reg,iterMax,lammps_location,mpi_location,output_folder,lammps_potential,disp_along_gb,disp_along_tilt)
+results_folder_path = generate_disconnection_images(gb_data,burgers_vector,step_height,lattice_parameter,lattice_vector,axis,size,element,reg,iterMax,lammps_location,mpi_location,output_folder,lammps_potential,disp_along_gb,disp_along_tilt)
 
 # Run neb calculations on the images generated
-
+partitions = 4                       # Number of partitions used for neb calculations
+mode = 0
+neb = run_neb_calc(results_folder_path,element,lattice_parameter,sigma,misorientation,size,burgers_vector,step_height,partitions,mode,lammps_potential,mpi_location,lammps_location)

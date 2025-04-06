@@ -15,8 +15,8 @@ def generate_disconnection_images(gb_data,bur,step_height,lat_par,lat_Vec,axis,s
     Generates disconnection images, calls the functions that are required
     """
     # GB properties
-    sigma = gb_data[0]
-    mis = gb_data[1]
+    sigma = int(gb_data[0])
+    mis = np.round(gb_data[1])
     inc = gb_data[2]
     p = gb_data[3]*lat_par
     non_per_cutoff = p*6
@@ -35,7 +35,7 @@ def generate_disconnection_images(gb_data,bur,step_height,lat_par,lat_Vec,axis,s
     min_decision = True# or False
     min_shuffle_decision = True # or False
     create_eco_input =  True
-    out_folder = folder + elem+"/Sigma"+str(sigma)+"/Misorientation"+str(np.round(mis))+"/size"+str(size)+"/b"+str(np.round(bur,2))+"h"+str(np.round(step_height,2))+"/"
+    out_folder = folder + elem+"/Sigma"+str(int(sigma))+"/Misorientation"+str(np.round(mis))+"/size"+str(size)+"/b"+str(np.round(bur,2))+"h"+str(np.round(step_height,2))+"/"
     os.makedirs(out_folder,exist_ok = True)
     for image_num in range(sizes+1):
         if image_num < sizes:
@@ -103,7 +103,7 @@ def generate_disconnection_images(gb_data,bur,step_height,lat_par,lat_Vec,axis,s
                 else:
                     gb_loc = 0.5*lat_par*p/32	
                 h = step_height + 0.25*step_height 
-                d_start = disloc1[0]-0.5*0
+                d_start = disloc1[0]-0.5*2
                 d_stop = disloc2[0]+0.5*2
                 version = "_step" + str(image_num)
                 
@@ -161,4 +161,4 @@ def generate_disconnection_images(gb_data,bur,step_height,lat_par,lat_Vec,axis,s
     #%% 
     if create_eco_input ==  True:
         fff = create_fix_eco_orientationfile(int(sigma), np.round(mis), inc, out_folder, A, B,lat_par)
-    return 0
+    return  out_folder

@@ -2,7 +2,12 @@ import numpy as np
 from src.oilab import find_ATGB_data
 
 
-def gb_props(sigma,mis,path,axis,lat_par):
+def gb_props(sigma,mis,axis,lat_par):
+    """
+    Reads input parameters and generates the requisit gb properties (burgers vector, step height, period)
+    """
+    folder = "data/" 
+    path = folder + "fcc0-10.txt"
     period_cutoff = 10
     atgb_data = find_ATGB_data(sigma,mis,path,period_cutoff,axis)
     gb_data = atgb_data[0,:]

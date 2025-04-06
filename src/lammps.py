@@ -1,6 +1,6 @@
 import numpy as np
 
-def write_minimization_input(elem,sigma,mis,inc,lat_par,size,folder,file_name,min_outputfile,dispy,dispz):
+def write_minimization_input(elem,sigma,mis,inc,lat_par,size,folder,file_name,min_outputfile,dispy,dispz,potential_path):
     """
     Writes lammps file to minimize a system
     """
@@ -30,7 +30,7 @@ def write_minimization_input(elem,sigma,mis,inc,lat_par,size,folder,file_name,mi
     
     f.write("#----------------- Variable declaration---------------------------------------\n")
     f.write("variable a equal %f\n"%(lat_par))
-    f.write("variable potpath string /opt/homebrew/Cellar/lammps/20240829-update1/share/lammps/potentials\n")
+    f.write("variable potpath string %s\n"%(potential_path))
     f.write("variable sigma equal %d\n"%(sigma))
     f.write("variable y_image equal %d\n"%(size))
     f.write("variable dispy equal %f\n"%dispy)
@@ -53,10 +53,7 @@ def write_minimization_input(elem,sigma,mis,inc,lat_par,size,folder,file_name,mi
     
     f.write("#----------------------- InterAtomic Potential --------------------\n")
     f.write("pair_style eam/alloy\n")
-    if elem == "Cu":
-        f.write("pair_coeff * * ${potpath}/Cu_mishin1.eam.alloy Cu Cu\n")
-    elif elem == "Al":
-        f.write("pair_coeff * * ${potpath}/zhou_1.eam.alloy Al Al\n")
+    f.write("pair_coeff * * ${potpath} %s %s\n"%(elem,elem))
     f.write("neighbor 2 bin\n")
     f.write("neigh_modify delay 10 check yes\n")
     

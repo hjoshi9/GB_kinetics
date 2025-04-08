@@ -100,8 +100,8 @@ def create_fix_eco_orientationfile(sigma,mis,inc,folder,a,b,lat_par):
     """
     first_grain = a.T*lat_par
     second_grain = b.T*lat_par
-    print(first_grain)
-    print(second_grain)
+    #print(first_grain)
+    #print(second_grain)
     file = "Sigma"+str(sigma)+"_mis"+str(mis)+"_inc"+str(inc)+".ori"
     f = open(folder+file,"w")
     for i in range(first_grain.shape[0]):

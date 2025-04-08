@@ -55,7 +55,7 @@ def find_ATGB_data(sigma,mis,path,period_cutoff,axis):
     6:burgers_vector_z, 7:step height, H, 8:step_vector_x, 9:step_vector_y, 10:step_vector_z 
     """
     data = np.asarray(read_data(path,1))
-    print(data)
+    #print(data)
     atgb_data = []
     prev_inc = -10 
     for j in range(len(data)):

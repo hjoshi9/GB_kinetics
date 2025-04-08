@@ -129,26 +129,10 @@ def generate_disconnection_ordered_initial(c1,c2,nCells,period,axis,lat_par,non_
                 b = lat_par*np.matmul(c2,loc)[:,0]
                 if a[0]>-box[1,0]+eps and a[0]<box[1,0]+eps and (a[2]) < box[1,2]+eps and (a[2]) > -box[1,2]+eps and (a[1]-box_shift)<box[1,1]+eps and (a[1]-box_shift)>-box[1,1]+eps:
                     disp = 0
-                    '''
-                    point = np.array([a[1],a[0]])
-                    solidAngle,disp=solidangle_displacement(nImages, nodes, period, point, bur)
-                    if a[1]-disp>box[1,1]:
-                        disp += 2*box[1,1]
-                    elif a[1]-disp<-box[1,1]:
-                        disp -= 2*box[1,1]
-                    '''
                     grainA1.append([a[0],a[1]-disp,a[2]])
                     atom_num_2 +=1
                 if b[0]<box[1,0]+eps and b[0]>-box[1,0]-eps and b[2]< box[1,2]+eps and (b[2]) > -box[1,2]+eps and (b[1]-box_shift)<box[1,1]+eps and (b[1]-box_shift)>-box[1,1]+eps:
                     disp = 0
-                    '''
-                    point = np.array([b[1],b[0]])
-                    solidAngle,disp=solidangle_displacement(nImages, nodes, period, point, bur)
-                    if b[1]-disp>box[1,1]:
-                        disp += 2*box[1,1]
-                    elif b[1]-disp<-box[1,1]:
-                        disp -= 2*box[1,1]
-                    '''
                     grainB1.append([b[0],b[1]-disp,b[2]])
                     atom_num_2 +=1
     #Deletion
@@ -180,14 +164,10 @@ def generate_disconnection_ordered_initial(c1,c2,nCells,period,axis,lat_par,non_
                 point.append(atom_count)
                 gB.append(point)
                 atom_count += 1
-    '''
-    gA = grainA1
-    gB = grainB1
-    '''
-    print(len(gA),len(gB),len(gA)+len(gB))
+    #print(len(gA),len(gB),len(gA)+len(gB))
     gA1 = np.array(gA)
     gB1 = np.array(gB)
-    print(bur,h)
+    #print(bur,h)
     return gA1,gB1,box
 
 
@@ -281,7 +261,7 @@ def generate_disconnection_ordered_other(c1,c2,nCells,period,axis,lat_par,non_pe
                             
                             grainB1.append(point)
                         atom_num_2 +=1
-    print(len(grainB1))
+    #print(len(grainB1))
     diag_plt = False
     if diag_plt == True:
         if len(grainB1)>0:
@@ -297,7 +277,7 @@ def generate_disconnection_ordered_other(c1,c2,nCells,period,axis,lat_par,non_pe
     stop = nodes[1,0]
     grainA_old = []
     grainB_old = []
-    print(start,stop,h,bur)
+    #print(start,stop,h,bur)
     
     if h>= 0 :
         for i in range(len(gA_1)):
@@ -310,7 +290,7 @@ def generate_disconnection_ordered_other(c1,c2,nCells,period,axis,lat_par,non_pe
                     disp += disp_temp
                 #if abs(gA_1[i,0] - (x_pos+h-0.1))>0.5:
                 if abs(gA_1[i,0]-x_pos-h)<0.2:
-                    disp = -1*disp
+                    disp = 1*disp
                 if gA_1[i,1]-disp>box[1,1]:
                     disp += 2*box[1,1]
                 elif gA_1[i,1]-disp<-box[1,1]:
@@ -326,13 +306,13 @@ def generate_disconnection_ordered_other(c1,c2,nCells,period,axis,lat_par,non_pe
                     solidAngle,disp_temp=solidangle_displacement(nImages, nodes_for_solid_angle, period, point, bur)
                     disp += disp_temp
                 if abs(gA_1[i,0]-x_pos)<0.2:
-                    disp = -1*disp
+                    disp = 1*disp
                 if gA_1[i,1]-disp>box[1,1]:
                     disp += 2*box[1,1]
                 elif gA_1[i,1]-disp<-box[1,1]:
                     disp -= 2*box[1,1]
                 grainA_old.append([gA_1[i,0],gA_1[i,1]-disp,gA_1[i,2],gA_1[i,3]])
-        print(len(grainA_old),len(grainB1)) 
+        #print(len(grainA_old),len(grainB1)) 
         diagnostic_grain_writing(np.array(grainA_old),np.array(grainB1),"grain_diagnostics.txt")
         diagnostic_plotting(grainA_old,grainB1, -35,35,-20,20)
         if diag_plt == True:

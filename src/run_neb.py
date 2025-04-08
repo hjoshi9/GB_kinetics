@@ -58,7 +58,7 @@ def write_lammps_neb_input_script(folder,elem,lat_par,sigma,mis,size,b,h,partiti
     f.write("thermo          10\n")
     f.write("variable       u uloop 100\n")
     f.write("min_style       quickmin\n")
-    f.write("dump 1 all custom 2000 ${outfolder}/dump.neb_{elem}sigma${sigma}size${size}discb${b}h${h}_step${s}.$u id type x y z c_eng c_csym\n")
+    f.write("dump 1 all custom 2000 ${outfolder}/dump.neb_${elem}sigma${sigma}size${size}discb${b}h${h}_step${s}.$u id type x y z c_eng c_csym\n")
     f.write("neb               0.0 0.0 10000 10000 1000 final ${final_file}\n")
     f.write("next s\n")
     f.write("jump SELF step_loop\n")

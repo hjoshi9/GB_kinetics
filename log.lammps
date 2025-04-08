@@ -1,0 +1,286 @@
+LAMMPS (29 Aug 2024 - Update 1)
+variable disp_county loop 1
+label loopy
+variable disp_countz loop 1
+label loopz
+variable a equal 3.615000
+variable potpath string /opt/homebrew/Cellar/lammps/20240829-update1/share/lammps/potentials/Cu_mishin1.eam.alloy
+variable sigma equal 13
+variable y_image equal 2
+variable dispy equal 0.000000*(${disp_county}-0)
+variable dispy equal 0.000000*(1-0)
+variable dispz equal 0.000000*(${disp_countz}-0)
+variable dispz equal 0.000000*(1-0)
+variable step equal 0
+variable elem string Cu
+variable mis equal 22
+variable folder string output/gridsearch/Sigma13_misorientation22/
+variable file_name string ${folder}/data.Cus13inc0.0_size_2perfect_gb
+variable file_name string output/gridsearch/Sigma13_misorientation22//data.Cus13inc0.0_size_2perfect_gb
+variable outfile2 string ${folder}/data.Cus13inc0.0_size_2perfect_gb_dy${dispy}dz${dispz}
+variable outfile2 string output/gridsearch/Sigma13_misorientation22//data.Cus13inc0.0_size_2perfect_gb_dy${dispy}dz${dispz}
+variable outfile2 string output/gridsearch/Sigma13_misorientation22//data.Cus13inc0.0_size_2perfect_gb_dy0dz${dispz}
+variable outfile2 string output/gridsearch/Sigma13_misorientation22//data.Cus13inc0.0_size_2perfect_gb_dy0dz0
+variable outfile string ${folder}/Cu_sigma13_mis22_size2_gridsearch_results.txt
+variable outfile string output/gridsearch/Sigma13_misorientation22//Cu_sigma13_mis22_size2_gridsearch_results.txt
+clear
+units metal
+dimension 3
+boundary m p p
+atom_style atomic
+echo both
+neighbor        0.3 bin
+neigh_modify    delay 1
+ atom_modify  map array sort 0 0.0
+lattice fcc $a
+lattice fcc 3.615
+Lattice spacing in x,y,z = 3.615 3.615 3.615
+read_data ${file_name}
+read_data output/gridsearch/Sigma13_misorientation22//data.Cus13inc0.0_size_2perfect_gb
+Reading data file ...
+  triclinic box = (-92.264786 -18.432957 -3.615) to (92.264786 18.432957 3.615) with tilt (0 0 0)
+  6 by 1 by 1 MPI processor grid
+  reading atoms ...
+  4168 atoms
+  read_data CPU = 0.023 seconds
+replicate 1 1 2
+Replication is creating a 1x1x2 = 2 times larger system...
+  triclinic box = (-92.264786 -18.432957 -3.615) to (92.264786 18.432957 10.845) with tilt (0 0 0)
+  6 by 1 by 1 MPI processor grid
+  8336 atoms
+  replicate CPU = 0.008 seconds
+group upper type 1
+4176 atoms in group upper
+group lower type 2
+4160 atoms in group lower
+variable midbox equal xhi/2+xlo/2
+variable gb_thickness equal 10
+variable gblo equal ${midbox}-${gb_thickness}
+variable gblo equal 0-${gb_thickness}
+variable gblo equal 0-10
+variable gbhi equal ${midbox}+${gb_thickness}
+variable gbhi equal 0+${gb_thickness}
+variable gbhi equal 0+10
+variable bulklo equal ${midbox}+1.2*${gb_thickness}
+variable bulklo equal 0+1.2*${gb_thickness}
+variable bulklo equal 0+1.2*10
+variable bulkhi equal xhi-0.25*${gb_thickness}
+variable bulkhi equal xhi-0.25*10
+region BULK block ${bulklo} ${bulkhi} INF INF INF INF units box
+region BULK block 12 ${bulkhi} INF INF INF INF units box
+region BULK block 12 89.7647865 INF INF INF INF units box
+region GB block ${gblo} ${gbhi} INF INF INF INF units box
+region GB block -10 ${gbhi} INF INF INF INF units box
+region GB block -10 10 INF INF INF INF units box
+variable area equal ly*lz
+pair_style eam/alloy
+pair_coeff * * ${potpath} ${elem} ${elem}
+pair_coeff * * /opt/homebrew/Cellar/lammps/20240829-update1/share/lammps/potentials/Cu_mishin1.eam.alloy ${elem} ${elem}
+pair_coeff * * /opt/homebrew/Cellar/lammps/20240829-update1/share/lammps/potentials/Cu_mishin1.eam.alloy Cu ${elem}
+pair_coeff * * /opt/homebrew/Cellar/lammps/20240829-update1/share/lammps/potentials/Cu_mishin1.eam.alloy Cu Cu
+Reading eam/alloy potential file /opt/homebrew/Cellar/lammps/20240829-update1/share/lammps/potentials/Cu_mishin1.eam.alloy with DATE: 2007-10-12
+neighbor 2 bin
+neigh_modify delay 10 check yes
+compute eng all pe/atom
+compute eatoms all reduce sum c_eng
+compute csym all centro/atom fcc
+group           GB region GB
+912 atoms in group GB
+group           BULK region BULK
+3520 atoms in group BULK
+compute         peratom GB pe/atom
+compute         peratombulk BULK pe/atom
+compute         pe GB reduce sum c_peratom
+compute         pebulk BULK reduce sum c_peratombulk
+variable        peGB equal c_pe
+variable        peBULK equal c_pebulk
+variable        atomsGB equal count(GB)
+variable        atomsBULK equal count(BULK)
+delete_atoms overlap 1 upper upper
+System init for delete_atoms ...
+Neighbor list info ...
+  update: every = 1 steps, delay = 10 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 7.50679
+  ghost atom cutoff = 7.50679
+  binsize = 3.753395, bins = 50 10 4
+  3 neighbor lists, perpetual/occasional/extra = 1 2 0
+  (1) command delete_atoms, occasional
+      attributes: full, newton on
+      pair build: full/bin/atomonly
+      stencil: full/bin/3d
+      bin: standard
+  (2) pair eam/alloy, perpetual
+      attributes: half, newton on
+      pair build: half/bin/atomonly/newton/tri
+      stencil: half/bin/3d/tri
+      bin: standard
+  (3) compute centro/atom, occasional
+      attributes: full, newton on
+      pair build: full/bin/atomonly
+      stencil: full/bin/3d
+      bin: standard
+Deleted 0 atoms, new total = 8336
+delete_atoms overlap 1 lower lower
+System init for delete_atoms ...
+Neighbor list info ...
+  update: every = 1 steps, delay = 10 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 7.50679
+  ghost atom cutoff = 7.50679
+  binsize = 3.753395, bins = 50 10 4
+  3 neighbor lists, perpetual/occasional/extra = 1 2 0
+  (1) command delete_atoms, occasional
+      attributes: full, newton on
+      pair build: full/bin/atomonly
+      stencil: full/bin/3d
+      bin: standard
+  (2) pair eam/alloy, perpetual
+      attributes: half, newton on
+      pair build: half/bin/atomonly/newton/tri
+      stencil: half/bin/3d/tri
+      bin: standard
+  (3) compute centro/atom, occasional
+      attributes: full, newton on
+      pair build: full/bin/atomonly
+      stencil: full/bin/3d
+      bin: standard
+Deleted 0 atoms, new total = 8336
+delete_atoms overlap 0.1 upper lower
+System init for delete_atoms ...
+Neighbor list info ...
+  update: every = 1 steps, delay = 10 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 7.50679
+  ghost atom cutoff = 7.50679
+  binsize = 3.753395, bins = 50 10 4
+  3 neighbor lists, perpetual/occasional/extra = 1 2 0
+  (1) command delete_atoms, occasional
+      attributes: full, newton on
+      pair build: full/bin/atomonly
+      stencil: full/bin/3d
+      bin: standard
+  (2) pair eam/alloy, perpetual
+      attributes: half, newton on
+      pair build: half/bin/atomonly/newton/tri
+      stencil: half/bin/3d/tri
+      bin: standard
+  (3) compute centro/atom, occasional
+      attributes: full, newton on
+      pair build: full/bin/atomonly
+      stencil: full/bin/3d
+      bin: standard
+Deleted 0 atoms, new total = 8336
+displace_atoms upper move 0 ${dispy} ${dispz} units box
+displace_atoms upper move 0 0 ${dispz} units box
+displace_atoms upper move 0 0 0 units box
+Displacing atoms ...
+thermo 500
+thermo_style custom step temp pe lx ly lz press pxx pyy pzz c_eatoms
+dump            1 all custom 5000 ${outfile2} id type x y z c_csym c_eng
+dump            1 all custom 5000 output/gridsearch/Sigma13_misorientation22//data.Cus13inc0.0_size_2perfect_gb_dy0dz0 id type x y z c_csym c_eng
+variable pot_eng equal pe
+
+min_style cg
+minimize 1e-25 1e-25 5000 5000
+
+CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
+
+Your simulation uses code contributions which should be cited:
+
+- Type Label Framework: https://doi.org/10.1021/acs.jpcb.3c08419
+
+@Article{Gissinger24,
+ author = {Jacob R. Gissinger, Ilia Nikiforov, Yaser Afshar, Brendon Waters, Moon-ki Choi, Daniel S. Karls, Alexander Stukowski, Wonpil Im, Hendrik Heinz, Axel Kohlmeyer, and Ellad B. Tadmor},
+ title = {Type Label Framework for Bonded Force Fields in LAMMPS},
+ journal = {J. Phys. Chem. B},
+ year =    2024,
+ volume =  128,
+ number =  13,
+ pages =   {3282–-3297}
+}
+
+CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
+
+Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 7.50679
+  ghost atom cutoff = 7.50679
+  binsize = 3.753395, bins = 50 10 4
+  2 neighbor lists, perpetual/occasional/extra = 1 1 0
+  (1) pair eam/alloy, perpetual
+      attributes: half, newton on
+      pair build: half/bin/atomonly/newton/tri
+      stencil: half/bin/3d/tri
+      bin: standard
+  (2) compute centro/atom, occasional
+      attributes: full, newton on
+      pair build: full/bin/atomonly
+      stencil: full/bin/3d
+      bin: standard
+WARNING: A per-atom density exceeded rhomax of EAM potential table - a linear extrapolation to the energy was made (src/MANYBODY/pair_eam.cpp:334)
+Per MPI rank memory allocation (min/avg/max) = 5.342 | 5.376 | 5.393 Mbytes
+   Step          Temp          PotEng           Lx             Ly             Lz           Press           Pxx            Pyy            Pzz          c_eatoms   
+         0   0             -22004.141      184.52957      36.865915      14.46          149338.44      453914.06     -2781.5229     -3117.2273     -22004.141    
+       500   0             -29378.277      184.98111      36.865915      14.46         -445.61648      1.2390788     -992.10342     -345.9851      -29378.277    
+       818   0             -29378.277      184.98111      36.865915      14.46         -446.6537       0.0045549354  -993.03664     -346.929       -29378.277    
+Loop time of 5.60659 on 6 procs for 818 steps with 8336 atoms
+
+98.7% CPU use with 6 MPI tasks x no OpenMP threads
+
+Minimization stats:
+  Stopping criterion = energy tolerance
+  Energy initial, next-to-last, final = 
+     -22004.1410072868  -29378.2769027481  -29378.2769027481
+  Force two-norm initial, final = 13180.536 2.2308207e-06
+  Force max component initial, final = 2329.116 2.3543097e-07
+  Final line search alpha, max atom move = 1 2.3543097e-07
+  Iterations, force evaluations = 818 1618
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 3.8389     | 4.0275     | 4.1571     |   5.6 | 71.83
+Neigh   | 0.0097404  | 0.01191    | 0.014483   |   1.8 |  0.21
+Comm    | 1.0978     | 1.2171     | 1.3106     |   7.3 | 21.71
+Output  | 6.0959e-05 | 6.3792e-05 | 6.9083e-05 |   0.0 |  0.00
+Modify  | 0          | 0          | 0          |   0.0 |  0.00
+Other   |            | 0.3501     |            |       |  6.24
+
+Nlocal:        1389.33 ave        1408 max        1376 min
+Histogram: 3 0 0 0 0 1 0 0 0 2
+Nghost:           4470 ave        4821 max        3837 min
+Histogram: 2 0 0 0 0 0 0 0 0 4
+Neighs:          95916 ave       97853 max       94116 min
+Histogram: 2 0 0 0 0 2 0 1 0 1
+FullNghs:       191797 ave      195232 max      188320 min
+Histogram: 2 0 0 0 0 0 2 1 0 1
+
+Total # of neighbors = 1150784
+Ave neighs/atom = 138.0499
+Neighbor list builds = 2
+Dangerous builds = 0
+
+variable        coh equal (${peBULK}/${atomsBULK})
+variable        coh equal (-12459.7706125859/${atomsBULK})
+variable        coh equal (-12459.7706125859/3520)
+variable        conversion_factor equal 16.02
+variable        GBene equal (${conversion_factor}*(${peGB}/${area}-${coh}*${atomsGB}/${area}))
+variable        GBene equal (16.02*(${peGB}/${area}-${coh}*${atomsGB}/${area}))
+variable        GBene equal (16.02*(-3193.33441473659/${area}-${coh}*${atomsGB}/${area}))
+variable        GBene equal (16.02*(-3193.33441473659/533.081125116-${coh}*${atomsGB}/${area}))
+variable        GBene equal (16.02*(-3193.33441473659/533.081125116--3.53970756039372*${atomsGB}/${area}))
+variable        GBene equal (16.02*(-3193.33441473659/533.081125116--3.53970756039372*912/${area}))
+variable        GBene equal (16.02*(-3193.33441473659/533.081125116--3.53970756039372*912/533.081125116))
+print "dispy = ${dispy} dispz = ${dispz} GBene = ${GBene} ; ${peGB} ;${peBULK}; ${coh} ; ${atomsGB}; ${atomsBULK}" append ${outfile}
+print "dispy = ${dispy} dispz = ${dispz} GBene = ${GBene} ; ${peGB} ;${peBULK}; ${coh} ; ${atomsGB}; ${atomsBULK}" append output/gridsearch/Sigma13_misorientation22//Cu_sigma13_mis22_size2_gridsearch_results.txt
+dispy = 0 dispz = 0 GBene = 1.04817003784364 ; -3193.33441473659 ;-12459.7706125859; -3.53970756039372 ; 912; 3520
+next disp_countz
+jump SELF loopz
+next disp_county
+jump SELF loopy
+
+
+Total wall time: 0:00:05

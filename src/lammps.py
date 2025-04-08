@@ -91,11 +91,7 @@ def write_minimization_input(elem,sigma,mis,inc,lat_par,size,folder,file_name,mi
     f.write("write_data ${out_file1}\n")
     
     f.close()
-    #f.write("write_data ${out_file2}\n")
-    #f.write("next s\n")
-    #f.write("jump %s loops\n"%(file))
     
-
     return file
 
 def create_fix_eco_orientationfile(sigma,mis,inc,folder,a,b,lat_par):
@@ -112,4 +108,102 @@ def create_fix_eco_orientationfile(sigma,mis,inc,folder,a,b,lat_par):
         f.write("%f %f %f\n"%(first_grain[i,0],first_grain[i,1],first_grain[i,2]))
     for i in range(second_grain.shape[0]):
         f.write("%f %f %f\n"%(second_grain[i,0],second_grain[i,1],second_grain[i,2]))
+    f.close()
     return folder+file
+
+def write_lammps_gridsearch_input(folder,infile,outfolder,potential,elem,lat_par,sigma,size,mis,step_increments,limit,output_setting=0):
+    """
+    Writes lammps file to conduct a grid search
+    """
+    file = "grid_search.in"
+    file = folder + file
+    outfile = elem+"_"+"sigma"+str(sigma)+"_mis"+str(mis)+"_size"+str(size)+"_gridsearch_results.txt"
+    yloop = int(2*limit*step_increments) + 1
+    zloop = yloop
+    yloop0 = int(limit*step_increments)
+    zloop0 = yloop0
+    f = open(file,"w")
+    f.write("variable disp_county loop %d\n"%yloop)
+    f.write("label loopy\n")
+    f.write("variable disp_countz loop %d\n"%zloop)
+    f.write("label loopz\n")
+    f.write("variable a equal %f\n"%lat_par)
+    f.write("variable potpath string %s\n"%potential)
+    f.write("variable sigma equal %d\n"%sigma)
+    f.write("variable y_image equal %d\n"%size)
+    f.write("variable dispy equal %f*(${disp_county}-%d)\n"%(step_increments,yloop0))
+    f.write("variable dispz equal %f*(${disp_countz}-%d)\n"%(step_increments,zloop0))
+    f.write("variable step equal 0\n")
+    f.write("variable elem string %s\n"%elem)
+    f.write("variable mis equal %d\n"%mis)
+    f.write("variable folder string %s\n"%folder)
+    f.write("variable file_name string ${folder}/%s \n"%infile)
+    if output_setting == 1:
+        f.write("variable outfile2 string ${folder}/%s_dy${dispy}dz${dispz}\n"%infile)
+    f.write("variable outfile string ${folder}/%s\n"%outfile)
+    f.write("clear\n")
+    f.write("units metal\n")
+    f.write("dimension 3\n")
+    f.write("boundary m p p\n")
+    f.write("atom_style atomic\n")
+    f.write("echo both\n")
+    f.write("neighbor        0.3 bin\n")
+    f.write("neigh_modify    delay 1\n")
+    f.write(" atom_modify  map array sort 0 0.0\n")
+    f.write("lattice fcc $a\n")
+    f.write("read_data ${file_name}\n")
+    f.write("replicate 1 1 2\n")
+    f.write("group upper type 1\n")
+    f.write("group lower type 2\n")
+    f.write("variable midbox equal xhi/2+xlo/2\n")
+    f.write("variable gb_thickness equal 10\n")
+    f.write("variable gblo equal ${midbox}-${gb_thickness}\n")
+    f.write("variable gbhi equal ${midbox}+${gb_thickness}\n")
+    f.write("variable bulklo equal ${midbox}+1.2*${gb_thickness}\n")
+    f.write("variable bulkhi equal xhi-0.25*${gb_thickness}\n")
+    f.write("region BULK block ${bulklo} ${bulkhi} INF INF INF INF units box\n")
+    f.write("region GB block ${gblo} ${gbhi} INF INF INF INF units box\n")
+    f.write("variable area equal ly*lz\n")
+    f.write("pair_style eam/alloy\n")
+    f.write("pair_coeff * * ${potpath} ${elem} ${elem}\n")
+    f.write("neighbor 2 bin\n")
+    f.write("neigh_modify delay 10 check yes\n")
+    f.write("compute eng all pe/atom\n")
+    f.write("compute eatoms all reduce sum c_eng\n")
+    f.write("compute csym all centro/atom fcc\n")
+    f.write("group           GB region GB\n")
+    f.write("group           BULK region BULK\n")
+    f.write("compute         peratom GB pe/atom\n")
+    f.write("compute         peratombulk BULK pe/atom\n")
+    f.write("compute         pe GB reduce sum c_peratom\n")
+    f.write("compute         pebulk BULK reduce sum c_peratombulk\n")
+    f.write("variable        peGB equal c_pe\n")
+    f.write("variable        peBULK equal c_pebulk\n")
+    f.write("variable        atomsGB equal count(GB)\n")
+    f.write("variable        atomsBULK equal count(BULK)\n")
+    f.write("delete_atoms overlap 1 upper upper\n")
+    f.write("delete_atoms overlap 1 lower lower\n")
+    f.write("delete_atoms overlap 0.1 upper lower\n")
+    f.write("displace_atoms upper move 0 ${dispy} ${dispz} units box\n")
+    f.write("thermo 500\n")
+    f.write("thermo_style custom step temp pe lx ly lz press pxx pyy pzz c_eatoms\n")
+    if output_setting == 1:
+        f.write("dump            1 all custom 5000 ${outfile2} id type x y z c_csym c_eng\n")
+    f.write("variable pot_eng equal pe\n")
+    f.write("\n")
+    f.write("min_style cg\n")
+    f.write("minimize 1e-25 1e-25 5000 5000\n")
+    f.write("\n")
+    f.write("variable        coh equal (${peBULK}/${atomsBULK})\n")
+    f.write("variable        conversion_factor equal 16.02\n")
+    f.write("variable        GBene equal (${conversion_factor}*(${peGB}/${area}-${coh}*${atomsGB}/${area}))\n")
+    f.write("print \"dispy = ${dispy} dispz = ${dispz} GBene = ${GBene}\" append ${outfile}\n")
+    f.write("next disp_countz\n")
+    f.write("jump SELF loopz\n")
+    f.write("next disp_county\n")
+    f.write("jump SELF loopy\n")
+    f.write("\n")
+    f.write("\n")
+    f.close()
+    
+    return outfile,file

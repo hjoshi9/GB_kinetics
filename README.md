@@ -5,3 +5,10 @@ The method (described in detail in the paper) can be broken down in 5 steps.<br 
 Run grid_search.py to carry out Step 1.<br />
 data folder contains output from Step 2 (implemented in oILAB, available on the Github repository: https://github.com/oiLAB-project/oILAB)<br />
 Run main.py to carry out Step 3, 4 and 5.<br />
+<br />
+Necessary installations: <br />
+The program requires python3, LAMMPS and openmpi installations on the system. <br />
+Details on installation of LAMMPS can be found at https://docs.lammps.org/Install.html <br />
+Details on installation of openmpi can be found at https://docs.open-mpi.org/en/v5.0.x/installing-open-mpi/quickstart.html<br />
+Necessary packages for python code are listed in requirements.txt  and can be installed by "pip install -r requirements"<br />
+<br />

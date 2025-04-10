@@ -7,6 +7,21 @@ from src.solid_angle_calculations import *
 def check_unique(point,grain,cutoff):
     """
     Checks if the atom position is unique or not
+
+    Parameters
+    ----------
+    point : 1D array
+        Position of an atom [x,y,z].
+    grain : 2D array
+        Atom positions already in a grain.
+    cutoff : float
+        parameter to decide if atoms are too close.
+
+    Returns
+    -------
+    unique : int
+        1 if point is new, 0 otherwise.
+
     """
     unique = 1
     for i in range(len(grain)):
@@ -19,7 +34,22 @@ def check_unique(point,grain,cutoff):
 
 def diagnostic_grain_writing(grain1,grain2,filename):
     """
+    
     Write grain 1 and grain 2 atoms for diagnostic purposes
+    
+    Parameters
+    ----------
+    grain1 : 2D array
+        Grain 1 atom positions.
+    grain2 : 2D array
+        Grain 2 atom positions.
+    filename : string
+        Output file.
+        
+    Returns
+    -------
+    1
+
     """
     f = open(filename,"w")
     f.write("%d\n\n"%(len(grain1)+len(grain2)))
@@ -28,11 +58,32 @@ def diagnostic_grain_writing(grain1,grain2,filename):
     for i in range(len(grain2)):
         f.write("%f %f %f %d\n"%(grain2[i,0],grain2[i,1],grain2[i,2],2))
     f.close()
+    return 1
     
 
 def diagnostic_plotting(grain1,grain2,minx,maxx,miny,maxy):
     """
-    Plot the grain 1 and grain 2 atoms
+    Plot the grain 1 and grain 2 atoms for diagnostics
+
+    Parameters
+    ----------
+    grain1 : 2D array
+        Grain 1 atom positions.
+    grain2 : 2D array
+        Grain 2 atom positions.
+    minx : float
+        Plot limit xlo.
+    maxx : float
+        Plot limit xhi.
+    miny : float
+        Plot limit ylo.
+    maxy : float
+        Plot limit yhi.
+
+    Returns
+    -------
+    1
+
     """
     g = np.array(grain1)
     g2 = np.array(grain2)
@@ -48,6 +99,29 @@ def diagnostic_plotting(grain1,grain2,minx,maxx,miny,maxy):
 def create_bicrystal(gb_data,axis,lat_par,lat_Vec):
     """
     Create a reference bicrystal for the gb in question
+
+    Parameters
+    ----------
+    gb_data : 1D array
+        vector coantaining gb data like sigma, misorientation, inclination, period.
+    axis : 1D array
+        Tilt axis.
+    lat_par : float
+        lattice parameter.
+    lat_Vec : 2D array
+        Primitive vectors for crystal system.
+
+    Returns
+    -------
+    A : 2D array
+        Grain 1 lattice vectors.
+    B : 2D array
+        Grain 2 lattice vectors.
+    a : 2D array
+        Rotated grain 1 lattice vectors.
+    b : 2D array
+        Rotated grain 2 lattice vectors.
+
     """
     dim = 3
     # fRotate basis vectors to get A and B
@@ -110,7 +184,47 @@ def create_bicrystal(gb_data,axis,lat_par,lat_Vec):
 def generate_disconnection_ordered_initial(c1,c2,nCells,period,axis,lat_par,non_per_cutoff,bur,size,nodes,nImages,h,x_pos):
     """
     Create the initial as cut gb using data from main
+
+    Parameters
+    ----------
+    c1 : 2D array
+        Lattice vectors for grain1.
+    c2 : 2D array
+        Lattice vectors for grain2.
+    nCells : int
+        Number of cells created.
+    period : float
+        Period of the GB.
+    axis : 1D array
+        Tilt axis.
+    lat_par : float
+        lattice parameter.
+    non_per_cutoff : float
+        Length of box along the nonperiodic direction.
+    bur : float
+        burgers vector or disconnection.
+    size : int
+        Factor that controls box size along the GB. Box length along GB = 2*CSL_period*size
+    nodes : 2D array
+        End points of dislocations inserted in the GB.
+    nImages : int
+        Periodic  images of dislocations to be used.
+    h : float
+        Step height of disconnection mode.
+    x_pos : float
+        Position of gb along non periodic direction.
+
+    Returns
+    -------
+    gA1 : 2D array
+        Atom positions for grain 1.
+    gB1 : 2D array
+        Atom positions for grain 2.
+    box : 2D array
+        Box dimensions.
+
     """
+    
     grainA1 = []
     grainB1 = []
     atom_num_1 = 0
@@ -174,6 +288,55 @@ def generate_disconnection_ordered_initial(c1,c2,nCells,period,axis,lat_par,non_
 def generate_disconnection_ordered_other(c1,c2,nCells,period,axis,lat_par,non_per_cutoff,bur,size,nodes,nImages,h,gA_1,gB_1,x_pos,image_number,dipole_number):
     """
     Generate images with disconnection step
+
+    Parameters
+    ----------
+    c1 : 2D array
+        Lattice vectors for grain1.
+    c2 : 2D array
+        Lattice vectors for grain2.
+    nCells : int
+        Number of cells created.
+    period : float
+        Period of the GB.
+    axis : 1D array
+        Tilt axis.
+    lat_par : float
+        lattice parameter.
+    non_per_cutoff : float
+        Length of box along the nonperiodic direction.
+    bur : float
+        burgers vector or disconnection.
+    size : int
+        Factor that controls box size along the GB. Box length along GB = 2*CSL_period*size
+    nodes : 2D array
+        End points of dislocations inserted in the GB.
+    nImages : int
+        Periodic  images of dislocations to be used.
+    h : float
+        Step height of disconnection mode.
+    x_pos : float
+        Position of gb along non periodic direction.
+    gA1 : 2D array
+        Atom positions for grain 1.
+    gB1 : 2D array
+        Atom positions for grain 2.
+    x_pos : float
+        Position of gb along non periodic direction.
+    image_number : int 
+        Image number .
+    dipole_number : int 
+        Number of dislocation dipoles inserted.
+
+    Returns
+    -------
+    gA1 : 2D array
+        Atom positions for grain 1.
+    gB1 : 2D array
+        Atom positions for grain 2.
+    box : 2D array
+        Box dimensions.
+
     """
     grainA1 = []
     grainB1 = []
@@ -240,8 +403,7 @@ def generate_disconnection_ordered_other(c1,c2,nCells,period,axis,lat_par,non_pe
                         atom_num_2 +=1
                 else:
                     # works
-                    eps2 = 0.1
-                    
+                    eps2 = 0.1                    
                     #if b[0]<box[1,0]+eps and b[0]>-box[1,0]-eps and b[2]< box[1,2]+eps and (b[2]) > -box[1,2]+eps and (b[1]-box_shift)<box[1,1]+eps and (b[1]-box_shift)>-box[1,1]+eps:
                     if b[0]<x_pos+h-0.2 and b[0]>x_pos-0.001 and b[2]< box[1,2]+0.1 and (b[2]) > -box[1,2] and (b[1])>start-0.1 and (b[1])<stop:
                     # Trial
@@ -313,7 +475,7 @@ def generate_disconnection_ordered_other(c1,c2,nCells,period,axis,lat_par,non_pe
                     disp -= 2*box[1,1]
                 grainA_old.append([gA_1[i,0],gA_1[i,1]-disp,gA_1[i,2],gA_1[i,3]])
         #print(len(grainA_old),len(grainB1)) 
-        diagnostic_grain_writing(np.array(grainA_old),np.array(grainB1),"grain_diagnostics.txt")
+        #diagnostic_grain_writing(np.array(grainA_old),np.array(grainB1),"grain_diagnostics.txt")
         diagnostic_plotting(grainA_old,grainB1, -35,35,-20,20)
         if diag_plt == True:
             diagnostic_plotting(gA,grainA_old, -15, 15,-20,20)
@@ -405,7 +567,7 @@ def generate_disconnection_ordered_other(c1,c2,nCells,period,axis,lat_par,non_pe
                     disp -= 2*box[1,1]
                 row = np.array([gA_1[i,0],gA_1[i,1]-disp,gA_1[i,2],gA_1[i,3]])
                 gA.append(row)
-        print(len(grainB_old),len(grainA1)) 
+        #print(len(grainB_old),len(grainA1)) 
         if diag_plt == True:
             diagnostic_plotting(grainA1,grainB_old, -20, 20,-20,20)
         
@@ -420,7 +582,7 @@ def generate_disconnection_ordered_other(c1,c2,nCells,period,axis,lat_par,non_pe
                     nodes_for_solid_angle = nodes_modified[dp]
                     solidAngle,disp_temp=solidangle_displacement(nImages, nodes_for_solid_angle, period, p, bur)
                     disp += disp_temp
-                disp = -2.5*disp
+                disp = -2*disp
             point = [grainA1[i][0],grainA1[i][1]-disp,grainA1[i][2]]
             min_dist = 1e5
             for j in range(len(grainB_old)):
@@ -442,8 +604,8 @@ def generate_disconnection_ordered_other(c1,c2,nCells,period,axis,lat_par,non_pe
     gA = grainA1
     gB = grainB1
     '''
-    print(len(gA),len(gB),len(gA)+len(gB))
+    #print(len(gA),len(gB),len(gA)+len(gB))
     gA1 = np.array(gA)
     gB1 = np.array(gB)
-    print(bur,h)
+    #print(bur,h)
     return gA1,gB1,box

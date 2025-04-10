@@ -4,74 +4,77 @@ import ot
 import ot.plot
 import matplotlib.pyplot as plt
 
+from src.read_write_lammpsdatafiles import read_LAMMPS_datafile,read_LAMMPS_dumpfile
 
-def read_LAMMPS_datafile(path_r,mode):
-    """
-    Function to read the data file containing the data from a lammps data file
-    Output form for each of the lines is : [ID,type,x,y,z]
-    """
-    i = 0
-    q = -1
-    j = q
-    data = []
-    k=0
-    message = "Reading " + path_r 
-    print(message)
-    with open(path_r,'r') as file:
-        flag1 = 0
-        flag2 = 0
-        flag3 = 0
-        
-        atoms = 0
-        flag1 = 1
-        box = np.zeros((3,2))
-        pot_eng = 0
-        atom_count = 0
-        atom_pos_csym = []
-        count = 0
-        types = 0
-        for line in file:
-            fields = line.split(' ')
-            #print(fields)
-            i = i+1
-            if fields[0].strip("\n")=="Velocities":
-                break
-            if(len(fields) == 2 and fields[1].strip('\n')=='atoms'):
-                atoms = int(fields[0])
-                flag2 = 0
-                #print(atoms)
-            if(len(fields)==3 and fields[1]=='atom'):
-                types = int(fields[0])
-            if(len(fields) == 4 and (fields[2]=="xlo" or fields[2]=="ylo" or fields[2]=="zlo")):
-                box[count,0] = float(fields[0])
-                box[count,1] = float(fields[1])
-                count  = count + 1
-                if count>2:
-                    flag3 = 0
-                #print(box)
-                
-            if mode == 2:
-                if(len(fields)==8):
-                    atom_count += 1
-                    atom_pos_csym.append([float(fields[0]),float(fields[1]),float(fields[2]),float(fields[3]),float(fields[4])])
-                    #print(atom_count,atoms)
-                    if atom_count == int(atoms):
-                        #print("yes")
-                        a = np.asarray(atom_pos_csym)
-                        data.append([atoms,types,box,a])
-            elif mode == 1:
-                if(len(fields)==5):
-                    atom_count += 1
-                    atom_pos_csym.append([float(fields[0]),float(fields[1]),float(fields[2]),float(fields[3]),float(fields[4])])
-                    if atom_count == int(atoms):
-                        a = np.asarray(atom_pos_csym)
-                        data.append([atoms,types,box,a])  
-        #print(atom_count,atoms,len(atom_pos_csym))
-    return data
 
-def replicate(rep_scheme,X,Y,box,dim):
+
+def find_gb_location(filepath):
     """
+    Locates the position of GB from a lammps dumpfile
+
+    Parameters
+    ----------
+    filepath : string
+        Path to the LAMMPS data file under consideration.
+
+    Returns
+    -------
+    average_gb_loc : float
+        Average location of GB.
+    extreme_gb_loc_hi : float
+        Upper extent of GB.
+    extreme_gb_loc_lo : float
+        Lower extent of GB.
+
+    """
+    data = read_LAMMPS_dumpfile(filepath)
+    box = data[-1][2]
+    boundary_layer_thickness = 25
+    atoms = data[-1][3]
+    average_gb_loc = 0
+    extreme_gb_loc_lo = 0
+    extreme_gb_loc_hi = 0
+    gb_atoms = 0
+    for i in range(len(atoms)):
+        if atoms[i,5]>2 and (box[0,0]+boundary_layer_thickness < atoms[i,2] < box[0,1]-boundary_layer_thickness):
+            gb_atoms +=1
+            average_gb_loc += atoms[i,2]
+            if atoms[i,2]>extreme_gb_loc_hi:
+                extreme_gb_loc_hi = atoms[i,2] 
+            if atoms[i,2]<extreme_gb_loc_lo:
+                extreme_gb_loc_lo = atoms[i,2] 
+    average_gb_loc = average_gb_loc/gb_atoms
+    
+    return average_gb_loc,extreme_gb_loc_hi,extreme_gb_loc_lo
+
+def replicate(rep_scheme,X,Y,box,dim=3):
+    """
+    
     Replicate the box provided in the system
+    
+
+    Parameters
+    ----------
+    rep_scheme : 1D array
+        Multiplicative factors that determine which dimensions are to be extended to what extent [lo,xhi,ylo,yhi,xlo,zhi].
+    X : 2D array
+        Initial configuration atoms.
+    Y : 2D array
+        final configuration atoms.
+    box : 2D array
+        Dimension of box.
+    dim : int
+        Dimensionality of system (3D by default).
+
+    Returns
+    -------
+    X_rep : 2D array
+        Replicated Initial configuration atoms
+    Y_rep : 2D array
+        Replicated final configuration atoms.
+    rep_box : 2D array
+        Replicated box.
+
     """
     # Define outputs
     rep_box = 0*box
@@ -130,9 +133,28 @@ def replicate(rep_scheme,X,Y,box,dim):
     
     return X_rep,Y_rep,rep_box
 
-def pbcdist(dp,Lx,Ly,Lz,dim):
+def pbcdist(dp,Lx,Ly,Lz,dim=3):
     """
     Finds the distance between particles according to periodic boundary conditions
+
+    Parameters
+    ----------
+    dp : 1D array
+        displcement
+    Lx : float
+        Box length in x
+    Ly : float
+        Box length in y
+    Lz : float
+        Box length in z
+    dim : int
+        Dimensionality of the simulation (default =3)
+
+    Returns
+    -------
+    d : 1D array
+        wrapped displacments
+
     """
     d = dp
     n = dim
@@ -149,6 +171,21 @@ def pbcdist(dp,Lx,Ly,Lz,dim):
 def pbcwrap(d,box,dim):
     """
     Wraps set of input coordinates according to pbc
+
+    Parameters
+    ----------
+    d : 2D array
+        Array containing distances between initial and final configuration.
+    box : 2D array
+        Box dimensions.
+    dim : int
+        Dimensionality of the simulation (default =3)
+
+    Returns
+    -------
+    dpbc : 2D array
+        Array containing wrapped distances between initial and final configuration
+
     """
     dpbc  = d
     
@@ -183,6 +220,19 @@ def pbcwrap(d,box,dim):
 def threshold(g,cutoff):
     """
     Thresholds the value of Gamma obtained from OT algorithm upto a cutoff
+
+    Parameters
+    ----------
+    g : 2D array
+        Gamma value
+    cutoff : float
+        cutoff value
+
+    Returns
+    -------
+    G : 2D array
+        Thresholded Gamma value
+
     """
     G = abs(g)
     row_ind,col_ind = np.where(g<cutoff)
@@ -190,149 +240,45 @@ def threshold(g,cutoff):
         G[row_ind[i],col_ind[i]] = 0
     return G
 
-def min_shuffle_input(Ai,Bi,Af,Bf,gb_loc,h,box,folder,sigma,inc,elem,disc_start,disc_end):
-    """
-    Reads input from lammps datafile which contains the information about the atoms on which minshuffle algorithm is to be acted on
-    """
-    data_A = []
-    data_B = []
-    eps = 1e-1
-    count = 1
-    initial = np.concatenate((Ai,Bi),axis=0)
-    for i in range(initial.shape[0]):
-        if  initial[i,0]<gb_loc+h-eps and initial[i,0]>gb_loc-eps and initial[i,1]>=disc_start and initial[i,1]<= disc_end:
-            count += 1
-            data_A.append([initial[i,0],initial[i,1],initial[i,2],initial[i,3]])
-    A = np.array(data_A)
-    for i in range(Af.shape[0]):
-        for j in range(len(data_A)):
-            if abs(Af[i,3]-A[j,3])<0.5:
-                count += 1
-                data_B.append([Af[i,0],Af[i,1],Af[i,2],Af[i,3]])
-                break
-            
-    for i in range(Bf.shape[0]):
-        for j in range(len(data_A)):
-            if abs(Bf[i,3]-A[j,3])<0.5:
-                count += 1
-                data_B.append([Bf[i,0],Bf[i,1],Bf[i,2],Bf[i,3]])
-                break
-            
-    
-    B = np.array(data_B)
-    prefix = "min_shuffle"
-    file = "data." + elem + "s" +str(sigma) + "inc" + str(inc) + "_" +prefix# + "_"+ str(mode)
-    name = folder + file
-    
-    natoms = A.shape[0]+B.shape[0]
-    print("Check for same number of particles in the system")
-    print(A.shape[0],B.shape[0])
-    f = open(name,"w")
-    #f.write("# LAMMPS data file Sigma = %d, inclination = %f\n"%(sigma,inc))
-    f.write("#LAMMPS data file\n")
-    f.write("%d atoms\n"%(natoms))
-    f.write("2 atom types\n")
-    eps2 = 1
-    xlo = gb_loc -h + eps2
-    xhi = gb_loc + h + eps2
-    mode = 2
-    scale = 1.25
-    f.write("%0.10f %0.10f xlo xhi\n"%(scale*xlo,scale*xhi))
-    f.write("%0.10f %0.10f ylo yhi\n"%(box[1,0],box[1,1]))
-    f.write("%0.10f %0.10f zlo zhi\n"%(box[2,0]+1e-2,box[2,1]))
-    f.write("0.0 0.0 0.0 xy xz yz\n\n")
-    f.write("Atoms # atomic\n\n")
-    k= 1
-    for i in range(A.shape[0]):
-        grain_num = 1
-        #f.write("%d\t%d\t%0.6f\t%0.6f\t%0.6f\n"% (k,grain_num,g_A[0,i],g_A[1,i],g_A[2,i]))
-        f.write("%d %d %0.10f %0.10f %0.10f\n"% (A[i,3],grain_num,A[i,0],A[i,1],A[i,2]))
-        k += 1
-    for i in range(B.shape[0]):
-        grain_num = 2
-        #f.write("%d\t%d\t%0.6f\t%0.6f\t%0.6f\n"%(k,grain_num,g_B[0,i],g_B[1,i],g_B[2,i]))
-        f.write("%d %d %0.10f %0.10f %0.10f\n"% (B[i,3],grain_num,B[i,0],B[i,1],B[i,2]))
-        k += 1
-    f.close()
-    
-    print("Done writing bicrystal")
-    print(name)
-    return A,B
-
-
-def min_shuffle_input_negative(Ai,Bi,Af,Bf,gb_loc,h,box,folder,sigma,inc,elem,disc_start,disc_end):
-    """
-    Reads min shuffle input for negative step heights
-    """
-    data_A = []
-    data_B = []
-    eps = 0
-    count = 0
-    print(gb_loc,gb_loc+h)
-    for i in range(Bi.shape[0]):
-        if  Bi[i,0]>gb_loc+h-eps and Bi[i,0]<gb_loc-eps and Bi[i,1]>=disc_start and Bi[i,1]<= disc_end:
-            count += 1
-            data_A.append([Bi[i,0],Bi[i,1],Bi[i,2],Bi[i,3]])
-    A = np.array(data_A)
-    for i in range(Af.shape[0]):
-        for j in range(len(data_A)):
-            if abs(Af[i,3]-A[j,3])<0.5:
-                count += 1
-                data_B.append([Af[i,0],Af[i,1],Af[i,2],Af[i,3]])
-                break
-            
-    for i in range(Bf.shape[0]):
-        for j in range(len(data_A)):
-            if abs(Bf[i,3]-A[j,3])<0.5:
-                count += 1
-                data_B.append([Bf[i,0],Bf[i,1],Bf[i,2],Bf[i,3]])
-                break
-            
-        
-    
-    B = np.array(data_B)
-    prefix = "min_shuffle"
-    file = "data." + elem + "s" +str(sigma) + "inc" + str(inc) + "_" +prefix# + "_"+ str(mode)
-    name = folder + file
-    print(count)
-    natoms = A.shape[0]+B.shape[0]
-    print("Check for same number of particles in the system")
-    print(A.shape[0],B.shape[0])
-    f = open(name,"w")
-    #f.write("# LAMMPS data file Sigma = %d, inclination = %f\n"%(sigma,inc))
-    f.write("#LAMMPS data file\n")
-    f.write("%d atoms\n"%(natoms))
-    f.write("2 atom types\n")
-    eps2 = 1
-    xlo = gb_loc +h - eps2
-    xhi = gb_loc - h + eps2
-    mode = 2
-    scale = 1.25
-    f.write("%0.10f %0.10f xlo xhi\n"%(scale*xlo,scale*xhi))
-    f.write("%0.10f %0.10f ylo yhi\n"%(box[1,0],box[1,1]))
-    f.write("%0.10f %0.10f zlo zhi\n"%(box[2,0]+1e-2,box[2,1]))
-    f.write("0.0 0.0 0.0 xy xz yz\n\n")
-    f.write("Atoms # atomic\n\n")
-    k= 1
-    for i in range(A.shape[0]):
-        grain_num = 1
-        #f.write("%d\t%d\t%0.6f\t%0.6f\t%0.6f\n"% (k,grain_num,g_A[0,i],g_A[1,i],g_A[2,i]))
-        f.write("%d %d %0.10f %0.10f %0.10f\n"% (A[i,3],grain_num,A[i,0],A[i,1],A[i,2]))
-        k += 1
-    for i in range(B.shape[0]):
-        grain_num = 2
-        #f.write("%d\t%d\t%0.6f\t%0.6f\t%0.6f\n"%(k,grain_num,g_B[0,i],g_B[1,i],g_B[2,i]))
-        f.write("%d %d %0.10f %0.10f %0.10f\n"% (B[i,3],grain_num,B[i,0],B[i,1],B[i,2]))
-        k += 1
-    f.close()
-    
-    print("Done writing bicrystal")
-    print(name)
-    return A,B
 
 def min_shuffle(dim,a,sig,misorient,folder,elem,reg_param,max_iters,box_expansion_factor):
     """
     Min shuffle algorithm implementation, make sure that the system has POT installed
+
+    Parameters
+    ----------
+    dim : int
+        Dimensionality of the simulation (default =3)
+    a : float
+        lattice parameter
+    sig : int
+        sigma value of GB
+    misorient : float
+        misorientation of GB
+    folder : string
+        Input file location 
+    elem : string
+        Element under consideration
+    reg_param : float
+        Regularization parameter for sinkhorm algorithm
+    max_iters : int
+        Maximum number of iterations for sinkhorn algorithm
+    box_expansion_factor : int
+        Factor that adds extra room to the original box (default = 0)
+
+    Returns
+    -------
+    Xs : 2D array
+        Initial configuration atoms
+    Ys : 2D array
+        Final configuration atoms
+    Dvec : 2D array
+        Displacement of atoms from initial to final configuration.
+    indicies 2D aray: 
+        Array describing the mapping chosen.
+    gamma_mod : 2D array
+        Output of skinhorm algorithm containing OT information
+
     """
     dim = 3
     lattice_parameter = a; #angstroms, for Al 

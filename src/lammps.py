@@ -3,6 +3,39 @@ import numpy as np
 def write_minimization_input(elem,sigma,mis,inc,lat_par,size,folder,file_name,min_outputfile,dispy,dispz,potential_path):
     """
     Writes lammps file to minimize a system
+
+    Parameters
+    ----------
+    elem : string
+        Element under consideration.
+    sigma : int
+        GB sigma value.
+    mis : float
+        Misorientation of GB.
+    inc : float
+        Inclination of GB.
+    lat_par : float
+        latttice parameter of element.
+    size : int
+        Factor that controls box size along the GB. Box length along GB = 2*CSL_period*size.
+    folder : string
+        Location of folder containing the images created.
+    file_name : string
+        Filename of image to be minimized.
+    min_outputfile : string
+        Suffix to be added to file_name and used to store the minimized output.
+    dispy : float
+        Displacement along gb.
+    dispz : float
+        Displadement along tilt axis.
+    potential_path : string
+        Location and name of LAMMPS potential file to be used in minimization.
+
+    Returns
+    -------
+    file : string
+        Location of file that minimizes the images created.
+
     """
     min_file = "min.in"
     file = folder + min_file
@@ -57,6 +90,12 @@ def write_minimization_input(elem,sigma,mis,inc,lat_par,size,folder,file_name,mi
     f.write("neighbor 2 bin\n")
     f.write("neigh_modify delay 10 check yes\n")
     
+    f.write("#-------------------- Define compute settings ------------------------\n")
+    f.write("compute csym all centro/atom fcc\n")
+    f.write("compute energy all pe/atom\n")
+    f.write("compute eng all reduce sum c_energy\n")
+
+
     f.write("#---------- Displace top part for lowest energy structure ----------\n")
     f.write("delete_atoms overlap 1 upper upper\n")
     f.write("delete_atoms overlap 1 lower lower\n")
@@ -70,7 +109,7 @@ def write_minimization_input(elem,sigma,mis,inc,lat_par,size,folder,file_name,mi
     f.write("#--------------------- Minimize ------------------------------------\n")
     f.write("thermo 250\n")
     f.write("thermo_style custom step temp pe lx ly lz press pxx pyy pzz\n")
-    f.write("dump 1 all custom 1000 ${out_file_mov} id type x y z\n")
+    f.write("dump 1 all custom 1000 ${out_file_mov} id type x y z c_csym c_energy\n")
     f.write("min_style cg\n")
     f.write("minimize 1e-25 1e-25 10000 10000\n")
     '''
@@ -97,6 +136,29 @@ def write_minimization_input(elem,sigma,mis,inc,lat_par,size,folder,file_name,mi
 def create_fix_eco_orientationfile(sigma,mis,inc,folder,a,b,lat_par):
     """
     Writes eco orient grain orientation files, in case MD simulations are to be done for a system
+
+    Parameters
+    ----------
+    sigma : int
+        GB sigma value.
+    mis : float
+        Misorientation of GB.
+    inc : float
+        Inclination of GB.
+    folder : string
+        path to directory where the output is to be stored.
+    a : 2D array
+        Lattice vectors for grain 1.
+    b : 2D array
+        Lattice vectors for grain 2.
+    lat_par : float
+        latttice parameter of element.
+
+    Returns
+    -------
+    string
+        location and name of .ori file generated.
+
     """
     first_grain = a.T*lat_par
     second_grain = b.T*lat_par
@@ -114,6 +176,41 @@ def create_fix_eco_orientationfile(sigma,mis,inc,folder,a,b,lat_par):
 def write_lammps_gridsearch_input(folder,infile,outfolder,potential,elem,lat_par,sigma,size,mis,step_increments,limit,output_setting=0):
     """
     Writes lammps file to conduct a grid search
+
+    Parameters
+    ----------
+    folder : string
+        Path to directory where GB data file is stored.
+    infile : string
+        Name of GB data file.
+    outfolder : string
+        Path to directory where grid search results are to be stored.
+    potential : string
+        Location and name of LAMMPS potential file to be used in minimization..
+    elem : string
+        Element.
+    lat_par : float
+        Lattice parameter.
+    sigma : int
+        Gb sigma value.
+    size : int
+        Factor that controls box size along the GB. Box length along GB = 2*CSL_period*size.
+    mis : float
+        GB misorientation.
+    step_increments : float
+        Decides granularity of grid search.
+    limit : float
+        Decides extent of grid search.
+    output_setting : int, optional
+        Decides if dump files are created or not. Create dump files = 1. The default is 0.
+
+    Returns
+    -------
+    outfile : string
+        Name of output file containing grid search results.
+    file : string
+        Name of grid search input file.
+
     """
     file = "grid_search.in"
     file = folder + file

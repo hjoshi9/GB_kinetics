@@ -4,6 +4,23 @@ import math
 def local_position(disloc1,disloc2,x):
     """
     Calculate the local position of an atom with respect to the dislocation dipole
+
+    Parameters
+    ----------
+    disloc1 : 1d array
+        Location of dislocation 1.
+    disloc2 : 1D array
+        Lcoation of dislocation 2.
+    x : 1D array
+        Coordinates of particle.
+
+    Returns
+    -------
+    xL : float
+        Integrand.
+    halfLenght : float
+        Half of lenght between dislocations.
+
     """
     A2B = -(disloc2 - disloc1)
     normA2B = np.linalg.norm(A2B)
@@ -15,6 +32,27 @@ def local_position(disloc1,disloc2,x):
 def solidangle_displacement(nImages,disloc_points,period,x,b):
     """
     Calculates the solid angle subtended by a point onto the dislocation dipole and thus finds the plastic displacement of the particle
+    
+    Parameters
+    ----------
+    nImages : int
+        Number of dislocation images to be used.
+    disloc_points : 1D array
+        Position of dislocation points.
+    period : float
+        Period of GB.
+    x : 2D array
+        Coordinates of paricle.
+    b : float
+        burgers vector.
+
+    Returns
+    -------
+    angle : float
+        Solid angle subtended by the dislocation dipole on a particle.
+    displacement : float
+        Plastic displacement of the particle due to dislocation dipole.
+
     """
     angle = 0
     disloc1 = disloc_points[0]

@@ -4,15 +4,54 @@ import subprocess
 
 from src.min_shuffle import *
 from src.lammps import *
-from src.oilab import *
 from src.disconnection_generation import *
 from src.solid_angle_calculations import *
-from src.write_neb_read_structures import *
 from src.read_write_lammpsdatafiles import *
 
 def generate_disconnection_images(gb_data,bur,step_height,lat_par,lat_Vec,axis,sizes,elem,reg_parameter,max_iters,lammps_location,mpi_location,folder,potential,dispy,dispz):
     """
     Generates disconnection images, calls the functions that are required
+
+    Parameters
+    ----------
+    gb_data : 1D array
+        Vector containing important GB information like sigma,mis,inc,period.
+    bur : float
+        Burgers vector of disconnection mode.
+    step_height : float
+        Step height of disconnection mode.
+    lat_par : float
+        Lattice parameter.
+    lat_Vec : 2D array
+        Primitive lattice vectors for crystal system.
+    axis : 1D array
+        Tilt axis.
+    sizes : int
+        Factor that controls box size along the GB. Box length along GB = 2*CSL_period*size.
+    elem : string
+        Element under consideration.
+    reg_parameter : float
+        Regularization parameter for skinhorn algorithm.
+    max_iters : float
+        Maximum number of iterations for skinhorn algorithm.
+    lammps_location : string
+        Location of lmp_serial and lmp_mpi executables.
+    mpi_location : string
+        Location of mpirun exeutable.
+    folder : string
+        Input folder.
+    potential : string
+        Location and name of LAMMPS potential to be used.
+    dispy : float
+        Displacement along gb.
+    dispz : float
+        displacement along axis.
+
+    Returns
+    -------
+    out_folder : string
+        Output folder.
+        
     """
     # GB properties
     sigma = int(gb_data[0])
@@ -62,7 +101,7 @@ def generate_disconnection_images(gb_data,bur,step_height,lat_par,lat_Vec,axis,s
                     command = lammps_location + "/lmp_serial -in " + f
                 else:
                     command = mpi_location + "/mpirun -np 6 "+ lammps_location + "/lmp_mpi -in" + f
-                subprocess.run([command], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,shell=True)
+                subprocess.run([command],shell=True,stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             #break
         else:
             if create_bicrystal_decision == True:
@@ -79,14 +118,14 @@ def generate_disconnection_images(gb_data,bur,step_height,lat_par,lat_Vec,axis,s
             
             # minimize
             if min_decision == True:
-                print("Minimizing using LAMMPS \n\n\n")
+                print("Minimizing using LAMMPS \n")
                 min_outputfile = "data."+elem+"s"+str(sigma)+"_size"+str(size)+"_min_d"+str(image_num)
                 f = write_minimization_input(elem,sigma,mis,inc,lat_par,size,out_folder,file_name1,min_outputfile,dispy,dispz,potential)
                 if min_shuffle_decision == True:
                     command = lammps_location + "/lmp_serial -in " + f
                 else:
                     command = mpi_location + "/mpirun -np 6 "+ lammps_location + "/lmp_mpi -in" + f
-                subprocess.run([command], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,shell=True) 
+                subprocess.run([command],shell=True,stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL) 
             
             if min_shuffle_decision == True:
                 # apply min shuffle
@@ -98,10 +137,13 @@ def generate_disconnection_images(gb_data,bur,step_height,lat_par,lat_Vec,axis,s
                 
                 
                 box = data_final[0][2]
+                filepath = out_folder+"data."+elem+"s"+str(sigma)+"inc0.0_size_"+str(size)+"disc"+str(0)+"_minmov"
+                #data.Cus13inc0.0_size_2disc0_minmov
+                average_gb_loc,gb_hi,gb_lo = find_gb_location(filepath)
                 if step_height > 0:
-                    gb_loc = -0.5*lat_par*p/32
+                    gb_loc = average_gb_loc-0.5*lat_par*p/32
                 else:
-                    gb_loc = 0.5*lat_par*p/32	
+                    gb_loc = average_gb_loc+0.5*lat_par*p/32	
                 h = step_height + 0.25*step_height 
                 d_start = disloc1[0]-0.5*2
                 d_stop = disloc2[0]+0.5*2

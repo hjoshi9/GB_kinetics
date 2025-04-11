@@ -5,6 +5,7 @@ The method (described in detail in the paper) can be broken down in 5 steps.<br 
 Run grid_search.py to carry out Step 1.<br />
 data folder contains output from Step 2 (implemented in oILAB, available on the Github repository: https://github.com/oiLAB-project/oILAB)<br />
 Run main.py to carry out Step 3, 4 and 5.<br />
+Output it stored in /output/<element>/Misorientation<misorientation>/size<size>/<disconnection_mode> folder <br />
 <br />
 Necessary installations: <br />
 The program requires python3, LAMMPS and openmpi installations on the system. <br />

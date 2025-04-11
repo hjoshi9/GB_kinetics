@@ -141,7 +141,7 @@ def run_neb_calc(folder,elem,lat_par,sigma,mis,size,b,h,partitions,mode,potentia
 
     """
     neb_input_file,neb_output_folder = write_lammps_neb_input_script(folder,elem,lat_par,sigma,np.round(mis),size,np.round(b,2),np.round(h,2),partitions,mode,potential)
-    print("Starting neb calculations")
+    print("============= Running neb calculations ===================")
     print("The results from this calculation will be stored in "+neb_output_folder)
     command = mpi_location + "/mpirun --oversubscribe --use-hwthread-cpus -np "+ str(partitions) + " " + lammps_location + "/lmp_mpi  -partition "+ str(partitions)+"x1 -in " + neb_input_file
     subprocess.run([command],stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,shell=True)  # 

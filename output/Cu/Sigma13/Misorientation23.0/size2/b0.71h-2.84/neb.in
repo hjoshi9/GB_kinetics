@@ -1,0 +1,47 @@
+# LAMMPS NEB input for Sigma = 13; misorientation = 23.000000; disconnection mode (b,h) = (0.710000,-2.840000); size = 2
+variable s loop 2
+label step_loop
+variable a equal 3.615000
+variable elem string Cu
+variable potpath string /opt/homebrew/Cellar/lammps/20240829-update1/share/lammps/potentials/Cu_mishin1.eam.alloy
+variable sigma equal 13
+variable mis equal 23.000000
+variable size equal 2
+variable folder string output/Cu/Sigma13/Misorientation23.0/size2/b0.71h-2.84/
+variable outfolder string output/Cu/Sigma13/Misorientation23.0/size2/b0.71h-2.84/partitions40/
+variable step_number equal $s-1
+variable b equal 0.710000
+variable h equal -2.840000
+variable initial_file string ${folder}/data.Cus${sigma}inc0.0__step${step_number}
+variable final_file string ${folder}/data.Cus${sigma}inc0.0_out_step${s}
+clear
+units metal
+boundary m p p
+atom_style atomic
+neighbor        0.3 bin
+neigh_modify    delay 1
+atom_modify  map array sort 0 0.0
+echo both
+lattice fcc $a
+read_data ${initial_file}
+group upper type 1
+group lower type 2
+pair_style eam/alloy
+pair_coeff * * ${potpath} Cu Cu
+neighbor 2 bin
+neigh_modify delay 10 check yes
+compute csym all centro/atom fcc
+compute eng all pe/atom
+region nearGB block INF INF  INF INF INF INF units box
+group nebatoms region nearGB
+group nonnebatoms subtract all nebatoms
+timestep 0.01
+fix             1b nebatoms neb 1.0 perp 1.0 parallel neigh
+thermo          10
+variable       u uloop 100
+min_style       quickmin
+dump 1 all custom 2000 ${outfolder}/dump.neb_${elem}sigma${sigma}size${size}discb${b}h${h}_step${s}.$u id type x y z c_eng c_csym
+neb               0.0 0.0 10000 10000 1000 final ${final_file}
+next s
+jump SELF step_loop
+

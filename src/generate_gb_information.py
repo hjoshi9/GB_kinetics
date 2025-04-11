@@ -175,6 +175,7 @@ def gb_props(sigma,mis,axis,lat_par,choose_decision=1):
         n = int(input("Enter the n corresponding to the disconnection mode:"))
     bur = m*b
     step_height = m*h+n*H
+    print("Disconnection mode considered in this run : ("+str(bur)+","+str(step_height)+")")
     return gb_data,bur,step_height
     
 

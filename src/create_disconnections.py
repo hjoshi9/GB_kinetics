@@ -94,7 +94,7 @@ def generate_disconnection_images(gb_data,bur,step_height,lat_par,lat_Vec,axis,s
                 file_name_init,box = write_lammps_input_ordered(out_folder,gA,gB,elem,sigma,inc,axis,2,box1,name_suffix,gb_pos,0,disloc1[0],disloc2[0])
                 #print(out_folder + file_name_init)
             if min_decision == True:
-                print("Minimizing using LAMMPS \n")
+                print("================ Minimizing using LAMMPS =================")
                 min_outputfile_init = "data."+elem+"s"+str(sigma)+"_size"+str(size)+"_min_d"+str(image_num)
                 f = write_minimization_input(elem,sigma,mis,inc,lat_par,size,out_folder,file_name_init,min_outputfile_init,dispy,dispz,potential)
                 if min_shuffle_decision == True:
@@ -118,7 +118,7 @@ def generate_disconnection_images(gb_data,bur,step_height,lat_par,lat_Vec,axis,s
             
             # minimize
             if min_decision == True:
-                print("Minimizing using LAMMPS \n")
+                print("================ Minimizing using LAMMPS =================")
                 min_outputfile = "data."+elem+"s"+str(sigma)+"_size"+str(size)+"_min_d"+str(image_num)
                 f = write_minimization_input(elem,sigma,mis,inc,lat_par,size,out_folder,file_name1,min_outputfile,dispy,dispz,potential)
                 if min_shuffle_decision == True:
@@ -128,6 +128,7 @@ def generate_disconnection_images(gb_data,bur,step_height,lat_par,lat_Vec,axis,s
                 subprocess.run([command],shell=True,stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL) 
             
             if min_shuffle_decision == True:
+                print("================= Generating atomic trajectories ====================")
                 # apply min shuffle
                 file_mode = 2
                 file = min_outputfile_init

@@ -1,5 +1,5 @@
-Data Files
-==========
+Data
+====
 
 This project uses the following data files:
 

@@ -4,11 +4,11 @@ Usage
 Installations required
 ----------------------
 
-| Repository is avaialble at https://github.com/hjoshi9/Disconnection_energetics
+| Repository is avaialble at https://github.com/hjoshi9/GB_kinetics.git
 | Clone the repository
 .. code-block:: console
 
-	$ git clone -b main https://github.com/hjoshi9/Disconnection_energetics
+	$ git clone -b main https://github.com/hjoshi9/GB_kinetics.git
 | The program requires python3, LAMMPS and openmpi installations on the system.
 | Details on installation of LAMMPS can be found at https://docs.lammps.org/Install.html
 | Details on installation of openmpi can be found at https://docs.open-mpi.org/en/v5.0.x/installing-open-mpi/quickstart.html

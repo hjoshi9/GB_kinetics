@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Disconnection energetics's documentation!
+Welcome to GB kinetics's documentation!
 ====================================================
 | This python project is the implementation of method developed in the paper: 
 

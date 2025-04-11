@@ -14,7 +14,8 @@ def read_data(path_r,sigma_val = 13):
     Returns
     -------
     data : 2D array
-        Array data with row format : {sigma,mis,inc,period,tn_x,tn_y,tn_z,bn_x,bn_y,bn_z,bx,by,bz,h,bx1,by1,bz1,h1,bx2,by2,bz2,h2,H}
+        Array data with row format : {sigma,mis,inc,period,tn_x,tn_y,tn_z,bn_x,bn_y,bn_z,
+                                      bx,by,bz,h,bx1,by1,bz1,h1,bx2,by2,bz2,h2,H}
 
     """
     i = 0

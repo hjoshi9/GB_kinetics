@@ -1,0 +1,261 @@
+
+
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>min_shuffle module &#8212; Disconnection energetics 1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/bizstyle.css" />
+    
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="create_disconnections module" href="create_disconnections.html" />
+    <link rel="prev" title="lammps module" href="lammps.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="create_disconnections.html" title="create_disconnections module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="lammps.html" title="lammps module"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Disconnection energetics 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="source.html" accesskey="U">Source</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">min_shuffle module</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-min_shuffle">
+<span id="min-shuffle-module"></span><h1>min_shuffle module<a class="headerlink" href="#module-min_shuffle" title="Permalink to this heading">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="min_shuffle.find_gb_location">
+<span class="sig-prename descclassname"><span class="pre">min_shuffle.</span></span><span class="sig-name descname"><span class="pre">find_gb_location</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/min_shuffle.html#find_gb_location"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#min_shuffle.find_gb_location" title="Permalink to this definition">¶</a></dt>
+<dd><p>Locates the position of GB from a lammps dumpfile</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filepath</strong> (<em>string</em>) – Path to the LAMMPS data file under consideration.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>average_gb_loc</strong> (<em>float</em>) – Average location of GB.</p></li>
+<li><p><strong>extreme_gb_loc_hi</strong> (<em>float</em>) – Upper extent of GB.</p></li>
+<li><p><strong>extreme_gb_loc_lo</strong> (<em>float</em>) – Lower extent of GB.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="min_shuffle.min_shuffle">
+<span class="sig-prename descclassname"><span class="pre">min_shuffle.</span></span><span class="sig-name descname"><span class="pre">min_shuffle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">misorient</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reg_param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_expansion_factor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/min_shuffle.html#min_shuffle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#min_shuffle.min_shuffle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Min shuffle algorithm implementation, make sure that the system has POT installed</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dim</strong> (<em>int</em>) – Dimensionality of the simulation (default =3)</p></li>
+<li><p><strong>a</strong> (<em>float</em>) – lattice parameter</p></li>
+<li><p><strong>sig</strong> (<em>int</em>) – sigma value of GB</p></li>
+<li><p><strong>misorient</strong> (<em>float</em>) – misorientation of GB</p></li>
+<li><p><strong>folder</strong> (<em>string</em>) – Input file location</p></li>
+<li><p><strong>elem</strong> (<em>string</em>) – Element under consideration</p></li>
+<li><p><strong>reg_param</strong> (<em>float</em>) – Regularization parameter for sinkhorm algorithm</p></li>
+<li><p><strong>max_iters</strong> (<em>int</em>) – Maximum number of iterations for sinkhorn algorithm</p></li>
+<li><p><strong>box_expansion_factor</strong> (<em>int</em>) – Factor that adds extra room to the original box (default = 0)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>Xs</strong> (<em>2D array</em>) – Initial configuration atoms</p></li>
+<li><p><strong>Ys</strong> (<em>2D array</em>) – Final configuration atoms</p></li>
+<li><p><strong>Dvec</strong> (<em>2D array</em>) – Displacement of atoms from initial to final configuration.</p></li>
+<li><p><em>indicies 2D aray</em> – Array describing the mapping chosen.</p></li>
+<li><p><strong>gamma_mod</strong> (<em>2D array</em>) – Output of skinhorm algorithm containing OT information</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="min_shuffle.pbcdist">
+<span class="sig-prename descclassname"><span class="pre">min_shuffle.</span></span><span class="sig-name descname"><span class="pre">pbcdist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Lx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ly</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Lz</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/min_shuffle.html#pbcdist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#min_shuffle.pbcdist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds the distance between particles according to periodic boundary conditions</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dp</strong> (<em>1D array</em>) – displcement</p></li>
+<li><p><strong>Lx</strong> (<em>float</em>) – Box length in x</p></li>
+<li><p><strong>Ly</strong> (<em>float</em>) – Box length in y</p></li>
+<li><p><strong>Lz</strong> (<em>float</em>) – Box length in z</p></li>
+<li><p><strong>dim</strong> (<em>int</em>) – Dimensionality of the simulation (default =3)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>d</strong> – wrapped displacments</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>1D array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="min_shuffle.pbcwrap">
+<span class="sig-prename descclassname"><span class="pre">min_shuffle.</span></span><span class="sig-name descname"><span class="pre">pbcwrap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/min_shuffle.html#pbcwrap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#min_shuffle.pbcwrap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wraps set of input coordinates according to pbc</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>d</strong> (<em>2D array</em>) – Array containing distances between initial and final configuration.</p></li>
+<li><p><strong>box</strong> (<em>2D array</em>) – Box dimensions.</p></li>
+<li><p><strong>dim</strong> (<em>int</em>) – Dimensionality of the simulation (default =3)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>dpbc</strong> – Array containing wrapped distances between initial and final configuration</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>2D array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="min_shuffle.replicate">
+<span class="sig-prename descclassname"><span class="pre">min_shuffle.</span></span><span class="sig-name descname"><span class="pre">replicate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rep_scheme</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/min_shuffle.html#replicate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#min_shuffle.replicate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replicate the box provided in the system</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rep_scheme</strong> (<em>1D array</em>) – Multiplicative factors that determine which dimensions are to be extended to what extent [lo,xhi,ylo,yhi,xlo,zhi].</p></li>
+<li><p><strong>X</strong> (<em>2D array</em>) – Initial configuration atoms.</p></li>
+<li><p><strong>Y</strong> (<em>2D array</em>) – final configuration atoms.</p></li>
+<li><p><strong>box</strong> (<em>2D array</em>) – Dimension of box.</p></li>
+<li><p><strong>dim</strong> (<em>int</em>) – Dimensionality of system (3D by default).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>X_rep</strong> (<em>2D array</em>) – Replicated Initial configuration atoms</p></li>
+<li><p><strong>Y_rep</strong> (<em>2D array</em>) – Replicated final configuration atoms.</p></li>
+<li><p><strong>rep_box</strong> (<em>2D array</em>) – Replicated box.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="min_shuffle.threshold">
+<span class="sig-prename descclassname"><span class="pre">min_shuffle.</span></span><span class="sig-name descname"><span class="pre">threshold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cutoff</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/min_shuffle.html#threshold"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#min_shuffle.threshold" title="Permalink to this definition">¶</a></dt>
+<dd><p>Thresholds the value of Gamma obtained from OT algorithm upto a cutoff</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>g</strong> (<em>2D array</em>) – Gamma value</p></li>
+<li><p><strong>cutoff</strong> (<em>float</em>) – cutoff value</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>G</strong> – Thresholded Gamma value</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>2D array</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="lammps.html"
+                          title="previous chapter">lammps module</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="create_disconnections.html"
+                          title="next chapter">create_disconnections module</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/min_shuffle.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="create_disconnections.html" title="create_disconnections module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="lammps.html" title="lammps module"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Disconnection energetics 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="source.html" >Source</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">min_shuffle module</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, Himanshu Joshi.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
+    </div>
+  </body>
+</html>

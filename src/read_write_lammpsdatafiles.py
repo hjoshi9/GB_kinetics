@@ -356,8 +356,8 @@ def neb_structure_minimized_negative(g_A,g_B,Xs,Ys,Af,Bf,box,step_height,burgers
     """
     Write neb read atom positions for a bicrystal for a disconnection mode of negative step height
 
-    Parameters
-    ----------
+   Parameters
+   ----------
    g_A : 2D array
        Initial configuration of Grain 1.
    g_B : 2D array

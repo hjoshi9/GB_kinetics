@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>disconnection_generation module &#8212; Disconnection energetics 1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/nature.css?v=279e0f84" />
+    <script src="_static/documentation_options.js?v=29a6c3e3"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="read_write_lammpsdatafiles module" href="read_write_lammpsdatafiles.html" />
+    <link rel="prev" title="create_disconnections module" href="create_disconnections.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="read_write_lammpsdatafiles.html" title="read_write_lammpsdatafiles module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="create_disconnections.html" title="create_disconnections module"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Disconnection energetics 1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">disconnection_generation module</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-disconnection_generation">
+<span id="disconnection-generation-module"></span><h1>disconnection_generation module<a class="headerlink" href="#module-disconnection_generation" title="Link to this heading">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="disconnection_generation.check_unique">
+<span class="sig-prename descclassname"><span class="pre">disconnection_generation.</span></span><span class="sig-name descname"><span class="pre">check_unique</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grain</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cutoff</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/disconnection_generation.html#check_unique"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#disconnection_generation.check_unique" title="Link to this definition">¶</a></dt>
+<dd><p>Checks if the atom position is unique or not</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>point</strong> (<em>1D array</em>) – Position of an atom [x,y,z].</p></li>
+<li><p><strong>grain</strong> (<em>2D array</em>) – Atom positions already in a grain.</p></li>
+<li><p><strong>cutoff</strong> (<em>float</em>) – parameter to decide if atoms are too close.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>unique</strong> – 1 if point is new, 0 otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="disconnection_generation.create_bicrystal">
+<span class="sig-prename descclassname"><span class="pre">disconnection_generation.</span></span><span class="sig-name descname"><span class="pre">create_bicrystal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gb_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lat_par</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lat_Vec</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/disconnection_generation.html#create_bicrystal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#disconnection_generation.create_bicrystal" title="Link to this definition">¶</a></dt>
+<dd><p>Create a reference bicrystal for the gb in question</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gb_data</strong> (<em>1D array</em>) – vector coantaining gb data like sigma, misorientation, inclination, period.</p></li>
+<li><p><strong>axis</strong> (<em>1D array</em>) – Tilt axis.</p></li>
+<li><p><strong>lat_par</strong> (<em>float</em>) – lattice parameter.</p></li>
+<li><p><strong>lat_Vec</strong> (<em>2D array</em>) – Primitive vectors for crystal system.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>A</strong> (<em>2D array</em>) – Grain 1 lattice vectors.</p></li>
+<li><p><strong>B</strong> (<em>2D array</em>) – Grain 2 lattice vectors.</p></li>
+<li><p><strong>a</strong> (<em>2D array</em>) – Rotated grain 1 lattice vectors.</p></li>
+<li><p><strong>b</strong> (<em>2D array</em>) – Rotated grain 2 lattice vectors.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="disconnection_generation.diagnostic_grain_writing">
+<span class="sig-prename descclassname"><span class="pre">disconnection_generation.</span></span><span class="sig-name descname"><span class="pre">diagnostic_grain_writing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grain1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grain2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/disconnection_generation.html#diagnostic_grain_writing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#disconnection_generation.diagnostic_grain_writing" title="Link to this definition">¶</a></dt>
+<dd><p>Write grain 1 and grain 2 atoms for diagnostic purposes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>grain1</strong> (<em>2D array</em>) – Grain 1 atom positions.</p></li>
+<li><p><strong>grain2</strong> (<em>2D array</em>) – Grain 2 atom positions.</p></li>
+<li><p><strong>filename</strong> (<em>string</em>) – Output file.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>1</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="disconnection_generation.diagnostic_plotting">
+<span class="sig-prename descclassname"><span class="pre">disconnection_generation.</span></span><span class="sig-name descname"><span class="pre">diagnostic_plotting</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grain1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grain2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">miny</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/disconnection_generation.html#diagnostic_plotting"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#disconnection_generation.diagnostic_plotting" title="Link to this definition">¶</a></dt>
+<dd><p>Plot the grain 1 and grain 2 atoms for diagnostics</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>grain1</strong> (<em>2D array</em>) – Grain 1 atom positions.</p></li>
+<li><p><strong>grain2</strong> (<em>2D array</em>) – Grain 2 atom positions.</p></li>
+<li><p><strong>minx</strong> (<em>float</em>) – Plot limit xlo.</p></li>
+<li><p><strong>maxx</strong> (<em>float</em>) – Plot limit xhi.</p></li>
+<li><p><strong>miny</strong> (<em>float</em>) – Plot limit ylo.</p></li>
+<li><p><strong>maxy</strong> (<em>float</em>) – Plot limit yhi.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>1</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="disconnection_generation.generate_disconnection_ordered_initial">
+<span class="sig-prename descclassname"><span class="pre">disconnection_generation.</span></span><span class="sig-name descname"><span class="pre">generate_disconnection_ordered_initial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nCells</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lat_par</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">non_per_cutoff</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nodes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nImages</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_pos</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/disconnection_generation.html#generate_disconnection_ordered_initial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#disconnection_generation.generate_disconnection_ordered_initial" title="Link to this definition">¶</a></dt>
+<dd><p>Create the initial as cut gb using data from main</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>c1</strong> (<em>2D array</em>) – Lattice vectors for grain1.</p></li>
+<li><p><strong>c2</strong> (<em>2D array</em>) – Lattice vectors for grain2.</p></li>
+<li><p><strong>nCells</strong> (<em>int</em>) – Number of cells created.</p></li>
+<li><p><strong>period</strong> (<em>float</em>) – Period of the GB.</p></li>
+<li><p><strong>axis</strong> (<em>1D array</em>) – Tilt axis.</p></li>
+<li><p><strong>lat_par</strong> (<em>float</em>) – lattice parameter.</p></li>
+<li><p><strong>non_per_cutoff</strong> (<em>float</em>) – Length of box along the nonperiodic direction.</p></li>
+<li><p><strong>bur</strong> (<em>float</em>) – burgers vector or disconnection.</p></li>
+<li><p><strong>size</strong> (<em>int</em>) – Factor that controls box size along the GB. Box length along GB = 2*CSL_period*size</p></li>
+<li><p><strong>nodes</strong> (<em>2D array</em>) – End points of dislocations inserted in the GB.</p></li>
+<li><p><strong>nImages</strong> (<em>int</em>) – Periodic  images of dislocations to be used.</p></li>
+<li><p><strong>h</strong> (<em>float</em>) – Step height of disconnection mode.</p></li>
+<li><p><strong>x_pos</strong> (<em>float</em>) – Position of gb along non periodic direction.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>gA1</strong> (<em>2D array</em>) – Atom positions for grain 1.</p></li>
+<li><p><strong>gB1</strong> (<em>2D array</em>) – Atom positions for grain 2.</p></li>
+<li><p><strong>box</strong> (<em>2D array</em>) – Box dimensions.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="disconnection_generation.generate_disconnection_ordered_other">
+<span class="sig-prename descclassname"><span class="pre">disconnection_generation.</span></span><span class="sig-name descname"><span class="pre">generate_disconnection_ordered_other</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nCells</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lat_par</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">non_per_cutoff</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nodes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nImages</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gA_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gB_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dipole_number</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/disconnection_generation.html#generate_disconnection_ordered_other"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#disconnection_generation.generate_disconnection_ordered_other" title="Link to this definition">¶</a></dt>
+<dd><p>Generate images with disconnection step</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>c1</strong> (<em>2D array</em>) – Lattice vectors for grain1.</p></li>
+<li><p><strong>c2</strong> (<em>2D array</em>) – Lattice vectors for grain2.</p></li>
+<li><p><strong>nCells</strong> (<em>int</em>) – Number of cells created.</p></li>
+<li><p><strong>period</strong> (<em>float</em>) – Period of the GB.</p></li>
+<li><p><strong>axis</strong> (<em>1D array</em>) – Tilt axis.</p></li>
+<li><p><strong>lat_par</strong> (<em>float</em>) – lattice parameter.</p></li>
+<li><p><strong>non_per_cutoff</strong> (<em>float</em>) – Length of box along the nonperiodic direction.</p></li>
+<li><p><strong>bur</strong> (<em>float</em>) – burgers vector or disconnection.</p></li>
+<li><p><strong>size</strong> (<em>int</em>) – Factor that controls box size along the GB. Box length along GB = 2*CSL_period*size</p></li>
+<li><p><strong>nodes</strong> (<em>2D array</em>) – End points of dislocations inserted in the GB.</p></li>
+<li><p><strong>nImages</strong> (<em>int</em>) – Periodic  images of dislocations to be used.</p></li>
+<li><p><strong>h</strong> (<em>float</em>) – Step height of disconnection mode.</p></li>
+<li><p><strong>x_pos</strong> (<em>float</em>) – Position of gb along non periodic direction.</p></li>
+<li><p><strong>gA1</strong> (<em>2D array</em>) – Atom positions for grain 1.</p></li>
+<li><p><strong>gB1</strong> (<em>2D array</em>) – Atom positions for grain 2.</p></li>
+<li><p><strong>x_pos</strong> – Position of gb along non periodic direction.</p></li>
+<li><p><strong>image_number</strong> (<em>int</em>) – Image number .</p></li>
+<li><p><strong>dipole_number</strong> (<em>int</em>) – Number of dislocation dipoles inserted.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>gA1</strong> (<em>2D array</em>) – Atom positions for grain 1.</p></li>
+<li><p><strong>gB1</strong> (<em>2D array</em>) – Atom positions for grain 2.</p></li>
+<li><p><strong>box</strong> (<em>2D array</em>) – Box dimensions.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">disconnection_generation module</a><ul>
+<li><a class="reference internal" href="#disconnection_generation.check_unique"><code class="docutils literal notranslate"><span class="pre">check_unique()</span></code></a></li>
+<li><a class="reference internal" href="#disconnection_generation.create_bicrystal"><code class="docutils literal notranslate"><span class="pre">create_bicrystal()</span></code></a></li>
+<li><a class="reference internal" href="#disconnection_generation.diagnostic_grain_writing"><code class="docutils literal notranslate"><span class="pre">diagnostic_grain_writing()</span></code></a></li>
+<li><a class="reference internal" href="#disconnection_generation.diagnostic_plotting"><code class="docutils literal notranslate"><span class="pre">diagnostic_plotting()</span></code></a></li>
+<li><a class="reference internal" href="#disconnection_generation.generate_disconnection_ordered_initial"><code class="docutils literal notranslate"><span class="pre">generate_disconnection_ordered_initial()</span></code></a></li>
+<li><a class="reference internal" href="#disconnection_generation.generate_disconnection_ordered_other"><code class="docutils literal notranslate"><span class="pre">generate_disconnection_ordered_other()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="create_disconnections.html"
+                          title="previous chapter">create_disconnections module</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="read_write_lammpsdatafiles.html"
+                          title="next chapter">read_write_lammpsdatafiles module</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/disconnection_generation.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="read_write_lammpsdatafiles.html" title="read_write_lammpsdatafiles module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="create_disconnections.html" title="create_disconnections module"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Disconnection energetics 1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">disconnection_generation module</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2025, Himanshu Joshi.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    </div>
+  </body>
+</html>

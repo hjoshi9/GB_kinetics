@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>disconnection_generation &#8212; Disconnection energetics 1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=279e0f84" />
+    <script src="../_static/documentation_options.js?v=29a6c3e3"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Disconnection energetics 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">disconnection_generation</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for disconnection_generation</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy.linalg</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">la</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.solid_angle_calculations</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+
+<div class="viewcode-block" id="check_unique">
+<a class="viewcode-back" href="../disconnection_generation.html#disconnection_generation.check_unique">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">check_unique</span><span class="p">(</span><span class="n">point</span><span class="p">,</span><span class="n">grain</span><span class="p">,</span><span class="n">cutoff</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Checks if the atom position is unique or not</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    point : 1D array</span>
+<span class="sd">        Position of an atom [x,y,z].</span>
+<span class="sd">    grain : 2D array</span>
+<span class="sd">        Atom positions already in a grain.</span>
+<span class="sd">    cutoff : float</span>
+<span class="sd">        parameter to decide if atoms are too close.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    unique : int</span>
+<span class="sd">        1 if point is new, 0 otherwise.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">unique</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">grain</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">grain</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">point</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">&lt;</span><span class="n">cutoff</span> <span class="ow">and</span> <span class="nb">abs</span><span class="p">(</span><span class="n">grain</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">point</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">&lt;</span><span class="n">cutoff</span> <span class="ow">and</span> <span class="nb">abs</span><span class="p">(</span><span class="n">grain</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">point</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="o">&lt;</span><span class="n">cutoff</span><span class="p">:</span> 
+            <span class="n">unique</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">break</span>
+    
+    <span class="k">return</span> <span class="n">unique</span></div>
+
+
+
+<div class="viewcode-block" id="diagnostic_grain_writing">
+<a class="viewcode-back" href="../disconnection_generation.html#disconnection_generation.diagnostic_grain_writing">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">diagnostic_grain_writing</span><span class="p">(</span><span class="n">grain1</span><span class="p">,</span><span class="n">grain2</span><span class="p">,</span><span class="n">filename</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    </span>
+<span class="sd">    Write grain 1 and grain 2 atoms for diagnostic purposes</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    grain1 : 2D array</span>
+<span class="sd">        Grain 1 atom positions.</span>
+<span class="sd">    grain2 : 2D array</span>
+<span class="sd">        Grain 2 atom positions.</span>
+<span class="sd">    filename : string</span>
+<span class="sd">        Output file.</span>
+<span class="sd">        </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    1</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">grain1</span><span class="p">)</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">grain2</span><span class="p">)))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">grain1</span><span class="p">)):</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%f</span><span class="s2"> </span><span class="si">%f</span><span class="s2"> </span><span class="si">%f</span><span class="s2"> </span><span class="si">%d</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">grain1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">grain1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span><span class="n">grain1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">grain2</span><span class="p">)):</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%f</span><span class="s2"> </span><span class="si">%f</span><span class="s2"> </span><span class="si">%f</span><span class="s2"> </span><span class="si">%d</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">grain2</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">grain2</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span><span class="n">grain2</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span><span class="mi">2</span><span class="p">))</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">return</span> <span class="mi">1</span></div>
+
+    
+
+<div class="viewcode-block" id="diagnostic_plotting">
+<a class="viewcode-back" href="../disconnection_generation.html#disconnection_generation.diagnostic_plotting">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">diagnostic_plotting</span><span class="p">(</span><span class="n">grain1</span><span class="p">,</span><span class="n">grain2</span><span class="p">,</span><span class="n">minx</span><span class="p">,</span><span class="n">maxx</span><span class="p">,</span><span class="n">miny</span><span class="p">,</span><span class="n">maxy</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plot the grain 1 and grain 2 atoms for diagnostics</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    grain1 : 2D array</span>
+<span class="sd">        Grain 1 atom positions.</span>
+<span class="sd">    grain2 : 2D array</span>
+<span class="sd">        Grain 2 atom positions.</span>
+<span class="sd">    minx : float</span>
+<span class="sd">        Plot limit xlo.</span>
+<span class="sd">    maxx : float</span>
+<span class="sd">        Plot limit xhi.</span>
+<span class="sd">    miny : float</span>
+<span class="sd">        Plot limit ylo.</span>
+<span class="sd">    maxy : float</span>
+<span class="sd">        Plot limit yhi.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    1</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">grain1</span><span class="p">)</span>
+    <span class="n">g2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">grain2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">g</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span><span class="n">g</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">s</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">g2</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span><span class="n">g2</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">s</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="n">minx</span><span class="p">,</span><span class="n">maxx</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="n">miny</span><span class="p">,</span><span class="n">maxy</span><span class="p">])</span>
+    
+    <span class="k">return</span> <span class="mi">1</span></div>
+
+
+
+<div class="viewcode-block" id="create_bicrystal">
+<a class="viewcode-back" href="../disconnection_generation.html#disconnection_generation.create_bicrystal">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_bicrystal</span><span class="p">(</span><span class="n">gb_data</span><span class="p">,</span><span class="n">axis</span><span class="p">,</span><span class="n">lat_par</span><span class="p">,</span><span class="n">lat_Vec</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create a reference bicrystal for the gb in question</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    gb_data : 1D array</span>
+<span class="sd">        vector coantaining gb data like sigma, misorientation, inclination, period.</span>
+<span class="sd">    axis : 1D array</span>
+<span class="sd">        Tilt axis.</span>
+<span class="sd">    lat_par : float</span>
+<span class="sd">        lattice parameter.</span>
+<span class="sd">    lat_Vec : 2D array</span>
+<span class="sd">        Primitive vectors for crystal system.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    A : 2D array</span>
+<span class="sd">        Grain 1 lattice vectors.</span>
+<span class="sd">    B : 2D array</span>
+<span class="sd">        Grain 2 lattice vectors.</span>
+<span class="sd">    a : 2D array</span>
+<span class="sd">        Rotated grain 1 lattice vectors.</span>
+<span class="sd">    b : 2D array</span>
+<span class="sd">        Rotated grain 2 lattice vectors.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dim</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="c1"># fRotate basis vectors to get A and B</span>
+    <span class="n">axis_true</span> <span class="o">=</span> <span class="n">axis</span>
+    <span class="n">axis</span> <span class="o">=</span> <span class="n">axis</span><span class="o">/</span><span class="n">la</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span>
+    <span class="n">K</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span> <span class="p">,</span><span class="o">-</span><span class="n">axis</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">axis</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
+                <span class="p">[</span><span class="n">axis</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="mi">0</span> <span class="p">,</span><span class="o">-</span><span class="n">axis</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
+                <span class="p">[</span><span class="o">-</span><span class="n">axis</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">axis</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">]])</span>
+    <span class="n">angle</span> <span class="o">=</span> <span class="n">gb_data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">theta1</span><span class="o">=</span><span class="mi">1</span><span class="o">*</span><span class="p">(</span><span class="n">angle</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">180</span>
+    <span class="n">theta2</span> <span class="o">=</span><span class="mi">1</span><span class="o">*</span><span class="p">(</span><span class="n">angle</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">180</span>
+    <span class="n">inc</span> <span class="o">=</span> <span class="n">gb_data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">phi</span> <span class="o">=</span> <span class="p">(</span><span class="n">inc</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">180</span>
+    <span class="n">ra</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta1</span><span class="o">+</span><span class="n">phi</span><span class="p">)</span><span class="o">*</span><span class="n">K</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta1</span><span class="o">+</span><span class="n">phi</span><span class="p">))</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">K</span><span class="p">,</span><span class="n">K</span><span class="p">)</span>
+    <span class="n">rb</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="o">-</span><span class="n">theta2</span><span class="o">+</span><span class="n">phi</span><span class="p">)</span><span class="o">*</span><span class="n">K</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="o">-</span><span class="n">theta2</span><span class="o">+</span><span class="n">phi</span><span class="p">))</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">K</span><span class="p">,</span><span class="n">K</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">ra</span><span class="p">,</span><span class="n">lat_Vec</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">rb</span><span class="p">,</span><span class="n">lat_Vec</span><span class="p">)</span>
+    <span class="c1">#burgers_vec = np.array([gb_data[4],gb_data[5],gb_data[6]])</span>
+    <span class="c1"># Rotate crystals such that tilt axis lies along [001]</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span><span class="n">z</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">axis</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">z</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="n">axis</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">z</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="n">axis</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="n">z</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="p">:</span>
+        <span class="n">Rot_fin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">dim</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">ax</span><span class="o">/</span><span class="n">la</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+        <span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span> <span class="p">,</span><span class="o">-</span><span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
+                    <span class="p">[</span><span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="mi">0</span> <span class="p">,</span><span class="o">-</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
+                    <span class="p">[</span><span class="o">-</span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">]])</span>
+        <span class="n">rot_angle</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span><span class="n">z</span><span class="p">)</span><span class="o">/</span><span class="n">la</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">axis</span><span class="p">))</span>
+        <span class="n">Rot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">dim</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">rot_angle</span><span class="p">)</span><span class="o">*</span><span class="n">V</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">V</span><span class="p">,</span><span class="n">V</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">rot_angle</span><span class="p">))</span>
+        
+        <span class="k">if</span> <span class="n">axis_true</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">axis_true</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">axis_true</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="p">:</span>
+            <span class="n">Rot_gb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">),</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">),</span><span class="mi">0</span><span class="p">],</span>
+                               <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">),</span><span class="mi">0</span><span class="p">],</span>
+                               <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span> 
+        <span class="k">if</span> <span class="n">axis_true</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">axis_true</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">axis_true</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">:</span>
+            <span class="n">Rot_gb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">),</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">),</span><span class="mi">0</span><span class="p">],</span>
+                               <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">),</span><span class="mi">0</span><span class="p">],</span>
+                               <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span> 
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        else:</span>
+<span class="sd">            </span>
+<span class="sd">            GB_normal = Rot.T@burgers_vec</span>
+<span class="sd">            direction_along_GB = np.cross(GB_normal,z)</span>
+<span class="sd">            rot_ax = z</span>
+<span class="sd">            intended_gb_direction = np.array([0,1,0])</span>
+<span class="sd">            U = np.array([[0 ,-rot_ax[2], rot_ax[1]],</span>
+<span class="sd">                        [rot_ax[2], 0 ,-rot_ax[0]],</span>
+<span class="sd">                        [-rot_ax[1], rot_ax[0], 0]])</span>
+<span class="sd">            rot_angle = np.arccos(np.dot(direction_along_GB,intended_gb_direction)/la.norm(direction_along_GB))</span>
+<span class="sd">            Rot_gb = np.eye(dim) + np.sin(rot_angle)*U + np.matmul(U,U)*(1-np.cos(rot_angle))\</span>
+<span class="sd">            &#39;&#39;&#39;</span>
+        <span class="c1">#Rot_gb = np.eye(dim)</span>
+        <span class="n">Rot_fin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">Rot</span><span class="p">,</span><span class="n">Rot_gb</span><span class="p">)</span>
+        <span class="n">aa</span> <span class="o">=</span> <span class="n">Rot_gb</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">Rot_fin</span><span class="o">.</span><span class="n">T</span><span class="p">,</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">Rot_fin</span><span class="o">.</span><span class="n">T</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span></div>
+
+
+<div class="viewcode-block" id="generate_disconnection_ordered_initial">
+<a class="viewcode-back" href="../disconnection_generation.html#disconnection_generation.generate_disconnection_ordered_initial">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_disconnection_ordered_initial</span><span class="p">(</span><span class="n">c1</span><span class="p">,</span><span class="n">c2</span><span class="p">,</span><span class="n">nCells</span><span class="p">,</span><span class="n">period</span><span class="p">,</span><span class="n">axis</span><span class="p">,</span><span class="n">lat_par</span><span class="p">,</span><span class="n">non_per_cutoff</span><span class="p">,</span><span class="n">bur</span><span class="p">,</span><span class="n">size</span><span class="p">,</span><span class="n">nodes</span><span class="p">,</span><span class="n">nImages</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="n">x_pos</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create the initial as cut gb using data from main</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    c1 : 2D array</span>
+<span class="sd">        Lattice vectors for grain1.</span>
+<span class="sd">    c2 : 2D array</span>
+<span class="sd">        Lattice vectors for grain2.</span>
+<span class="sd">    nCells : int</span>
+<span class="sd">        Number of cells created.</span>
+<span class="sd">    period : float</span>
+<span class="sd">        Period of the GB.</span>
+<span class="sd">    axis : 1D array</span>
+<span class="sd">        Tilt axis.</span>
+<span class="sd">    lat_par : float</span>
+<span class="sd">        lattice parameter.</span>
+<span class="sd">    non_per_cutoff : float</span>
+<span class="sd">        Length of box along the nonperiodic direction.</span>
+<span class="sd">    bur : float</span>
+<span class="sd">        burgers vector or disconnection.</span>
+<span class="sd">    size : int</span>
+<span class="sd">        Factor that controls box size along the GB. Box length along GB = 2*CSL_period*size</span>
+<span class="sd">    nodes : 2D array</span>
+<span class="sd">        End points of dislocations inserted in the GB.</span>
+<span class="sd">    nImages : int</span>
+<span class="sd">        Periodic  images of dislocations to be used.</span>
+<span class="sd">    h : float</span>
+<span class="sd">        Step height of disconnection mode.</span>
+<span class="sd">    x_pos : float</span>
+<span class="sd">        Position of gb along non periodic direction.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    gA1 : 2D array</span>
+<span class="sd">        Atom positions for grain 1.</span>
+<span class="sd">    gB1 : 2D array</span>
+<span class="sd">        Atom positions for grain 2.</span>
+<span class="sd">    box : 2D array</span>
+<span class="sd">        Box dimensions.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">grainA1</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">grainB1</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">atom_num_1</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">atom_num_2</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">zfactor</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">box</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">size</span><span class="o">*</span><span class="n">period</span><span class="p">,</span><span class="n">non_per_cutoff</span><span class="p">,</span><span class="n">la</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span><span class="o">*</span><span class="n">lat_par</span><span class="o">*</span><span class="n">zfactor</span><span class="p">],</span>
+                    <span class="p">[</span><span class="n">non_per_cutoff</span><span class="p">,</span><span class="n">size</span><span class="o">*</span><span class="n">period</span><span class="p">,</span><span class="n">la</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span><span class="o">*</span><span class="n">lat_par</span><span class="o">*</span><span class="n">zfactor</span><span class="p">]])</span>
+    <span class="n">eps</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="n">box_shift</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1">#Creation</span>
+    <span class="k">for</span> <span class="n">nx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="n">nCells</span><span class="p">,</span><span class="n">nCells</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">ny</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="n">nCells</span><span class="p">,</span><span class="n">nCells</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">nz</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="n">nCells</span><span class="p">,</span><span class="n">nCells</span><span class="p">):</span>
+                <span class="n">loc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">nx</span><span class="p">],[</span><span class="n">ny</span><span class="p">],[</span><span class="n">nz</span><span class="p">]])</span>
+                <span class="n">a</span> <span class="o">=</span> <span class="n">lat_par</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">c1</span><span class="p">,</span><span class="n">loc</span><span class="p">)[:,</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">b</span> <span class="o">=</span> <span class="n">lat_par</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">c2</span><span class="p">,</span><span class="n">loc</span><span class="p">)[:,</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&gt;-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">eps</span> <span class="ow">and</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&lt;</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">eps</span> <span class="ow">and</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="n">eps</span> <span class="ow">and</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">&gt;</span> <span class="o">-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="n">eps</span> <span class="ow">and</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">box_shift</span><span class="p">)</span><span class="o">&lt;</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">eps</span> <span class="ow">and</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">box_shift</span><span class="p">)</span><span class="o">&gt;-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">eps</span><span class="p">:</span>
+                    <span class="n">disp</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="n">grainA1</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">disp</span><span class="p">,</span><span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]])</span>
+                    <span class="n">atom_num_2</span> <span class="o">+=</span><span class="mi">1</span>
+                <span class="k">if</span> <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&lt;</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">eps</span> <span class="ow">and</span> <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&gt;-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">eps</span> <span class="ow">and</span> <span class="n">b</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">&lt;</span> <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="n">eps</span> <span class="ow">and</span> <span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">&gt;</span> <span class="o">-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="n">eps</span> <span class="ow">and</span> <span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">box_shift</span><span class="p">)</span><span class="o">&lt;</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">eps</span> <span class="ow">and</span> <span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">box_shift</span><span class="p">)</span><span class="o">&gt;-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">eps</span><span class="p">:</span>
+                    <span class="n">disp</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="n">grainB1</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">disp</span><span class="p">,</span><span class="n">b</span><span class="p">[</span><span class="mi">2</span><span class="p">]])</span>
+                    <span class="n">atom_num_2</span> <span class="o">+=</span><span class="mi">1</span>
+    <span class="c1">#Deletion</span>
+    <span class="n">gA</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">gB</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1">#x_pos = 0#-lat_par*period/2</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">y_eps</span> <span class="o">=</span> <span class="mf">0.</span>
+    <span class="n">y_eps2</span> <span class="o">=</span> <span class="mf">0.4</span>
+    <span class="n">eps</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">stop</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">atom_count</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">grainA1</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">grainA1</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">&gt;=</span><span class="n">x_pos</span><span class="o">-</span><span class="n">eps</span><span class="p">:</span>
+            <span class="n">point</span> <span class="o">=</span> <span class="p">[</span><span class="n">grainA1</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">grainA1</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span><span class="n">grainA1</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]]</span>
+            <span class="n">flag</span> <span class="o">=</span> <span class="n">check_unique</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">gA</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">flag</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+                <span class="n">point</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">atom_count</span><span class="p">)</span>
+                <span class="n">gA</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
+                <span class="n">atom_count</span> <span class="o">+=</span> <span class="mi">1</span>
+        
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">grainB1</span><span class="p">)):</span>
+        <span class="k">if</span>  <span class="n">grainB1</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">&lt;</span><span class="n">x_pos</span><span class="o">-</span><span class="n">eps</span><span class="p">:</span>
+            <span class="n">point</span> <span class="o">=</span> <span class="p">[</span><span class="n">grainB1</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">grainB1</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span><span class="n">grainB1</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]]</span>
+            <span class="n">flag</span> <span class="o">=</span> <span class="n">check_unique</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">gB</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">flag</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+                <span class="n">point</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">atom_count</span><span class="p">)</span>
+                <span class="n">gB</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
+                <span class="n">atom_count</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="c1">#print(len(gA),len(gB),len(gA)+len(gB))</span>
+    <span class="n">gA1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">gA</span><span class="p">)</span>
+    <span class="n">gB1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">gB</span><span class="p">)</span>
+    <span class="c1">#print(bur,h)</span>
+    <span class="k">return</span> <span class="n">gA1</span><span class="p">,</span><span class="n">gB1</span><span class="p">,</span><span class="n">box</span></div>
+
+
+
+<div class="viewcode-block" id="generate_disconnection_ordered_other">
+<a class="viewcode-back" href="../disconnection_generation.html#disconnection_generation.generate_disconnection_ordered_other">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_disconnection_ordered_other</span><span class="p">(</span><span class="n">c1</span><span class="p">,</span><span class="n">c2</span><span class="p">,</span><span class="n">nCells</span><span class="p">,</span><span class="n">period</span><span class="p">,</span><span class="n">axis</span><span class="p">,</span><span class="n">lat_par</span><span class="p">,</span><span class="n">non_per_cutoff</span><span class="p">,</span><span class="n">bur</span><span class="p">,</span><span class="n">size</span><span class="p">,</span><span class="n">nodes</span><span class="p">,</span><span class="n">nImages</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="n">gA_1</span><span class="p">,</span><span class="n">gB_1</span><span class="p">,</span><span class="n">x_pos</span><span class="p">,</span><span class="n">image_number</span><span class="p">,</span><span class="n">dipole_number</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate images with disconnection step</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    c1 : 2D array</span>
+<span class="sd">        Lattice vectors for grain1.</span>
+<span class="sd">    c2 : 2D array</span>
+<span class="sd">        Lattice vectors for grain2.</span>
+<span class="sd">    nCells : int</span>
+<span class="sd">        Number of cells created.</span>
+<span class="sd">    period : float</span>
+<span class="sd">        Period of the GB.</span>
+<span class="sd">    axis : 1D array</span>
+<span class="sd">        Tilt axis.</span>
+<span class="sd">    lat_par : float</span>
+<span class="sd">        lattice parameter.</span>
+<span class="sd">    non_per_cutoff : float</span>
+<span class="sd">        Length of box along the nonperiodic direction.</span>
+<span class="sd">    bur : float</span>
+<span class="sd">        burgers vector or disconnection.</span>
+<span class="sd">    size : int</span>
+<span class="sd">        Factor that controls box size along the GB. Box length along GB = 2*CSL_period*size</span>
+<span class="sd">    nodes : 2D array</span>
+<span class="sd">        End points of dislocations inserted in the GB.</span>
+<span class="sd">    nImages : int</span>
+<span class="sd">        Periodic  images of dislocations to be used.</span>
+<span class="sd">    h : float</span>
+<span class="sd">        Step height of disconnection mode.</span>
+<span class="sd">    x_pos : float</span>
+<span class="sd">        Position of gb along non periodic direction.</span>
+<span class="sd">    gA1 : 2D array</span>
+<span class="sd">        Atom positions for grain 1.</span>
+<span class="sd">    gB1 : 2D array</span>
+<span class="sd">        Atom positions for grain 2.</span>
+<span class="sd">    x_pos : float</span>
+<span class="sd">        Position of gb along non periodic direction.</span>
+<span class="sd">    image_number : int </span>
+<span class="sd">        Image number .</span>
+<span class="sd">    dipole_number : int </span>
+<span class="sd">        Number of dislocation dipoles inserted.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    gA1 : 2D array</span>
+<span class="sd">        Atom positions for grain 1.</span>
+<span class="sd">    gB1 : 2D array</span>
+<span class="sd">        Atom positions for grain 2.</span>
+<span class="sd">    box : 2D array</span>
+<span class="sd">        Box dimensions.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">grainA1</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">grainB1</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">atom_num_1</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">atom_num_2</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">zfactor</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">box</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">size</span><span class="o">*</span><span class="n">period</span><span class="p">,</span><span class="n">non_per_cutoff</span><span class="p">,</span><span class="n">la</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span><span class="o">*</span><span class="n">lat_par</span><span class="o">*</span><span class="n">zfactor</span><span class="p">],</span>
+                    <span class="p">[</span><span class="n">non_per_cutoff</span><span class="p">,</span><span class="n">size</span><span class="o">*</span><span class="n">period</span><span class="p">,</span><span class="n">la</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span><span class="o">*</span><span class="n">lat_par</span><span class="o">*</span><span class="n">zfactor</span><span class="p">]])</span>
+    <span class="c1">#x_pos = 0#-lat_par*period/2</span>
+    <span class="n">eps</span> <span class="o">=</span> <span class="mi">0</span><span class="c1"># for m=1, n= 0: 0.1</span>
+    <span class="n">eps2</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="n">box_shift</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">stop</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">diag_plt</span> <span class="o">=</span> <span class="kc">False</span> <span class="c1">#True</span>
+    <span class="n">nodes_for_solid_angle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+    <span class="c1"># for m = 2, n = -1</span>
+    <span class="k">if</span> <span class="n">image_number</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="o">*</span><span class="n">size</span><span class="p">:</span>
+        <span class="n">fac</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">fac</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">image_number</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="o">*</span><span class="n">size</span><span class="p">:</span>
+        <span class="n">nodes_modified</span> <span class="o">=</span> <span class="p">[</span><span class="n">nodes</span><span class="p">]</span> <span class="c1">#+ np.array([[-period/8,0],[period/8,0]])</span>
+        <span class="k">if</span> <span class="n">dipole_number</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">transition_node_start</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">nodes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">x_pos</span><span class="p">],[</span><span class="n">nodes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">nodes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]]])</span>
+            <span class="n">transition_node_stop</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">nodes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">nodes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]],[</span><span class="n">nodes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">x_pos</span><span class="p">]])</span>
+            <span class="n">nodes_modified</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">transition_node_start</span><span class="p">)</span>
+            <span class="n">nodes_modified</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">transition_node_stop</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span> 
+        <span class="n">nodes_modified</span> <span class="o">=</span> <span class="p">[</span><span class="n">nodes</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="n">period</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="n">period</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">]])]</span>
+        <span class="n">dipole_number</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="c1"># if m = 3 or m = 2</span>
+    <span class="n">fac</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># if m = -1 n = 1</span>
+    <span class="k">if</span> <span class="n">image_number</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="o">*</span><span class="n">size</span><span class="p">:</span>
+        <span class="n">fac1</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">fac1</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1">#Creation</span>
+    <span class="n">grainA1</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">grainB1</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">nx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="n">nCells</span><span class="p">,</span><span class="n">nCells</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">ny</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="n">nCells</span><span class="p">,</span><span class="n">nCells</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">nz</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="n">nCells</span><span class="p">,</span><span class="n">nCells</span><span class="p">):</span>
+                <span class="n">loc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">nx</span><span class="p">],[</span><span class="n">ny</span><span class="p">],[</span><span class="n">nz</span><span class="p">]])</span>
+                <span class="n">a</span> <span class="o">=</span> <span class="n">lat_par</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">c1</span><span class="p">,</span><span class="n">loc</span><span class="p">)[:,</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">b</span> <span class="o">=</span> <span class="n">lat_par</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">c2</span><span class="p">,</span><span class="n">loc</span><span class="p">)[:,</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">h</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">:</span>
+                    <span class="c1"># For m = 1</span>
+                    <span class="c1">#if a[0]&gt;x_pos+h-1*eps2 and a[0]&lt;x_pos-eps2 and (a[2]) &lt; box[1,2]+0.25*eps2 and (a[2]) &gt; -box[1,2]+0*eps2 and (a[1]-box_shift)&gt;start and (a[1]-box_shift)&lt;stop:</span>
+                    <span class="c1">#For m = 3</span>
+                    <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&gt;</span><span class="n">x_pos</span><span class="o">+</span><span class="n">h</span><span class="o">-</span><span class="n">eps2</span><span class="o">*</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&lt;</span><span class="n">x_pos</span><span class="o">-</span><span class="n">eps2</span> <span class="ow">and</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="mf">0.25</span><span class="o">*</span><span class="n">eps2</span> <span class="ow">and</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">&gt;</span> <span class="o">-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="mi">0</span><span class="o">*</span><span class="n">eps2</span> <span class="ow">and</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">box_shift</span><span class="p">)</span><span class="o">&gt;</span><span class="n">start</span><span class="o">-</span><span class="n">eps2</span><span class="o">*</span><span class="mi">0</span> <span class="ow">and</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">box_shift</span><span class="p">)</span><span class="o">&lt;</span><span class="n">stop</span><span class="o">-</span><span class="n">eps2</span><span class="o">*</span><span class="mi">00</span><span class="p">:</span>
+                        <span class="n">disp</span> <span class="o">=</span> <span class="mi">0</span>
+                        <span class="n">point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+                        <span class="k">for</span> <span class="n">dp</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dipole_number</span><span class="p">):</span>
+                            <span class="n">nodes_for_solid_angle</span> <span class="o">=</span> <span class="n">nodes_modified</span><span class="p">[</span><span class="n">dp</span><span class="p">]</span>
+                            <span class="n">solidAngle</span><span class="p">,</span><span class="n">disp_temp</span><span class="o">=</span><span class="n">solidangle_displacement</span><span class="p">(</span><span class="n">nImages</span><span class="p">,</span> <span class="n">nodes_for_solid_angle</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span> <span class="n">point</span><span class="p">,</span> <span class="n">bur</span><span class="p">)</span>
+                            <span class="n">disp</span> <span class="o">+=</span> <span class="n">disp_temp</span>
+                        <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">disp</span><span class="o">&gt;</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]:</span>
+                            <span class="n">disp</span> <span class="o">+=</span> <span class="mi">2</span><span class="o">*</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+                        <span class="k">elif</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">disp</span><span class="o">&lt;-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]:</span>
+                            <span class="n">disp</span> <span class="o">-=</span> <span class="mi">2</span><span class="o">*</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+                        <span class="n">grainA1</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">disp</span><span class="p">,</span><span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]])</span>
+                        <span class="n">atom_num_2</span> <span class="o">+=</span><span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># works</span>
+                    <span class="n">eps2</span> <span class="o">=</span> <span class="mf">0.1</span>                    
+                    <span class="c1">#if b[0]&lt;box[1,0]+eps and b[0]&gt;-box[1,0]-eps and b[2]&lt; box[1,2]+eps and (b[2]) &gt; -box[1,2]+eps and (b[1]-box_shift)&lt;box[1,1]+eps and (b[1]-box_shift)&gt;-box[1,1]+eps:</span>
+                    <span class="k">if</span> <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&lt;</span><span class="n">x_pos</span><span class="o">+</span><span class="n">h</span><span class="o">-</span><span class="n">eps2</span> <span class="ow">and</span> <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&gt;</span><span class="n">x_pos</span><span class="o">-</span><span class="n">eps2</span> <span class="ow">and</span> <span class="n">b</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">&lt;</span> <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="mf">0.25</span><span class="o">*</span><span class="n">eps2</span> <span class="ow">and</span> <span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">&gt;</span> <span class="o">-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span> <span class="ow">and</span> <span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">&gt;</span><span class="n">start</span><span class="o">-</span><span class="mf">0.0</span> <span class="ow">and</span> <span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">&lt;</span><span class="n">stop</span><span class="p">:</span>
+                    <span class="c1"># Trial</span>
+                    <span class="c1">#if b[0]&lt;x_pos+h+eps2 and b[0]&gt;x_pos-eps2 and b[2]&lt; box[1,2]+eps2 and (b[2]) &gt; -box[1,2]+eps2 and (b[1]-box_shift)&gt;start-0*eps2 and (b[1]-box_shift)&lt;stop-fac*eps2:</span>
+                        <span class="n">disp</span> <span class="o">=</span> <span class="mi">0</span>
+                        <span class="n">point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+                        <span class="k">for</span> <span class="n">dp</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dipole_number</span><span class="p">):</span>
+                            <span class="n">nodes_for_solid_angle</span> <span class="o">=</span> <span class="n">nodes_modified</span><span class="p">[</span><span class="n">dp</span><span class="p">]</span>
+                            <span class="n">solidAngle</span><span class="p">,</span><span class="n">disp_temp</span><span class="o">=</span><span class="n">solidangle_displacement</span><span class="p">(</span><span class="n">nImages</span><span class="p">,</span> <span class="n">nodes_for_solid_angle</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span> <span class="n">point</span><span class="p">,</span> <span class="n">bur</span><span class="p">)</span>
+                            <span class="n">disp</span> <span class="o">+=</span> <span class="mi">0</span><span class="o">*</span><span class="n">disp_temp</span>
+                        <span class="k">if</span> <span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">disp</span><span class="o">&gt;</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]:</span>
+                            <span class="n">disp</span> <span class="o">+=</span> <span class="mi">2</span><span class="o">*</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+                        <span class="k">elif</span> <span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">disp</span><span class="o">&lt;-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]:</span>
+                            <span class="n">disp</span> <span class="o">-=</span> <span class="mi">2</span><span class="o">*</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+                        <span class="n">point</span> <span class="o">=</span> <span class="p">[</span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">disp</span><span class="p">,</span><span class="n">b</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
+                        <span class="k">if</span> <span class="n">check_unique</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">grainB1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                            
+                            <span class="n">grainB1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
+                        <span class="n">atom_num_2</span> <span class="o">+=</span><span class="mi">1</span>
+    <span class="c1">#print(len(grainB1))</span>
+    <span class="n">diag_plt</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="n">diag_plt</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">grainB1</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+            <span class="n">diagnostic_plotting</span><span class="p">(</span><span class="n">grainB1</span><span class="p">,</span> <span class="n">nodes</span><span class="p">,</span> <span class="o">-</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span><span class="mi">20</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">grainA1</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+            <span class="n">diagnostic_plotting</span><span class="p">(</span><span class="n">grainA1</span><span class="p">,</span> <span class="n">nodes</span><span class="p">,</span> <span class="o">-</span><span class="mi">15</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span><span class="mi">20</span><span class="p">)</span>
+    <span class="c1">#Deletion</span>
+    <span class="n">gA</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">gB</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">y_eps</span> <span class="o">=</span> <span class="mf">0.</span>
+    <span class="n">eps</span> <span class="o">=</span> <span class="mf">0.1</span><span class="c1"># for m=1, n= 0: 0.1</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">stop</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">grainA_old</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">grainB_old</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1">#print(start,stop,h,bur)</span>
+    
+    <span class="k">if</span> <span class="n">h</span><span class="o">&gt;=</span> <span class="mi">0</span> <span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">gA_1</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">gA_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">&gt;=</span><span class="n">x_pos</span><span class="o">+</span><span class="n">h</span><span class="o">-</span><span class="mf">0.1</span> <span class="ow">or</span> <span class="p">(((</span><span class="n">gA_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span><span class="o">&lt;</span><span class="n">start</span> <span class="ow">or</span> <span class="p">(</span><span class="n">gA_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span><span class="o">&gt;</span><span class="n">stop</span><span class="p">)</span> <span class="ow">and</span> <span class="n">gA_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">&gt;</span><span class="n">x_pos</span><span class="o">-</span><span class="mf">0.1</span><span class="p">):</span>
+                <span class="n">disp</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">gA_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span><span class="n">gA_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">]])</span>
+                <span class="k">for</span> <span class="n">dp</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dipole_number</span><span class="p">):</span>
+                    <span class="n">nodes_for_solid_angle</span> <span class="o">=</span> <span class="n">nodes_modified</span><span class="p">[</span><span class="n">dp</span><span class="p">]</span>
+                    <span class="n">solidAngle</span><span class="p">,</span><span class="n">disp_temp</span><span class="o">=</span><span class="n">solidangle_displacement</span><span class="p">(</span><span class="n">nImages</span><span class="p">,</span> <span class="n">nodes_for_solid_angle</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span> <span class="n">point</span><span class="p">,</span> <span class="n">bur</span><span class="p">)</span>
+                    <span class="n">disp</span> <span class="o">+=</span> <span class="n">disp_temp</span>
+                <span class="c1">#if abs(gA_1[i,0] - (x_pos+h-0.1))&gt;0.5:</span>
+                <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">gA_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">x_pos</span><span class="o">-</span><span class="n">h</span><span class="p">)</span><span class="o">&lt;</span><span class="mf">0.2</span><span class="p">:</span>
+                    <span class="n">disp</span> <span class="o">=</span> <span class="mi">1</span><span class="o">*</span><span class="n">disp</span>
+                <span class="k">if</span> <span class="n">gA_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">disp</span><span class="o">&gt;</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]:</span>
+                    <span class="n">disp</span> <span class="o">+=</span> <span class="mi">2</span><span class="o">*</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">elif</span> <span class="n">gA_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">disp</span><span class="o">&lt;-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]:</span>
+                    <span class="n">disp</span> <span class="o">-=</span> <span class="mi">2</span><span class="o">*</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+                    
+                <span class="n">row</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">gA_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">gA_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">disp</span><span class="p">,</span><span class="n">gA_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span><span class="n">gA_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">3</span><span class="p">]])</span>
+                <span class="n">gA</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">disp</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">gA_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span><span class="n">gA_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">]])</span>
+                <span class="k">for</span> <span class="n">dp</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dipole_number</span><span class="p">):</span>
+                    <span class="n">nodes_for_solid_angle</span> <span class="o">=</span> <span class="n">nodes_modified</span><span class="p">[</span><span class="n">dp</span><span class="p">]</span>
+                    <span class="n">solidAngle</span><span class="p">,</span><span class="n">disp_temp</span><span class="o">=</span><span class="n">solidangle_displacement</span><span class="p">(</span><span class="n">nImages</span><span class="p">,</span> <span class="n">nodes_for_solid_angle</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span> <span class="n">point</span><span class="p">,</span> <span class="n">bur</span><span class="p">)</span>
+                    <span class="n">disp</span> <span class="o">+=</span> <span class="n">disp_temp</span>
+                <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">gA_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">x_pos</span><span class="p">)</span><span class="o">&lt;</span><span class="mf">0.2</span><span class="p">:</span>
+                    <span class="n">disp</span> <span class="o">=</span> <span class="mi">1</span><span class="o">*</span><span class="n">disp</span>
+                <span class="k">if</span> <span class="n">gA_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">disp</span><span class="o">&gt;</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]:</span>
+                    <span class="n">disp</span> <span class="o">+=</span> <span class="mi">2</span><span class="o">*</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">elif</span> <span class="n">gA_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">disp</span><span class="o">&lt;-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]:</span>
+                    <span class="n">disp</span> <span class="o">-=</span> <span class="mi">2</span><span class="o">*</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">grainA_old</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">gA_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">gA_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">disp</span><span class="p">,</span><span class="n">gA_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span><span class="n">gA_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">3</span><span class="p">]])</span>
+        <span class="c1">#print(len(grainA_old),len(grainB1)) </span>
+        <span class="c1">#diagnostic_grain_writing(np.array(grainA_old),np.array(grainB1),&quot;grain_diagnostics.txt&quot;)</span>
+        <span class="n">diagnostic_plotting</span><span class="p">(</span><span class="n">grainA_old</span><span class="p">,</span><span class="n">grainB1</span><span class="p">,</span> <span class="o">-</span><span class="mi">35</span><span class="p">,</span><span class="mi">35</span><span class="p">,</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span><span class="mi">20</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">diag_plt</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">diagnostic_plotting</span><span class="p">(</span><span class="n">gA</span><span class="p">,</span><span class="n">grainA_old</span><span class="p">,</span> <span class="o">-</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span><span class="mi">20</span><span class="p">)</span>
+            
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">gB_1</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">gB_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">&lt;</span><span class="n">x_pos</span><span class="o">-</span><span class="n">eps</span><span class="p">:</span> <span class="c1">#or (((gB_1[i,1])&gt;start and gB_1[i,1]&lt;=stop-y_eps) and gB_1[i,0]&lt;x_pos+h-eps):</span>
+                <span class="n">disp</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">gB_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span><span class="n">gB_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">]])</span>
+                <span class="k">for</span> <span class="n">dp</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dipole_number</span><span class="p">):</span>
+                    <span class="n">nodes_for_solid_angle</span> <span class="o">=</span> <span class="n">nodes_modified</span><span class="p">[</span><span class="n">dp</span><span class="p">]</span>
+                    <span class="n">solidAngle</span><span class="p">,</span><span class="n">disp_temp</span><span class="o">=</span><span class="n">solidangle_displacement</span><span class="p">(</span><span class="n">nImages</span><span class="p">,</span> <span class="n">nodes_for_solid_angle</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span> <span class="n">point</span><span class="p">,</span> <span class="n">bur</span><span class="p">)</span>
+                    <span class="n">disp</span> <span class="o">+=</span> <span class="n">disp_temp</span>
+                <span class="k">if</span> <span class="n">gB_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">disp</span><span class="o">&gt;</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]:</span>
+                    <span class="n">disp</span> <span class="o">+=</span> <span class="mi">2</span><span class="o">*</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">elif</span> <span class="n">gB_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">disp</span><span class="o">&lt;-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]:</span>
+                    <span class="n">disp</span> <span class="o">-=</span> <span class="mi">2</span><span class="o">*</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">row</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">gB_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">gB_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">disp</span><span class="p">,</span><span class="n">gB_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span><span class="n">gB_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">3</span><span class="p">]])</span>
+                <span class="n">gB</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+        
+        <span class="c1"># Add atoms to grain B due to transformation</span>
+        <span class="n">countb</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">grainB1</span><span class="p">)):</span>
+            <span class="n">point</span> <span class="o">=</span> <span class="p">[</span><span class="n">grainB1</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">grainB1</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span><span class="n">grainB1</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]]</span>
+            <span class="n">min_dist</span> <span class="o">=</span> <span class="mf">1e5</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">grainA_old</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">grainA_old</span><span class="p">)):</span>
+                    <span class="n">b_p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
+                    <span class="n">a_p</span> <span class="o">=</span> <span class="n">grainA_old</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                    <span class="n">dist_coord</span> <span class="o">=</span> <span class="n">b_p</span><span class="o">-</span><span class="n">a_p</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+                    <span class="n">dist</span> <span class="o">=</span> <span class="n">la</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">b_p</span><span class="o">-</span><span class="n">a_p</span><span class="p">[:</span><span class="mi">3</span><span class="p">])</span>
+                    
+                    <span class="k">if</span> <span class="n">min_dist</span><span class="o">&gt;</span><span class="n">dist</span><span class="p">:</span>
+                        <span class="c1">#print(dist)</span>
+                        <span class="n">atom_count</span><span class="o">=</span> <span class="n">a_p</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+                        <span class="n">index</span> <span class="o">=</span> <span class="n">j</span>
+                        <span class="n">min_dist</span> <span class="o">=</span> <span class="n">dist</span>
+                <span class="n">grainA_old</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+                <span class="n">point</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">atom_count</span><span class="p">)</span>
+                <span class="n">gB</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
+                <span class="n">countb</span> <span class="o">+=</span><span class="mi">1</span>
+        <span class="c1">#print(countb,len(grainB1),grainB1[-1],grainB1[-2])</span>
+        
+        <span class="k">if</span> <span class="n">diag_plt</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">diagnostic_plotting</span><span class="p">(</span><span class="n">gA</span><span class="p">,</span><span class="n">gB</span><span class="p">,</span> <span class="o">-</span><span class="mi">15</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span><span class="mi">20</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">gB_1</span><span class="p">)):</span>
+            <span class="c1"># For m = 1</span>
+            <span class="k">if</span> <span class="n">gB_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">&lt;</span><span class="n">x_pos</span><span class="o">+</span><span class="n">h</span><span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="n">eps</span> <span class="ow">or</span> <span class="p">((</span><span class="n">gB_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">&lt;</span><span class="n">start</span> <span class="ow">or</span> <span class="n">gB_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">&gt;</span><span class="n">stop</span><span class="o">-</span><span class="mi">0</span><span class="o">*</span><span class="n">y_eps</span><span class="p">)</span> <span class="ow">and</span> <span class="n">gB_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">&lt;</span><span class="n">x_pos</span><span class="o">-</span><span class="n">eps</span><span class="p">):</span>
+            <span class="c1">#if gB_1[i,0]&lt;x_pos+h-0*eps or ((gB_1[i,1]&lt;start or gB_1[i,1]&gt;stop-10*y_eps) and gB_1[i,0]&lt;x_pos-eps):</span>
+                <span class="n">disp</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">gB_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span><span class="n">gB_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">]])</span>
+                <span class="k">for</span> <span class="n">dp</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dipole_number</span><span class="p">):</span>
+                    <span class="n">nodes_for_solid_angle</span> <span class="o">=</span> <span class="n">nodes_modified</span><span class="p">[</span><span class="n">dp</span><span class="p">]</span>
+                    <span class="n">solidAngle</span><span class="p">,</span><span class="n">disp_temp</span><span class="o">=</span><span class="n">solidangle_displacement</span><span class="p">(</span><span class="n">nImages</span><span class="p">,</span> <span class="n">nodes_for_solid_angle</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span> <span class="n">point</span><span class="p">,</span> <span class="n">bur</span><span class="p">)</span>
+                    <span class="n">disp</span> <span class="o">+=</span> <span class="n">disp_temp</span>
+                <span class="k">if</span> <span class="n">gB_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">disp</span><span class="o">&gt;</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]:</span>
+                    <span class="n">disp</span> <span class="o">+=</span> <span class="mi">2</span><span class="o">*</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">elif</span> <span class="n">gB_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">disp</span><span class="o">&lt;-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]:</span>
+                    <span class="n">disp</span> <span class="o">-=</span> <span class="mi">2</span><span class="o">*</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">row</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">gB_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">gB_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">disp</span><span class="p">,</span><span class="n">gB_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span><span class="n">gB_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">3</span><span class="p">]])</span>
+                <span class="n">gB</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">disp</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">gB_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span><span class="n">gB_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">]])</span>
+                <span class="k">for</span> <span class="n">dp</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dipole_number</span><span class="p">):</span>
+                    <span class="n">nodes_for_solid_angle</span> <span class="o">=</span> <span class="n">nodes_modified</span><span class="p">[</span><span class="n">dp</span><span class="p">]</span>
+                    <span class="n">solidAngle</span><span class="p">,</span><span class="n">disp_temp</span><span class="o">=</span><span class="n">solidangle_displacement</span><span class="p">(</span><span class="n">nImages</span><span class="p">,</span> <span class="n">nodes_for_solid_angle</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span> <span class="n">point</span><span class="p">,</span> <span class="n">bur</span><span class="p">)</span>
+                    <span class="n">disp</span> <span class="o">+=</span> <span class="n">disp_temp</span>
+                <span class="k">if</span> <span class="n">gB_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">disp</span><span class="o">&gt;</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]:</span>
+                    <span class="n">disp</span> <span class="o">+=</span> <span class="mi">2</span><span class="o">*</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">elif</span> <span class="n">gB_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">disp</span><span class="o">&lt;-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]:</span>
+                    <span class="n">disp</span> <span class="o">-=</span> <span class="mi">2</span><span class="o">*</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">grainB_old</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">gB_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">gB_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">disp</span><span class="p">,</span><span class="n">gB_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span><span class="n">gB_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">3</span><span class="p">]])</span>
+                
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">gA_1</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">gA_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">&gt;=</span><span class="n">x_pos</span><span class="o">-</span><span class="n">eps</span> <span class="ow">or</span> <span class="p">(((</span><span class="n">gA_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span><span class="o">&gt;</span><span class="n">start</span> <span class="ow">and</span> <span class="p">(</span><span class="n">gA_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span><span class="o">&lt;</span><span class="n">stop</span><span class="p">)</span> <span class="ow">and</span> <span class="n">gA_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">&gt;</span><span class="n">x_pos</span><span class="o">+</span><span class="n">h</span><span class="o">-</span><span class="n">eps</span><span class="p">):</span>
+                <span class="n">disp</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">gA_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span><span class="n">gA_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">]])</span>
+                <span class="k">for</span> <span class="n">dp</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dipole_number</span><span class="p">):</span>
+                    <span class="n">nodes_for_solid_angle</span> <span class="o">=</span> <span class="n">nodes_modified</span><span class="p">[</span><span class="n">dp</span><span class="p">]</span>
+                    <span class="n">solidAngle</span><span class="p">,</span><span class="n">disp_temp</span><span class="o">=</span><span class="n">solidangle_displacement</span><span class="p">(</span><span class="n">nImages</span><span class="p">,</span> <span class="n">nodes_for_solid_angle</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span> <span class="n">point</span><span class="p">,</span> <span class="n">bur</span><span class="p">)</span>
+                    <span class="n">disp</span> <span class="o">+=</span> <span class="n">disp_temp</span>
+                <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">gA_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">x_pos</span><span class="o">-</span><span class="n">h</span><span class="p">)</span><span class="o">&lt;</span><span class="mf">0.2</span><span class="p">:</span>
+                    <span class="n">disp</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">disp</span>
+                <span class="k">if</span> <span class="n">gA_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">disp</span><span class="o">&gt;</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]:</span>
+                    <span class="n">disp</span> <span class="o">+=</span> <span class="mi">2</span><span class="o">*</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">elif</span> <span class="n">gA_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">disp</span><span class="o">&lt;-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]:</span>
+                    <span class="n">disp</span> <span class="o">-=</span> <span class="mi">2</span><span class="o">*</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">row</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">gA_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">gA_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">disp</span><span class="p">,</span><span class="n">gA_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span><span class="n">gA_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">3</span><span class="p">]])</span>
+                <span class="n">gA</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+        <span class="c1">#print(len(grainB_old),len(grainA1)) </span>
+        <span class="k">if</span> <span class="n">diag_plt</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">diagnostic_plotting</span><span class="p">(</span><span class="n">grainA1</span><span class="p">,</span><span class="n">grainB_old</span><span class="p">,</span> <span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span><span class="mi">20</span><span class="p">)</span>
+        
+        
+        <span class="c1"># Add atoms to grain B due to transformation</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">grainA1</span><span class="p">)):</span>
+            <span class="n">point</span> <span class="o">=</span> <span class="p">[</span><span class="n">grainA1</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">grainA1</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span><span class="n">grainA1</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]]</span>
+            <span class="n">disp</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">grainA1</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">x_pos</span><span class="o">-</span><span class="n">h</span><span class="p">)</span><span class="o">&lt;</span><span class="mf">0.1</span><span class="p">:</span>
+                <span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">grainA1</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span><span class="n">grainA1</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]])</span>
+                <span class="k">for</span> <span class="n">dp</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dipole_number</span><span class="p">):</span>
+                    <span class="n">nodes_for_solid_angle</span> <span class="o">=</span> <span class="n">nodes_modified</span><span class="p">[</span><span class="n">dp</span><span class="p">]</span>
+                    <span class="n">solidAngle</span><span class="p">,</span><span class="n">disp_temp</span><span class="o">=</span><span class="n">solidangle_displacement</span><span class="p">(</span><span class="n">nImages</span><span class="p">,</span> <span class="n">nodes_for_solid_angle</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">bur</span><span class="p">)</span>
+                    <span class="n">disp</span> <span class="o">+=</span> <span class="n">disp_temp</span>
+                <span class="n">disp</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">disp</span>
+            <span class="n">point</span> <span class="o">=</span> <span class="p">[</span><span class="n">grainA1</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">grainA1</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">disp</span><span class="p">,</span><span class="n">grainA1</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]]</span>
+            <span class="n">min_dist</span> <span class="o">=</span> <span class="mf">1e5</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">grainB_old</span><span class="p">)):</span>
+                <span class="n">b_p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
+                <span class="n">a_p</span> <span class="o">=</span> <span class="n">grainB_old</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                <span class="n">dist_coord</span> <span class="o">=</span> <span class="n">b_p</span><span class="o">-</span><span class="n">a_p</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+                <span class="n">dist</span> <span class="o">=</span> <span class="n">la</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">b_p</span><span class="o">-</span><span class="n">a_p</span><span class="p">[:</span><span class="mi">3</span><span class="p">])</span>
+                
+                <span class="k">if</span> <span class="n">min_dist</span><span class="o">&gt;</span><span class="n">dist</span><span class="p">:</span>
+                    <span class="c1">#print(dist)</span>
+                    <span class="n">atom_count</span><span class="o">=</span> <span class="n">a_p</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="n">j</span>
+                    <span class="n">min_dist</span> <span class="o">=</span> <span class="n">dist</span>
+            <span class="n">grainB_old</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+            <span class="n">point</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">atom_count</span><span class="p">)</span>
+            <span class="n">gA</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
+<span class="w">        </span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    gA = grainA1</span>
+<span class="sd">    gB = grainB1</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c1">#print(len(gA),len(gB),len(gA)+len(gB))</span>
+    <span class="n">gA1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">gA</span><span class="p">)</span>
+    <span class="n">gB1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">gB</span><span class="p">)</span>
+    <span class="c1">#print(bur,h)</span>
+    <span class="k">return</span> <span class="n">gA1</span><span class="p">,</span><span class="n">gB1</span><span class="p">,</span><span class="n">box</span></div>
+
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Disconnection energetics 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">disconnection_generation</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2025, Himanshu Joshi.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    </div>
+  </body>
+</html>

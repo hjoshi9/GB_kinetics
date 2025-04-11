@@ -1,0 +1,47 @@
+.. Disconnection energetics documentation master file, created by
+   sphinx-quickstart on Thu Apr 10 21:58:46 2025.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Welcome to Disconnection energetics's documentation!
+====================================================
+| This python project is the implementation of method developed in the paper: 
+
+**Energetics of the nucleation and glide of disconnection modes in symmetric tilt grain boundaries** (under review)
+
+| This method helps investigate the mechanisms involved with motion of a GB assuming that disconnection glide and migration is the underlying mechanism.
+| The program creates atomistic systems showing nucleation and glide of a chosen disconnection mode and uses Nugded Elastic Band (NEB) method to calculate the Minimum Energy Path(MEP).
+
+.. video:: _static/sigma13_size6_b0.71h1.77neb.mp4
+    :align: center
+    :caption: Mechanism of GB migration mediated by disconnection nucleation and glide.
+
+.. note::
+
+	Note that this repository is in active development.	
+
+Contents
+--------
+
+.. toctree::
+   :maxdepth: 2
+   
+   usage
+   generate_gb_information
+   lammps
+   min_shuffle
+   create_disconnections
+   disconnection_generation
+   read_write_lammpsdatafiles
+   solid_angle_calculations
+   run_neb
+   data
+
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

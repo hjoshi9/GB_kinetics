@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>read_write_lammpsdatafiles module &#8212; Disconnection energetics 1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/nature.css?v=279e0f84" />
+    <script src="_static/documentation_options.js?v=29a6c3e3"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="solid_angle_calculations module" href="solid_angle_calculations.html" />
+    <link rel="prev" title="disconnection_generation module" href="disconnection_generation.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="solid_angle_calculations.html" title="solid_angle_calculations module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="disconnection_generation.html" title="disconnection_generation module"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Disconnection energetics 1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">read_write_lammpsdatafiles module</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-read_write_lammpsdatafiles">
+<span id="read-write-lammpsdatafiles-module"></span><h1>read_write_lammpsdatafiles module<a class="headerlink" href="#module-read_write_lammpsdatafiles" title="Link to this heading">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="read_write_lammpsdatafiles.min_shuffle_input">
+<span class="sig-prename descclassname"><span class="pre">read_write_lammpsdatafiles.</span></span><span class="sig-name descname"><span class="pre">min_shuffle_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Ai</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Bi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Af</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Bf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gb_loc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disc_start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disc_end</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/read_write_lammpsdatafiles.html#min_shuffle_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#read_write_lammpsdatafiles.min_shuffle_input" title="Link to this definition">¶</a></dt>
+<dd><p>Reads input from lammps datafile which contains the information about the atoms on which minshuffle algorithm is to be acted on</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Ai</strong> (<em>2D array</em>) – Initial configuration of Grain 1.</p></li>
+<li><p><strong>Bi</strong> (<em>2D array</em>) – Initial configuration of Grain 2.</p></li>
+<li><p><strong>Af</strong> (<em>2D array</em>) – Final configuration of Grain 1.</p></li>
+<li><p><strong>Bf</strong> (<em>2D array</em>) – Final configuration of Grain 2.</p></li>
+<li><p><strong>gb_loc</strong> (<em>float</em>) – GB location.</p></li>
+<li><p><strong>h</strong> (<em>float</em>) – Step height of disconnection mode.</p></li>
+<li><p><strong>box</strong> (<em>2D array</em>) – Box dimensions.</p></li>
+<li><p><strong>folder</strong> (<em>string</em>) – output folder.</p></li>
+<li><p><strong>sigma</strong> (<em>int</em>) – Gb sigma value.</p></li>
+<li><p><strong>inc</strong> (<em>float</em>) – GB inclination.</p></li>
+<li><p><strong>elem</strong> (<em>string</em>) – Element.</p></li>
+<li><p><strong>disc_start</strong> (<em>float</em>) – Disconnection start location.</p></li>
+<li><p><strong>disc_end</strong> (<em>float</em>) – Disconnection end location.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>A</strong> (<em>2D array</em>) – Grain 1.</p></li>
+<li><p><strong>B</strong> (<em>2D array</em>) – Grain 2.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="read_write_lammpsdatafiles.min_shuffle_input_negative">
+<span class="sig-prename descclassname"><span class="pre">read_write_lammpsdatafiles.</span></span><span class="sig-name descname"><span class="pre">min_shuffle_input_negative</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Ai</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Bi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Af</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Bf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gb_loc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disc_start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disc_end</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/read_write_lammpsdatafiles.html#min_shuffle_input_negative"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#read_write_lammpsdatafiles.min_shuffle_input_negative" title="Link to this definition">¶</a></dt>
+<dd><p>Reads min shuffle input for negative step heights</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Ai</strong> (<em>2D array</em>) – Initial configuration of Grain 1.</p></li>
+<li><p><strong>Bi</strong> (<em>2D array</em>) – Initial configuration of Grain 2.</p></li>
+<li><p><strong>Af</strong> (<em>2D array</em>) – Final configuration of Grain 1.</p></li>
+<li><p><strong>Bf</strong> (<em>2D array</em>) – Final configuration of Grain 2.</p></li>
+<li><p><strong>gb_loc</strong> (<em>float</em>) – GB location.</p></li>
+<li><p><strong>h</strong> (<em>float</em>) – Step height of disconnection mode.</p></li>
+<li><p><strong>box</strong> (<em>2D array</em>) – Box dimensions.</p></li>
+<li><p><strong>folder</strong> (<em>string</em>) – output folder.</p></li>
+<li><p><strong>sigma</strong> (<em>int</em>) – Gb sigma value.</p></li>
+<li><p><strong>inc</strong> (<em>float</em>) – GB inclination.</p></li>
+<li><p><strong>elem</strong> (<em>string</em>) – Element.</p></li>
+<li><p><strong>disc_start</strong> (<em>float</em>) – Disconnection start location.</p></li>
+<li><p><strong>disc_end</strong> (<em>float</em>) – Disconnection end location.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>A</strong> (<em>2D array</em>) – Grain 1.</p></li>
+<li><p><strong>B</strong> (<em>2D array</em>) – Grain 2.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="read_write_lammpsdatafiles.neb_structure_minimized">
+<span class="sig-prename descclassname"><span class="pre">read_write_lammpsdatafiles.</span></span><span class="sig-name descname"><span class="pre">neb_structure_minimized</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g_A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g_B</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Xs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ys</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Af</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Bf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">burgers_vector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disc_start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disc_end</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/read_write_lammpsdatafiles.html#neb_structure_minimized"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#read_write_lammpsdatafiles.neb_structure_minimized" title="Link to this definition">¶</a></dt>
+<dd><p>Write neb read atom positions for a bicrystal for a disconnection mode of positive step height</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>g_A</strong> (<em>2D array</em>) – Initial configuration of Grain 1.</p></li>
+<li><p><strong>g_B</strong> (<em>2D array</em>) – Initial configuration of Grain 2.</p></li>
+<li><p><strong>Xs</strong> (<em>2D array</em>) – Initial atom positions in transformed region.</p></li>
+<li><p><strong>Ys</strong> (<em>2D array</em>) – Final atom positions in transformed region.</p></li>
+<li><p><strong>Af</strong> (<em>2D array</em>) – Final configuration of Grain 1.</p></li>
+<li><p><strong>Bf</strong> (<em>2D array</em>) – Final configuration of Grain 2.</p></li>
+<li><p><strong>box</strong> (<em>2D array</em>) – Box dimensions.</p></li>
+<li><p><strong>step_height</strong> (<em>float</em>) – Step height of disconnection mode.</p></li>
+<li><p><strong>burgers_vector</strong> (<em>float</em>) – Burgers vector of disconnection mode.</p></li>
+<li><p><strong>folder</strong> (<em>string</em>) – output folder.</p></li>
+<li><p><strong>sigma</strong> (<em>int</em>) – GB sigma value.</p></li>
+<li><p><strong>inc</strong> (<em>float</em>) – GB inclination.</p></li>
+<li><p><strong>elem</strong> (<em>string</em>) – Element.</p></li>
+<li><p><strong>mode</strong> (<em>string</em>) – Disconnection mode (b&lt;burgers_vector&gt;h&lt;step_height&gt;).</p></li>
+<li><p><strong>y_size</strong> (<em>int</em>) – Size of the system in term of period of GB.</p></li>
+<li><p><strong>disc_start</strong> (<em>float</em>) – Dislocation start location.</p></li>
+<li><p><strong>disc_end</strong> (<em>float</em>) – Dislocation end location.</p></li>
+<li><p><strong>version</strong> (<em>string</em>) – Name of step being created.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>file</strong> (<em>string</em>) – name of output file.</p></li>
+<li><p><strong>grainA</strong> (<em>2D array</em>) – Grain 1</p></li>
+<li><p><em>grainb_ 2D array</em> – Grain 2</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="read_write_lammpsdatafiles.neb_structure_minimized_negative">
+<span class="sig-prename descclassname"><span class="pre">read_write_lammpsdatafiles.</span></span><span class="sig-name descname"><span class="pre">neb_structure_minimized_negative</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g_A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g_B</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Xs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ys</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Af</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Bf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">burgers_vector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disc_start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disc_end</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">final</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/read_write_lammpsdatafiles.html#neb_structure_minimized_negative"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#read_write_lammpsdatafiles.neb_structure_minimized_negative" title="Link to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Write neb read atom positions for a bicrystal for a disconnection mode of negative step height</p>
+</div></blockquote>
+<dl>
+<dt>g_A<span class="classifier">2D array</span></dt><dd><p>Initial configuration of Grain 1.</p>
+</dd>
+<dt>g_B<span class="classifier">2D array</span></dt><dd><p>Initial configuration of Grain 2.</p>
+</dd>
+<dt>Xs<span class="classifier">2D array</span></dt><dd><p>Initial atom positions in transformed region.</p>
+</dd>
+<dt>Ys<span class="classifier">2D array</span></dt><dd><p>Final atom positions in transformed region.</p>
+</dd>
+<dt>Af<span class="classifier">2D array</span></dt><dd><p>Final configuration of Grain 1.</p>
+</dd>
+<dt>Bf<span class="classifier">2D array</span></dt><dd><p>Final configuration of Grain 2.</p>
+</dd>
+<dt>box<span class="classifier">2D array</span></dt><dd><p>Box dimensions.</p>
+</dd>
+<dt>step_height<span class="classifier">float</span></dt><dd><p>Step height of disconnection mode.</p>
+</dd>
+<dt>burgers_vector<span class="classifier">float</span></dt><dd><p>Burgers vector of disconnection mode.</p>
+</dd>
+<dt>folder<span class="classifier">string</span></dt><dd><p>output folder.</p>
+</dd>
+<dt>sigma<span class="classifier">int</span></dt><dd><p>GB sigma value.</p>
+</dd>
+<dt>inc<span class="classifier">float</span></dt><dd><p>GB inclination.</p>
+</dd>
+<dt>elem<span class="classifier">string</span></dt><dd><p>Element.</p>
+</dd>
+<dt>mode<span class="classifier">string</span></dt><dd><p>Disconnection mode (b&lt;burgers_vector&gt;h&lt;step_height&gt;).</p>
+</dd>
+<dt>y_size<span class="classifier">int</span></dt><dd><p>Size of the system in term of period of GB.</p>
+</dd>
+<dt>disc_start<span class="classifier">float</span></dt><dd><p>Dislocation start location.</p>
+</dd>
+<dt>disc_end<span class="classifier">float</span></dt><dd><p>Dislocation end location.</p>
+</dd>
+<dt>version<span class="classifier">string</span></dt><dd><blockquote>
+<div><p>Name of step being created.</p>
+</div></blockquote>
+<dl class="simple">
+<dt>initial<span class="classifier">2D array</span></dt><dd><p>Initial atom positions.</p>
+</dd>
+<dt>final<span class="classifier">2D array</span></dt><dd><p>Final atom positions.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>file<span class="classifier">string</span></dt><dd><p>name of output file.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="read_write_lammpsdatafiles.read_LAMMPS_datafile">
+<span class="sig-prename descclassname"><span class="pre">read_write_lammpsdatafiles.</span></span><span class="sig-name descname"><span class="pre">read_LAMMPS_datafile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/read_write_lammpsdatafiles.html#read_LAMMPS_datafile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#read_write_lammpsdatafiles.read_LAMMPS_datafile" title="Link to this definition">¶</a></dt>
+<dd><p>Function to read the data file containing the data from a lammps data file
+Output form for each of the lines is :</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path_r</strong> (<em>string</em>) – Path to input file.</p></li>
+<li><p><strong>mode</strong> (<em>int</em><em>,</em><em>optional</em>) – Parameter that helps regulate how input file it read. The defalut is 1</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>data</strong> – Array with each line as [ID,type,x,y,z].</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>2D array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="read_write_lammpsdatafiles.read_LAMMPS_dumpfile">
+<span class="sig-prename descclassname"><span class="pre">read_write_lammpsdatafiles.</span></span><span class="sig-name descname"><span class="pre">read_LAMMPS_dumpfile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_r</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/read_write_lammpsdatafiles.html#read_LAMMPS_dumpfile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#read_write_lammpsdatafiles.read_LAMMPS_dumpfile" title="Link to this definition">¶</a></dt>
+<dd><p>Reads the data file containing the data from a lammps dump file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path_r</strong> (<em>string</em>) – Location of LAMMPS dump file</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>data</strong> – Per Atom data with format [ID,type,x,y,z,centrosymmetry, energy]</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>2D array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="read_write_lammpsdatafiles.write_lammps_input">
+<span class="sig-prename descclassname"><span class="pre">read_write_lammpsdatafiles.</span></span><span class="sig-name descname"><span class="pre">write_lammps_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g_A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g_B</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/read_write_lammpsdatafiles.html#write_lammps_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#read_write_lammpsdatafiles.write_lammps_input" title="Link to this definition">¶</a></dt>
+<dd><p>Function to print the given particle positions given</p>
+<p>Generates a lammps data file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>folder</strong> (<em>string</em>) – Location of input file.</p></li>
+<li><p><strong>g_A</strong> (<em>2D array</em>) – Grain 1 atom locations.</p></li>
+<li><p><strong>g_B</strong> (<em>2D array</em>) – Grain 2 atom locations.</p></li>
+<li><p><strong>elem</strong> (<em>string</em>) – Element.</p></li>
+<li><p><strong>sigma</strong> (<em>int</em>) – GB sigma.</p></li>
+<li><p><strong>inc</strong> (<em>float</em>) – GB inclination.</p></li>
+<li><p><strong>axis</strong> (<em>1D Array</em>) – Tilt axis.</p></li>
+<li><p><strong>mode</strong> (<em>int</em>) – mode = 1 if cut along x axis and 2 if cut along y axis</p></li>
+<li><p><strong>box</strong> (<em>2D array</em>) – Box dimensions.</p></li>
+<li><p><strong>prefix</strong> (<em>string</em>) – suffix to be added to the input file name.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>file</strong> (<em>string</em>) – name of output file.</p></li>
+<li><p><strong>grainA</strong> (<em>2D array</em>) – Grain 1</p></li>
+<li><p><em>grainb_ 2D array</em> – Grain 2</p></li>
+<li><p><strong>box</strong> (<em>2D array</em>) – Box dimensions.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="read_write_lammpsdatafiles.write_lammps_input_ordered">
+<span class="sig-prename descclassname"><span class="pre">read_write_lammpsdatafiles.</span></span><span class="sig-name descname"><span class="pre">write_lammps_input_ordered</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g_A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g_B</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xpos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/read_write_lammpsdatafiles.html#write_lammps_input_ordered"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#read_write_lammpsdatafiles.write_lammps_input_ordered" title="Link to this definition">¶</a></dt>
+<dd><p>Function to print the given particle positions given
+mode = 1 if cut along x axis and 2 if cut along y axis
+Generates a lammps data file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>folder</strong> (<em>string</em>) – Location of input file.</p></li>
+<li><p><strong>g_A</strong> (<em>2D array</em>) – Grain 1 atom locations.</p></li>
+<li><p><strong>g_B</strong> (<em>2D array</em>) – Grain 2 atom locations.</p></li>
+<li><p><strong>elem</strong> (<em>string</em>) – Element.</p></li>
+<li><p><strong>sigma</strong> (<em>int</em>) – GB sigma.</p></li>
+<li><p><strong>inc</strong> (<em>float</em>) – GB inclination.</p></li>
+<li><p><strong>axis</strong> (<em>1D Array</em>) – Tilt axis.</p></li>
+<li><p><strong>mode</strong> (<em>int</em>) – mode = 1 if cut along x axis and 2 if cut along y axis</p></li>
+<li><p><strong>box</strong> (<em>2D array</em>) – Box dimensions.</p></li>
+<li><p><strong>prefix</strong> (<em>string</em>) – suffix to be added to the input file name.</p></li>
+<li><p><strong>xpos</strong> (<em>float</em>) – Position of GB.</p></li>
+<li><p><strong>h</strong> (<em>float</em>) – Step height.</p></li>
+<li><p><strong>start</strong> (<em>float</em>) – Disconnection start location.</p></li>
+<li><p><strong>stop</strong> (<em>float</em>) – Disconnection end location.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>file</strong> (<em>string</em>) – name of output file.</p></li>
+<li><p><strong>box</strong> (<em>2D array</em>) – Box dimensions.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="read_write_lammpsdatafiles.write_neb_input_file">
+<span class="sig-prename descclassname"><span class="pre">read_write_lammpsdatafiles.</span></span><span class="sig-name descname"><span class="pre">write_neb_input_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_num</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outfile</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/read_write_lammpsdatafiles.html#write_neb_input_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#read_write_lammpsdatafiles.write_neb_input_file" title="Link to this definition">¶</a></dt>
+<dd><p>Create neb input file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>folder</strong> (<em>string</em>) – Location of directory where input file is to be stored.</p></li>
+<li><p><strong>file</strong> (<em>string</em>) – Name of file.</p></li>
+<li><p><strong>image_num</strong> (<em>int</em>) – Step number.</p></li>
+<li><p><strong>outfile</strong> (<em>string</em>) – Name of  output file.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>out_file</strong> – Path to output file.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">read_write_lammpsdatafiles module</a><ul>
+<li><a class="reference internal" href="#read_write_lammpsdatafiles.min_shuffle_input"><code class="docutils literal notranslate"><span class="pre">min_shuffle_input()</span></code></a></li>
+<li><a class="reference internal" href="#read_write_lammpsdatafiles.min_shuffle_input_negative"><code class="docutils literal notranslate"><span class="pre">min_shuffle_input_negative()</span></code></a></li>
+<li><a class="reference internal" href="#read_write_lammpsdatafiles.neb_structure_minimized"><code class="docutils literal notranslate"><span class="pre">neb_structure_minimized()</span></code></a></li>
+<li><a class="reference internal" href="#read_write_lammpsdatafiles.neb_structure_minimized_negative"><code class="docutils literal notranslate"><span class="pre">neb_structure_minimized_negative()</span></code></a></li>
+<li><a class="reference internal" href="#read_write_lammpsdatafiles.read_LAMMPS_datafile"><code class="docutils literal notranslate"><span class="pre">read_LAMMPS_datafile()</span></code></a></li>
+<li><a class="reference internal" href="#read_write_lammpsdatafiles.read_LAMMPS_dumpfile"><code class="docutils literal notranslate"><span class="pre">read_LAMMPS_dumpfile()</span></code></a></li>
+<li><a class="reference internal" href="#read_write_lammpsdatafiles.write_lammps_input"><code class="docutils literal notranslate"><span class="pre">write_lammps_input()</span></code></a></li>
+<li><a class="reference internal" href="#read_write_lammpsdatafiles.write_lammps_input_ordered"><code class="docutils literal notranslate"><span class="pre">write_lammps_input_ordered()</span></code></a></li>
+<li><a class="reference internal" href="#read_write_lammpsdatafiles.write_neb_input_file"><code class="docutils literal notranslate"><span class="pre">write_neb_input_file()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="disconnection_generation.html"
+                          title="previous chapter">disconnection_generation module</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="solid_angle_calculations.html"
+                          title="next chapter">solid_angle_calculations module</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/read_write_lammpsdatafiles.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="solid_angle_calculations.html" title="solid_angle_calculations module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="disconnection_generation.html" title="disconnection_generation module"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Disconnection energetics 1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">read_write_lammpsdatafiles module</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2025, Himanshu Joshi.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    </div>
+  </body>
+</html>

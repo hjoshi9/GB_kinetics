@@ -105,6 +105,7 @@ def write_lammps_neb_input_script(folder,elem,lat_par,sigma,mis,size,b,h,partiti
 def run_neb_calc(folder,elem,lat_par,sigma,mis,size,b,h,partitions,mode,potential,mpi_location,lammps_location):
     """
     Run the neb input file
+    
     Parameters
     ----------
     folder : string

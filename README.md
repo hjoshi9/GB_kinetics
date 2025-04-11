@@ -10,5 +10,5 @@ Necessary installations: <br />
 The program requires python3, LAMMPS and openmpi installations on the system. <br />
 Details on installation of LAMMPS can be found at https://docs.lammps.org/Install.html <br />
 Details on installation of openmpi can be found at https://docs.open-mpi.org/en/v5.0.x/installing-open-mpi/quickstart.html<br />
-Necessary packages for python code are listed in requirements.txt  and can be installed by "pip install -r requirements"<br />
+Necessary packages for python code are listed in requirements.txt  and can be installed by using :  pip install -r requirements.txt<br />
 <br />

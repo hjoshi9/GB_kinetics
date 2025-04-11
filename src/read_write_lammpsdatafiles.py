@@ -72,8 +72,8 @@ def min_shuffle_input(Ai,Bi,Af,Bf,gb_loc,h,box,folder,sigma,inc,elem,disc_start,
     name = folder + file
     
     natoms = A.shape[0]+B.shape[0]
-    print("Check for same number of particles in the system")
-    print(A.shape[0],B.shape[0])
+    #print("Check for same number of particles in the system")
+    #print(A.shape[0],B.shape[0])
     f = open(name,"w")
     #f.write("# LAMMPS data file Sigma = %d, inclination = %f\n"%(sigma,inc))
     f.write("#LAMMPS data file\n")
@@ -102,8 +102,7 @@ def min_shuffle_input(Ai,Bi,Af,Bf,gb_loc,h,box,folder,sigma,inc,elem,disc_start,
         k += 1
     f.close()
     
-    print("Done writing bicrystal")
-    print(name)
+    print("Done writing bicrystal "+name)
     return A,B
 
 
@@ -152,7 +151,7 @@ def min_shuffle_input_negative(Ai,Bi,Af,Bf,gb_loc,h,box,folder,sigma,inc,elem,di
     data_B = []
     eps = 0
     count = 0
-    print(gb_loc,gb_loc+h)
+    #print(gb_loc,gb_loc+h)
     for i in range(Bi.shape[0]):
         if  Bi[i,0]>gb_loc+h-eps and Bi[i,0]<gb_loc-eps and Bi[i,1]>=disc_start and Bi[i,1]<= disc_end:
             count += 1
@@ -178,10 +177,10 @@ def min_shuffle_input_negative(Ai,Bi,Af,Bf,gb_loc,h,box,folder,sigma,inc,elem,di
     prefix = "min_shuffle"
     file = "data." + elem + "s" +str(sigma) + "inc" + str(inc) + "_" +prefix# + "_"+ str(mode)
     name = folder + file
-    print(count)
+    #print(count)
     natoms = A.shape[0]+B.shape[0]
-    print("Check for same number of particles in the system")
-    print(A.shape[0],B.shape[0])
+    #print("Check for same number of particles in the system")
+    #print(A.shape[0],B.shape[0])
     f = open(name,"w")
     #f.write("# LAMMPS data file Sigma = %d, inclination = %f\n"%(sigma,inc))
     f.write("#LAMMPS data file\n")
@@ -210,8 +209,7 @@ def min_shuffle_input_negative(Ai,Bi,Af,Bf,gb_loc,h,box,folder,sigma,inc,elem,di
         k += 1
     f.close()
     
-    print("Done writing bicrystal")
-    print(name)
+    print("Done writing bicrystal "+name)
     return A,B
 
 def neb_structure_minimized(g_A,g_B,Xs,Ys,Af,Bf,box,step_height,burgers_vector,folder,sigma,inc,elem,mode,y_size,disc_start,disc_end,version):
@@ -299,14 +297,14 @@ def neb_structure_minimized(g_A,g_B,Xs,Ys,Af,Bf,box,step_height,burgers_vector,f
                 f.write("%d %d %0.10f %0.10f %0.10f\n"% (g_A[i,3],grain_num,g_A[i,0],g_A[i,1],g_A[i,2]))
                 grain_A.append([g_A[i,0],g_A[i,1],g_A[i,2],g_A[i,3]])
                 k += 1
-            print(k)
+            #print(k)
             for i in range(g_B.shape[0]):
                 grain_num = 2
                 #f.write("%d\t%d\t%0.6f\t%0.6f\t%0.6f\n"%(k,grain_num,g_B[0,i],g_B[1,i],g_B[2,i]))
                 f.write("%d %d %0.10f %0.10f %0.10f\n"% (g_B[i,3],grain_num,g_B[i,0],g_B[i,1],g_B[i,2]))
                 grain_B.append([g_B[i,0],g_B[i,1],g_B[i,2],g_B[i,3]])
                 k += 1
-            print(k)
+            #print(k)
             f.close()
         else:
             
@@ -328,7 +326,7 @@ def neb_structure_minimized(g_A,g_B,Xs,Ys,Af,Bf,box,step_height,burgers_vector,f
                 f.write("%d %d %0.10f %0.10f %0.10f\n"% (g_A2[i,3],grain_num,g_A2[i,0],g_A2[i,1],g_A2[i,2]))
                 grain_A2.append([g_A[i,0],g_A[i,1],g_A[i,2],g_A[i,3]])
                 k += 1
-            print(k)
+            #print(k)
             for i in range(g_B2.shape[0]):
                 grain_num = 2
                 flag = 0
@@ -345,12 +343,12 @@ def neb_structure_minimized(g_A,g_B,Xs,Ys,Af,Bf,box,step_height,burgers_vector,f
                 f.write("%d %d %0.10f %0.10f %0.10f\n"% (g_B2[i,3],grain_num,g_B2[i,0],g_B2[i,1],g_B2[i,2]))
                 grain_B2.append([g_B2[i,0],g_B2[i,1],g_B2[i,2],g_B2[i,3]])
                 k += 1
-            print(k)
+            #print(k)
             f.close()
             
             # Create the array
             
-    print("Done writing bicrystal"+name)
+    print("Done writing bicrystal "+name)
     return file,np.array(grain_A),np.array(grain_B)
 
 
@@ -414,7 +412,7 @@ def neb_structure_minimized_negative(g_A,g_B,Xs,Ys,Af,Bf,box,step_height,burgers
         name = folder + file
         natoms = g_A.shape[0]+g_B.shape[0]
         k= 1
-        print(g_A.shape[0],g_B.shape[0])
+        #print(g_A.shape[0],g_B.shape[0])
         g_A2 = g_A
         g_B2 = g_B
         if suffix[ii]=="_step0":
@@ -447,8 +445,7 @@ def neb_structure_minimized_negative(g_A,g_B,Xs,Ys,Af,Bf,box,step_height,burgers
             for i in range(len(initial)):
                 f.write("%d %d %0.10f %0.10f %0.10f\n"% (initial[i,0],initial[i,1],initial[i,2],initial[i,3],initial[i,4]))
             f.close()
-            print("Done writing bicrystal")
-            print(name)
+            print("Done writing bicrystal "+name)
         else:
             f = open(name,"w")
             eps = 0.1
@@ -509,11 +506,10 @@ def neb_structure_minimized_negative(g_A,g_B,Xs,Ys,Af,Bf,box,step_height,burgers
                 #print(flag,out-final[k,:])
                 f.write("%d %d %0.10f %0.10f %0.10f\n"% (out[0],out[1],out[2],out[3],out[4]))
             f.close()
-            print(count,len(Xs),len(Ys))
+            #print(count,len(Xs),len(Ys))
             f.close()
             
-            print("Done writing bicrystal")
-            print(name)
+            print("Done writing bicrystal "+name)
     
     return file
 
@@ -575,7 +571,7 @@ def read_LAMMPS_datafile(path_r,mode=1):
     data = []
     k=0
     message = "Reading " + path_r
-    print(message)
+    #print(message)
     with open(path_r,'r') as file:
         flag1 = 0
         flag2 = 0
@@ -710,7 +706,7 @@ def write_lammps_input(folder,g_A,g_B,elem,sigma,inc,axis,mode,box,prefix):
         k += 1
     f.close()
     
-    print("Done writing bicrystal")
+    print("Done writing bicrystal " + name)
     return file,np.array(grain_A),np.array(grain_B),box
 
 def write_lammps_input_ordered(folder,g_A,g_B,elem,sigma,inc,axis,mode,box,prefix,xpos,h,start,stop):
@@ -805,7 +801,7 @@ def write_lammps_input_ordered(folder,g_A,g_B,elem,sigma,inc,axis,mode,box,prefi
     '''
     f.close()
     
-    print("Done writing bicrystal")
+    print("Done writing bicrystal "+name)
     return file,box
 
 def read_LAMMPS_dumpfile(path_r):

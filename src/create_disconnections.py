@@ -92,7 +92,7 @@ def generate_disconnection_images(gb_data,bur,step_height,lat_par,lat_Vec,axis,s
                 gB_1 = gB
                 name_suffix = "size_"+str(size)+"disc"+str(image_num)
                 file_name_init,box = write_lammps_input_ordered(out_folder,gA,gB,elem,sigma,inc,axis,2,box1,name_suffix,gb_pos,0,disloc1[0],disloc2[0])
-                print(out_folder + file_name_init)
+                #print(out_folder + file_name_init)
             if min_decision == True:
                 print("Minimizing using LAMMPS \n")
                 min_outputfile_init = "data."+elem+"s"+str(sigma)+"_size"+str(size)+"_min_d"+str(image_num)
@@ -109,12 +109,12 @@ def generate_disconnection_images(gb_data,bur,step_height,lat_par,lat_Vec,axis,s
                     gA,gB,box1 = generate_disconnection_ordered_other(A,B,nCells,p,axis,lat_par,non_per_cutoff,bur,size,nodes,nImages,step_height,gA_1,gB_1,gb_pos,image_num,dipole_number)
                     name_suffix = "size_"+str(size)+"disc"+str(image_num)
                     file_name1,box = write_lammps_input_ordered(out_folder,gA,gB,elem,sigma,inc,axis,2,box1,name_suffix,gb_pos,step_height,disloc1[0],disloc2[0])
-                    print(out_folder + file_name1)
+                    #print(out_folder + file_name1)
                 else:
                     gA,gB,box1 = generate_disconnection_ordered_final(A,B,nCells,p,axis,lat_par,non_per_cutoff,bur,size,nodes,nImages,step_height,gb_pos)
                     name_suffix = "size_"+str(size)+"disc"+str(image_num)
                     file_name1,box = write_lammps_input_ordered(out_folder,gA,gB,elem,sigma,inc,axis,2,box1,name_suffix,gb_pos,step_height,disloc1[0],disloc2[0])
-                    print(out_folder + file_name1)
+                    #print(out_folder + file_name1)
             
             # minimize
             if min_decision == True:
@@ -141,12 +141,12 @@ def generate_disconnection_images(gb_data,bur,step_height,lat_par,lat_Vec,axis,s
                 #data.Cus13inc0.0_size_2disc0_minmov
                 average_gb_loc,gb_hi,gb_lo = find_gb_location(filepath)
                 if step_height > 0:
-                    gb_loc = average_gb_loc-0.5*lat_par*p/32
+                    gb_loc = 0*average_gb_loc-0.5*lat_par*p/32
                 else:
-                    gb_loc = average_gb_loc+0.5*lat_par*p/32	
+                    gb_loc = average_gb_loc+0.5*lat_par*p/32
                 h = step_height + 0.25*step_height 
-                d_start = disloc1[0]-0.5*2
-                d_stop = disloc2[0]+0.5*2
+                d_start = disloc1[0]-0.5*1
+                d_stop = disloc2[0]+0.5*1
                 version = "_step" + str(image_num)
                 
                 atoms = data_init[0][3]

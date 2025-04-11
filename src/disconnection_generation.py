@@ -405,7 +405,7 @@ def generate_disconnection_ordered_other(c1,c2,nCells,period,axis,lat_par,non_pe
                     # works
                     eps2 = 0.1                    
                     #if b[0]<box[1,0]+eps and b[0]>-box[1,0]-eps and b[2]< box[1,2]+eps and (b[2]) > -box[1,2]+eps and (b[1]-box_shift)<box[1,1]+eps and (b[1]-box_shift)>-box[1,1]+eps:
-                    if b[0]<x_pos+h-0.2 and b[0]>x_pos-0.001 and b[2]< box[1,2]+0.1 and (b[2]) > -box[1,2] and (b[1])>start-0.1 and (b[1])<stop:
+                    if b[0]<x_pos+h-eps2 and b[0]>x_pos-eps2 and b[2]< box[1,2]+0.25*eps2 and (b[2]) > -box[1,2] and (b[1])>start-0.0 and (b[1])<stop:
                     # Trial
                     #if b[0]<x_pos+h+eps2 and b[0]>x_pos-eps2 and b[2]< box[1,2]+eps2 and (b[2]) > -box[1,2]+eps2 and (b[1]-box_shift)>start-0*eps2 and (b[1]-box_shift)<stop-fac*eps2:
                         disp = 0
@@ -413,7 +413,7 @@ def generate_disconnection_ordered_other(c1,c2,nCells,period,axis,lat_par,non_pe
                         for dp in range(dipole_number):
                             nodes_for_solid_angle = nodes_modified[dp]
                             solidAngle,disp_temp=solidangle_displacement(nImages, nodes_for_solid_angle, period, point, bur)
-                            disp += disp_temp
+                            disp += 0*disp_temp
                         if b[1]-disp>box[1,1]:
                             disp += 2*box[1,1]
                         elif b[1]-disp<-box[1,1]:
@@ -516,7 +516,7 @@ def generate_disconnection_ordered_other(c1,c2,nCells,period,axis,lat_par,non_pe
                 point.append(atom_count)
                 gB.append(point)
                 countb +=1
-        print(countb,len(grainB1),grainB1[-1],grainB1[-2])
+        #print(countb,len(grainB1),grainB1[-1],grainB1[-2])
         
         if diag_plt == True:
             diagnostic_plotting(gA,gB, -15,15,-20,20)

@@ -150,32 +150,59 @@ def gb_props(sigma,mis,axis,lat_par,choose_decision=1):
     b = atgb_data[0,4]*lat_par
     h = atgb_data[0,7]*lat_par
     H = atgb_data[0,8]*lat_par
-    print("The GB to be investigated is:\n")
-    print("Sigma = " + str(gb_data[0]) + "; Misorientation = " + str(gb_data[1]) + "; Inclination = " + str(gb_data[2]) + "\n")
-    print("The relevant gb properties are:\n")
-    print("period = " +str(p))
-    print("smallest burgers vector (b) = "+str(b))
-    print("fundamental step height (h) = "+str(h))
-    print("distance between CSL planes (H) = "+str(H))
+    print("+--------------------------------------------------------------------+")
+    print("+                           GB Kinetics                              +")
+    print("+ This program generates atomistic images for motion of GB mediated  +")
+    print("+             by disconnection nucleation and glide                  +")
+    print("+--------------------------------------------------------------------+")
+    print("\n======================== GB information ==============================")
+    print("Sigma = " + str(gb_data[0]))
+    print("Misorientation = " + str(gb_data[1]))
+    print("Inclination = " + str(gb_data[2]))
+    print("Period = " +str(p))
+    print("Smallest burgers vector (b) = "+str(b))
+    print("Fundamental glide step height (hg) = "+str(h))
+    print("Distance between CSL planes (H) = "+str(H))
     if choose_decision == 0:
         m = 1
         n = -1
     else:
-        print("There exist infinetly many disconnection modes with the form (b,h) = (m*b,m*h+n*H), where m and n are integers")
+        print("\n================== Choose disconnection mode =========================")
+        print("There exist infinetly many disconnection modes with the form:")
+        print("               (b,h) = (m * b, m * hg + n * H)               ")
+        print("where m and n are integers                  \n")
         print("Example of a few of the possible disconnection modes are:")
-        print("m \t n \t burgers_vector \t step_height")
-        for i in range(-2,3,1):
-            for j in range(-2,3,1):
+        headers = ["m","n","|b|","h","coupling factor"]
+        table_contents = []
+        #print("m \t n \t |b| \t h \t couling factor")
+        for i in range(-3,3,1):
+            for j in range(-3,3,1):
                 if i == 0 and j == 0:
                     continue
                 br = i*b
                 sh =  i*h+j*H
-                print(str(i) + "\t" + str(j) +"\t" + str(np.round(br,2)) +"\t\t\t" + str(np.round(sh,2)))
-        m = int(input("Enter the m corrresponding to the disconnection mode:"))
+                beta = br/sh
+                table_contents.append([i,j,np.round(br,2),np.round(sh,2),np.round(beta,2)])
+                #print(str(i) + "\t" + str(j) +"\t" + str(np.round(br,2)) +"\t\t" + str(np.round(sh,2))+"\t\t" + str(np.round(beta,2)))
+                #print("%-1i%-1i")
+        # Print table headers
+        #print("Index".ljust(10), end = "")
+        for col in headers:
+            print(col.ljust(10), end="")
+        print()
+        
+        # Print table rows
+        for i, row in enumerate(table_contents, start = 1):
+            #print(str(i).ljust(10), end = "")                      
+            for col in row:
+                print(str(col).ljust(10), end = "")
+            print()
+        m = int(input("\nEnter the m corrresponding to the disconnection mode:"))
         n = int(input("Enter the n corresponding to the disconnection mode:"))
     bur = m*b
     step_height = m*h+n*H
-    print("Disconnection mode considered in this run : ("+str(bur)+","+str(step_height)+")")
+    print("Disconnection mode considered in this run :") 
+    print("(b,h) = ("+str(np.round(bur,2))+","+str(np.round(step_height,2))+"), coupling factor = " + str(np.round(bur/step_height,2)))
     return gb_data,bur,step_height
     
 

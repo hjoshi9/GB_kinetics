@@ -229,7 +229,7 @@ def generate_disconnection_ordered_initial(c1,c2,nCells,period,axis,lat_par,non_
     grainB1 = []
     atom_num_1 = 0
     atom_num_2 = 0
-    zfactor = 1
+    zfactor = 2
     box = np.array([[size*period,non_per_cutoff,la.norm(axis)*lat_par*zfactor],
                     [non_per_cutoff,size*period,la.norm(axis)*lat_par*zfactor]])
     eps = 0.1
@@ -342,7 +342,7 @@ def generate_disconnection_ordered_other(c1,c2,nCells,period,axis,lat_par,non_pe
     grainB1 = []
     atom_num_1 = 0
     atom_num_2 = 0
-    zfactor = 1
+    zfactor = 2
     box = np.array([[size*period,non_per_cutoff,la.norm(axis)*lat_par*zfactor],
                     [non_per_cutoff,size*period,la.norm(axis)*lat_par*zfactor]])
     #x_pos = 0#-lat_par*period/2
@@ -404,7 +404,6 @@ def generate_disconnection_ordered_other(c1,c2,nCells,period,axis,lat_par,non_pe
                 else:
                     # works
                     eps2 = 0.1                    
-                    #if b[0]<box[1,0]+eps and b[0]>-box[1,0]-eps and b[2]< box[1,2]+eps and (b[2]) > -box[1,2]+eps and (b[1]-box_shift)<box[1,1]+eps and (b[1]-box_shift)>-box[1,1]+eps:
                     if b[0]<x_pos+h-eps2 and b[0]>x_pos-eps2 and b[2]< box[1,2]+0.25*eps2 and (b[2]) > -box[1,2] and (b[1])>start-0.0 and (b[1])<stop:
                     # Trial
                     #if b[0]<x_pos+h+eps2 and b[0]>x_pos-eps2 and b[2]< box[1,2]+eps2 and (b[2]) > -box[1,2]+eps2 and (b[1]-box_shift)>start-0*eps2 and (b[1]-box_shift)<stop-fac*eps2:
@@ -413,14 +412,13 @@ def generate_disconnection_ordered_other(c1,c2,nCells,period,axis,lat_par,non_pe
                         for dp in range(dipole_number):
                             nodes_for_solid_angle = nodes_modified[dp]
                             solidAngle,disp_temp=solidangle_displacement(nImages, nodes_for_solid_angle, period, point, bur)
-                            disp += 0*disp_temp
+                            disp += 1*disp_temp
                         if b[1]-disp>box[1,1]:
                             disp += 2*box[1,1]
                         elif b[1]-disp<-box[1,1]:
                             disp -= 2*box[1,1]
                         point = [b[0],b[1]-disp,b[2]]
                         if check_unique(point, grainB1, 0.1) == 1:
-                            
                             grainB1.append(point)
                         atom_num_2 +=1
     #print(len(grainB1))
@@ -443,7 +441,7 @@ def generate_disconnection_ordered_other(c1,c2,nCells,period,axis,lat_par,non_pe
     
     if h>= 0 :
         for i in range(len(gA_1)):
-            if gA_1[i,0]>=x_pos+h-0.1 or (((gA_1[i,1])<start or (gA_1[i,1])>stop) and gA_1[i,0]>x_pos-0.1):
+            if gA_1[i,0]>=x_pos+h-0.1 or (((gA_1[i,1])<start or (gA_1[i,1])>stop) and gA_1[i,0]>x_pos-0.01):
                 disp = 0
                 point = np.array([gA_1[i,1],gA_1[i,0]])
                 for dp in range(dipole_number):
@@ -452,7 +450,7 @@ def generate_disconnection_ordered_other(c1,c2,nCells,period,axis,lat_par,non_pe
                     disp += disp_temp
                 #if abs(gA_1[i,0] - (x_pos+h-0.1))>0.5:
                 if abs(gA_1[i,0]-x_pos-h)<0.2:
-                    disp = 1*disp
+                    disp = -0.5*disp
                 if gA_1[i,1]-disp>box[1,1]:
                     disp += 2*box[1,1]
                 elif gA_1[i,1]-disp<-box[1,1]:
@@ -521,7 +519,6 @@ def generate_disconnection_ordered_other(c1,c2,nCells,period,axis,lat_par,non_pe
         if diag_plt == True:
             diagnostic_plotting(gA,gB, -15,15,-20,20)
     else:
-        
         for i in range(len(gB_1)):
             # For m = 1
             if gB_1[i,0]<x_pos+h-1*eps or ((gB_1[i,1]<start or gB_1[i,1]>stop-0*y_eps) and gB_1[i,0]<x_pos-eps):
@@ -559,8 +556,8 @@ def generate_disconnection_ordered_other(c1,c2,nCells,period,axis,lat_par,non_pe
                     nodes_for_solid_angle = nodes_modified[dp]
                     solidAngle,disp_temp=solidangle_displacement(nImages, nodes_for_solid_angle, period, point, bur)
                     disp += disp_temp
-                if abs(gA_1[i,0]-x_pos-h)<0.2:
-                    disp = -2*disp
+                if abs(gA_1[i,0]-x_pos+h)<0.2:
+                    disp = 1*disp
                 if gA_1[i,1]-disp>box[1,1]:
                     disp += 2*box[1,1]
                 elif gA_1[i,1]-disp<-box[1,1]:
@@ -576,13 +573,13 @@ def generate_disconnection_ordered_other(c1,c2,nCells,period,axis,lat_par,non_pe
         for i in range(len(grainA1)):
             point = [grainA1[i][0],grainA1[i][1],grainA1[i][2]]
             disp = 0
-            if abs(grainA1[i][0]-x_pos-h)<0.1:
+            if abs(grainA1[i][0]-x_pos+h)<0.1:
                 p = np.array([grainA1[i][1],grainA1[i][0]])
                 for dp in range(dipole_number):
                     nodes_for_solid_angle = nodes_modified[dp]
                     solidAngle,disp_temp=solidangle_displacement(nImages, nodes_for_solid_angle, period, p, bur)
                     disp += disp_temp
-                disp = -2*disp
+                disp = 1*disp
             point = [grainA1[i][0],grainA1[i][1]-disp,grainA1[i][2]]
             min_dist = 1e5
             for j in range(len(grainB_old)):

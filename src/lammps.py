@@ -130,8 +130,8 @@ def write_minimization_input(elem,sigma,mis,inc,lat_par,size,folder,file_name,mi
     f.write("write_data ${out_file1}\n")
     
     f.close()
-    
-    return file
+    outfile = folder + min_outputfile
+    return file,outfile
 
 def create_fix_eco_orientationfile(sigma,mis,inc,folder,a,b,lat_par):
     """

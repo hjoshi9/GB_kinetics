@@ -331,7 +331,7 @@ def min_shuffle(dim,a,sig,misorient,folder,elem,reg_param,max_iters,box_expansio
             #print(Xbasis.shape)
             if Xbasis.shape[0]!= Ybasis.shape[0]:
                 print("The number of atoms do not match for the two grains. One-to-one mapping not possible")
-                exit
+                exit(0)
             else:
                 N = Xbasis.shape[0]
             

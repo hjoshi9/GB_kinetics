@@ -181,7 +181,7 @@ def create_bicrystal(gb_data,axis,lat_par,lat_Vec):
     B = np.matmul(Rot_fin.T,b)
     return A,B,a,b
 
-def generate_disconnection_ordered_initial(c1,c2,nCells,period,axis,lat_par,non_per_cutoff,bur,size,nodes,nImages,h,x_pos):
+def generate_disconnection_ordered_initial(c1,c2,nCells,period,axis,lat_par,non_per_cutoff,bur,size,size_z,nodes,nImages,h,x_pos):
     """
     Create the initial as cut gb using data from main
 
@@ -229,7 +229,7 @@ def generate_disconnection_ordered_initial(c1,c2,nCells,period,axis,lat_par,non_
     grainB1 = []
     atom_num_1 = 0
     atom_num_2 = 0
-    zfactor = 2
+    zfactor = size_z
     box = np.array([[size*period,non_per_cutoff,la.norm(axis)*lat_par*zfactor],
                     [non_per_cutoff,size*period,la.norm(axis)*lat_par*zfactor]])
     eps = 0.1
@@ -285,7 +285,7 @@ def generate_disconnection_ordered_initial(c1,c2,nCells,period,axis,lat_par,non_
     return gA1,gB1,box
 
 
-def generate_disconnection_ordered_other(c1,c2,nCells,period,axis,lat_par,non_per_cutoff,bur,size,nodes,nImages,h,gA_1,gB_1,x_pos,image_number,dipole_number):
+def generate_disconnection_ordered_other(c1,c2,nCells,period,axis,lat_par,non_per_cutoff,bur,size,size_z,nodes,nImages,h,gA_1,gB_1,x_pos,image_number,dipole_number):
     """
     Generate images with disconnection step
 
@@ -342,7 +342,7 @@ def generate_disconnection_ordered_other(c1,c2,nCells,period,axis,lat_par,non_pe
     grainB1 = []
     atom_num_1 = 0
     atom_num_2 = 0
-    zfactor = 2
+    zfactor = size_z
     box = np.array([[size*period,non_per_cutoff,la.norm(axis)*lat_par*zfactor],
                     [non_per_cutoff,size*period,la.norm(axis)*lat_par*zfactor]])
     #x_pos = 0#-lat_par*period/2

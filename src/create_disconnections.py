@@ -8,7 +8,7 @@ from src.disconnection_generation import *
 from src.solid_angle_calculations import *
 from src.read_write_lammpsdatafiles import *
 
-def generate_disconnection_images(gb_data,bur,step_height,lat_par,lat_Vec,axis,sizes,elem,reg_parameter,max_iters,lammps_location,mpi_location,folder,potential,dispy,dispz):
+def generate_disconnection_images(gb_data,bur,step_height,lat_par,lat_Vec,axis,sizes,size_z,elem,reg_parameter,max_iters,lammps_location,mpi_location,folder,potential,dispy,dispz):
     """
     Generates disconnection images, calls the functions that are required
 
@@ -89,7 +89,7 @@ def generate_disconnection_images(gb_data,bur,step_height,lat_par,lat_Vec,axis,s
         if image_num == 0:
             if create_bicrystal_decision == True:
                 print("\n============= Generating initial GB bicrystallographically ==================")
-                gA,gB,box1 = generate_disconnection_ordered_initial(A,B,nCells,p,axis,lat_par,non_per_cutoff,bur,size,nodes,nImages,step_height,gb_pos)
+                gA,gB,box1 = generate_disconnection_ordered_initial(A,B,nCells,p,axis,lat_par,non_per_cutoff,bur,size,size_z,nodes,nImages,step_height,gb_pos)
                 gA_1 = gA
                 gB_1 = gB
                 name_suffix = "size_"+str(size)+"disc"+str(image_num)
@@ -107,18 +107,16 @@ def generate_disconnection_images(gb_data,bur,step_height,lat_par,lat_Vec,axis,s
                 print("Done writing minimized file " + fout)
             #break
         else:
-            #if image_num<5:
-                #continue
             if create_bicrystal_decision == True:
                 if image_num<total_images:
                     print("\n================= Generating GB image " + str(image_num) + " bicrystallographically ==============")
-                    gA,gB,box1 = generate_disconnection_ordered_other(A,B,nCells,p,axis,lat_par,non_per_cutoff,bur,size,nodes,nImages,step_height,gA_1,gB_1,gb_pos,image_num,dipole_number)
+                    gA,gB,box1 = generate_disconnection_ordered_other(A,B,nCells,p,axis,lat_par,non_per_cutoff,bur,size,size_z,nodes,nImages,step_height,gA_1,gB_1,gb_pos,image_num,dipole_number)
                     name_suffix = "size_"+str(size)+"disc"+str(image_num)
                     file_name1,box = write_lammps_input_ordered(out_folder,gA,gB,elem,sigma,inc,axis,2,box1,name_suffix,gb_pos,step_height,disloc1[0],disloc2[0])
                     #print(out_folder + file_name1)
                 else:
                     print("\n================ Generating final GB bicrystallographically =================")
-                    gA,gB,box1 = generate_disconnection_ordered_final(A,B,nCells,p,axis,lat_par,non_per_cutoff,bur,size,nodes,nImages,step_height,gb_pos)
+                    gA,gB,box1 = generate_disconnection_ordered_final(A,B,nCells,p,axis,lat_par,non_per_cutoff,bur,size,size_z,nodes,nImages,step_height,gb_pos)
                     name_suffix = "size_"+str(size)+"disc"+str(image_num)
                     file_name1,box = write_lammps_input_ordered(out_folder,gA,gB,elem,sigma,inc,axis,2,box1,name_suffix,gb_pos,step_height,disloc1[0],disloc2[0])
                     #print(out_folder + file_name1)
@@ -152,10 +150,10 @@ def generate_disconnection_images(gb_data,bur,step_height,lat_par,lat_Vec,axis,s
                 if step_height > 0:
                     gb_loc = 0*average_gb_loc-0.5*lat_par*p/16
                 else:
-                    gb_loc = average_gb_loc+0.5*lat_par*p/16
-                h = step_height + 1.5*step_height 
-                d_start = disloc1[0]-0.5*20
-                d_stop = disloc2[0]+0.5*20
+                    gb_loc = 1*average_gb_loc+0.5*lat_par*p/16
+                h = step_height + 1*step_height 
+                d_start = disloc1[0]-0.5*5
+                d_stop = disloc2[0]+0.5*5
                 version = "_step" + str(image_num)
                 
                 atoms = data_init[0][3]
@@ -198,17 +196,15 @@ def generate_disconnection_images(gb_data,bur,step_height,lat_par,lat_Vec,axis,s
                     neb_file =  min_shuffle_input_negative(Ai,Bi,Af,Bf,gb_loc,h,box,out_folder,sigma,inc,elem,d_start,d_stop)
                 
                 Xs,Ys,Dvec,indicies,gamma_mod = min_shuffle(3, lat_par, sigma, mis,out_folder,elem,reg_parameter,max_iters,image_num)
-                image_num = 1
+                
                 if step_height>0:
                     final_file = neb_structure_minimized(Ai,Bi,Xs,Ys,Af,Bf,box,step_height,bur,out_folder,sigma,inc,elem,2,size,d_start,d_stop,version)
                 else:
                     final_file = neb_structure_minimized_negative(Ai,Bi,Xs,Ys,Af,Bf,box,h,bur,out_folder,sigma,inc,elem,2,size,d_start,d_stop,version,initial,final)
-    #%% 
-                #if min_shuffle_decision == True:
-                    f#or i in range(sizes+1):
-                file = "data.Cus"+str(sigma)+"inc0.0__step"+str(image_num)
-                outfile = "data.Cus"+str(sigma)+"inc0.0_out_step"+str(image_num)
-                f = write_neb_input_file(out_folder,file,image_num,outfile)
+                if min_shuffle_decision == True:
+                    file = "data.Cus"+str(sigma)+"inc0.0__step"+str(image_num)
+                    outfile = "data.Cus"+str(sigma)+"inc0.0_out_step"+str(image_num)
+                    f = write_neb_input_file(out_folder,file,image_num,outfile)
     #%% 
     if create_eco_input ==  True:
         fff = create_fix_eco_orientationfile(int(sigma), np.round(mis), inc, out_folder, A, B,lat_par)

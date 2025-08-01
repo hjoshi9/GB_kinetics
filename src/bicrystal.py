@@ -195,13 +195,11 @@ class bicrystal:
                     a = lat_par * np.matmul(grain2transform, loc)[:, 0]
                     if np.all((a - box_shift > lower_bounds + eps) & (a - box_shift < upper_bounds + eps)):
                         point = np.array([a[1], a[0]])
-                        plastic_displacement = bicrystal._apply_plastic_displacement(nodes_modified,period,burgers_vector,point,disconnection_start,disconnection_stop)#box[1,1],-box[1,1])
-                        """
+                        plastic_displacement = bicrystal._apply_plastic_displacement(nodes_modified,period,burgers_vector,point,box[1,1],-box[1,1])
                         if a[1]-plastic_displacement > disconnection_stop:
                             plastic_displacement +=(disconnection_stop - disconnection_start)
                         elif a[1]-plastic_displacement < disconnection_start:
                             plastic_displacement -= (disconnection_start - disconnection_start)
-                        """
                         transformed_atoms.append([a[0], a[1] - plastic_displacement, a[2]])
 
         # Compile atoms in regions

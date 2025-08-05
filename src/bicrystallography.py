@@ -140,7 +140,7 @@ class bicrystallography:
         print("Distance between CSL planes (H) = " + str(H))
         if choose_decision == 0:
             m = 1
-            n = -1
+            n = 0
         else:
             print("\n================== Choose disconnection mode =========================")
             print("There exist infinitely many disconnection modes with the form:")

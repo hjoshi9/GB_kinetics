@@ -5,9 +5,9 @@ from src.GBKineticsRunController import *
 # Element
 element = "Cu"
 # Sigma value of Gb under consideration
-sigma = 13
+sigma = 17
 # Misorientation of the Gb
-misorientation = 67.4
+misorientation = 28
 # Inclination of the GB
 inclination = 0.0
 # Lattice parameter of the element (try using the lat par corresponding to the potential you intend to use)
@@ -27,7 +27,7 @@ lattice_vector = np.array([[0.5, 0.5, 0.0],
 # Regularization parameter for min-shuffle algorithm
 reg = 0.05
 # Maximum iterations for min-shuffle algorithm
-iterMax = 10000
+iterMax = 100000
 # Put 1 if you want to choose the disconnection mode
 choose_disconnection = 1
 
@@ -48,7 +48,7 @@ lammps_potential = "/opt/homebrew/Cellar/lammps/20240829-update1/share/lammps/po
 
 # Displacements obtained from running grid_search script
 disp_along_gb = 0.0
-disp_along_tilt = -1.35
+disp_along_tilt = -0.9
 
 # Parameters for neb run on lammps
 # Number of partitions used for neb calculations
@@ -56,8 +56,8 @@ partitions = 40
 # Variable lets you choose if you want to run intermediate images through NEB or not.
 # mode = 1 -> NEB with intermediate images, mode = 0 -> NEb with just the initial and final GB images
 mode = 0
-# Variable which allows for switching off automatically trigering neb calculations (in case you only need disconnection images)
-run_neb = False
+# Variable which allows for switching off automatically triggering neb calculations (in case you only need disconnection images)
+run_neb = True
 # Run
 results_folder_path = runGBkinetics(sigma,misorientation,inclination, lattice_parameter,
                                     lattice_vector, axis, size_y, size_z, element, reg, iterMax,

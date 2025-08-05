@@ -1,6 +1,10 @@
 import os
 import subprocess
 import numpy as np
+import matplotlib.pyplot as plt
+
+from gridSearch import misorientation
+from src.IO import read_neb_output_data,write_LAMMPSoutput_tstep
 
 class run_LAMMPS:
     def __init__(self, folder, element, lattice_parameter, sigma, misorientation, inclination, size_along_gb_period,
@@ -18,6 +22,11 @@ class run_LAMMPS:
 
         self.output_filename = None
         self.lammps_input_filename = None
+        self.neb_images = None
+        self.number_of_images_provided = None
+        self.burgers_vec = None
+        self.step_height = None
+        self.neb_output_folder = None
 
     def write_minimization_input(self, file_name, dispy, dispz,minimization_along_gb_directions=False):
         sigma = self.sigma
@@ -232,7 +241,7 @@ jump SELF loopy
         with open(file, "w") as f:
             f.write(script)
 
-    def write_lammps_neb_input_script(self, burgers_vector, step_height, partitions, mode=1):
+    def write_lammps_neb_input_script(self, burgers_vector, step_height,num_steps, partitions, mode=1):
         folder = self.folder
         elem = self.element
         lat_par = self.lattice_parameter
@@ -250,7 +259,7 @@ jump SELF loopy
         if mode == 0:
             number_of_steps = 1
         else:
-            number_of_steps = size
+            number_of_steps = num_steps
 
         if mode == 0:
             final_file_var = "variable final_file string ${folder}/data.Cus${sigma}inc0.0_out_step${size}"
@@ -310,17 +319,21 @@ jump SELF loopy
             f.write(script)
         return output_folder
 
-    def run_neb_calc(self, burgers_vector, step_height, partitions=40, mode=1):
+    def run_neb_calc(self, burgers_vector, step_height,number_of_steps, partitions=40, mode=1):
         mpi_location = self.mpi_location
         lammps_location = self.lammps_location
+        folder = self.folder
         print("============= Running neb calculations ===================")
-        neb_output_folder = self.write_lammps_neb_input_script(self, burgers_vector, step_height, partitions, mode)
+        neb_output_folder = self.write_lammps_neb_input_script(burgers_vector, step_height,number_of_steps, partitions, mode)
         print("The results from this calculation will be stored in " + neb_output_folder)
         command = mpi_location + "/mpirun --oversubscribe --use-hwthread-cpus -np " + str(
-            partitions) + " " + lammps_location + "/lmp_mpi  -partition " + str(partitions) + "x1 -in " + self.lammps_input_filename
+            partitions) + " " + lammps_location + "/lmp_mpi  -partition " + str(partitions) + "x1 -in " + folder+self.lammps_input_filename
         subprocess.run([command], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)
+        self._remove_temp_files(neb_output_folder)
         print("Done with NEB calculations!!")
-        return 1
+        self.neb_images = partitions
+        self.number_of_images_provided = number_of_steps
+        self.neb_output_folder = neb_output_folder
 
     def run_minimization(self,file_name,disp_along_gb_period,disp_along_tilt_axis,minimization_along_gb_directions=False):
         lammps_location = self.lammps_location
@@ -342,3 +355,72 @@ jump SELF loopy
         print("Done with grid search!!")
         print("Results stored in : " + self.output_filename)
         return self.output_filename
+
+    def post_process_neb_output(self,outfolder,plot_decision=False):
+        sigma = self.sigma
+        size = self.size_along_gb_period
+        partitions = self.neb_images
+        steps = self.number_of_images_provided
+        b = self.burgers_vec
+        h = self.step_height
+        folder = self.neb_output_folder
+        mis = self.misorientation
+        elem = self.element
+
+        file = f"dump.neb_{elem}sigma{sigma}_mis{mis}_size{size}_discb{b}h{h}_partition{partitions}"
+        message = "Writing output dump file: " + folder + file
+        print(message)
+        pot_eng = []
+        for k in range(steps):
+            for j in range(partitions):
+                file = folder + f"dump.neb_{elem}sigma{sigma}mis{mis}size{size}discb{b}h{h}_step{k}.{j+1}"
+                print(file)
+                data = read_neb_output_data(file,2)
+                tstep = partitions*k+j
+                box = data[-1][2]
+                Atoms = data[-1][3]
+                natoms = Atoms.shape[0]
+                pe = np.sum(Atoms[:,5])
+                area = (box[1,1]-box[1,0])*(box[2,1]-box[2,0])/100 #nm^2
+                pot_eng.append([tstep,pe,area])
+                f = write_LAMMPSoutput_tstep(natoms,Atoms,box,outfolder,file,tstep)
+        peng = np.array(pot_eng)
+
+        out_name = outfolder + f"{elem}sigma{sigma}_mis{mis}_size{size}_discb{b}h{h}_partition{partitions}.txt"
+        message = "Writing output dump file: " + out_name
+        print(message)
+        np.savetxt(out_name,peng)
+
+        if plot_decision == True:
+            # plotting
+            plt.figure(dpi=300)
+            plt.plot(peng[:,0]/len(peng),(peng[:,1]-peng[0,1])/peng[0,2])
+            plt.grid()
+            plt.xlabel("Reaction coordinate")
+            plt.ylabel(r"$\Delta$E/a (eV/nm$^2$)")
+            plt.legend()
+            fig_name = outfolder + f"{elem}sigma{sigma}_mis{mis}_size{size}_discb{b}h{h}_partition{partitions}.png"
+            message = "Writing output dump file: " + fig_name
+            print(message)
+            plt.savefig(fig_name)
+
+    def post_process_gridsearch_data(self,outfolder,plot_decision=False):
+        sigma = self.sigma
+        size = self.size_along_gb_period
+        mis = self.misorientation
+        elem = self.element
+
+    @staticmethod
+    def _remove_temp_files(output_folder):
+        # Move log file to results folder
+        command = f"mv log.lammps {output_folder}."
+        subprocess.run(command, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        # Remove temp files generated by lammps neb
+        command = "rm screen.*"
+        subprocess.run(command, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        command = "rm log.lammps*"
+        subprocess.run(command, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        command = "rm tmp.lammps.variable"
+        subprocess.run(command, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+

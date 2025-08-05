@@ -38,8 +38,8 @@ def runGBkinetics(sig, mis, inc, lat_par, lat_Vec, axis, size_y, size_z, elem, r
 
     # Decision variables for testing and isolated runs
     create_bicrystal_decision = True  # or False
-    min_decision = False  # or False
-    min_shuffle_decision = False  # or False
+    min_decision = True  # or False
+    min_shuffle_decision = True  # or False
     create_eco_input = False
 
     # Define a bicrystal
@@ -56,35 +56,35 @@ def runGBkinetics(sig, mis, inc, lat_par, lat_Vec, axis, size_y, size_z, elem, r
     for image_num in range(total_images):
         # Define dislocation locations forming the disconnection
         perturb = 0.1
-        if image_num < total_images:
+        if image_num < total_images-1:
             nodes = np.array([[-image_num * p / section_factor + offset - perturb, step_height + gb_position],
                               [ image_num * p / section_factor + offset + perturb, step_height + gb_position]])
         else:
-            fac = 4
+            fac = 1
             nodes = np.array([[-image_num * p / section_factor - p / 2 * fac , step_height + gb_position],
                               [ image_num * p / section_factor + p / 2 * fac , step_height + gb_position]])
         disloc1 = nodes[0]
         disloc2 = nodes[1]
         # Create and minimize bicrystals
         if image_num == 0:
-            if create_bicrystal_decision == True:
-                print("\n============= Generating initial flat GB  ==================")
+            if create_bicrystal_decision:
+                print("\n============================= Generating initial flat GB  =======================================")
                 Bicrystal.create_flat_gb_bicrystal(gb_position)
                 file_name_init = Bicrystal.ordered_write(out_folder, elem, image_num, gb_position)
-            if min_decision == True:
+            if min_decision:
                 min_outputfile_init = run_lmp.run_minimization(file_name_init, dispy, dispz)
         else:
-            if create_bicrystal_decision == True:
+            if create_bicrystal_decision:
                 print("\n================= Generating GB image " + str(image_num) + " bicrystallographically ==============")
                 Bicrystal.create_disconnection_containing_bicrystal(nodes,bur,step_height,gb_position,image_num)
                 file_name_image = Bicrystal.ordered_write(out_folder, elem, image_num, gb_position, step_height,disloc1[0],disloc2[0])
-            if min_decision == True:
+            if min_decision:
                 min_outputfile_image = run_lmp.run_minimization(file_name_image, dispy, dispz)
 
-            if min_shuffle_decision == True:
-                print("==================== Generating atomic trajectories =========================")
+            if min_shuffle_decision:
+                print("=============================== Generating atomic trajectories =====================================")
                 # Apply min shuffle
-                if min_decision == True:
+                if min_decision:
                     file_mode = 2
                     file_flat = out_folder + min_outputfile_init
                     file_disconnection = out_folder + min_outputfile_image
@@ -97,15 +97,18 @@ def runGBkinetics(sig, mis, inc, lat_par, lat_Vec, axis, size_y, size_z, elem, r
                 min_shuffle_operator.format_input(out_folder)
                 min_shuffle_operator.run()
                 min_shuffle_operator.write_images(out_folder,image_num)
-                if run_neb == True:
-                    min_shuffle_operator._write_neb_input_file(out_folder, image_num)
-    #run_lmp.run_neb_calc(burgers_vector, step_height)
+                min_shuffle_operator._write_neb_input_file(out_folder, image_num)
+
+    # Run neb calculations
+    if run_neb:
+        run_lmp.run_neb_calc(np.round(bur, 2), np.round(step_height, 2), total_images-1,4)
+
     # %%
-    if create_eco_input == True:
+    if create_eco_input:
         Bicrystal.create_fix_eco_orientationfile(out_folder)
 
     return out_folder
-
+'''
 def runGridSearch(sig, mis, inc, lat_par, lat_Vec, axis, size_y, size_z, elem, lammps_location,
                   mpi_location, folder, potential, oilab_output_file, choose_disconnection = False):
 
@@ -147,3 +150,5 @@ def runGridSearch(sig, mis, inc, lat_par, lat_Vec, axis, size_y, size_z, elem, l
     out = run_lmp.run_neb_calc(file_name_init, out_folder)
 
     return out_folder
+
+'''

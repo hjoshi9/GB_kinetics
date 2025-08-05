@@ -1,0 +1,60 @@
+# Minimization of Sigma13 disconnections using LAMMPS
+#------------------General settings for simulation----------------------------
+clear
+units metal
+dimension 3
+boundary m p p
+atom_style atomic
+neighbor 0.3 bin
+neigh_modify delay 5
+atom_modify map array sort 0 0.0
+
+#----------------- Variable declaration---------------------------------------
+variable a equal 3.615
+variable potpath string /opt/homebrew/Cellar/lammps/20240829-update1/share/lammps/potentials/Cu_mishin1.eam.alloy
+variable sigma equal 13
+variable y_image equal 1
+variable dispy equal 0.0
+variable dispz equal -1.35
+variable elem string Cu
+variable mis equal 67.0
+variable folder string output/Cu/Sigma13/Misorientation67.0/size1/b1.0h-2.51/
+variable file_name string ${folder}data.Cus13.0inc0.0_size1disc2
+variable out_file1 string ${folder}data.Cus13.0inc0.0_size1disc2_min
+variable out_file_mov string ${folder}data.Cus13.0inc0.0_size1disc2_minmov
+
+#----------------------- Atomic structure ----------------------
+lattice fcc $a
+read_data ${file_name}
+group upper type 1
+group lower type 2
+
+#----------------------- InterAtomic Potential --------------------
+pair_style eam/alloy
+pair_coeff * * ${potpath} Cu Cu
+neighbor 2 bin
+neigh_modify delay 10 check yes
+
+#-------------------- Define compute settings ------------------------
+compute csym all centro/atom fcc
+compute energy all pe/atom
+compute eng all reduce sum c_energy
+
+#---------- Displace top part for lowest energy structure ----------
+delete_atoms overlap 1 upper upper
+delete_atoms overlap 1 lower lower
+delete_atoms overlap 0.1 upper lower
+displace_atoms upper move 0 ${dispy} ${dispz} units box
+
+# Apply fix to tether centroid of the system to the center
+
+#--------------------- Minimize ------------------------------------
+thermo 250
+thermo_style custom step temp pe lx ly lz press pxx pyy pzz
+dump 1 all custom 100 ${out_file_mov} id type x y z c_csym c_energy
+min_style cg
+minimize 1e-25 1e-25 10000 10000
+
+
+write_data ${out_file1}
+        

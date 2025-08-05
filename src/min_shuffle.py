@@ -37,16 +37,16 @@ class min_shuffle:
         self.box_minshuf = None
 
         self.initial_atoms_transformed_region = None
-        self.final_atoms_tranformed_region = None
+        self.final_atoms_transformed_region = None
 
-    def gb_info(self,filepath,st_height,disloc1,disloc2,min_shuffle_domain_expansion_factor=1,disconnection_extension=0.5):
+    def gb_info(self,filepath,st_height,disloc1,disloc2,min_shuffle_domain_expansion_factor=1.5,disconnection_extension=5):
         lat_par = self.lattice_parameter
         p = self.period
         average_gb_loc, gb_hi, gb_lo = find_gb_location(filepath)
         if st_height > 0:
-            gb_location = 0 * average_gb_loc - 0.5 * lat_par * p / 16
+            gb_location = 1 * average_gb_loc - 0.5 * lat_par * p / 16
         else:
-            gb_location = 0 * average_gb_loc + 0.5 * lat_par * p / 16
+            gb_location = 1 * average_gb_loc + 0.5 * lat_par * p / 16
         d_start = disloc1[0] - disconnection_extension
         d_stop = disloc2[0] + disconnection_extension
         self.gb_location = gb_location
@@ -54,7 +54,6 @@ class min_shuffle:
         self.dislocation_start = d_start
         self.dislocation_end = d_stop
 
-        return gb_location, st_height*(1+ min_shuffle_domain_expansion_factor), d_start, d_stop
 
     def load_data(self,file_mode,file_flat,file_disconnection):
         data_init = read_LAMMPS_datafile(file_flat, file_mode)
@@ -91,8 +90,6 @@ class min_shuffle:
         Bf = np.asarray(Bf)
         final = atoms
 
-        Ai_n = np.array(neb_init)
-        Bf_n = np.array(neb_final)
         self.grainA_pretransform = Ai
         self.grainB_pretransform = Bi
         self.grainA_posttransform = Af
@@ -118,7 +115,6 @@ class min_shuffle:
         elem = self.element
         sigma = self.sigma
         inc = self.inclination
-
 
         data_A = []
         data_B = []
@@ -160,17 +156,17 @@ class min_shuffle:
         eps2 = 0.1
         xlo = gb_loc - h + eps2
         xhi = gb_loc + h + eps2
-        scale = 1.25
+        scale = 1.05
         box = np.array([[scale * xlo, scale * xhi],
                         [box[1, 0], box[1, 1]],
                         [box[2, 0] + 1e-2, box[2, 1]]])
         self.atoms_minshuf = np.zeros((len(A)+len(B),5))
         for i in range(len(A)):
-            self.atoms_minshuf[i,0] = i+1
+            self.atoms_minshuf[i,0] = A[i,3]
             self.atoms_minshuf[i,1] = 1
             self.atoms_minshuf[i,2:] = A[i,:3]
         for i in range(len(B)):
-            self.atoms_minshuf[i+len(A), 0] = i+len(A)+1
+            self.atoms_minshuf[i+len(A), 0] = B[i,3]
             self.atoms_minshuf[i+len(A), 1] = 2
             self.atoms_minshuf[i+len(A), 2:] = B[i, :3]
         self.types_minshuf = types
@@ -281,17 +277,13 @@ class min_shuffle:
         return dpbc
 
     def run(self):
-        dim = self.dimension
-        lattice_parameter = self.lattice_parameter;  # angstroms
-        r0 = lattice_parameter / np.sqrt(2);         # nearest neighbor distance in perfect FCC crystal
-
-        # Define the input file location
-        sigma = [self.sigma]
-        elem = self.element
-        mis = [self.misorientation]
-        reg_p = [self.reg_param]
+        # Import input parameters
+        reg_param = self.reg_param
         iter_max = self.max_iters
         box_expansion_factor = self.box_expansion_factor
+        dim = self.dimension
+        #lattice_parameter = self.lattice_parameter  # angstroms
+        #r0 = lattice_parameter / np.sqrt(2)  # nearest neighbor distance in perfect FCC crystal
 
         if self.types_minshuf is None:
             raise ValueError("Input formatting not done yet. Run format_input()")
@@ -299,235 +291,222 @@ class min_shuffle:
         types = self.types_minshuf
         box = self.box_minshuf
 
-        for sigma_num in range(len(sigma)):
-            for reg_num in range(len(reg_p)):
-                # Find box size and atom positions for each of the types of particles
-                N = atoms.shape[0]
-                box += box_expansion_factor * np.array([[0, 0], [-5, 5], [0, 0]])
-                xlo = box[0, 0]
-                ylo = box[1, 0]
-                zlo = box[2, 0]
-                xhi = box[0, 1]
-                yhi = box[1, 1]
-                zhi = box[2, 1]
-                Lx = xhi - xlo
-                Ly = yhi - ylo
-                Lz = zhi - zlo
+        # Find box size and atom positions for each of the types of particles
+        N = atoms.shape[0]
+        box += box_expansion_factor * np.array([[0, 0], [-5, 5], [0, 0]])
+        xlo = box[0, 0]
+        ylo = box[1, 0]
+        zlo = box[2, 0]
+        xhi = box[0, 1]
+        yhi = box[1, 1]
+        zhi = box[2, 1]
+        Lx = xhi - xlo
+        Ly = yhi - ylo
+        Lz = zhi - zlo
 
-                type_list = [x + 1 for x in range(types)]
-                # Find the particles of each of the grains: X is grain 1 Y is grain 2
-                Xbasis = []  # type 1
-                Ybasis = []  # type 2
-                indicies = []
-                for i in range(N):
-                    if atoms[i, 1] == 1:
-                        Xbasis.append(atoms[i,2:])
-                        indicies.append(atoms[i, 0])
-                    elif atoms[i, 1] == 2:
-                        Ybasis.append(atoms[i,2:])
-                Xbasis = np.array(Xbasis)
-                Ybasis = np.array(Ybasis)
-                # print(Xbasis.shape)
-                if Xbasis.shape[0] == 0 or Ybasis.shape[0] == 0:
-                    raise ValueError("Xbasis and Ybasis must have same non-zero length")
-                if Xbasis.shape[0] != Ybasis.shape[0]:
-                    raise ValueError("The number of atoms do not match for the two grains. One-to-one mapping not possible")
-                else:
-                    N = Xbasis.shape[0]
+        type_list = [x + 1 for x in range(types)]
+        # Find the particles of each of the grains: X is grain 1 Y is grain 2
+        Xbasis = []  # type 1
+        Ybasis = []  # type 2
+        indicies = []
+        for i in range(N):
+            if atoms[i, 1] == 1:
+                Xbasis.append(atoms[i,2:])
+                indicies.append(atoms[i, 0])
+            elif atoms[i, 1] == 2:
+                Ybasis.append(atoms[i,2:])
+        Xbasis = np.array(Xbasis)
+        Ybasis = np.array(Ybasis)
+        # print(Xbasis.shape)
+        if Xbasis.shape[0] == 0 or Ybasis.shape[0] == 0:
+            raise ValueError("Xbasis and Ybasis must have same non-zero length")
+        if Xbasis.shape[0] != Ybasis.shape[0]:
+            raise ValueError("The number of atoms do not match for the two grains. One-to-one mapping not possible")
+        else:
+            N = Xbasis.shape[0]
 
-                # Find displacent vectors with pbcs
-                pbcon = True
-                dist_mat = np.zeros((N, N))
-                for i in range(N):
-                    dvec = Ybasis - Xbasis[i, :]
-                    dvec_pbc = self.pbcdist(dvec, Lx, Ly, Lz)
-                    for j in range(N):
-                        dist_mat[i, j] = la.norm(dvec_pbc[j, :])
+        # Find displacement vectors with pbcs
+        pbcon = True
+        dist_mat = np.zeros((N, N))
+        for i in range(N):
+            dvec = Ybasis - Xbasis[i, :]
+            dvec_pbc = self.pbcdist(dvec, Lx, Ly, Lz)
+            for j in range(N):
+                dist_mat[i, j] = la.norm(dvec_pbc[j, :])
 
+        if pbcon == True:
+            dist_mat = dist_mat ** 2
+
+        p = np.zeros(dim)  # Recomputed, set to [0,0,0] if unknown and results will match TDP
+
+        # Sinkhorn's algorithm
+        a = np.ones(N) / N
+        b = np.ones(N) / N
+        Gamma = ot.bregman.sinkhorn_log(a, b, dist_mat, reg_param, iter_max)
+
+        # Recover the displacement vectors from OT matrix(gamma)
+        cutoff = 1 / (N * 2)
+        gamma_mod = min_shuffle._threshold(Gamma, cutoff)
+        I, J = np.where(gamma_mod != 0)
+        # I,J = np.where(Gamma!=0)
+        maxNp = np.max(gamma_mod)
+        disp_vecs = np.zeros((len(I), 11))
+        for i in range(len(I)):
+            K = gamma_mod[I[i], J[i]]  # path prob
+            Xcoords = np.zeros((1, dim))
+            Ycoords = np.zeros((1, dim))
+            Xcoords[0, :] = np.array([Xbasis[I[i], 0], Xbasis[I[i], 1], Xbasis[I[i], 2]])
+            Ycoords[0, :] = np.array([Ybasis[J[i], 0], Ybasis[J[i], 1], Ybasis[J[i], 2]])
+            index = indicies[I[i]]
+
+            # Vector connecting X and Y
+            disp_vec_new = Ycoords - Xcoords
+            if pbcon == True:
+                disp_pbc = self.pbcdist(disp_vec_new, Lx, Ly, Lz)
+            newYcoords = Xcoords + disp_pbc
+
+            disp_vecs[i, :] = np.array([disp_pbc[0, 0], disp_pbc[0, 1], disp_pbc[0, 2], K, Xcoords[0, 0],
+                                        Xcoords[0, 1], Xcoords[0, 2], newYcoords[0, 0], newYcoords[0, 1],
+                                        newYcoords[0, 2], index])
+
+        # Data in different frames
+        ndisps = disp_vecs.shape[0]
+        Kvec = disp_vecs[:, 3]
+        Kvecrenorm = la.norm(Kvec)
+
+        Xcoords = disp_vecs[:, 4:7]
+        Ycoords = disp_vecs[:, 7:10]
+        dTDP = disp_vecs[:, 0:3]
+        XTDP = Xcoords
+        YTDP = Ycoords
+        dCDP = dTDP - p
+        XCDP = Xcoords
+        YCDP = Ycoords - p
+        prob = np.zeros((len(Kvec), 3))
+        idx = disp_vecs[:, 10]
+        for i in range(len(Kvec)):
+            prob[i, :] = Kvec[i] * dTDP[i, :]
+        Dvec = np.sum(prob, 0)  # probabilistic expression for total net displacement/atom
+        dSDP = dTDP - Dvec
+        XSDP = Xcoords
+        YSDP = Ycoords - Dvec
+
+        Mvecest = Dvec - p
+        microvecs = np.array([p[0], p[1], p[2],
+                              Mvecest[0], Mvecest[1], Mvecest[2],
+                              Dvec[0], Dvec[1], Dvec[2]])
+        Xp = XTDP
+        Yp = YTDP
+
+        Xs = np.zeros((ndisps, 5))
+        Ys = np.zeros((ndisps, 5))  # copies of coordinates to overwrite with sheared coordinates
+        k = 0
+        prob_cutoff = 1e-8
+        for i in range(ndisps):
+            path_prob = Kvec[i]
+            if path_prob > prob_cutoff:
+                a = np.zeros((1, 3))
+                b = np.zeros((1, 3))
+                a[0, :] = Xp[i, :]
+                b[0, :] = Yp[i, :]
                 if pbcon == True:
-                    dist_mat = dist_mat ** 2
+                    dp_new = self.pbcdist(b - a, Lx, Ly, Lz)
+                b_new = a + dp_new
+                Xs[k, :3] = a
+                Xs[k, 3] = idx[i]
+                Xs[k,4] = k
+                Ys[k, :3] = b_new
+                Ys[k, 3] = idx[i]
+                Ys[k,4] = k
+                flag = 0
+                # Check for PBCs along y and z
+                if b_new[0, 1] > yhi:
+                    b_new[0, 1] -= Ly
+                    flag = 1
+                if b_new[0, 2] > zhi:
+                    b_new[0, 2] -= Lz
+                    flag = 1
+                if b_new[0, 1] < ylo:
+                    b_new[0, 1] += Ly
+                    flag = 1
+                if b_new[0, 2] <= zlo + 0.1:
+                    b_new[0, 2] += Lz
+                    flag = 1
+                # if b_new
+                Ys[k, :3] = b_new
+                # print(b_new)
+                k += 1
 
-                # Optimal Transportation problem solution
-                reg_param = reg_p[reg_num]  # This is the regularization parameter, changing the value
-                # means accessing different modes of transport.
-                # 0.005 ~ Min-shuffle
-                # Higher values give higher energy permutations, related to kbT
-                p = np.zeros(dim)  # Recomputed, set to [0,0,0] if unknown and results will match TDP
-
-                # Sinkhorn's algorithm
-                a = np.ones(N) / N
-                b = np.ones(N) / N
-
-                Gamma = ot.bregman.sinkhorn_log(a, b, dist_mat, reg_param, iter_max)
-
-                # Recover the displacement vectors from OT matrix(gamma)
-                cutoff = 1 / (N * 2)
-                gamma_mod = min_shuffle._threshold(Gamma, cutoff)
-                I, J = np.where(gamma_mod != 0)
-                # I,J = np.where(Gamma!=0)
-                maxNp = np.max(gamma_mod)
-                disp_vecs = np.zeros((len(I), 11))
-                for i in range(len(I)):
-                    K = gamma_mod[I[i], J[i]]  # path prob
-                    Xcoords = np.zeros((1, dim))
-                    Ycoords = np.zeros((1, dim))
-                    Xcoords[0, :] = np.array([Xbasis[I[i], 0], Xbasis[I[i], 1], Xbasis[I[i], 2]])
-                    Ycoords[0, :] = np.array([Ybasis[J[i], 0], Ybasis[J[i], 1], Ybasis[J[i], 2]])
-                    index = indicies[I[i]]
-
-                    # Vector connecting X and Y
-                    disp_vec_new = Ycoords - Xcoords
-                    if pbcon == True:
-                        disp_pbc = self.pbcdist(disp_vec_new, Lx, Ly, Lz)
-                    newYcoords = Xcoords + disp_pbc
-
-                    disp_vecs[i, :] = np.array([disp_pbc[0, 0], disp_pbc[0, 1], disp_pbc[0, 2], K, Xcoords[0, 0],
-                                                Xcoords[0, 1], Xcoords[0, 2], newYcoords[0, 0], newYcoords[0, 1],
-                                                newYcoords[0, 2], index])
-
-                # Data in different frames
-                ndisps = disp_vecs.shape[0]
-                Kvec = disp_vecs[:, 3]
-                Kvecrenorm = la.norm(Kvec)
-
-                Xcoords = disp_vecs[:, 4:7]
-                Ycoords = disp_vecs[:, 7:10]
-                dTDP = disp_vecs[:, 0:3]
-                XTDP = Xcoords
-                YTDP = Ycoords
-                dCDP = dTDP - p
-                XCDP = Xcoords
-                YCDP = Ycoords - p
-                prob = np.zeros((len(Kvec), 3))
-                idx = disp_vecs[:, 10]
-                for i in range(len(Kvec)):
-                    prob[i, :] = Kvec[i] * dTDP[i, :]
-                Dvec = np.sum(prob, 0)  # probabilistic expression for total net displacement/atom
-                dSDP = dTDP - Dvec
-                XSDP = Xcoords
-                YSDP = Ycoords - Dvec
-
-                Mvecest = Dvec - p
-                microvecs = np.array([p[0], p[1], p[2],
-                                      Mvecest[0], Mvecest[1], Mvecest[2],
-                                      Dvec[0], Dvec[1], Dvec[2]])
-                Xp = XTDP
-                Yp = YTDP
-
-                Xs = np.zeros((ndisps, 4))
-                Ys = np.zeros((ndisps, 4))  # copies of coordinates to overwrite with sheared coordinates
-                Xss = []
-                Yss = []
-                indicies_s = []
-                k = 0
-                prob_cutoff = 1e-8
-                for i in range(ndisps):
-                    path_prob = Kvec[i]
-                    if path_prob > prob_cutoff:
-                        a = np.zeros((1, 3))
-                        b = np.zeros((1, 3))
-                        a[0, :] = Xp[i, :]
-                        b[0, :] = Yp[i, :]
-                        # print(np.round(b-a,4))
-                        if pbcon == True:
-                            dp_new = self.pbcdist(b - a, Lx, Ly, Lz)
-                        b_new = a + dp_new
-                        # print(a,Xs)
-                        Xs[k, :3] = a
-                        Xs[k, 3] = idx[i]
-                        Ys[k, :3] = b_new
-                        Ys[k, 3] = idx[i]
-                        # print(b_new)
-                        flag = 0
-                        # Check for PBCs along y and z
-                        if b_new[0, 1] > yhi:
-                            b_new[0, 1] -= Ly
-                            flag = 1
-                        if b_new[0, 2] > zhi:
-                            b_new[0, 2] -= Lz
-                            flag = 1
-                        if b_new[0, 1] < ylo:
-                            b_new[0, 1] += Ly
-                            flag = 1
-                        if b_new[0, 2] <= zlo + 0.1:
-                            b_new[0, 2] += Lz
-                            flag = 1
-                        # if b_new
-                        Ys[k, :3] = b_new
-                        # print(b_new)
-                        k += 1
-
-                        x, y, z = [a[0, 0], b_new[0, 0]], [a[0, 1], b_new[0, 1]], [a[0, 2], b_new[0, 2]]
+                x, y, z = [a[0, 0], b_new[0, 0]], [a[0, 1], b_new[0, 1]], [a[0, 2], b_new[0, 2]]
 
         self.initial_atoms_transformed_region = Xs
         self.final_atoms_transformed_region = Ys
 
 
     def write_images(self,folder, image_num):
-        initial = self.initial_grain
-        final = self.final_grain
-        Xs = self.initial_atoms_transformed_region
-        Ys = self.final_atoms_transformed_region
+        def write_header(f,natoms,box):
+            eps = 0.1
+            f.write("#LAMMPS data file\n")
+            f.write("%d atoms\n" % (natoms))
+            f.write("2 atom types\n")
+            f.write("%0.10f %0.10f xlo xhi\n" % (box[0, 0] - eps, box[0, 1] + eps))
+            f.write("%0.10f %0.10f ylo yhi\n" % (box[1, 0], box[1, 1]))
+            f.write("%0.10f %0.10f zlo zhi\n" % (box[2, 0], box[2, 1]))
+            f.write("0.0 0.0 0.0 xy xz yz\n\n")
+            f.write("Atoms # atomic\n\n")
+        def write_atoms(f,atoms):
+            for i in range(len(atoms)):
+                f.write("%d %d %f %f %f\n" % (int(atoms[i, 0]), int(atoms[i, 1]), atoms[i, 2], atoms[i, 3],atoms[i, 4]))
+
         box = self.box
         sigma = self.sigma
         inc = self.inclination
         elem = self.element
-        version = "_step"+str(image_num)
-        suffix = ["_step0", version]
-        for ii in range(len(suffix)):
-            if ii == 0 and image_num == 1:
-                file = "data." + elem + "s" + str(sigma) + "inc" + str(inc) + "_" + suffix[ii]
-                name = folder + file
-                natoms = initial.shape[0]
-                f = open(name, "w")
-                eps = 0.1
-                # f.write("# LAMMPS data file Sigma = %d, inclination = %f\n"%(sigma,inc))
-                f.write("#LAMMPS data file\n")
-                f.write("%d atoms\n" % (natoms))
-                f.write("2 atom types\n")
-                f.write("%0.10f %0.10f xlo xhi\n" % (box[0, 0] - eps, box[0, 1] + eps))
-                f.write("%0.10f %0.10f ylo yhi\n" % (box[1, 0], box[1, 1]))
-                f.write("%0.10f %0.10f zlo zhi\n" % (box[2, 0], box[2, 1]))
-                f.write("0.0 0.0 0.0 xy xz yz\n\n")
-                f.write("Atoms # atomic\n\n")
-                k = 1
-                for i in range(len(initial)):
-                    f.write("%d %d %0.10f %0.10f %0.10f\n" % (initial[i, 0], initial[i, 1], initial[i, 2], initial[i, 3],initial[i, 4]))
-                f.close()
-                print("Done writing bicrystal " + name)
-            else:
-                file = "data." + elem + "s" + str(sigma) + "inc" + str(inc) + "_" + suffix[ii]
-                name = folder + file
-                natoms = initial.shape[0]
-                f = open(name, "w")
-                eps = 0.1
-                # f.write("# LAMMPS data file Sigma = %d, inclination = %f\n"%(sigma,inc))
-                f.write("#LAMMPS data file\n")
-                f.write("%d atoms\n" % (natoms))
-                f.write("2 atom types\n")
-                f.write("%0.10f %0.10f xlo xhi\n" % (box[0, 0] - eps, box[0, 1] + eps))
-                f.write("%0.10f %0.10f ylo yhi\n" % (box[1, 0], box[1, 1]))
-                f.write("%0.10f %0.10f zlo zhi\n" % (box[2, 0], box[2, 1]))
-                f.write("0.0 0.0 0.0 xy xz yz\n\n")
-                f.write("Atoms # atomic\n\n")
-                k = 1
-                count = 0
-                for i in range(len(initial)):
-                    out = initial[i, :]
-                    flag = 0
-                    for j in range(len(Xs)):
-                        grain_num = 1
-                        if abs(initial[i, 0] - Xs[j, 3]) < 0.1:
-                            out = np.array([Ys[j, 3], grain_num, Ys[j, 0], Ys[j, 1], Ys[j, 2]])
-                            count += 1
-                            flag = 1
-                    if flag == 0:
-                        for k in range(len(final)):
-                            if abs(initial[i, 0] - final[k, 0]) < 0.1:
-                                out = final[k, :]
-                    f.write("%d %d %0.10f %0.10f %0.10f\n" % (out[0], out[1], out[2], out[3], out[4]))
-                f.close()
-                print("Done writing bicrystal " + name)
+        # Write image 0 (flat gb)
+        if image_num == 1:
+            initial = self.initial_grain
+            file = "data." + elem + "s" + str(sigma) + "inc" + str(inc) + "__step0"
+            with open(folder + file, "w") as f0:
+                write_header(f0,len(initial),box)
+                write_atoms(f0,initial)
+            print(f"Done writing bicrystal {folder}/{file}")
+
+        final = self.final_grain
+        Ys = self.final_atoms_transformed_region
+        initial = self.initial_grain
+        Xs = self.initial_atoms_transformed_region
+        if self.step_height >= 0:
+            grain_num = 2
+        else:
+            grain_num = 1
+
+        # Build lookup dictionaries for quick ID-based matching
+        Xs_dict = {int(x[3]): x for x in Xs}
+        final = final[final[:, 0].argsort()]
+        final_dict = {int(f[0]): f for f in final}
+        #print(Xs_dict,Ys)
+        # Populate a matrix with correct atom indices and positions
+        final_atoms = []
+        for i in range(len(initial)):
+            atom_id = int(initial[i,0])
+            if atom_id in Xs_dict:
+                j = int(Xs_dict[atom_id][4])
+                final_atoms.append(np.array([atom_id, grain_num, Ys[j, 0], Ys[j, 1], Ys[j, 2]]))
+            elif atom_id in final_dict:
+                index = int(final_dict[atom_id][0])-1
+                final_atoms.append(final[index,:])
+
+        final_atoms = np.array(final_atoms)
+
+
+        # Write data
+        file = "data." + elem + "s" + str(sigma) + "inc" + str(inc) + "__step"+str(image_num)
+        with open(folder + file, "w") as f:
+            write_header(f,len(final_atoms),box)
+            write_atoms(f,final_atoms)
+        print(f"Done writing bicrystal {folder}/{file}")
+
+
 
     def _write_neb_input_file(self,folder, image_num):
         sigma = self.sigma
@@ -587,11 +566,11 @@ class min_shuffle:
         return 1
 
     @staticmethod
-    def plot_min_shuffle_2d(Xbasis,Ybasis,Gamma,sigma,reg_param):
+    def plot_min_shuffle_2d(folder,Xbasis,Ybasis,Gamma,sigma,reg_param):
         plt.figure(dpi=200)
         ot.plot.plot2D_samples_mat(Xbasis, Ybasis, Gamma, c=[.5, .5, 1])
         plt.scatter(Xbasis[:, 0], Xbasis[:, 1], color='b', label='Source samples')
         plt.scatter(Ybasis[:, 0], Ybasis[:, 1], color='r', label='Target samples')
         plt.legend(loc='best')
         name = "Sigma" + str(sigma) + "min shuffle optimal beta eps=" + str(reg_param)
-        plt.savefig(name)
+        plt.savefig(folder+name)

@@ -95,7 +95,7 @@ class bicrystal:
 
         box = np.array([[self.size_along_period * period , self.non_periodic_direction_size, la.norm(axis) * lat_par * self.size_along_tilt_axis],
                         [self.non_periodic_direction_size, self.size_along_period * period , la.norm(axis) * lat_par * self.size_along_tilt_axis]])
-        eps_p = np.array([0,0.1,0.1])
+        eps_p = np.array([0,-0.1,0.1])
         eps_n = np.array([0,0.0,0.0])
         box_shift = np.array([0,0,0])
 
@@ -177,23 +177,28 @@ class bicrystal:
         box_shift = np.array([0, 0, 0])
         grainA = self.grain1_orientation
         grainB = self.grain2_orientation
+
+        disconnection_start = disconnection_start if disconnection_start > -box[1, 1] else -box[1, 1]
+        disconnection_stop  = disconnection_stop  if disconnection_stop  <  box[1, 1] else  box[1, 1]
         if step_height < 0:
             grain2transform = grainA
             lower_bounds = np.array([gb_position + step_height-0.1, disconnection_start, -box[1, 2]])
             upper_bounds = np.array([gb_position-0.1, disconnection_stop, box[1, 2]])
-            eps = np.array([0, 0, 0.1])
+            eps_n = np.array([0, 0, 0.0])
+            eps_p = np.array([0, -0.1, 0.1])
         else:
             grain2transform = grainB
             lower_bounds = np.array([gb_position-0.1, disconnection_start, -box[1, 2]])
             upper_bounds = np.array([gb_position + step_height, disconnection_stop, box[1, 2]])
-            eps = np.array([0, 0, 0.1])
+            eps_n = np.array([0, 0, 0.0])
+            eps_p = np.array([0, -0.1, 0.1])
 
         for nx in range(-nCells, nCells):
             for ny in range(-nCells, nCells):
                 for nz in range(-nCells, nCells):
                     loc = np.array([[nx], [ny], [nz]])
                     a = lat_par * np.matmul(grain2transform, loc)[:, 0]
-                    if np.all((a - box_shift > lower_bounds + eps) & (a - box_shift < upper_bounds + eps)):
+                    if np.all((a - box_shift > lower_bounds - eps_n) & (a - box_shift < upper_bounds + eps_p)):
                         point = np.array([a[1], a[0]])
                         plastic_displacement = bicrystal._apply_plastic_displacement(nodes_modified,period,burgers_vector,point,box[1,1],-box[1,1])
                         if a[1]-plastic_displacement > disconnection_stop:

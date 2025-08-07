@@ -190,7 +190,7 @@ def read_neb_output_data(path_r,mode):
     k=0
     message = "Reading " + path_r
     #print(data)
-    print(message)
+    #print(message)
     with open(path_r,'r') as file:
         flag1 = 0
         flag2 = 0
@@ -274,3 +274,26 @@ def write_LAMMPSoutput_tstep(natoms,Atoms,box,folder,file,tstep):
 
     #print("Done writing bicrystal")
     return file
+
+def read_gridsearch_results(filepath):
+    data = []
+    with open(filepath, 'r') as file:
+        for line in file:
+            fields = line.split(' ')
+            row = []
+            for i in range(len(fields)):
+                if fields[i] == "dispy":
+                    row.append(float(fields[i + 2]))
+                elif fields[i] == "dispz":
+                    row.append(float(fields[i + 2]))
+                elif fields[i] == "GBene":
+                    row.append(float(fields[i + 2]))
+                    data.append(row)
+    return np.array(data)
+
+def write_gridsearch_results(filepath, data):
+    with open(filepath, 'w') as file:
+        file.write("dispy\t\tdispz\t\tGB Energy\n")
+        for i in range(len(data)):
+            file.write("%f\t\t%f\t\t%f\n"%(data[i,0],data[i,1],data[i,2]))
+

@@ -2,9 +2,9 @@ import os
 import subprocess
 import numpy as np
 import matplotlib.pyplot as plt
-
-from gridSearch import misorientation
-from src.IO import read_neb_output_data,write_LAMMPSoutput_tstep
+from mpl_toolkits import mplot3d
+from scipy.interpolate import griddata
+from src.IO import *
 
 class run_LAMMPS:
     def __init__(self, folder, element, lattice_parameter, sigma, misorientation, inclination, size_along_gb_period,
@@ -16,11 +16,15 @@ class run_LAMMPS:
         self.misorientation = misorientation
         self.inclination = inclination
         self.size_along_gb_period = size_along_gb_period
+
         self.potential = potential
         self.mpi_location = mpi_location
         self.lammps_location = lammps_location
 
-        self.output_filename = None
+        self.output_filename_gridsearch = None
+        self.gridsearch_output_setting = None
+        self.gridsearch_output_folder = None
+
         self.lammps_input_filename = None
         self.neb_images = None
         self.number_of_images_provided = None
@@ -143,18 +147,22 @@ write_data ${{out_file1}}
         file = folder + file
         self.lammps_input_filename = file
         outfile = elem + "_" + "sigma" + str(sigma) + "_mis" + str(mis) + "_size" + str(size) + "_gridsearch_results.txt"
-        self.output_filename = outfile
-        yloop = int(2 * limit * step_increments) + 1
+        self.output_filename_gridsearch = outfile
+        yloop = int(2 * limit/step_increments) + 1
         zloop = yloop
-        yloop0 = int(limit * step_increments)
+        yloop0 = int(limit/step_increments) + 1
         zloop0 = yloop0
-        dispy_expr = f"{step_increments}*(${{'disp_county'}}-{yloop0})"
-        dispz_expr = f"{step_increments}*(${{'disp_countz'}}-{zloop0})"
+        dispy_expr = f"{step_increments}*(${{disp_county}}-{yloop0})"
+        dispz_expr = f"{step_increments}*(${{disp_countz}}-{zloop0})"
 
         outfile2_line = ""
         dump_line = ""
+        outfolder2_line = ""
         if output_setting == 1:
-            outfile2_line = f"variable outfile2 string ${{folder}}/{infile}_dy${{dispy}}dz${{dispz}}\n"
+            outfolder_configs = outfolder + "/configs"
+            os.makedirs(outfolder_configs, exist_ok=True)
+            outfolder2_line = f"variable outfolder_configs string {outfolder_configs}"
+            outfile2_line = f"variable outfile2 string ${{outfolder_configs}}/{infile}_dy${{dispy}}dz${{dispz}}\n"
             dump_line = "dump            1 all custom 5000 ${outfile2} id type x y z c_csym c_eng\n"
 
         script = f"""# LAMMPS script to run a grid search
@@ -171,8 +179,9 @@ variable dispz equal {dispz_expr}
 variable step equal 0
 variable elem string {elem}
 variable mis equal {mis}
-variable folder string {folder}
+variable folder string {outfolder}
 variable file_name string ${{folder}}/{infile}
+{outfolder2_line}
 {outfile2_line}
 variable outfile string ${{folder}}/{outfile}
 
@@ -250,7 +259,9 @@ jump SELF loopy
         size = self.size_along_gb_period
         potential = self.potential
         b = burgers_vector
+        self.burgers_vec = b
         h = step_height
+        self.step_height = h
         neb_file = "neb.in"
         self.lammps_input_filename = neb_file
         file = folder + neb_file
@@ -323,13 +334,13 @@ jump SELF loopy
         mpi_location = self.mpi_location
         lammps_location = self.lammps_location
         folder = self.folder
-        print("============= Running neb calculations ===================")
+        print("\n========================== Running neb calculations ==============================")
         neb_output_folder = self.write_lammps_neb_input_script(burgers_vector, step_height,number_of_steps, partitions, mode)
         print("The results from this calculation will be stored in " + neb_output_folder)
         command = mpi_location + "/mpirun --oversubscribe --use-hwthread-cpus -np " + str(
             partitions) + " " + lammps_location + "/lmp_mpi  -partition " + str(partitions) + "x1 -in " + folder+self.lammps_input_filename
         subprocess.run([command], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)
-        self._remove_temp_files(neb_output_folder)
+        self._remove_temp_files(neb_output_folder,"neb")
         print("Done with NEB calculations!!")
         self.neb_images = partitions
         self.number_of_images_provided = number_of_steps
@@ -347,14 +358,18 @@ jump SELF loopy
         return self.output_filename
 
     def run_grid_search(self,infile, outfolder,number_of_cores = 6,step_increments=0.1,limit=1,output_setting=0):
+        print("\n=================================== Running grid search  ========================================")
         mpi_location = self.mpi_location
         lammps_location = self.lammps_location
-        self.write_lammps_gridsearch_input(self, infile, outfolder,step_increments,limit, output_setting)
+        self.write_lammps_gridsearch_input(infile, outfolder,step_increments,limit, output_setting)
         command = mpi_location + "/mpirun -np " + str(number_of_cores)+ " " + lammps_location + "/lmp_mpi -in " + self.lammps_input_filename
         subprocess.run([command], shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         print("Done with grid search!!")
-        print("Results stored in : " + self.output_filename)
-        return self.output_filename
+        print("Results stored in : " +outfolder+ self.output_filename_gridsearch)
+        self.gridsearch_output_setting = output_setting
+        self.gridsearch_output_folder = outfolder
+        self._remove_temp_files(outfolder)
+        return self.output_filename_gridsearch
 
     def post_process_neb_output(self,outfolder,plot_decision=False):
         sigma = self.sigma
@@ -366,14 +381,14 @@ jump SELF loopy
         folder = self.neb_output_folder
         mis = self.misorientation
         elem = self.element
-
-        file = f"dump.neb_{elem}sigma{sigma}_mis{mis}_size{size}_discb{b}h{h}_partition{partitions}"
-        message = "Writing output dump file: " + folder + file
+        print("================================ Running neb post-processing ==================================")
+        out_file = f"dump.neb_{elem}sigma{sigma}_mis{mis}_size{size}_discb{b}h{h}_partition{partitions}"
+        message = "Writing output dump file: " + folder + out_file
         print(message)
         pot_eng = []
         for k in range(steps):
             for j in range(partitions):
-                file = folder + f"dump.neb_{elem}sigma{sigma}mis{mis}size{size}discb{b}h{h}_step{k}.{j+1}"
+                file = folder + f"dump.neb_{elem}sigma{sigma}size{size}discb{b}h{h}_step{k+1}.{j+1}"
                 print(file)
                 data = read_neb_output_data(file,2)
                 tstep = partitions*k+j
@@ -383,7 +398,7 @@ jump SELF loopy
                 pe = np.sum(Atoms[:,5])
                 area = (box[1,1]-box[1,0])*(box[2,1]-box[2,0])/100 #nm^2
                 pot_eng.append([tstep,pe,area])
-                f = write_LAMMPSoutput_tstep(natoms,Atoms,box,outfolder,file,tstep)
+                f = write_LAMMPSoutput_tstep(natoms,Atoms,box,outfolder,out_file,tstep)
         peng = np.array(pot_eng)
 
         out_name = outfolder + f"{elem}sigma{sigma}_mis{mis}_size{size}_discb{b}h{h}_partition{partitions}.txt"
@@ -398,29 +413,59 @@ jump SELF loopy
             plt.grid()
             plt.xlabel("Reaction coordinate")
             plt.ylabel(r"$\Delta$E/a (eV/nm$^2$)")
-            plt.legend()
             fig_name = outfolder + f"{elem}sigma{sigma}_mis{mis}_size{size}_discb{b}h{h}_partition{partitions}.png"
             message = "Writing output dump file: " + fig_name
             print(message)
             plt.savefig(fig_name)
 
-    def post_process_gridsearch_data(self,outfolder,plot_decision=False):
+    def post_process_gridsearch_data(self,plot_decision=False):
         sigma = self.sigma
         size = self.size_along_gb_period
         mis = self.misorientation
         elem = self.element
+        outfolder = self.gridsearch_output_folder
+        infile = self.output_filename_gridsearch
+        print("=========================== Running grid search post-processing ==================================")
+        gs_data = read_gridsearch_results(outfolder+infile)
+        gs_data = gs_data[gs_data[:, 2].argsort()]
+        outfile = outfolder + f"{elem}_sigma{sigma}_mis{mis}_size{size}_gridsearch_sorted.txt"
+        write_gridsearch_results(outfile, gs_data)
+        if plot_decision:
+            # Create a regular grid to interpolate onto
+            x = gs_data[:, 0]
+            y = gs_data[:, 1]
+            z = gs_data[:, 2]
+            segments = len(x) * 2
+            xi = np.linspace(np.min(x), np.max(x), segments)
+            yi = np.linspace(np.min(y), np.max(y), segments)
+            X, Y = np.meshgrid(xi, yi)
+            # Interpolate z values onto the grid
+            Z = griddata((x, y), z, (X, Y), method='cubic', rescale=True)
+            # Plot
+            fig = plt.figure(dpi=400, figsize=(8, 6))
+            contour = plt.contourf(X, Y, Z, levels=segments, cmap='RdBu_r')
+            plt.contour(X, Y, Z, levels=segments, colors='w', linewidths=0.00001)
+            plt.xlabel("Displacement along gb period")
+            plt.ylabel("Displacement along tilt axis")
+            fig.colorbar(contour, location="right", orientation="vertical", shrink=1, pad=0.05, aspect=10,
+                         label="GB energy")
+            plt.scatter(x, y, c=z, s=10, cmap="RdBu_r")
+            plt.tight_layout()
+            outfile = outfolder + f"{elem}_sigma{sigma}_mis{mis}_size{size}_gridsearch_sorted.png"
+            plt.savefig(outfile)
 
     @staticmethod
-    def _remove_temp_files(output_folder):
+    def _remove_temp_files(output_folder,mode="non-neb"):
         # Move log file to results folder
         command = f"mv log.lammps {output_folder}."
         subprocess.run(command, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        # Remove temp files generated by lammps neb
-        command = "rm screen.*"
-        subprocess.run(command, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        command = "rm log.lammps*"
-        subprocess.run(command, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        command = "rm tmp.lammps.variable"
-        subprocess.run(command, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        if mode == "neb":
+            # Remove temp files generated by lammps neb
+            command = "rm screen.*"
+            subprocess.run(command, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            command = "rm log.lammps*"
+            subprocess.run(command, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            command = "rm tmp.lammps.variable"
+            subprocess.run(command, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 

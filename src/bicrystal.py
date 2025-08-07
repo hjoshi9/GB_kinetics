@@ -79,7 +79,7 @@ class bicrystal:
         self.grain2_orientation = grain2_orientation
 
     def create_flat_gb_bicrystal(self,gb_position):
-
+        print("\n============================= Generating initial flat GB  =======================================")
         # Declare relevant variables
         axis = self.axis
         lat_par = self.lat_par
@@ -141,6 +141,7 @@ class bicrystal:
 
 
     def create_disconnection_containing_bicrystal(self,nodes,burgers_vector,step_height,gb_position,image_number,nImages = 2,number_of_dipoles=3):
+        print("\n================= Generating GB image " + str(image_number) + " bicrystallographically ==============")
         # Declare relevant variables
         axis = self.axis
         lat_par = self.lat_par

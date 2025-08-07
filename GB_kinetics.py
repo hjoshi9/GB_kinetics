@@ -25,11 +25,12 @@ lattice_vector = np.array([[0.5, 0.5, 0.0],
 
 #-------------- Parameters for min-shuffle algorithm --------------#
 # Regularization parameter for min-shuffle algorithm
-reg = 0.05
+reg = 0.005
 # Maximum iterations for min-shuffle algorithm
-iterMax = 100000
-# Put 1 if you want to choose the disconnection mode
-choose_disconnection = 1
+iterMax = 1000000
+# Put True if you want to choose the disconnection mode, False will automatically create disconnection mode with
+# smallest burgers vector and corresponding step height
+choose_disconnection = True
 
 # ------------- Input and output folders (do not change) -------------------- #
 # Location of bicrystallographic data obtained using oILAB
@@ -55,11 +56,27 @@ disp_along_tilt = -0.9
 partitions = 40
 # Variable lets you choose if you want to run intermediate images through NEB or not.
 # mode = 1 -> NEB with intermediate images, mode = 0 -> NEb with just the initial and final GB images
-mode = 0
+neb_mode = 0
 # Variable which allows for switching off automatically triggering neb calculations (in case you only need disconnection images)
 run_neb = True
 # Run
-results_folder_path = runGBkinetics(sigma,misorientation,inclination, lattice_parameter,
-                                    lattice_vector, axis, size_y, size_z, element, reg, iterMax,
-                                    lammps_location, mpi_location, output_folder, lammps_potential,
-                                    disp_along_gb, disp_along_tilt,oilab_output_file,mode,run_neb)
+results_folder_path = runGBkinetics(sigma,
+                                    misorientation,
+                                    inclination,
+                                    lattice_parameter,
+                                    lattice_vector,
+                                    axis,
+                                    size_y,
+                                    size_z,
+                                    element,
+                                    reg,
+                                    iterMax,
+                                    lammps_location,
+                                    mpi_location,
+                                    output_folder,
+                                    lammps_potential,
+                                    disp_along_gb,
+                                    disp_along_tilt,
+                                    oilab_output_file,
+                                    choose_disconnection,
+                                    run_neb)

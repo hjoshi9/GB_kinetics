@@ -56,6 +56,7 @@ class min_shuffle:
 
 
     def load_data(self,file_mode,file_flat,file_disconnection):
+        print("=============================== Generating atomic trajectories =====================================")
         data_init = read_LAMMPS_datafile(file_flat, file_mode)
         data_final = read_LAMMPS_datafile(file_disconnection, file_mode)
         atoms = data_init[0][3]

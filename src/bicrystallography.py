@@ -138,7 +138,7 @@ class bicrystallography:
         print("Smallest burgers vector (b) = " + str(b))
         print("Fundamental glide step height (hg) = " + str(h))
         print("Distance between CSL planes (H) = " + str(H))
-        if choose_decision == 0:
+        if choose_decision == False:
             m = 1
             n = 0
         else:

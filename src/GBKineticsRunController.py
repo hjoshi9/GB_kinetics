@@ -1,4 +1,3 @@
-# This module only defines the generate_disconnection_images function.
 # It is not intended to be run directly.
 import numpy as np
 import os
@@ -9,9 +8,10 @@ from src.min_shuffle import min_shuffle
 from src.bicrystal import bicrystallography
 
 
-def runGBkinetics(sig, mis, inc, lat_par, lat_Vec, axis, size_y, size_z, elem, reg_parameter,
-                max_iters, lammps_location, mpi_location, folder, potential,
-                  dispy, dispz, oilab_output_file,choose_disconnection=True,run_neb = False):
+def runGBkinetics(sig, mis, inc, lat_par, lat_Vec, axis, size_y, size_z, elem,
+                  reg_parameter,max_iters, lammps_location, mpi_location,
+                  folder, potential,dispy, dispz,
+                  oilab_output_file,choose_disconnection=True,run_neb = False):
     # Bicrystallographic GB properties
     bc = bicrystallography(sig,mis,inc, axis, lat_par)
     gb_data, bur, step_height = bc.gb_props(oilab_output_file, choose_disconnection)
@@ -68,21 +68,18 @@ def runGBkinetics(sig, mis, inc, lat_par, lat_Vec, axis, size_y, size_z, elem, r
         # Create and minimize bicrystals
         if image_num == 0:
             if create_bicrystal_decision:
-                print("\n============================= Generating initial flat GB  =======================================")
                 Bicrystal.create_flat_gb_bicrystal(gb_position)
                 file_name_init = Bicrystal.ordered_write(out_folder, elem, image_num, gb_position)
             if min_decision:
                 min_outputfile_init = run_lmp.run_minimization(file_name_init, dispy, dispz)
         else:
             if create_bicrystal_decision:
-                print("\n================= Generating GB image " + str(image_num) + " bicrystallographically ==============")
                 Bicrystal.create_disconnection_containing_bicrystal(nodes,bur,step_height,gb_position,image_num)
                 file_name_image = Bicrystal.ordered_write(out_folder, elem, image_num, gb_position, step_height,disloc1[0],disloc2[0])
             if min_decision:
                 min_outputfile_image = run_lmp.run_minimization(file_name_image, dispy, dispz)
 
             if min_shuffle_decision:
-                print("=============================== Generating atomic trajectories =====================================")
                 # Apply min shuffle
                 if min_decision:
                     file_mode = 2
@@ -102,15 +99,20 @@ def runGBkinetics(sig, mis, inc, lat_par, lat_Vec, axis, size_y, size_z, elem, r
     # Run neb calculations
     if run_neb:
         run_lmp.run_neb_calc(np.round(bur, 2), np.round(step_height, 2), total_images-1,4)
-
-    # %%
+        out_folder = folder + elem + "/Sigma" + str(int(sigma)) + "/Misorientation" + str(np.round(mis))  + "/post_processed_neb_results/"
+        os.makedirs(out_folder,exist_ok=True)
+        plot_decision = True
+        run_lmp.post_process_neb_output(out_folder,plot_decision)
+    # Write orient file for fix eco LAMMPS command
     if create_eco_input:
         Bicrystal.create_fix_eco_orientationfile(out_folder)
 
     return out_folder
-'''
+
+
 def runGridSearch(sig, mis, inc, lat_par, lat_Vec, axis, size_y, size_z, elem, lammps_location,
-                  mpi_location, folder, potential, oilab_output_file, choose_disconnection = False):
+                  mpi_location, folder, potential, oilab_output_file, choose_disconnection = False,
+                  number_of_cores = 6,step_increments=0.1,limit=1,output_setting=0):
 
     # Bicrystallographic GB properties
     bc = bicrystallography(sig, mis, inc, axis, lat_par)
@@ -134,21 +136,21 @@ def runGridSearch(sig, mis, inc, lat_par, lat_Vec, axis, size_y, size_z, elem, l
 
     # Define a bicrystal
     Bicrystal = bicrystal(gb_data, axis, lat_par, lat_Vec, size_along_period, size_along_tilt_axis,non_periodic_direction_size)
-    A, B, ga, gb = Bicrystal._setup_bicrystal()
+    Bicrystal._setup_bicrystal()
 
     # Define LAMMPS handler
     run_lmp = run_LAMMPS(folder, elem, lat_par, sigma, mis, inc, size_along_period, potential, mpi_location,lammps_location)
 
     # Create a flat bicrystal
-    print("\n============= Generating initial flat GB  ==================")
-    gA_1, gB_1, box1 = Bicrystal.create_flat_gb_bicrystal(gb_position)
-    name_suffix = "size_" + str(size_along_period)
-    file_name_init = Bicrystal.ordered_write(out_folder, elem, name_suffix, gb_position)
+    image_num = 0
+    Bicrystal.create_flat_gb_bicrystal(gb_position)
+    file_name_init = Bicrystal.ordered_write(out_folder, elem, image_num, gb_position)
 
     # Run grid search
-    print("\n================= Running grid search  =====================")
-    out = run_lmp.run_neb_calc(file_name_init, out_folder)
+    out = run_lmp.run_grid_search(file_name_init, out_folder,number_of_cores,step_increments,limit,output_setting)
 
-    return out_folder
+    # Post process grid search results
+    plot_decision = True
+    run_lmp.post_process_gridsearch_data(plot_decision)
+    return out
 
-'''

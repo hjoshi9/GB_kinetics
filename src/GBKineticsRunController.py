@@ -12,6 +12,34 @@ def runGBkinetics(sig, mis, inc, lat_par, lat_Vec, axis, size_y, size_z, elem,
                   reg_parameter,max_iters, lammps_location, mpi_location,
                   folder, potential,dispy, dispz,
                   oilab_output_file,choose_disconnection=True,run_neb = False):
+    """
+        Run a grain boundary kinetics simulation using input parameters and LAMMPS.
+
+        Args:
+            sigma (int): Sigma value of the grain boundary.
+            misorientation (float): Misorientation angle in degrees.
+            inclination (float): Inclination angle in degrees.
+            lattice_parameter (float): Lattice parameter of the element.
+            lattice_vector (np.ndarray): Lattice vectors for the crystal (3x3 matrix).
+            axis (list[int]): Tilt axis vector.
+            size_y (int): System size along the GB period (in 2×CSL units).
+            size_z (int): System size along the tilt axis (in 2×CSL units).
+            element (str): Chemical element symbol (e.g., "Cu").
+            reg (float): Regularization parameter for the min-shuffle algorithm.
+            iterMax (int): Maximum number of iterations for the min-shuffle algorithm.
+            lammps_location (str): Path to the directory containing LAMMPS binaries.
+            mpi_location (str): Path to the directory containing the MPI executable.
+            output_folder (str): Root folder where output data will be stored.
+            lammps_potential (str): Full path to the LAMMPS potential file.
+            disp_along_gb (float): Displacement along the grain boundary direction.
+            disp_along_tilt (float): Displacement along the tilt axis direction.
+            oilab_output_file (str): Path to the bicrystallographic data file from oILAB.
+            choose_disconnection (bool): Whether to manually choose the disconnection mode.
+            run_neb (bool): Whether to run NEB calculations.
+
+        Returns:
+            str: Path to the folder containing the simulation results.
+    """
     # Bicrystallographic GB properties
     bc = bicrystallography(sig,mis,inc, axis, lat_par)
     gb_data, bur, step_height = bc.gb_props(oilab_output_file, choose_disconnection)
@@ -113,7 +141,37 @@ def runGBkinetics(sig, mis, inc, lat_par, lat_Vec, axis, size_y, size_z, elem,
 def runGridSearch(sig, mis, inc, lat_par, lat_Vec, axis, size_y, size_z, elem, lammps_location,
                   mpi_location, folder, potential, oilab_output_file, choose_disconnection = False,
                   number_of_cores = 6,step_increments=0.1,limit=1,output_setting=0):
+    """
+        Run a grid search to identify minimum energy configurations of a grain boundary structure.
 
+        This function builds a bicrystal based on bicrystallographic parameters and performs
+        a systematic grid search using LAMMPS simulations to evaluate different GB displacements.
+
+        Args:
+            sig (int): Sigma value of the grain boundary.
+            mis (float): Misorientation angle in degrees.
+            inc (float): Inclination angle in degrees.
+            lat_par (float): Lattice parameter of the element.
+            lat_Vec (np.ndarray): Lattice vectors (3x3 matrix) for the crystal.
+            axis (list[int]): Tilt axis vector of the grain boundary.
+            size_y (int): System size along the grain boundary period (in 2×CSL units).
+            size_z (int): System size along the tilt axis (in 2×CSL units).
+            elem (str): Chemical symbol of the element (e.g., "Cu").
+            lammps_location (str): Path to the directory containing LAMMPS binaries.
+            mpi_location (str): Path to the directory containing the MPI executable.
+            folder (str): Root folder to store all output data.
+            potential (str): Full path to the LAMMPS potential file.
+            oilab_output_file (str): Path to the bicrystallographic data file from oILAB.
+            choose_disconnection (bool, optional): Whether to manually select a disconnection mode. Defaults to False.
+            number_of_cores (int, optional): Number of processor cores to use for LAMMPS. Defaults to 6.
+            step_increments (float, optional): Step size (in lattice units) for displacement search. Defaults to 0.1.
+            limit (float, optional): Maximum displacement range to search (in lattice units). Defaults to 1.
+            output_setting (int, optional): Output format/type flag for LAMMPS scripts. Defaults to 0.
+
+        Returns:
+            Any: Output from the grid search post-processing routine (usually energy data or selected configuration).
+
+    """
     # Bicrystallographic GB properties
     bc = bicrystallography(sig, mis, inc, axis, lat_par)
     gb_data, bur, step_height = bc.gb_props(oilab_output_file,choose_disconnection)

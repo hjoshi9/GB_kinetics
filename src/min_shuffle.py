@@ -6,7 +6,52 @@ import matplotlib.pyplot as plt
 from src.IO import *
 
 class min_shuffle:
-    def __init__(self,lattice_parameter,sigma,misorientation,inclination,period,folder,elem,reg_param,max_iters,box_expansion_factor=0,dimension=3):
+    """
+        Class to perform minimal atomic shuffling analysis between two grain boundary configurations
+        using optimal transport (Sinkhorn algorithm).
+
+        This class reads initial and final atomic configurations from LAMMPS data files, identifies
+        a region around a grain boundary and a disconnection, formats the data, applies periodic boundary
+        conditions, replicates the simulation box if necessary, and runs the Sinkhorn optimal transport
+        to find minimal atomic displacement mappings.
+    """
+    def __init__(self,lattice_parameter,sigma,misorientation,inclination,
+                 period,folder,elem,reg_param,max_iters,
+                 box_expansion_factor=0,dimension=3):
+        """
+        Initializes the min_shuffle object with simulation parameters and placeholders for atomic data.
+
+        Args:
+            lattice_parameter (float): The lattice parameter of the crystal structure (in angstroms).
+            sigma (float): Sigma value related to the grain boundary type or misorientation.
+            misorientation (float): The misorientation angle between grains (in degrees).
+            inclination (float): The inclination angle of the grain boundary (in degrees).
+            period (int): The period or repeat length of the grain boundary.
+            folder (str): Directory path where output files and data will be stored.
+            elem (str): Chemical element symbol of the material (e.g., 'Al', 'Cu').
+            reg_param (float): Regularization parameter used in the Sinkhorn optimal transport algorithm.
+            max_iters (int): Maximum number of iterations allowed in the Sinkhorn solver.
+            box_expansion_factor (float, optional): Factor to expand the simulation box dimensions, defaults to 0 (no expansion).
+            dimension (int, optional): Dimensionality of the simulation system, defaults to 3 (3D).
+
+        Attributes:
+            grainA_pretransform (np.ndarray or None): Atomic positions of grain A before transformation.
+            grainB_pretransform (np.ndarray or None): Atomic positions of grain B before transformation.
+            grainA_posttransform (np.ndarray or None): Atomic positions of grain A after transformation.
+            grainB_posttransform (np.ndarray or None): Atomic positions of grain B after transformation.
+            initial_grain (np.ndarray or None): Complete initial atomic configuration.
+            final_grain (np.ndarray or None): Complete final atomic configuration.
+            box (np.ndarray or None): Simulation box dimensions.
+            gb_location (float or None): Grain boundary location coordinate.
+            step_height (float or None): Step height parameter defining the shuffle domain.
+            dislocation_start (float or None): Start coordinate of the dislocation region.
+            dislocation_end (float or None): End coordinate of the dislocation region.
+            atoms_minshuf (np.ndarray or None): Atomic coordinates involved in minimal shuffle.
+            types_minshuf (int or None): Number of atom types in minimal shuffle domain.
+            box_minshuf (np.ndarray or None): Simulation box dimensions for minimal shuffle domain.
+            initial_atoms_transformed_region (np.ndarray or None): Initial atom coordinates of the transformed region.
+            final_atoms_transformed_region (np.ndarray or None): Final atom coordinates of the transformed region.
+        """
         self.lattice_parameter = lattice_parameter
         self.sigma = sigma
         self.misorientation = misorientation
@@ -39,7 +84,25 @@ class min_shuffle:
         self.initial_atoms_transformed_region = None
         self.final_atoms_transformed_region = None
 
-    def gb_info(self,filepath,st_height,disloc1,disloc2,min_shuffle_domain_expansion_factor=1.5,disconnection_extension=5):
+    def gb_info(self,filepath,st_height,disloc1,disloc2,
+                min_shuffle_domain_expansion_factor=1.5,disconnection_extension=5):
+        """
+            Computes grain boundary location, step height, and dislocation region based on input parameters.
+
+            Args:
+                filepath (str): Path to the file to extract grain boundary info.
+                st_height (float): Step height direction and magnitude.
+                disloc1 (tuple): Coordinates of the start of the dislocation.
+                disloc2 (tuple): Coordinates of the end of the dislocation.
+                min_shuffle_domain_expansion_factor (float, optional): Expansion factor of minimal shuffle domain. Defaults to 1.5.
+                disconnection_extension (int, optional): Extension length for dislocation region. Defaults to 5.
+
+            Sets:
+                self.gb_location (float): Calculated grain boundary location.
+                self.step_height (float): Adjusted step height of the shuffle domain.
+                self.dislocation_start (float): Start coordinate of the dislocation region.
+                self.dislocation_end (float): End coordinate of the dislocation region.
+        """
         lat_par = self.lattice_parameter
         p = self.period
         average_gb_loc, gb_hi, gb_lo = find_gb_location(filepath)
@@ -56,6 +119,23 @@ class min_shuffle:
 
 
     def load_data(self,file_mode,file_flat,file_disconnection):
+        """
+            Loads atomic positions from initial and final LAMMPS data files.
+
+            Args:
+                file_mode (str): Mode for reading the LAMMPS data files.
+                file_flat (str): Path to the initial (flat) atomic configuration file.
+                file_disconnection (str): Path to the final atomic configuration file.
+
+            Sets:
+                self.grainA_pretransform (np.ndarray): Atoms in grain A before transformation.
+                self.grainB_pretransform (np.ndarray): Atoms in grain B before transformation.
+                self.grainA_posttransform (np.ndarray): Atoms in grain A after transformation.
+                self.grainB_posttransform (np.ndarray): Atoms in grain B after transformation.
+                self.box (np.ndarray): Simulation box.
+                self.initial_grain (np.ndarray): Initial atomic data.
+                self.final_grain (np.ndarray): Final atomic data.
+        """
         print("=============================== Generating atomic trajectories =====================================")
         data_init = read_LAMMPS_datafile(file_flat, file_mode)
         data_final = read_LAMMPS_datafile(file_disconnection, file_mode)
@@ -100,6 +180,20 @@ class min_shuffle:
         self.final_grain = final
 
     def format_input(self,folder):
+        """
+            Formats the input by selecting atoms in the minimal shuffle domain and writes data files.
+
+            Args:
+                folder (str): Directory to write formatted data files.
+
+            Raises:
+                ValueError: If grain boundary info or atomic data is missing.
+
+            Sets:
+                self.atoms_minshuf (np.ndarray): Formatted atoms array for minimal shuffling.
+                self.types_minshuf (int): Number of atom types.
+                self.box_minshuf (np.ndarray): Simulation box for the minimal shuffle domain.
+        """
         if self.step_height is None:
             raise ValueError("GB details not defined. Run gb_info()")
         if self.grainA_posttransform is  None:
@@ -174,6 +268,21 @@ class min_shuffle:
         self.box_minshuf = box
 
     def replicate(self,rep_scheme,X,Y,box):
+        """
+            Replicates atomic configurations according to the specified replication scheme.
+
+            Args:
+                rep_scheme (list): List of 6 integers defining replication multipliers [xlo, xhi, ylo, yhi, zlo, zhi].
+                X (np.ndarray): Initial atomic coordinates.
+                Y (np.ndarray): Final atomic coordinates.
+                box (np.ndarray): Simulation box dimensions.
+
+            Returns:
+                tuple: (X_rep, Y_rep, rep_box)
+                    X_rep (np.ndarray): Replicated initial coordinates.
+                    Y_rep (np.ndarray): Replicated final coordinates.
+                    rep_box (np.ndarray): Updated simulation box after replication.
+        """
         dim = self.dimension
         # Define outputs
         rep_box = 0 * box
@@ -232,6 +341,18 @@ class min_shuffle:
         return X_rep, Y_rep, rep_box
 
     def pbcdist(self,dp,Lx,Ly,Lz):
+        """
+            Applies periodic boundary conditions to displacement vectors.
+
+            Args:
+                dp (np.ndarray): Displacement vectors.
+                Lx (float): Box length along x-axis.
+                Ly (float): Box length along y-axis.
+                Lz (float): Box length along z-axis.
+
+            Returns:
+                np.ndarray: Adjusted displacement vectors considering periodic boundaries.
+        """
         dim = self.dimension
         d = dp
         n = dim
@@ -246,6 +367,16 @@ class min_shuffle:
         return d
 
     def pbcwrap(self,d,box):
+        """
+            Wraps coordinates into the primary simulation box applying periodic boundary conditions.
+
+            Args:
+                d (np.ndarray): Coordinates to wrap.
+                box (np.ndarray): Simulation box dimensions.
+
+            Returns:
+                np.ndarray: Coordinates wrapped within the simulation box.
+        """
         dim = self.dimension
         dpbc = d
 
@@ -278,6 +409,17 @@ class min_shuffle:
         return dpbc
 
     def run(self):
+        """
+            Runs the Sinkhorn optimal transport algorithm to compute minimal shuffling displacement vectors
+            between initial and final atomic configurations in the minimal shuffle domain.
+
+            Raises:
+                ValueError: If input formatting is not done or atoms mismatch.
+
+            Sets:
+                self.initial_atoms_transformed_region (np.ndarray): Initial atomic positions after transformation.
+                self.final_atoms_transformed_region (np.ndarray): Final atomic positions after transformation.
+        """
         # Import input parameters
         reg_param = self.reg_param
         iter_max = self.max_iters
@@ -445,6 +587,13 @@ class min_shuffle:
 
 
     def write_images(self,folder, image_num):
+        """
+            Writes LAMMPS data files for atomic configurations at specified image numbers.
+
+            Args:
+                folder (str): Directory to save output files.
+                image_num (int): Image index (e.g., 0 for initial flat GB, 1 for final transformed state).
+        """
         def write_header(f,natoms,box):
             eps = 0.1
             f.write("#LAMMPS data file\n")
@@ -507,9 +656,18 @@ class min_shuffle:
             write_atoms(f,final_atoms)
         print(f"Done writing bicrystal {folder}/{file}")
 
-
-
     def _write_neb_input_file(self,folder, image_num):
+        """
+            Writes a LAMMPS NEB (Nudged Elastic Band) input data file for a specific image number.
+
+            Args:
+                folder (str): Path to the directory containing input and output files.
+                image_num (int): Image number used to generate input/output file names.
+
+            Side Effects:
+                Reads LAMMPS data from an input file and writes a processed output file
+                in the specified folder. Prints confirmation upon completion.
+        """
         sigma = self.sigma
         file = "data.Cus" + str(sigma) + "inc0.0__step" + str(image_num)
         outfile = "data.Cus" + str(sigma) + "inc0.0_out_step" + str(image_num)
@@ -527,6 +685,16 @@ class min_shuffle:
 
     @staticmethod
     def _threshold(g, cutoff):
+        """
+            Applies a threshold to a matrix, setting elements less than the cutoff to zero.
+
+            Args:
+                g (np.ndarray): Input matrix of values.
+                cutoff (float): Threshold cutoff value.
+
+            Returns:
+                np.ndarray: Matrix with values below cutoff set to zero.
+        """
         G = abs(g)
         row_ind, col_ind = np.where(g < cutoff)
         for i in range(len(row_ind)):
@@ -535,6 +703,19 @@ class min_shuffle:
 
     @staticmethod
     def plot_min_shuffle_3d(Xs, Ys, box,sigma,reg_param):
+        """
+            Creates a 3D scatter plot comparing initial and final atomic configurations within a simulation box.
+
+            Args:
+                Xs (np.ndarray): Coordinates of initial atomic positions, shape (N, 3).
+                Ys (np.ndarray): Coordinates of final atomic positions, shape (N, 3).
+                box (np.ndarray): Simulation box boundaries, shape (3, 2) with [[xlo, xhi], [ylo, yhi], [zlo, zhi]].
+                sigma (float): Grain boundary sigma value used for labeling.
+                reg_param (float): Regularization parameter used for labeling.
+
+            Returns:
+                int: Returns 1 upon completion (placeholder return value).
+        """
         # Plot simulation box
         fig, ax = plt.subplots()
         xlo = box[0, 0]
@@ -568,6 +749,20 @@ class min_shuffle:
 
     @staticmethod
     def plot_min_shuffle_2d(folder,Xbasis,Ybasis,Gamma,sigma,reg_param):
+        """
+            Generates and saves a 2D plot of optimal transport mapping between source and target atomic configurations.
+
+            Args:
+                folder (str): Directory path to save the plot image.
+                Xbasis (np.ndarray): Source sample coordinates, shape (N, 2).
+                Ybasis (np.ndarray): Target sample coordinates, shape (N, 2).
+                Gamma (np.ndarray): Transport plan matrix.
+                sigma (float): Grain boundary sigma value for plot labeling.
+                reg_param (float): Regularization parameter for plot labeling.
+
+            Side Effects:
+                Saves the generated plot as a PNG file in the specified folder.
+        """
         plt.figure(dpi=200)
         ot.plot.plot2D_samples_mat(Xbasis, Ybasis, Gamma, c=[.5, .5, 1])
         plt.scatter(Xbasis[:, 0], Xbasis[:, 1], color='b', label='Source samples')

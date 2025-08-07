@@ -1,6 +1,19 @@
 import numpy as np
 
 def read_LAMMPS_dumpfile(path_r):
+    """
+        Reads atomic configurations from a LAMMPS dump file.
+
+        Args:
+            path_r (str): Path to the LAMMPS dump file.
+
+        Returns:
+            list: A list of snapshots, each containing:
+                - timestep (float)
+                - number of atoms (int)
+                - box dimensions (3x2 np.ndarray)
+                - atomic data (np.ndarray of shape [n_atoms, 7])
+    """
     i = 0
     q = -1
     j = q
@@ -63,6 +76,22 @@ def read_LAMMPS_dumpfile(path_r):
     return data
 
 def read_LAMMPS_datafile(path_r,mode=1):
+    """
+        Reads a LAMMPS data file and extracts atom positions and box dimensions.
+
+        Args:
+            path_r (str): Path to the data file.
+            mode (int, optional): Parsing mode.
+                - 1: Expecting 5 columns per atom line.
+                - 2: Expecting 8 columns per atom line.
+
+        Returns:
+            list: A list containing:
+                - number of atoms (int)
+                - number of types (int)
+                - box dimensions (3x2 np.ndarray)
+                - atom positions (np.ndarray)
+    """
     i = 0
     q = -1
     j = q
@@ -125,6 +154,21 @@ def read_LAMMPS_datafile(path_r,mode=1):
     return data
 
 def write_lammps_datafile(folder,file,suffix, g_A, g_B, input_box,mode = 2):
+    """
+        Writes a LAMMPS data file for a bicrystal configuration.
+
+        Args:
+            folder (str): Path to output folder.
+            file (str): File name prefix.
+            suffix (str): File suffix (e.g., 'min_shuffle').
+            g_A (np.ndarray): Atom positions for grain A.
+            g_B (np.ndarray): Atom positions for grain B.
+            input_box (np.ndarray): Original box dimensions (3x3).
+            mode (int, optional): Determines which box vector to expand for bicrystal. Default is 2 (z-direction).
+
+        Returns:
+            str: Path to the generated data file.
+    """
     name = folder + file + "_"+suffix
     natoms = g_A.shape[0] + g_B.shape[0]
     f = open(name, "w")
@@ -161,6 +205,18 @@ def write_lammps_datafile(folder,file,suffix, g_A, g_B, input_box,mode = 2):
     return name
 
 def find_gb_location(filepath):
+    """
+       Determines the location of a grain boundary based on centro-symmetry parameter.
+
+       Args:
+           filepath (str): Path to the LAMMPS dump file.
+
+       Returns:
+           tuple:
+               - average_gb_loc (float): Average z-location of the grain boundary.
+               - extreme_gb_loc_hi (float): Upper bound of GB atom positions.
+               - extreme_gb_loc_lo (float): Lower bound of GB atom positions.
+    """
     data = read_LAMMPS_dumpfile(filepath)
     box = data[-1][2]
     boundary_layer_thickness = 25
@@ -183,6 +239,20 @@ def find_gb_location(filepath):
     return average_gb_loc, extreme_gb_loc_hi, extreme_gb_loc_lo
 
 def read_neb_output_data(path_r,mode):
+    """
+        Reads output from a NEB (nudged elastic band) LAMMPS simulation.
+
+        Args:
+            path_r (str): Path to NEB output dump file.
+            mode (int): Determines number of atom attributes to read (7 or 8 columns).
+
+        Returns:
+            list: A list of snapshots, each with:
+                - timestep (float)
+                - number of atoms (int)
+                - box dimensions (3x2 np.ndarray)
+                - atomic data (np.ndarray of shape [n_atoms, N])
+    """
     i = 0
     q = -1
     j = q
@@ -249,6 +319,20 @@ def read_neb_output_data(path_r,mode):
     return data
 
 def write_LAMMPSoutput_tstep(natoms,Atoms,box,folder,file,tstep):
+    """
+       Writes a single timestep's atomic configuration to a LAMMPS trajectory file.
+
+       Args:
+           natoms (int): Total number of atoms.
+           Atoms (np.ndarray): Array of atomic data (id, type, x, y, z, PotEng, CentroSym).
+           box (np.ndarray): Box dimensions (3x2).
+           folder (str): Output folder.
+           file (str): File name.
+           tstep (int): Timestep to write.
+
+       Returns:
+           str: Path to the output trajectory file.
+    """
     name = folder + file
     if tstep==0:
         mode = "w"
@@ -276,6 +360,15 @@ def write_LAMMPSoutput_tstep(natoms,Atoms,box,folder,file,tstep):
     return file
 
 def read_gridsearch_results(filepath):
+    """
+       Reads grid search results from a custom text file (displacements and GB energy).
+
+       Args:
+           filepath (str): Path to the results file.
+
+       Returns:
+           np.ndarray: Array with columns [dispy, dispz, GB_energy].
+    """
     data = []
     with open(filepath, 'r') as file:
         for line in file:
@@ -292,6 +385,16 @@ def read_gridsearch_results(filepath):
     return np.array(data)
 
 def write_gridsearch_results(filepath, data):
+    """
+        Writes displacements and GB energy to a tabulated results file.
+
+        Args:
+            filepath (str): Output file path.
+            data (np.ndarray): Array of shape (N, 3) containing:
+                - dispy (float)
+                - dispz (float)
+                - GB energy (float)
+    """
     with open(filepath, 'w') as file:
         file.write("dispy\t\tdispz\t\tGB Energy\n")
         for i in range(len(data)):

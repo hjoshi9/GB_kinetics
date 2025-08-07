@@ -7,8 +7,49 @@ from scipy.interpolate import griddata
 from src.IO import *
 
 class run_LAMMPS:
-    def __init__(self, folder, element, lattice_parameter, sigma, misorientation, inclination, size_along_gb_period,
+    """
+        A class to set up, run, and post-process LAMMPS simulations
+        for grain boundary disconnection energy calculations.
+
+        Attributes:
+            folder (str): Directory for simulation input/output files.
+            element (str): Chemical element symbol (e.g. 'Cu').
+            lattice_parameter (float): Lattice parameter for the element.
+            sigma (int): Sigma value for grain boundary.
+            misorientation (float): Misorientation angle.
+            inclination (float): Grain boundary inclination.
+            size_along_gb_period (int): Size along grain boundary periodicity.
+            potential (str): Path to interatomic potential file.
+            mpi_location (str): Path to MPI binaries.
+            lammps_location (str): Path to LAMMPS binaries.
+            output_filename_gridsearch (str or None): Filename for grid search output.
+            gridsearch_output_setting (int or None): Grid search output setting flag.
+            gridsearch_output_folder (str or None): Folder for grid search outputs.
+            lammps_input_filename (str or None): Filename of the current LAMMPS input script.
+            neb_images (int or None): Number of NEB images (partitions).
+            number_of_images_provided (int or None): Number of images in NEB calculation.
+            burgers_vec (float or None): Burgers vector magnitude.
+            step_height (float or None): Step height used in NEB calculation.
+            neb_output_folder (str or None): Folder for NEB output files.
+    """
+    def __init__(self, folder, element, lattice_parameter, sigma, misorientation,
+                 inclination, size_along_gb_period,
                   potential, mpi_location, lammps_location):
+        """
+            Initializes the run_LAMMPS instance with simulation parameters.
+
+            Args:
+                folder (str): Directory to store simulation files.
+                element (str): Chemical element symbol.
+                lattice_parameter (float): Lattice parameter.
+                sigma (int): Sigma value for grain boundary.
+                misorientation (float): Misorientation angle in degrees.
+                inclination (float): Grain boundary inclination angle.
+                size_along_gb_period (int): Size along grain boundary period.
+                potential (str): Path to interatomic potential file.
+                mpi_location (str): Path to MPI binaries.
+                lammps_location (str): Path to LAMMPS binaries.
+         """
         self.folder = folder
         self.element = element
         self.lattice_parameter = lattice_parameter
@@ -33,6 +74,16 @@ class run_LAMMPS:
         self.neb_output_folder = None
 
     def write_minimization_input(self, file_name, dispy, dispz,minimization_along_gb_directions=False):
+        """
+            Writes a LAMMPS input script for energy minimization with optional box relaxation.
+
+            Args:
+                file_name (str): Base filename for input/output.
+                dispy (float): Displacement along grain boundary periodic direction.
+                dispz (float): Displacement along tilt axis.
+                minimization_along_gb_directions (bool): If True, performs additional minimization
+                    steps with box relaxation along y and z directions.
+        """
         sigma = self.sigma
         mis   = self.misorientation
         inc   = self.inclination
@@ -43,7 +94,7 @@ class run_LAMMPS:
         folder = self.folder
 
         min_file = "min.in"
-        file = folder + min_file
+        file = os.path.join(folder, min_file)
         self.lammps_input_filename = file
         min_outputfile = file_name + "_min"
         min_output_movie = file_name + "_minmov"
@@ -131,9 +182,19 @@ write_data ${{out_file1}}
         with open(file, "w") as f:
             f.write(lammps_script)
 
-        outfile = folder + min_outputfile
+        outfile = os.path.join(folder, min_outputfile) #folder + min_outputfile
 
     def write_lammps_gridsearch_input(self, infile, outfolder,step_increments, limit, output_setting=0):
+        """
+            Writes a LAMMPS input script for performing a grid search over displacements.
+
+            Args:
+                infile (str): Name of the input data file.
+                outfolder (str): Output folder to store results.
+                step_increments (float): Incremental displacement step size.
+                limit (float): Maximum displacement limit in both directions.
+                output_setting (int): Flag to enable detailed output; 1 enables additional dumps.
+        """
         sigma = self.sigma
         mis = self.misorientation
         inc = self.inclination
@@ -143,8 +204,8 @@ write_data ${{out_file1}}
         elem = self.element
         folder = self.folder
 
-        file = "grid_search.in"
-        file = folder + file
+        f_name = "grid_search.in"
+        file = os.path.join(folder, f_name)
         self.lammps_input_filename = file
         outfile = elem + "_" + "sigma" + str(sigma) + "_mis" + str(mis) + "_size" + str(size) + "_gridsearch_results.txt"
         self.output_filename_gridsearch = outfile
@@ -159,7 +220,7 @@ write_data ${{out_file1}}
         dump_line = ""
         outfolder2_line = ""
         if output_setting == 1:
-            outfolder_configs = outfolder + "/configs"
+            outfolder_configs = os.path.join(outfolder, "/configs")
             os.makedirs(outfolder_configs, exist_ok=True)
             outfolder2_line = f"variable outfolder_configs string {outfolder_configs}"
             outfile2_line = f"variable outfile2 string ${{outfolder_configs}}/{infile}_dy${{dispy}}dz${{dispz}}\n"
@@ -251,6 +312,19 @@ jump SELF loopy
             f.write(script)
 
     def write_lammps_neb_input_script(self, burgers_vector, step_height,num_steps, partitions, mode=1):
+        """
+            Writes a LAMMPS input script for Nudged Elastic Band (NEB) calculations.
+
+            Args:
+                burgers_vector (float): Burgers vector magnitude for disconnection.
+                step_height (float): Step height for the disconnection mode.
+                num_steps (int): Number of NEB images (steps).
+                partitions (int): Number of parallel partitions for NEB.
+                mode (int): Mode flag controlling file naming and step count behavior.
+
+            Returns:
+                str: Path to the output folder for NEB calculation results.
+        """
         folder = self.folder
         elem = self.element
         lat_par = self.lattice_parameter
@@ -264,8 +338,8 @@ jump SELF loopy
         self.step_height = h
         neb_file = "neb.in"
         self.lammps_input_filename = neb_file
-        file = folder + neb_file
-        output_folder = folder + "partitions" + str(partitions) + "/"
+        file = os.path.join(folder, neb_file)
+        output_folder = os.path.join(folder, "partitions" + str(partitions) + "/")
         os.makedirs(output_folder, exist_ok=True)
         if mode == 0:
             number_of_steps = 1
@@ -331,6 +405,19 @@ jump SELF loopy
         return output_folder
 
     def run_neb_calc(self, burgers_vector, step_height,number_of_steps, partitions=40, mode=1):
+        """
+            Runs the NEB calculation using MPI-parallelized LAMMPS.
+
+            Args:
+                burgers_vector (float): Burgers vector magnitude.
+                step_height (float): Step height.
+                number_of_steps (int): Number of NEB steps.
+                partitions (int, optional): Number of parallel partitions (default: 40).
+                mode (int, optional): Mode flag for NEB input script generation (default: 1).
+
+            Raises:
+                RuntimeError: If the NEB LAMMPS run fails.
+        """
         mpi_location = self.mpi_location
         lammps_location = self.lammps_location
         folder = self.folder
@@ -339,7 +426,11 @@ jump SELF loopy
         print("The results from this calculation will be stored in " + neb_output_folder)
         command = mpi_location + "/mpirun --oversubscribe --use-hwthread-cpus -np " + str(
             partitions) + " " + lammps_location + "/lmp_mpi  -partition " + str(partitions) + "x1 -in " + folder+self.lammps_input_filename
-        subprocess.run([command], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)
+        #subprocess.run([command], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)
+        result = subprocess.run([command], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        if result.returncode != 0:
+            raise RuntimeError(
+                f"NEB run failed:\nSTDOUT:\n{result.stdout.decode()}\nSTDERR:\n{result.stderr.decode()}")
         self._remove_temp_files(neb_output_folder,"neb")
         print("Done with NEB calculations!!")
         self.neb_images = partitions
@@ -347,23 +438,63 @@ jump SELF loopy
         self.neb_output_folder = neb_output_folder
 
     def run_minimization(self,file_name,disp_along_gb_period,disp_along_tilt_axis,minimization_along_gb_directions=False):
+        """
+            Runs a minimization calculation using LAMMPS.
+
+            Args:
+                file_name (str): Base filename for input/output files.
+                disp_along_gb_period (float): Displacement along grain boundary period.
+                disp_along_tilt_axis (float): Displacement along tilt axis.
+                minimization_along_gb_directions (bool, optional): Whether to perform box relaxations (default: False).
+
+            Returns:
+                str: Filename of the minimized structure output.
+
+            Raises:
+                RuntimeError: If the minimization LAMMPS run fails.
+        """
         lammps_location = self.lammps_location
         dispy = disp_along_gb_period
         dispz = disp_along_tilt_axis
         print("========================== Minimizing using LAMMPS ==========================")
         self.write_minimization_input(file_name, dispy, dispz,minimization_along_gb_directions)
         command = lammps_location + "/lmp_serial -in " + self.lammps_input_filename
-        subprocess.run([command], shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        #subprocess.run([command], shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        result = subprocess.run([command], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        if result.returncode != 0:
+            raise RuntimeError(
+                f"LAMMPS minimization failed:\nSTDOUT:\n{result.stdout.decode()}\nSTDERR:\n{result.stderr.decode()}")
         print("Done writing minimized file " + self.output_filename)
         return self.output_filename
 
     def run_grid_search(self,infile, outfolder,number_of_cores = 6,step_increments=0.1,limit=1,output_setting=0):
+        """
+            Runs a grid search of displacements using MPI-parallelized LAMMPS.
+
+            Args:
+                infile (str): Input data filename.
+                outfolder (str): Output folder for results.
+                number_of_cores (int, optional): Number of MPI cores to use (default: 6).
+                step_increments (float, optional): Step size for grid search increments (default: 0.1).
+                limit (float, optional): Maximum displacement limit (default: 1).
+                output_setting (int, optional): Output verbosity setting (default: 0).
+
+            Returns:
+                str: Filename of the grid search results.
+
+            Raises:
+                RuntimeError: If the grid search LAMMPS run fails.
+        """
         print("\n=================================== Running grid search  ========================================")
         mpi_location = self.mpi_location
         lammps_location = self.lammps_location
         self.write_lammps_gridsearch_input(infile, outfolder,step_increments,limit, output_setting)
         command = mpi_location + "/mpirun -np " + str(number_of_cores)+ " " + lammps_location + "/lmp_mpi -in " + self.lammps_input_filename
-        subprocess.run([command], shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        #subprocess.run([command], shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        result = subprocess.run([command], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        if result.returncode != 0:
+            raise RuntimeError(
+                f"Grid search run failed:\nSTDOUT:\n{result.stdout.decode()}\nSTDERR:\n{result.stderr.decode()}")
         print("Done with grid search!!")
         print("Results stored in : " +outfolder+ self.output_filename_gridsearch)
         self.gridsearch_output_setting = output_setting
@@ -372,6 +503,13 @@ jump SELF loopy
         return self.output_filename_gridsearch
 
     def post_process_neb_output(self,outfolder,plot_decision=False):
+        """
+            Post-processes the NEB output dump files and optionally plots the energy profile.
+
+            Args:
+                outfolder (str): Folder to write processed output files.
+                plot_decision (bool, optional): If True, generates and saves energy plot (default: False).
+        """
         sigma = self.sigma
         size = self.size_along_gb_period
         partitions = self.neb_images
@@ -389,7 +527,6 @@ jump SELF loopy
         for k in range(steps):
             for j in range(partitions):
                 file = folder + f"dump.neb_{elem}sigma{sigma}size{size}discb{b}h{h}_step{k+1}.{j+1}"
-                print(file)
                 data = read_neb_output_data(file,2)
                 tstep = partitions*k+j
                 box = data[-1][2]
@@ -419,6 +556,12 @@ jump SELF loopy
             plt.savefig(fig_name)
 
     def post_process_gridsearch_data(self,plot_decision=False):
+        """
+            Post-processes grid search results, sorting and optionally plotting the GB energy surface.
+
+            Args:
+                plot_decision (bool, optional): If True, generates and saves contour plots (default: False).
+        """
         sigma = self.sigma
         size = self.size_along_gb_period
         mis = self.misorientation
@@ -456,9 +599,16 @@ jump SELF loopy
 
     @staticmethod
     def _remove_temp_files(output_folder,mode="non-neb"):
+        """
+            Moves the LAMMPS log file to output folder and removes temporary files.
+
+            Args:
+                output_folder (str): Folder where output files are stored.
+                mode (str, optional): If "neb", removes additional NEB-related temp files (default: "non-neb").
+        """
         # Move log file to results folder
-        command = f"mv log.lammps {output_folder}."
-        subprocess.run(command, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        log_file = os.path.join(output_folder, "log.lammps")
+        os.rename("log.lammps", log_file)
         if mode == "neb":
             # Remove temp files generated by lammps neb
             command = "rm screen.*"

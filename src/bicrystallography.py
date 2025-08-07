@@ -2,18 +2,26 @@ import numpy as np
 
 class bicrystallography:
     """
-    Class that calculates GB properties based on bicrystallography.
+        Class to calculate grain boundary (GB) properties based on bicrystallography.
+
+        Attributes:
+            sigma (int): Sigma value representing the coincidence site lattice (CSL) density.
+            misorientation (float): Misorientation angle between grains (in degrees).
+            inclination (float): Inclination angle of the grain boundary (in degrees).
+            axis (np.ndarray): Rotation axis vector (3D).
+            lattice_parameter (float): Lattice parameter of the crystal.
     """
     def __init__(self,sigma,misorientation,inclination,axis,lattice_parameter):
         """
-        Class constructor
-        :param sigma: Sigma value of GB.
-        :param misorientation: Misorientation value of GB.
-        :param inclination: Inclination value of GB.
-        :param axis: Axis of GB.
-        :param lattice_parameter: Lattice parameter of material.
-        :param oilab_input: oILAB output corresponding to the axis.
-        """
+            Initialize a bicrystallography object.
+
+            Args:
+                sigma (int): Sigma value representing the CSL density.
+                misorientation (float): Misorientation angle (degrees).
+                inclination (float): Inclination angle of the GB (degrees).
+                axis (list or np.ndarray): Rotation axis vector.
+                lattice_parameter (float): Lattice parameter of the crystal.
+         """
         self.sigma = sigma
         self.misorientation = misorientation
         self.inclination = inclination
@@ -23,10 +31,13 @@ class bicrystallography:
     @staticmethod
     def _read_data(path):
         """
-        Function to read data from oILAB output file.
-        :param path: oILAB output corresponding to the axis.
-        :return data: Array data with row format : {sigma,mis,inc,period,tn_x,tn_y,tn_z,bn_x,bn_y,bn_z,
-                                          bx,by,bz,h,bx1,by1,bz1,h1,bx2,by2,bz2,h2,H}
+            Read and parse grain boundary data from a text file (OILAB output format).
+
+            Args:
+                path (str): Path to the GB data file.
+
+            Returns:
+                list: A list of parsed rows, where each row contains GB properties.
         """
         i = 0
         j = -1
@@ -67,6 +78,16 @@ class bicrystallography:
         return data
 
     def _find_ATGB_data(self,path,period_cutoff=50):
+        """
+            Filter GB data based on misorientation and period constraints.
+
+            Args:
+                path (str): Path to the OILAB output file.
+                period_cutoff (float, optional): Maximum allowed CSL period. Defaults to 50.
+
+            Returns:
+                np.ndarray: Filtered and sorted GB data for acceptable ATGB configurations.
+        """
         mis  = self.misorientation
         axis = self.axis
 
@@ -110,11 +131,17 @@ class bicrystallography:
 
     def gb_props(self,oilab_output_file = "/data/fcc0-10.txt",choose_decision=1):
         """
-        Function to calculate GB properties.
-        :param choose_decision: optional argument that enables user to choose the disconnection mode or just run the default one.
-        :return gb_data: Information read from oILAB output about the GB (sigma, misorientation, inclination, period)
-        :return burgers_vector : Burgers vector of disconnection mode chosen.
-        :return step_height: Step height of disconnection mode chosen.
+            Calculate GB properties and optionally prompt user to choose a disconnection mode.
+
+            Args:
+                oilab_output_file (str, optional): Path to the OILAB output file. Defaults to "/data/fcc0-10.txt".
+                choose_decision (bool, optional): If True, allows user to choose disconnection mode. Defaults to True.
+
+            Returns:
+                tuple:
+                    - gb_data (np.ndarray): GB data including sigma, misorientation, inclination, etc.
+                    - burgers_vector (float): Burgers vector magnitude of selected disconnection mode.
+                    - step_height (float): Step height of the selected disconnection mode.
         """
         lat_par = self.lattice_parameter
         period_cutoff = 10

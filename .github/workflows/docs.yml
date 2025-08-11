@@ -2,7 +2,7 @@ name: Build and Deploy Docs
 
 on:
   push:
-    branches: [main]  # Update if your default branch is different
+    branches: [oop]  # Update if your default branch is different
     paths:
       - 'docs/**'
       - 'requirements.txt'

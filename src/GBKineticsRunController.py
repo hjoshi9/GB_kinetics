@@ -5,13 +5,15 @@ from src.bicrystal import bicrystal
 from src.IO import *
 from src.runLAMMPS import run_LAMMPS
 from src.min_shuffle import min_shuffle
-from src.bicrystal import bicrystallography
+from src.bicrystallography import bicrystallography
 
 
 def runGBkinetics(sig, mis, inc, lat_par, lat_Vec, axis, size_y, size_z, elem,
                   reg_parameter,max_iters, lammps_location, mpi_location,
                   folder, potential,dispy, dispz,
-                  oilab_output_file,choose_disconnection=True,run_neb = False):
+                  oilab_output_file,choose_disconnection=True,run_neb = False,
+                                        neb_mode = 1,
+                                        partitions = 40):
     """
         Run a grain boundary kinetics simulation using input parameters and LAMMPS.
 
@@ -36,6 +38,8 @@ def runGBkinetics(sig, mis, inc, lat_par, lat_Vec, axis, size_y, size_z, elem,
             oilab_output_file (str): Path to the bicrystallographic data file from oILAB.
             choose_disconnection (bool): Whether to manually choose the disconnection mode.
             run_neb (bool): Whether to run NEB calculations.
+            neb_mode (int): NEB mode.
+            partitions (int): Number of intermediate images used for NEB calculations.
 
         Returns:
             str: Path to the folder containing the simulation results.
@@ -126,7 +130,7 @@ def runGBkinetics(sig, mis, inc, lat_par, lat_Vec, axis, size_y, size_z, elem,
 
     # Run neb calculations
     if run_neb:
-        run_lmp.run_neb_calc(np.round(bur, 2), np.round(step_height, 2), total_images-1,4)
+        run_lmp.run_neb_calc(np.round(bur, 2), np.round(step_height, 2), total_images-1,partitions)
         out_folder = folder + elem + "/Sigma" + str(int(sigma)) + "/Misorientation" + str(np.round(mis))  + "/post_processed_neb_results/"
         os.makedirs(out_folder,exist_ok=True)
         plot_decision = True

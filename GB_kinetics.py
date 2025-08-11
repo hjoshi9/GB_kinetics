@@ -11,13 +11,13 @@ misorientation = 28
 # Inclination of the GB
 inclination = 0.0
 # Lattice parameter of the element (try using the lat par corresponding to the potential you intend to use)
-lattice_parameter = 3.615
+latticeParameter = 3.615
 # Tilt axis of GB
 axis = [0, 0, 1]
 # Size of system along the GB period in terms of 2*CSL period
-size_y = 1
+size_along_gb_period = 1
 # Size of system along the tilt axis in terms of 2*CSL period
-size_z = 1
+size__along_tilt_axis = 1
 # Lattice Vectors for the crystal system (current implementation is tested for fcc only)
 lattice_vector = np.array([[0.5, 0.5, 0.0],
                            [0.0, 0.5, 0.5],
@@ -25,14 +25,14 @@ lattice_vector = np.array([[0.5, 0.5, 0.0],
 
 #-------------- Parameters for min-shuffle algorithm --------------#
 # Regularization parameter for min-shuffle algorithm
-reg = 0.005
+regularizationParameter = 0.005
 # Maximum iterations for min-shuffle algorithm
-iterMax = 1000000
+maximumIterations = 1000000
 # Put True if you want to choose the disconnection mode, False will automatically create disconnection mode with
 # smallest burgers vector and corresponding step height
-choose_disconnection = True
+chooseDisconnection = True
 
-# ------------- Input and output folders (do not change) -------------------- #
+# ------------------------- Input and output folders -------------------- #
 # Location of bicrystallographic data obtained using oILAB
 oilab_output_file = "data/fcc0-10.txt"
 # Location of directory where output is to be stored, the program creates subdirectories
@@ -53,30 +53,34 @@ disp_along_tilt = -0.9
 
 # Parameters for neb run on lammps
 # Number of partitions used for neb calculations
-partitions = 40
+partitions = 4
 # Variable lets you choose if you want to run intermediate images through NEB or not.
 # mode = 1 -> NEB with intermediate images, mode = 0 -> NEb with just the initial and final GB images
-neb_mode = 0
+neb_mode = 1
 # Variable which allows for switching off automatically triggering neb calculations (in case you only need disconnection images)
 run_neb = True
+
 # Run
-results_folder_path = runGBkinetics(sigma,
-                                    misorientation,
-                                    inclination,
-                                    lattice_parameter,
-                                    lattice_vector,
-                                    axis,
-                                    size_y,
-                                    size_z,
-                                    element,
-                                    reg,
-                                    iterMax,
-                                    lammps_location,
-                                    mpi_location,
-                                    output_folder,
-                                    lammps_potential,
-                                    disp_along_gb,
-                                    disp_along_tilt,
-                                    oilab_output_file,
-                                    choose_disconnection,
-                                    run_neb)
+if __name__ == "__main__":
+    results_folder_path = runGBkinetics(sigma,
+                                        misorientation,
+                                        inclination,
+                                        latticeParameter,
+                                        lattice_vector,
+                                        axis,
+                                        size_along_gb_period,
+                                        size__along_tilt_axis,
+                                        element,
+                                        regularizationParameter,
+                                        maximumIterations,
+                                        lammps_location,
+                                        mpi_location,
+                                        output_folder,
+                                        lammps_potential,
+                                        disp_along_gb,
+                                        disp_along_tilt,
+                                        oilab_output_file,
+                                        chooseDisconnection,
+                                        run_neb,
+                                        neb_mode,
+                                        partitions)

@@ -1,0 +1,293 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>plastic_slip &mdash; GB Kinetics 2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=60dbed4a"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            GB Kinetics
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage.html#installations-required">Installations required</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage.html#general-usage">General usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">Source</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../GBKineticsRunController.html">GBKineticsRunController module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../IO.html">IO module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../IO.html#IO.find_gb_location"><code class="docutils literal notranslate"><span class="pre">find_gb_location()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../IO.html#IO.read_LAMMPS_datafile"><code class="docutils literal notranslate"><span class="pre">read_LAMMPS_datafile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../IO.html#IO.read_LAMMPS_dumpfile"><code class="docutils literal notranslate"><span class="pre">read_LAMMPS_dumpfile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../IO.html#IO.read_gridsearch_results"><code class="docutils literal notranslate"><span class="pre">read_gridsearch_results()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../IO.html#IO.read_neb_output_data"><code class="docutils literal notranslate"><span class="pre">read_neb_output_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../IO.html#IO.write_LAMMPSoutput_tstep"><code class="docutils literal notranslate"><span class="pre">write_LAMMPSoutput_tstep()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../IO.html#IO.write_gridsearch_results"><code class="docutils literal notranslate"><span class="pre">write_gridsearch_results()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../IO.html#IO.write_lammps_datafile"><code class="docutils literal notranslate"><span class="pre">write_lammps_datafile()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../bicrystal.html">bicrystal module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../bicrystal.html#src.bicrystal.bicrystal"><code class="docutils literal notranslate"><span class="pre">bicrystal</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../bicrystal.html#src.bicrystal.bicrystal.create_disconnection_containing_bicrystal"><code class="docutils literal notranslate"><span class="pre">bicrystal.create_disconnection_containing_bicrystal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../bicrystal.html#src.bicrystal.bicrystal.create_fix_eco_orientationfile"><code class="docutils literal notranslate"><span class="pre">bicrystal.create_fix_eco_orientationfile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../bicrystal.html#src.bicrystal.bicrystal.create_flat_gb_bicrystal"><code class="docutils literal notranslate"><span class="pre">bicrystal.create_flat_gb_bicrystal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../bicrystal.html#src.bicrystal.bicrystal.ordered_write"><code class="docutils literal notranslate"><span class="pre">bicrystal.ordered_write()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../bicrystal.html#src.bicrystal.bicrystal.write"><code class="docutils literal notranslate"><span class="pre">bicrystal.write()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../bicrystallography.html">bicrystallography module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../bicrystallography.html#bicrystallography.bicrystallography"><code class="docutils literal notranslate"><span class="pre">bicrystallography</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../bicrystallography.html#bicrystallography.bicrystallography.sigma"><code class="docutils literal notranslate"><span class="pre">bicrystallography.sigma</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../bicrystallography.html#bicrystallography.bicrystallography.misorientation"><code class="docutils literal notranslate"><span class="pre">bicrystallography.misorientation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../bicrystallography.html#bicrystallography.bicrystallography.inclination"><code class="docutils literal notranslate"><span class="pre">bicrystallography.inclination</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../bicrystallography.html#bicrystallography.bicrystallography.axis"><code class="docutils literal notranslate"><span class="pre">bicrystallography.axis</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../bicrystallography.html#bicrystallography.bicrystallography.lattice_parameter"><code class="docutils literal notranslate"><span class="pre">bicrystallography.lattice_parameter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../bicrystallography.html#bicrystallography.bicrystallography.gb_props"><code class="docutils literal notranslate"><span class="pre">bicrystallography.gb_props()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../min_shuffle.html">min_shuffle module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../plastic_slip.html">plastic_slip module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../plastic_slip.html#plastic_slip.dislocation_dipole"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../plastic_slip.html#plastic_slip.dislocation_dipole.dislocation_points"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.dislocation_points</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../plastic_slip.html#plastic_slip.dislocation_dipole.period"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.period</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../plastic_slip.html#plastic_slip.dislocation_dipole.burgers_vector"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.burgers_vector</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../plastic_slip.html#plastic_slip.dislocation_dipole.dislocation_vector"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.dislocation_vector</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../plastic_slip.html#plastic_slip.dislocation_dipole.dislocation_distance"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.dislocation_distance</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../plastic_slip.html#plastic_slip.dislocation_dipole.plastic_displacement"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.plastic_displacement()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../runLAMMPS.html">runLAMMPS module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.folder"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.folder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.element"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.element</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.lattice_parameter"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.lattice_parameter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.sigma"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.sigma</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.misorientation"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.misorientation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.inclination"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.inclination</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.size_along_gb_period"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.size_along_gb_period</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.potential"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.potential</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.mpi_location"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.mpi_location</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.lammps_location"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.lammps_location</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.output_filename_gridsearch"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.output_filename_gridsearch</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.gridsearch_output_setting"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.gridsearch_output_setting</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.gridsearch_output_folder"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.gridsearch_output_folder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.lammps_input_filename"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.lammps_input_filename</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.neb_images"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.neb_images</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.number_of_images_provided"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.number_of_images_provided</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.burgers_vec"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.burgers_vec</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.step_height"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.step_height</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.neb_output_folder"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.neb_output_folder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.post_process_gridsearch_data"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.post_process_gridsearch_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.post_process_neb_output"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.post_process_neb_output()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.run_grid_search"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.run_grid_search()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.run_minimization"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.run_minimization()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.run_neb_calc"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.run_neb_calc()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.write_lammps_gridsearch_input"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.write_lammps_gridsearch_input()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.write_lammps_neb_input_script"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.write_lammps_neb_input_script()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.write_minimization_input"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.write_minimization_input()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../data.html">Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../example_gs.html">Example: Running Grid Search</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../example_gs.html#output">Output</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../example_gbkinetics.html">Example: Runnig GB Kinetics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../example_gbkinetics.html#output">Output</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">GB Kinetics</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">plastic_slip</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for plastic_slip</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+
+<div class="viewcode-block" id="dislocation_dipole">
+<a class="viewcode-back" href="../plastic_slip.html#plastic_slip.dislocation_dipole">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">dislocation_dipole</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Class to calculate plastic slip due to a dislocation dipole.</span>
+
+<span class="sd">        Attributes:</span>
+<span class="sd">            dislocation_points (np.ndarray): Array of coordinates for dislocations (2D points).</span>
+<span class="sd">            period (float): Periodicity of the system (typically along GB direction).</span>
+<span class="sd">            burgers_vector (float): Magnitude of the Burgers vector.</span>
+<span class="sd">            dislocation_vector (np.ndarray): Vector from first to second dislocation.</span>
+<span class="sd">            dislocation_distance (float): Distance between the two dislocations.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">dislocation_points</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span> <span class="n">burgers_vector</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Initialize a dislocation dipole object.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                dislocation_points (np.ndarray): Coordinates of the dislocation pair (shape: 2x2).</span>
+<span class="sd">                period (float): Periodicity of the system (along grain boundary direction).</span>
+<span class="sd">                burgers_vector (float): Magnitude of the Burgers vector.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dislocation_points</span> <span class="o">=</span> <span class="n">dislocation_points</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">period</span> <span class="o">=</span> <span class="n">period</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">burgers_vector</span> <span class="o">=</span> <span class="n">burgers_vector</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dislocation_vector</span> <span class="o">=</span> <span class="n">dislocation_points</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">dislocation_points</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dislocation_distance</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dislocation_vector</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_local_position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">disloc1</span><span class="p">,</span><span class="n">disloc2</span><span class="p">,</span><span class="n">x</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Transform a point `x` into a local coordinate system based on a dislocation segment.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                disloc1 (np.ndarray): Starting point of the dislocation segment.</span>
+<span class="sd">                disloc2 (np.ndarray): Ending point of the dislocation segment.</span>
+<span class="sd">                x (np.ndarray): Point to transform into local coordinates.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                tuple:</span>
+<span class="sd">                    - np.ndarray: Local coordinates [parallel, perpendicular] relative to the segment.</span>
+<span class="sd">                    - float: Half length of the dislocation segment.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">A2B</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dislocation_vector</span>
+        <span class="n">normA2B</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dislocation_distance</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">A2B</span> <span class="o">/</span> <span class="n">normA2B</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">disloc1</span> <span class="o">+</span> <span class="n">disloc2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">c</span><span class="p">,</span> <span class="n">t</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">c</span><span class="p">,</span> <span class="n">n</span><span class="p">)]),</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">normA2B</span>
+
+<div class="viewcode-block" id="dislocation_dipole.plastic_displacement">
+<a class="viewcode-back" href="../plastic_slip.html#plastic_slip.dislocation_dipole.plastic_displacement">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plastic_displacement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">nImages</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Compute the plastic displacement at a point `x` due to a dislocation dipole.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                x (np.ndarray): 2D point at which displacement is calculated.</span>
+<span class="sd">                nImages (int, optional): Number of periodic image dipoles to consider. Defaults to 2.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                tuple:</span>
+<span class="sd">                    - float: Total angle of plastic distortion (radians).</span>
+<span class="sd">                    - float: Plastic displacement at the point `x`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">angle</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">disloc_points</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dislocation_points</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">burgers_vector</span>
+        <span class="n">period</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">period</span>
+        <span class="n">normA2B</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dislocation_distance</span>
+        <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">normA2B</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e-6</span><span class="p">:</span>
+            <span class="n">displacement</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="n">nImages</span><span class="p">,</span> <span class="n">nImages</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">disloc_points</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+                    <span class="n">disloc1</span> <span class="o">=</span> <span class="n">disloc_points</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+                    <span class="n">disloc2</span> <span class="o">=</span> <span class="n">disloc_points</span><span class="p">[</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+                    <span class="n">xL</span><span class="p">,</span> <span class="n">halfLength</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_local_position</span><span class="p">(</span><span class="n">disloc1</span><span class="p">,</span><span class="n">disloc2</span><span class="p">,</span><span class="n">x</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="n">period</span><span class="o">*</span><span class="mi">100</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">xL</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mf">1e-16</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">xL</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">halfLength</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="n">xL</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                                <span class="n">angle</span> <span class="o">+=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+                            <span class="k">elif</span> <span class="n">xL</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                                <span class="n">angle</span> <span class="o">-=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="n">angle</span> <span class="o">+=</span> <span class="mf">0.0</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">Yterm</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">xL</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                        <span class="n">angle</span> <span class="o">+=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">xL</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="n">math</span><span class="o">.</span><span class="n">atan</span><span class="p">((</span><span class="n">xL</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">halfLength</span><span class="p">)</span> <span class="o">*</span> <span class="n">Yterm</span><span class="p">)</span> <span class="o">+</span>
+                                                       <span class="n">math</span><span class="o">.</span><span class="n">atan</span><span class="p">((</span><span class="n">xL</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">halfLength</span><span class="p">)</span> <span class="o">*</span> <span class="n">Yterm</span><span class="p">))</span>
+            <span class="n">displacement</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">angle</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span> <span class="o">*</span> <span class="n">b</span>
+        <span class="k">return</span> <span class="n">angle</span><span class="p">,</span> <span class="n">displacement</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Himanshu Joshi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

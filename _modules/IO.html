@@ -1,0 +1,623 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IO &mdash; GB Kinetics 2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=60dbed4a"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            GB Kinetics
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage.html#installations-required">Installations required</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage.html#general-usage">General usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">Source</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../GBKineticsRunController.html">GBKineticsRunController module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../IO.html">IO module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../IO.html#IO.find_gb_location"><code class="docutils literal notranslate"><span class="pre">find_gb_location()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../IO.html#IO.read_LAMMPS_datafile"><code class="docutils literal notranslate"><span class="pre">read_LAMMPS_datafile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../IO.html#IO.read_LAMMPS_dumpfile"><code class="docutils literal notranslate"><span class="pre">read_LAMMPS_dumpfile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../IO.html#IO.read_gridsearch_results"><code class="docutils literal notranslate"><span class="pre">read_gridsearch_results()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../IO.html#IO.read_neb_output_data"><code class="docutils literal notranslate"><span class="pre">read_neb_output_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../IO.html#IO.write_LAMMPSoutput_tstep"><code class="docutils literal notranslate"><span class="pre">write_LAMMPSoutput_tstep()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../IO.html#IO.write_gridsearch_results"><code class="docutils literal notranslate"><span class="pre">write_gridsearch_results()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../IO.html#IO.write_lammps_datafile"><code class="docutils literal notranslate"><span class="pre">write_lammps_datafile()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../bicrystal.html">bicrystal module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../bicrystal.html#src.bicrystal.bicrystal"><code class="docutils literal notranslate"><span class="pre">bicrystal</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../bicrystal.html#src.bicrystal.bicrystal.create_disconnection_containing_bicrystal"><code class="docutils literal notranslate"><span class="pre">bicrystal.create_disconnection_containing_bicrystal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../bicrystal.html#src.bicrystal.bicrystal.create_fix_eco_orientationfile"><code class="docutils literal notranslate"><span class="pre">bicrystal.create_fix_eco_orientationfile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../bicrystal.html#src.bicrystal.bicrystal.create_flat_gb_bicrystal"><code class="docutils literal notranslate"><span class="pre">bicrystal.create_flat_gb_bicrystal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../bicrystal.html#src.bicrystal.bicrystal.ordered_write"><code class="docutils literal notranslate"><span class="pre">bicrystal.ordered_write()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../bicrystal.html#src.bicrystal.bicrystal.write"><code class="docutils literal notranslate"><span class="pre">bicrystal.write()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../bicrystallography.html">bicrystallography module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../bicrystallography.html#bicrystallography.bicrystallography"><code class="docutils literal notranslate"><span class="pre">bicrystallography</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../bicrystallography.html#bicrystallography.bicrystallography.sigma"><code class="docutils literal notranslate"><span class="pre">bicrystallography.sigma</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../bicrystallography.html#bicrystallography.bicrystallography.misorientation"><code class="docutils literal notranslate"><span class="pre">bicrystallography.misorientation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../bicrystallography.html#bicrystallography.bicrystallography.inclination"><code class="docutils literal notranslate"><span class="pre">bicrystallography.inclination</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../bicrystallography.html#bicrystallography.bicrystallography.axis"><code class="docutils literal notranslate"><span class="pre">bicrystallography.axis</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../bicrystallography.html#bicrystallography.bicrystallography.lattice_parameter"><code class="docutils literal notranslate"><span class="pre">bicrystallography.lattice_parameter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../bicrystallography.html#bicrystallography.bicrystallography.gb_props"><code class="docutils literal notranslate"><span class="pre">bicrystallography.gb_props()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../min_shuffle.html">min_shuffle module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../plastic_slip.html">plastic_slip module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../plastic_slip.html#plastic_slip.dislocation_dipole"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../plastic_slip.html#plastic_slip.dislocation_dipole.dislocation_points"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.dislocation_points</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../plastic_slip.html#plastic_slip.dislocation_dipole.period"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.period</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../plastic_slip.html#plastic_slip.dislocation_dipole.burgers_vector"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.burgers_vector</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../plastic_slip.html#plastic_slip.dislocation_dipole.dislocation_vector"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.dislocation_vector</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../plastic_slip.html#plastic_slip.dislocation_dipole.dislocation_distance"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.dislocation_distance</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../plastic_slip.html#plastic_slip.dislocation_dipole.plastic_displacement"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.plastic_displacement()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../runLAMMPS.html">runLAMMPS module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.folder"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.folder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.element"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.element</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.lattice_parameter"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.lattice_parameter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.sigma"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.sigma</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.misorientation"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.misorientation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.inclination"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.inclination</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.size_along_gb_period"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.size_along_gb_period</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.potential"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.potential</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.mpi_location"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.mpi_location</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.lammps_location"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.lammps_location</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.output_filename_gridsearch"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.output_filename_gridsearch</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.gridsearch_output_setting"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.gridsearch_output_setting</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.gridsearch_output_folder"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.gridsearch_output_folder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.lammps_input_filename"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.lammps_input_filename</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.neb_images"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.neb_images</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.number_of_images_provided"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.number_of_images_provided</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.burgers_vec"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.burgers_vec</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.step_height"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.step_height</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.neb_output_folder"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.neb_output_folder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.post_process_gridsearch_data"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.post_process_gridsearch_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.post_process_neb_output"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.post_process_neb_output()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.run_grid_search"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.run_grid_search()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.run_minimization"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.run_minimization()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.run_neb_calc"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.run_neb_calc()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.write_lammps_gridsearch_input"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.write_lammps_gridsearch_input()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.write_lammps_neb_input_script"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.write_lammps_neb_input_script()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.write_minimization_input"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.write_minimization_input()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../data.html">Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../example_gs.html">Example: Running Grid Search</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../example_gs.html#output">Output</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../example_gbkinetics.html">Example: Runnig GB Kinetics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../example_gbkinetics.html#output">Output</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">GB Kinetics</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">IO</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for IO</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<div class="viewcode-block" id="read_LAMMPS_dumpfile">
+<a class="viewcode-back" href="../IO.html#IO.read_LAMMPS_dumpfile">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">read_LAMMPS_dumpfile</span><span class="p">(</span><span class="n">path_r</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reads atomic configurations from a LAMMPS dump file.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            path_r (str): Path to the LAMMPS dump file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list of snapshots, each containing:</span>
+<span class="sd">                - timestep (float)</span>
+<span class="sd">                - number of atoms (int)</span>
+<span class="sd">                - box dimensions (3x2 np.ndarray)</span>
+<span class="sd">                - atomic data (np.ndarray of shape [n_atoms, 7])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">q</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># message = &quot;Reading &quot; + path_r</span>
+    <span class="c1"># print(message)</span>
+    <span class="n">atom_count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_r</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">flag1</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">flag2</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">flag3</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">atoms</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">fields</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">fields</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;TIMESTEP</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">):</span>
+                <span class="n">flag1</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="c1"># print(message)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">flag1</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">t</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">flag1</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="c1"># message = &quot;Timestep = &quot; + str(t)</span>
+                <span class="c1"># if t==0 or (t&gt;145000 and t&lt;150000):</span>
+                <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                    <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+                    <span class="c1"># print(message)</span>
+                    <span class="n">box</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+                    <span class="n">pot_eng</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="n">atom_count</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="n">atom_pos_csym</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unable to read lammps dump file&quot;</span><span class="p">)</span>
+                    <span class="k">continue</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span> <span class="ow">and</span> <span class="n">fields</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;ATOMS</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">):</span>
+                <span class="n">flag2</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">flag2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">atoms</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">flag2</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span> <span class="o">==</span> <span class="mi">9</span> <span class="ow">and</span> <span class="n">fields</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;BOX&quot;</span><span class="p">):</span>
+                <span class="n">flag3</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">flag3</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">box</span><span class="p">[</span><span class="n">count</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">box</span><span class="p">[</span><span class="n">count</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="n">count</span> <span class="o">=</span> <span class="n">count</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">count</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="n">flag3</span> <span class="o">=</span> <span class="mi">0</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span> <span class="o">==</span> <span class="mi">7</span><span class="p">):</span>
+                <span class="n">atom_count</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">atom_pos_csym</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">4</span><span class="p">]),</span>
+                     <span class="nb">float</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">5</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">6</span><span class="p">])])</span>
+                <span class="k">if</span> <span class="n">atom_count</span> <span class="o">==</span> <span class="nb">int</span><span class="p">(</span><span class="n">atoms</span><span class="p">):</span>
+                    <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">atom_pos_csym</span><span class="p">)</span>
+                    <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">t</span><span class="p">,</span> <span class="n">atoms</span><span class="p">,</span> <span class="n">box</span><span class="p">,</span> <span class="n">a</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">data</span></div>
+
+
+<div class="viewcode-block" id="read_LAMMPS_datafile">
+<a class="viewcode-back" href="../IO.html#IO.read_LAMMPS_datafile">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">read_LAMMPS_datafile</span><span class="p">(</span><span class="n">path_r</span><span class="p">,</span><span class="n">mode</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reads a LAMMPS data file and extracts atom positions and box dimensions.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            path_r (str): Path to the data file.</span>
+<span class="sd">            mode (int, optional): Parsing mode.</span>
+<span class="sd">                - 1: Expecting 5 columns per atom line.</span>
+<span class="sd">                - 2: Expecting 8 columns per atom line.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list containing:</span>
+<span class="sd">                - number of atoms (int)</span>
+<span class="sd">                - number of types (int)</span>
+<span class="sd">                - box dimensions (3x2 np.ndarray)</span>
+<span class="sd">                - atom positions (np.ndarray)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">q</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Reading &quot;</span> <span class="o">+</span> <span class="n">path_r</span>
+    <span class="c1"># print(message)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_r</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">flag1</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">flag2</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">flag3</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="n">atoms</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">flag1</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">box</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="n">pot_eng</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">atom_count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">atom_pos_csym</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">types</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">fields</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+            <span class="c1"># print(fields)</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">fields</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;Velocities&quot;</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">fields</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;atoms&#39;</span><span class="p">):</span>
+                <span class="n">atoms</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">flag2</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="c1"># print(atoms)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">fields</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;atom&#39;</span><span class="p">):</span>
+                <span class="n">types</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span> <span class="ow">and</span> <span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;xlo&quot;</span> <span class="ow">or</span> <span class="n">fields</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;ylo&quot;</span> <span class="ow">or</span> <span class="n">fields</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;zlo&quot;</span><span class="p">)):</span>
+                <span class="n">box</span><span class="p">[</span><span class="n">count</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">box</span><span class="p">[</span><span class="n">count</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="n">count</span> <span class="o">=</span> <span class="n">count</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">count</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="n">flag3</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="c1"># print(box)</span>
+
+            <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span> <span class="o">==</span> <span class="mi">8</span><span class="p">):</span>
+                    <span class="n">atom_count</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">atom_pos_csym</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                        <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">4</span><span class="p">])])</span>
+                    <span class="c1"># print(atom_count,atoms)</span>
+                    <span class="k">if</span> <span class="n">atom_count</span> <span class="o">==</span> <span class="nb">int</span><span class="p">(</span><span class="n">atoms</span><span class="p">):</span>
+                        <span class="c1"># print(&quot;yes&quot;)</span>
+                        <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">atom_pos_csym</span><span class="p">)</span>
+                        <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">atoms</span><span class="p">,</span> <span class="n">types</span><span class="p">,</span> <span class="n">box</span><span class="p">,</span> <span class="n">a</span><span class="p">])</span>
+            <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span><span class="p">):</span>
+                    <span class="n">atom_count</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">atom_pos_csym</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                        <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">4</span><span class="p">])])</span>
+                    <span class="k">if</span> <span class="n">atom_count</span> <span class="o">==</span> <span class="nb">int</span><span class="p">(</span><span class="n">atoms</span><span class="p">):</span>
+                        <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">atom_pos_csym</span><span class="p">)</span>
+                        <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">atoms</span><span class="p">,</span> <span class="n">types</span><span class="p">,</span> <span class="n">box</span><span class="p">,</span> <span class="n">a</span><span class="p">])</span>
+        <span class="c1"># print(atom_count,atoms,len(atom_pos_csym))</span>
+    <span class="k">return</span> <span class="n">data</span></div>
+
+
+<div class="viewcode-block" id="write_lammps_datafile">
+<a class="viewcode-back" href="../IO.html#IO.write_lammps_datafile">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">write_lammps_datafile</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span><span class="n">file</span><span class="p">,</span><span class="n">suffix</span><span class="p">,</span> <span class="n">g_A</span><span class="p">,</span> <span class="n">g_B</span><span class="p">,</span> <span class="n">input_box</span><span class="p">,</span><span class="n">mode</span> <span class="o">=</span> <span class="mi">2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Writes a LAMMPS data file for a bicrystal configuration.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            folder (str): Path to output folder.</span>
+<span class="sd">            file (str): File name prefix.</span>
+<span class="sd">            suffix (str): File suffix (e.g., &#39;min_shuffle&#39;).</span>
+<span class="sd">            g_A (np.ndarray): Atom positions for grain A.</span>
+<span class="sd">            g_B (np.ndarray): Atom positions for grain B.</span>
+<span class="sd">            input_box (np.ndarray): Original box dimensions (3x3).</span>
+<span class="sd">            mode (int, optional): Determines which box vector to expand for bicrystal. Default is 2 (z-direction).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: Path to the generated data file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">folder</span> <span class="o">+</span> <span class="n">file</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span><span class="o">+</span><span class="n">suffix</span>
+    <span class="n">natoms</span> <span class="o">=</span> <span class="n">g_A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">g_B</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+    <span class="n">eps</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="c1"># f.write(&quot;# LAMMPS data file Sigma = %d, inclination = %f\n&quot;%(sigma,inc))</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;#LAMMPS data file</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> atoms</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">natoms</span><span class="p">))</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;2 atom types</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">suffix</span> <span class="o">==</span> <span class="s2">&quot;min_shuffle&quot;</span><span class="p">:</span>
+        <span class="n">box</span> <span class="o">=</span> <span class="n">input_box</span>
+        <span class="n">box</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]</span> <span class="o">*=</span> <span class="mf">1.25</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">box</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="n">input_box</span><span class="p">[</span><span class="n">mode</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">eps</span><span class="p">,</span> <span class="n">input_box</span><span class="p">[</span><span class="n">mode</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">eps</span><span class="p">],</span>
+                        <span class="p">[</span><span class="o">-</span><span class="n">input_box</span><span class="p">[</span><span class="n">mode</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">input_box</span><span class="p">[</span><span class="n">mode</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span>
+                        <span class="p">[</span><span class="o">-</span><span class="n">input_box</span><span class="p">[</span><span class="n">mode</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">input_box</span><span class="p">[</span><span class="n">mode</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]])</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%0.10f</span><span class="s2"> </span><span class="si">%0.10f</span><span class="s2"> xlo xhi</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">box</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">box</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%0.10f</span><span class="s2"> </span><span class="si">%0.10f</span><span class="s2"> ylo yhi</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%0.10f</span><span class="s2"> </span><span class="si">%0.10f</span><span class="s2"> zlo zhi</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">box</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">box</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;0.0 0.0 0.0 xy xz yz</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Atoms # atomic</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">g_A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">grain_num</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> </span><span class="si">%d</span><span class="s2"> </span><span class="si">%0.10f</span><span class="s2"> </span><span class="si">%0.10f</span><span class="s2"> </span><span class="si">%0.10f</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">grain_num</span><span class="p">,</span> <span class="n">g_A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">g_A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">g_A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">]))</span>
+        <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">g_B</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">grain_num</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> </span><span class="si">%d</span><span class="s2"> </span><span class="si">%0.10f</span><span class="s2"> </span><span class="si">%0.10f</span><span class="s2"> </span><span class="si">%0.10f</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">grain_num</span><span class="p">,</span> <span class="n">g_B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">g_B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">g_B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">]))</span>
+        <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Done writing bicrystal &quot;</span> <span class="o">+</span> <span class="n">name</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">name</span></div>
+
+
+<div class="viewcode-block" id="find_gb_location">
+<a class="viewcode-back" href="../IO.html#IO.find_gb_location">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">find_gb_location</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">       Determines the location of a grain boundary based on centro-symmetry parameter.</span>
+
+<span class="sd">       Args:</span>
+<span class="sd">           filepath (str): Path to the LAMMPS dump file.</span>
+
+<span class="sd">       Returns:</span>
+<span class="sd">           tuple:</span>
+<span class="sd">               - average_gb_loc (float): Average z-location of the grain boundary.</span>
+<span class="sd">               - extreme_gb_loc_hi (float): Upper bound of GB atom positions.</span>
+<span class="sd">               - extreme_gb_loc_lo (float): Lower bound of GB atom positions.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">read_LAMMPS_dumpfile</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+    <span class="n">box</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">boundary_layer_thickness</span> <span class="o">=</span> <span class="mi">25</span>
+    <span class="n">atoms</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">average_gb_loc</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">extreme_gb_loc_lo</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">extreme_gb_loc_hi</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">gb_atoms</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">atoms</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="ow">and</span> <span class="p">(</span>
+                <span class="n">box</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">boundary_layer_thickness</span> <span class="o">&lt;</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">box</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">boundary_layer_thickness</span><span class="p">):</span>
+            <span class="n">gb_atoms</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">average_gb_loc</span> <span class="o">+=</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">extreme_gb_loc_hi</span><span class="p">:</span>
+                <span class="n">extreme_gb_loc_hi</span> <span class="o">=</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">extreme_gb_loc_lo</span><span class="p">:</span>
+                <span class="n">extreme_gb_loc_lo</span> <span class="o">=</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+    <span class="n">average_gb_loc</span> <span class="o">=</span> <span class="n">average_gb_loc</span> <span class="o">/</span> <span class="n">gb_atoms</span>
+
+    <span class="k">return</span> <span class="n">average_gb_loc</span><span class="p">,</span> <span class="n">extreme_gb_loc_hi</span><span class="p">,</span> <span class="n">extreme_gb_loc_lo</span></div>
+
+
+<div class="viewcode-block" id="read_neb_output_data">
+<a class="viewcode-back" href="../IO.html#IO.read_neb_output_data">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">read_neb_output_data</span><span class="p">(</span><span class="n">path_r</span><span class="p">,</span><span class="n">mode</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reads output from a NEB (nudged elastic band) LAMMPS simulation.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            path_r (str): Path to NEB output dump file.</span>
+<span class="sd">            mode (int): Determines number of atom attributes to read (7 or 8 columns).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list of snapshots, each with:</span>
+<span class="sd">                - timestep (float)</span>
+<span class="sd">                - number of atoms (int)</span>
+<span class="sd">                - box dimensions (3x2 np.ndarray)</span>
+<span class="sd">                - atomic data (np.ndarray of shape [n_atoms, N])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">q</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">k</span><span class="o">=</span><span class="mi">0</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Reading &quot;</span> <span class="o">+</span> <span class="n">path_r</span>
+    <span class="c1">#print(data)</span>
+    <span class="c1">#print(message)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_r</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">flag1</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">flag2</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">flag3</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">atoms</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">fields</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+            <span class="c1">#print(fields)</span>
+            <span class="k">if</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">fields</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;TIMESTEP</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">):</span>
+                <span class="n">flag1</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="n">box</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+                <span class="n">pot_eng</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">atom_count</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">atom_pos_csym</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="c1">#print(message)</span>
+            <span class="k">if</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">flag1</span><span class="o">==</span><span class="mi">1</span><span class="p">):</span>
+                <span class="n">t</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">flag1</span><span class="o">=</span><span class="mi">0</span>
+                <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Timestep = &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+                <span class="c1">#print(t)</span>
+
+            <span class="k">if</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span> <span class="ow">and</span> <span class="n">fields</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;ATOMS</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">):</span>
+                <span class="n">flag2</span> <span class="o">=</span> <span class="mi">1</span>
+
+            <span class="k">if</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">flag2</span><span class="o">==</span><span class="mi">1</span><span class="p">):</span>
+                <span class="n">atoms</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">flag2</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="c1">#print(atoms)</span>
+
+            <span class="k">if</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span><span class="o">==</span><span class="mi">9</span> <span class="ow">and</span> <span class="n">fields</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span><span class="o">==</span><span class="s2">&quot;pp</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">):</span>
+                <span class="n">flag3</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+
+            <span class="k">if</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">flag3</span><span class="o">==</span><span class="mi">1</span><span class="p">):</span>
+                <span class="n">box</span><span class="p">[</span><span class="n">count</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">box</span><span class="p">[</span><span class="n">count</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="n">count</span>  <span class="o">=</span> <span class="n">count</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">count</span><span class="o">&gt;</span><span class="mi">2</span><span class="p">:</span>
+                    <span class="n">flag3</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="c1">#print(box)</span>
+            <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">count_elem</span> <span class="o">=</span> <span class="mi">8</span>
+            <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">count_elem</span> <span class="o">=</span> <span class="mi">7</span>
+            <span class="k">if</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span><span class="o">==</span><span class="n">count_elem</span><span class="p">):</span>
+                <span class="n">atom_count</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="c1">#print(box)</span>
+                <span class="c1">#atom_pos_csym.append([float(fields[0]),float(fields[1]),float(fields[2]),float(fields[3]),float(fields[4]),float(fields[5])])#,float(fields[6])])</span>
+                <span class="n">atom_pos_csym</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span><span class="nb">float</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span><span class="nb">float</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span><span class="nb">float</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span><span class="nb">float</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">4</span><span class="p">]),</span><span class="nb">float</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">5</span><span class="p">]),</span><span class="nb">float</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">6</span><span class="p">])])</span>
+                <span class="k">if</span> <span class="n">atom_count</span> <span class="o">==</span> <span class="nb">int</span><span class="p">(</span><span class="n">atoms</span><span class="p">):</span>
+                    <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">atom_pos_csym</span><span class="p">)</span>
+                    <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">t</span><span class="p">,</span><span class="n">atoms</span><span class="p">,</span><span class="n">box</span><span class="p">,</span><span class="n">a</span><span class="p">])</span>
+    <span class="c1">#print(data)</span>
+    <span class="k">return</span> <span class="n">data</span></div>
+
+
+<div class="viewcode-block" id="write_LAMMPSoutput_tstep">
+<a class="viewcode-back" href="../IO.html#IO.write_LAMMPSoutput_tstep">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">write_LAMMPSoutput_tstep</span><span class="p">(</span><span class="n">natoms</span><span class="p">,</span><span class="n">Atoms</span><span class="p">,</span><span class="n">box</span><span class="p">,</span><span class="n">folder</span><span class="p">,</span><span class="n">file</span><span class="p">,</span><span class="n">tstep</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">       Writes a single timestep&#39;s atomic configuration to a LAMMPS trajectory file.</span>
+
+<span class="sd">       Args:</span>
+<span class="sd">           natoms (int): Total number of atoms.</span>
+<span class="sd">           Atoms (np.ndarray): Array of atomic data (id, type, x, y, z, PotEng, CentroSym).</span>
+<span class="sd">           box (np.ndarray): Box dimensions (3x2).</span>
+<span class="sd">           folder (str): Output folder.</span>
+<span class="sd">           file (str): File name.</span>
+<span class="sd">           tstep (int): Timestep to write.</span>
+
+<span class="sd">       Returns:</span>
+<span class="sd">           str: Path to the output trajectory file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">folder</span> <span class="o">+</span> <span class="n">file</span>
+    <span class="k">if</span> <span class="n">tstep</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+        <span class="n">mode</span> <span class="o">=</span> <span class="s2">&quot;w&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">mode</span> <span class="o">=</span> <span class="s2">&quot;a&quot;</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="n">mode</span><span class="p">)</span>
+    <span class="c1">#f.write(&quot;# LAMMPS data file Sigma = %d, inclination = %f\n&quot;%(sigma,inc))</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;ITEM: TIMESTEP</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">tstep</span><span class="p">))</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;ITEM: NUMBER OF ATOMS</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">natoms</span><span class="p">))</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;ITEM: BOX BOUNDS xy xz yz mm pp pp</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%0.10f</span><span class="s2"> </span><span class="si">%0.10f</span><span class="s2"> 0.0</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">box</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">box</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%0.10f</span><span class="s2"> </span><span class="si">%0.10f</span><span class="s2"> 0.0</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%0.10f</span><span class="s2"> </span><span class="si">%0.10f</span><span class="s2"> 0.0</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">box</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">box</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;ITEM: ATOMS id type x y z PotEng</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span><span class="c1"># CentroSym\n&quot;)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Atoms</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="c1">#print(Atoms[i,:])</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> </span><span class="si">%d</span><span class="s2"> </span><span class="si">%0.10f</span><span class="s2"> </span><span class="si">%0.10f</span><span class="s2"> </span><span class="si">%0.10f</span><span class="s2"> </span><span class="si">%0.10f</span><span class="s2"> </span><span class="si">%0.10f</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">Atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">Atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span><span class="n">Atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span><span class="n">Atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span><span class="n">Atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span><span class="n">Atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span><span class="n">Atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">6</span><span class="p">]))</span>
+        <span class="c1">#f.write(&quot;%d %d %0.10f %0.10f %0.10f %0.10f\n&quot;%(Atoms[i,0],Atoms[i,1],Atoms[i,2],Atoms[i,3],Atoms[i,4],Atoms[i,5]))</span>
+
+    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="c1">#print(&quot;Done writing bicrystal&quot;)</span>
+    <span class="k">return</span> <span class="n">file</span></div>
+
+
+<div class="viewcode-block" id="read_gridsearch_results">
+<a class="viewcode-back" href="../IO.html#IO.read_gridsearch_results">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">read_gridsearch_results</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">       Reads grid search results from a custom text file (displacements and GB energy).</span>
+
+<span class="sd">       Args:</span>
+<span class="sd">           filepath (str): Path to the results file.</span>
+
+<span class="sd">       Returns:</span>
+<span class="sd">           np.ndarray: Array with columns [dispy, dispz, GB_energy].</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">fields</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+            <span class="n">row</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fields</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="n">fields</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;dispy&quot;</span><span class="p">:</span>
+                    <span class="n">row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]))</span>
+                <span class="k">elif</span> <span class="n">fields</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;dispz&quot;</span><span class="p">:</span>
+                    <span class="n">row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]))</span>
+                <span class="k">elif</span> <span class="n">fields</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;GBene&quot;</span><span class="p">:</span>
+                    <span class="n">row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]))</span>
+                    <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="write_gridsearch_results">
+<a class="viewcode-back" href="../IO.html#IO.write_gridsearch_results">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">write_gridsearch_results</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Writes displacements and GB energy to a tabulated results file.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            filepath (str): Output file path.</span>
+<span class="sd">            data (np.ndarray): Array of shape (N, 3) containing:</span>
+<span class="sd">                - dispy (float)</span>
+<span class="sd">                - dispz (float)</span>
+<span class="sd">                - GB energy (float)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;dispy</span><span class="se">\t\t</span><span class="s2">dispz</span><span class="se">\t\t</span><span class="s2">GB Energy</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)):</span>
+            <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%f</span><span class="se">\t\t</span><span class="si">%f</span><span class="se">\t\t</span><span class="si">%f</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">2</span><span class="p">]))</span></div>
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Himanshu Joshi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

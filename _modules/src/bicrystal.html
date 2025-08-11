@@ -1,0 +1,890 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.bicrystal &mdash; GB Kinetics 2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=60dbed4a"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            GB Kinetics
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../usage.html#installations-required">Installations required</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage.html#general-usage">General usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Source</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../GBKineticsRunController.html">GBKineticsRunController module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../IO.html">IO module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../IO.html#IO.find_gb_location"><code class="docutils literal notranslate"><span class="pre">find_gb_location()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../IO.html#IO.read_LAMMPS_datafile"><code class="docutils literal notranslate"><span class="pre">read_LAMMPS_datafile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../IO.html#IO.read_LAMMPS_dumpfile"><code class="docutils literal notranslate"><span class="pre">read_LAMMPS_dumpfile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../IO.html#IO.read_gridsearch_results"><code class="docutils literal notranslate"><span class="pre">read_gridsearch_results()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../IO.html#IO.read_neb_output_data"><code class="docutils literal notranslate"><span class="pre">read_neb_output_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../IO.html#IO.write_LAMMPSoutput_tstep"><code class="docutils literal notranslate"><span class="pre">write_LAMMPSoutput_tstep()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../IO.html#IO.write_gridsearch_results"><code class="docutils literal notranslate"><span class="pre">write_gridsearch_results()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../IO.html#IO.write_lammps_datafile"><code class="docutils literal notranslate"><span class="pre">write_lammps_datafile()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../bicrystal.html">bicrystal module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal"><code class="docutils literal notranslate"><span class="pre">bicrystal</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.create_disconnection_containing_bicrystal"><code class="docutils literal notranslate"><span class="pre">bicrystal.create_disconnection_containing_bicrystal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.create_fix_eco_orientationfile"><code class="docutils literal notranslate"><span class="pre">bicrystal.create_fix_eco_orientationfile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.create_flat_gb_bicrystal"><code class="docutils literal notranslate"><span class="pre">bicrystal.create_flat_gb_bicrystal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.ordered_write"><code class="docutils literal notranslate"><span class="pre">bicrystal.ordered_write()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.write"><code class="docutils literal notranslate"><span class="pre">bicrystal.write()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../bicrystallography.html">bicrystallography module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../bicrystallography.html#bicrystallography.bicrystallography"><code class="docutils literal notranslate"><span class="pre">bicrystallography</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystallography.html#bicrystallography.bicrystallography.sigma"><code class="docutils literal notranslate"><span class="pre">bicrystallography.sigma</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystallography.html#bicrystallography.bicrystallography.misorientation"><code class="docutils literal notranslate"><span class="pre">bicrystallography.misorientation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystallography.html#bicrystallography.bicrystallography.inclination"><code class="docutils literal notranslate"><span class="pre">bicrystallography.inclination</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystallography.html#bicrystallography.bicrystallography.axis"><code class="docutils literal notranslate"><span class="pre">bicrystallography.axis</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystallography.html#bicrystallography.bicrystallography.lattice_parameter"><code class="docutils literal notranslate"><span class="pre">bicrystallography.lattice_parameter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystallography.html#bicrystallography.bicrystallography.gb_props"><code class="docutils literal notranslate"><span class="pre">bicrystallography.gb_props()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../min_shuffle.html">min_shuffle module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../plastic_slip.html">plastic_slip module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../plastic_slip.html#plastic_slip.dislocation_dipole"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../plastic_slip.html#plastic_slip.dislocation_dipole.dislocation_points"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.dislocation_points</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../plastic_slip.html#plastic_slip.dislocation_dipole.period"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.period</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../plastic_slip.html#plastic_slip.dislocation_dipole.burgers_vector"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.burgers_vector</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../plastic_slip.html#plastic_slip.dislocation_dipole.dislocation_vector"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.dislocation_vector</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../plastic_slip.html#plastic_slip.dislocation_dipole.dislocation_distance"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.dislocation_distance</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../plastic_slip.html#plastic_slip.dislocation_dipole.plastic_displacement"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.plastic_displacement()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../runLAMMPS.html">runLAMMPS module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.folder"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.folder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.element"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.element</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.lattice_parameter"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.lattice_parameter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.sigma"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.sigma</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.misorientation"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.misorientation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.inclination"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.inclination</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.size_along_gb_period"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.size_along_gb_period</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.potential"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.potential</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.mpi_location"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.mpi_location</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.lammps_location"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.lammps_location</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.output_filename_gridsearch"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.output_filename_gridsearch</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.gridsearch_output_setting"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.gridsearch_output_setting</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.gridsearch_output_folder"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.gridsearch_output_folder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.lammps_input_filename"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.lammps_input_filename</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.neb_images"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.neb_images</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.number_of_images_provided"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.number_of_images_provided</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.burgers_vec"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.burgers_vec</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.step_height"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.step_height</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.neb_output_folder"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.neb_output_folder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.post_process_gridsearch_data"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.post_process_gridsearch_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.post_process_neb_output"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.post_process_neb_output()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.run_grid_search"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.run_grid_search()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.run_minimization"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.run_minimization()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.run_neb_calc"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.run_neb_calc()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.write_lammps_gridsearch_input"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.write_lammps_gridsearch_input()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.write_lammps_neb_input_script"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.write_lammps_neb_input_script()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.write_minimization_input"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.write_minimization_input()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../data.html">Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../example_gs.html">Example: Running Grid Search</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../example_gs.html#output">Output</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../example_gbkinetics.html">Example: Runnig GB Kinetics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../example_gbkinetics.html#output">Output</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">GB Kinetics</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">src.bicrystal</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for src.bicrystal</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy.linalg</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">la</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.bicrystallography</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.plastic_slip</span><span class="w"> </span><span class="kn">import</span> <span class="n">dislocation_dipole</span>
+
+<div class="viewcode-block" id="bicrystal">
+<a class="viewcode-back" href="../../bicrystal.html#src.bicrystal.bicrystal">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">bicrystal</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a bicrystal</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">gb_data</span><span class="p">,</span><span class="n">axis</span><span class="p">,</span><span class="n">lat_par</span><span class="p">,</span><span class="n">lat_Vec</span><span class="p">,</span>
+                 <span class="n">size_along_period</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">size_along_tilt_axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                 <span class="n">non_periodic_direction_size</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes a bicrystal configuration based on grain boundary crystallography.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            gb_data (np.ndarray): Grain boundary bicrystallographic data, typically</span>
+<span class="sd">                the output from a bicrystallography class.</span>
+<span class="sd">            axis (np.ndarray): Tilt axis of the bicrystal.</span>
+<span class="sd">            lat_par (float): Lattice parameter of the material.</span>
+<span class="sd">            lat_Vec (np.ndarray): Lattice vectors of the material.</span>
+<span class="sd">            size_along_period (int, optional): Number of CSL repeats along the GB period.</span>
+<span class="sd">                Defaults to 1.</span>
+<span class="sd">            size_along_tilt_axis (int, optional): Number of CSL repeats along the tilt axis.</span>
+<span class="sd">                Defaults to 1.</span>
+<span class="sd">            non_periodic_direction_size (float, optional): Size of the bicrystal normal</span>
+<span class="sd">                to the GB plane, in angstroms. Defaults to 50.</span>
+
+<span class="sd">        Attributes:</span>
+<span class="sd">            gb_data (np.ndarray): Grain boundary data input.</span>
+<span class="sd">            axis (np.ndarray): Tilt axis.</span>
+<span class="sd">            lat_par (float): Lattice parameter.</span>
+<span class="sd">            lat_Vec (np.ndarray): Lattice vectors.</span>
+<span class="sd">            size_along_period (int): Size along GB period (CSL multiples).</span>
+<span class="sd">            size_along_tilt_axis (int): Size along tilt axis (CSL multiples).</span>
+<span class="sd">            non_periodic_direction_size (float): Size normal to the GB plane in angstroms.</span>
+<span class="sd">            nCells (int): Number of unit cells in the bicrystal. Computed as</span>
+<span class="sd">                `size_factor * size_along_period`, where `size_factor` is</span>
+<span class="sd">                40 if `size_along_period == 1`, else 25.</span>
+
+<span class="sd">            grain1_orientation (Any): Orientation matrix or parameters for grain 1 (initialized as None).</span>
+<span class="sd">            grain2_orientation (Any): Orientation matrix or parameters for grain 2 (initialized as None).</span>
+<span class="sd">            grain1_flatgb (Any): Flat grain boundary structure for grain 1 (initialized as None).</span>
+<span class="sd">            grain2_flatgb (Any): Flat grain boundary structure for grain 2 (initialized as None).</span>
+<span class="sd">            grain1 (Any): Final structure of grain 1 (initialized as None).</span>
+<span class="sd">            grain2 (Any): Final structure of grain 2 (initialized as None).</span>
+<span class="sd">            box (Any): Simulation or bounding box information (initialized as None).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gb_data</span> <span class="o">=</span> <span class="n">gb_data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">axis</span> <span class="o">=</span> <span class="n">axis</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lat_par</span> <span class="o">=</span> <span class="n">lat_par</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lat_Vec</span> <span class="o">=</span> <span class="n">lat_Vec</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">size_along_period</span> <span class="o">=</span> <span class="n">size_along_period</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">size_along_tilt_axis</span> <span class="o">=</span> <span class="n">size_along_tilt_axis</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">non_periodic_direction_size</span> <span class="o">=</span> <span class="n">non_periodic_direction_size</span>
+        <span class="n">size_factor</span> <span class="o">=</span> <span class="mi">40</span> <span class="k">if</span> <span class="n">size_along_period</span><span class="o">==</span><span class="mi">1</span> <span class="k">else</span> <span class="mi">25</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nCells</span> <span class="o">=</span> <span class="n">size_factor</span><span class="o">*</span><span class="n">size_along_period</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">grain1_orientation</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grain2_orientation</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grain1_flatgb</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grain2_flatgb</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grain1</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grain2</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">box</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_setup_bicrystal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Computes the orientation matrices for the two grains in a bicrystal system,</span>
+<span class="sd">            based on the tilt axis, misorientation, and inclination angle from the grain</span>
+<span class="sd">            boundary (GB) data.</span>
+
+<span class="sd">            This method performs:</span>
+<span class="sd">                - Construction of grain rotation matrices using Rodrigues’ rotation formula.</span>
+<span class="sd">                - Application of inclination and misorientation angles.</span>
+<span class="sd">                - Alignment of the tilt axis with the [001] direction via coordinate transformation.</span>
+<span class="sd">                - Final transformation of lattice vectors into crystal orientations.</span>
+
+<span class="sd">            Sets:</span>
+<span class="sd">                grain1_orientation (np.ndarray): Rotated lattice vectors for grain 1 in the final coordinate system.</span>
+<span class="sd">                grain2_orientation (np.ndarray): Rotated lattice vectors for grain 2 in the final coordinate system.</span>
+
+<span class="sd">            Notes:</span>
+<span class="sd">                - The tilt axis is aligned to the global Z-axis [0, 0, 1].</span>
+<span class="sd">                - Uses Rodrigues’ formula to compute rotations from GB data.</span>
+<span class="sd">                - Applies an additional rotation if the tilt axis is [1 1 1] or [1 1 0], to align the grains properly.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dim</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="n">axis</span>    <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">axis</span>
+        <span class="n">lat_par</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lat_par</span>
+        <span class="n">gb_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gb_data</span>
+        <span class="n">lat_Vec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lat_Vec</span>
+
+        <span class="c1"># Rotate basis vectors to get A and B</span>
+        <span class="n">axis_true</span> <span class="o">=</span> <span class="n">axis</span>
+        <span class="n">axis</span> <span class="o">=</span> <span class="n">axis</span> <span class="o">/</span> <span class="n">la</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span>
+        <span class="n">K</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">axis</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">axis</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
+                      <span class="p">[</span><span class="n">axis</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">axis</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
+                      <span class="p">[</span><span class="o">-</span><span class="n">axis</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">axis</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">]])</span>
+        <span class="n">misorientation</span> <span class="o">=</span> <span class="n">gb_data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">theta1</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">*</span> <span class="p">(</span><span class="n">misorientation</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span>
+        <span class="n">theta2</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">*</span> <span class="p">(</span><span class="n">misorientation</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span>
+        <span class="n">inclination</span> <span class="o">=</span> <span class="n">gb_data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">phi</span> <span class="o">=</span> <span class="p">(</span><span class="n">inclination</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span>
+        <span class="n">grain1_rotation</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta1</span> <span class="o">+</span> <span class="n">phi</span><span class="p">)</span> <span class="o">*</span> <span class="n">K</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta1</span> <span class="o">+</span> <span class="n">phi</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span>
+        <span class="n">grain2_rotation</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="o">-</span><span class="n">theta2</span> <span class="o">+</span> <span class="n">phi</span><span class="p">)</span> <span class="o">*</span> <span class="n">K</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="o">-</span><span class="n">theta2</span> <span class="o">+</span> <span class="n">phi</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span>
+        <span class="n">g1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">grain1_rotation</span><span class="p">,</span> <span class="n">lat_Vec</span><span class="p">)</span>
+        <span class="n">g2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">grain2_rotation</span><span class="p">,</span> <span class="n">lat_Vec</span><span class="p">)</span>
+
+        <span class="c1"># Rotate crystals such that tilt axis lies along [001]</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">axis</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">z</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="n">axis</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">z</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="n">axis</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="n">z</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span>
+            <span class="n">final_rotation</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">dim</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ax</span> <span class="o">=</span> <span class="n">ax</span> <span class="o">/</span> <span class="n">la</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+            <span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
+                          <span class="p">[</span><span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
+                          <span class="p">[</span><span class="o">-</span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">]])</span>
+            <span class="n">rotation_angle</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span> <span class="o">/</span> <span class="n">la</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">axis</span><span class="p">))</span>
+            <span class="n">rotation</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">dim</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">rotation_angle</span><span class="p">)</span> <span class="o">*</span> <span class="n">V</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">V</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">rotation_angle</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="n">axis_true</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">axis_true</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">axis_true</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">rotation_tilt_axis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">4</span><span class="p">),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">4</span><span class="p">),</span> <span class="mi">0</span><span class="p">],</span>
+                                   <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">4</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">4</span><span class="p">),</span> <span class="mi">0</span><span class="p">],</span>
+                                   <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+            <span class="k">if</span> <span class="n">axis_true</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">axis_true</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">axis_true</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">rotation_tilt_axis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">4</span><span class="p">),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">4</span><span class="p">),</span> <span class="mi">0</span><span class="p">],</span>
+                                   <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">4</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">4</span><span class="p">),</span> <span class="mi">0</span><span class="p">],</span>
+                                   <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+            <span class="n">final_rotation</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">rotation</span><span class="p">,</span> <span class="n">rotation_tilt_axis</span><span class="p">)</span>
+
+        <span class="n">grain1_orientation</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">final_rotation</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">g1</span><span class="p">)</span>
+        <span class="n">grain2_orientation</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">final_rotation</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">g2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grain1_orientation</span> <span class="o">=</span> <span class="n">grain1_orientation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grain2_orientation</span> <span class="o">=</span> <span class="n">grain2_orientation</span>
+
+<div class="viewcode-block" id="bicrystal.create_flat_gb_bicrystal">
+<a class="viewcode-back" href="../../bicrystal.html#src.bicrystal.bicrystal.create_flat_gb_bicrystal">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_flat_gb_bicrystal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">gb_position</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Generates the initial flat grain boundary (GB) structure by constructing a dichromatic pattern</span>
+<span class="sd">            from the two grain orientations and selecting atoms to form a bicrystal.</span>
+
+<span class="sd">            This function:</span>
+<span class="sd">                - Constructs a 3D dichromatic pattern for both grains using lattice translations.</span>
+<span class="sd">                - Filters atoms within a simulation box, optionally shifted.</span>
+<span class="sd">                - Selects atoms for each grain based on their position relative to the GB plane.</span>
+<span class="sd">                - Removes duplicate atoms using a distance-based uniqueness check.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                gb_position (float): The X-coordinate (along GB normal) at which the GB plane is located.</span>
+
+<span class="sd">            Sets:</span>
+<span class="sd">                grain1_flatgb (np.ndarray): Filtered atomic positions for grain 1, including unique atom IDs.</span>
+<span class="sd">                grain2_flatgb (np.ndarray): Filtered atomic positions for grain 2, including unique atom IDs.</span>
+<span class="sd">                box (np.ndarray): Dimensions of the simulation box used for filtering and placement.</span>
+
+<span class="sd">            Notes:</span>
+<span class="sd">                - Atom uniqueness is checked using `_check_unique()` with a distance tolerance of 0.5 Å.</span>
+<span class="sd">                - Atoms on or near the GB plane are discarded to create a clean flat interface.</span>
+<span class="sd">                - The structure is built from `-nCells` to `+nCells` in lattice units in all three dimensions.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">============================= Generating initial flat GB  =======================================&quot;</span><span class="p">)</span>
+        <span class="c1"># Declare relevant variables</span>
+        <span class="n">axis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">axis</span>
+        <span class="n">lat_par</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lat_par</span>
+        <span class="n">gb_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gb_data</span>
+        <span class="n">lat_Vec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lat_Vec</span>
+        <span class="n">period</span> <span class="o">=</span> <span class="n">gb_data</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="n">lat_par</span>
+        <span class="n">nCells</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nCells</span>
+
+        <span class="n">grainA</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grain1_orientation</span>
+        <span class="n">grainB</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grain2_orientation</span>
+        <span class="n">grainA_dichromatic</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">grainB_dichromatic</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">box</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="bp">self</span><span class="o">.</span><span class="n">size_along_period</span> <span class="o">*</span> <span class="n">period</span> <span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">non_periodic_direction_size</span><span class="p">,</span> <span class="n">la</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span> <span class="o">*</span> <span class="n">lat_par</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">size_along_tilt_axis</span><span class="p">],</span>
+                        <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">non_periodic_direction_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">size_along_period</span> <span class="o">*</span> <span class="n">period</span> <span class="p">,</span> <span class="n">la</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span> <span class="o">*</span> <span class="n">lat_par</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">size_along_tilt_axis</span><span class="p">]])</span>
+        <span class="n">eps_p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.1</span><span class="p">])</span>
+        <span class="n">eps_n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">])</span>
+        <span class="n">box_shift</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="c1"># Create dichromatic pattern</span>
+        <span class="k">for</span> <span class="n">nx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="n">nCells</span><span class="p">,</span> <span class="n">nCells</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">ny</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="n">nCells</span><span class="p">,</span> <span class="n">nCells</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">nz</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="n">nCells</span><span class="p">,</span> <span class="n">nCells</span><span class="p">):</span>
+                    <span class="n">loc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">nx</span><span class="p">],</span> <span class="p">[</span><span class="n">ny</span><span class="p">],</span> <span class="p">[</span><span class="n">nz</span><span class="p">]])</span>
+                    <span class="n">a</span> <span class="o">=</span> <span class="n">lat_par</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">grainA</span><span class="p">,</span> <span class="n">loc</span><span class="p">)[:,</span> <span class="mi">0</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">((</span><span class="n">a</span><span class="o">-</span><span class="n">box_shift</span><span class="o">&gt;-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,:]</span><span class="o">-</span><span class="n">eps_n</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">a</span><span class="o">-</span><span class="n">box_shift</span><span class="o">&lt;</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,:]</span><span class="o">+</span><span class="n">eps_p</span><span class="p">)):</span>
+                        <span class="n">grainA_dichromatic</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]])</span>
+                    <span class="n">b</span> <span class="o">=</span> <span class="n">lat_par</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">grainB</span><span class="p">,</span> <span class="n">loc</span><span class="p">)[:,</span> <span class="mi">0</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">((</span><span class="n">b</span><span class="o">-</span><span class="n">box_shift</span><span class="o">&gt;-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,:]</span><span class="o">-</span><span class="n">eps_n</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">b</span><span class="o">-</span><span class="n">box_shift</span><span class="o">&lt;</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,:]</span><span class="o">+</span><span class="n">eps_p</span><span class="p">)):</span>
+                        <span class="n">grainB_dichromatic</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">,</span> <span class="n">b</span><span class="p">[</span><span class="mi">2</span><span class="p">]])</span>
+
+
+        <span class="c1"># Creation of a bicrystal by deleting atoms on the GB</span>
+        <span class="n">gA</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">gB</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">eps</span> <span class="o">=</span> <span class="mf">0.1</span>
+        <span class="n">atom_count</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">grainA_dichromatic</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">grainA_dichromatic</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">gb_position</span> <span class="o">-</span> <span class="n">eps</span><span class="p">:</span>
+                <span class="n">point</span> <span class="o">=</span> <span class="p">[</span><span class="n">grainA_dichromatic</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">grainA_dichromatic</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">grainA_dichromatic</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]]</span>
+                <span class="n">flag</span> <span class="o">=</span> <span class="n">bicrystal</span><span class="o">.</span><span class="n">_check_unique</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">gA</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">flag</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">point</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">atom_count</span><span class="p">)</span>
+                    <span class="n">gA</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
+                    <span class="n">atom_count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">grainB_dichromatic</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">grainB_dichromatic</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">gb_position</span> <span class="o">-</span> <span class="n">eps</span><span class="p">:</span>
+                <span class="n">point</span> <span class="o">=</span> <span class="p">[</span><span class="n">grainB_dichromatic</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">grainB_dichromatic</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">grainB_dichromatic</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]]</span>
+                <span class="n">flag</span> <span class="o">=</span> <span class="n">bicrystal</span><span class="o">.</span><span class="n">_check_unique</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">gB</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">flag</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">point</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">atom_count</span><span class="p">)</span>
+                    <span class="n">gB</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
+                    <span class="n">atom_count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">grain1_flatgb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">gA</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grain2_flatgb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">gB</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">box</span> <span class="o">=</span> <span class="n">box</span></div>
+
+
+
+<div class="viewcode-block" id="bicrystal.create_disconnection_containing_bicrystal">
+<a class="viewcode-back" href="../../bicrystal.html#src.bicrystal.bicrystal.create_disconnection_containing_bicrystal">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_disconnection_containing_bicrystal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">nodes</span><span class="p">,</span><span class="n">burgers_vector</span><span class="p">,</span><span class="n">step_height</span><span class="p">,</span><span class="n">gb_position</span><span class="p">,</span>
+                                                  <span class="n">image_number</span><span class="p">,</span><span class="n">nImages</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span><span class="n">number_of_dipoles</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Generates a grain boundary (GB) image with a disconnection dipole and possible steps</span>
+<span class="sd">            based on the bicrystallographic configuration.</span>
+
+<span class="sd">            This method:</span>
+<span class="sd">                - Validates the presence of a flat GB structure.</span>
+<span class="sd">                - Determines regions affected by the dislocation dipole.</span>
+<span class="sd">                - Applies displacement fields to atoms in the transformed region based on</span>
+<span class="sd">                  the dipole configuration and Burgers vector.</span>
+<span class="sd">                - Combines atoms from transformed and non-transformed regions to form a new GB image.</span>
+<span class="sd">                - Assigns unique atom IDs while avoiding duplicate atoms.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                image_number (int): Identifier for the GB image being generated, used to determine</span>
+<span class="sd">                    whether dipole transitions are included.</span>
+<span class="sd">                gb_position (float): X-coordinate of the GB plane, defining the boundary between grains.</span>
+<span class="sd">                nodes (np.ndarray): 2x2 array of disconnection node coordinates in the GB plane.</span>
+<span class="sd">                step_height (float): Height of the step at the GB (positive or negative), used to</span>
+<span class="sd">                    determine which grain is displaced.</span>
+<span class="sd">                burgers_vector (np.ndarray): Displacement vector representing the dislocation.</span>
+<span class="sd">                number_of_dipoles (int): Number of dipoles introduced in the bicrystal.</span>
+
+<span class="sd">            Sets:</span>
+<span class="sd">                grain1 (np.ndarray): Atom positions for grain 1, including plastic displacement and unique IDs.</span>
+<span class="sd">                grain2 (np.ndarray): Atom positions for grain 2, similarly displaced and labeled.</span>
+
+<span class="sd">            Raises:</span>
+<span class="sd">                ValueError: If the flat GB structure has not been created via `create_flat_gb_bicrystal`.</span>
+
+<span class="sd">            Notes:</span>
+<span class="sd">                - Atoms in the transformed region are displaced based on the disconnection geometry.</span>
+<span class="sd">                - Overlapping atoms are checked using Euclidean distance and matched to maintain continuity.</span>
+<span class="sd">                - Diagnostics are written to file if mismatch occurs between atom counts in transformed regions.</span>
+
+<span class="sd">            Diagnostic Output:</span>
+<span class="sd">                If atom mismatches are detected in the transformed region, a diagnostic file is written to:</span>
+<span class="sd">                `/Users/hj-home/Desktop/Research/GB_kinetics_oop/output/grain_diagnostics.txt`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">================= Generating GB image &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">image_number</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; bicrystallographically ==============&quot;</span><span class="p">)</span>
+        <span class="c1"># Declare relevant variables</span>
+        <span class="n">axis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">axis</span>
+        <span class="n">lat_par</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lat_par</span>
+        <span class="n">gb_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gb_data</span>
+        <span class="n">period</span> <span class="o">=</span> <span class="n">gb_data</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="n">lat_par</span>
+        <span class="n">nCells</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nCells</span>
+
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">grain1_flatgb</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">grain2_flatgb</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Bicrystal with flat GB not constructed. Run create_flat_gb_bicrystal first.&quot;</span><span class="p">)</span>
+        <span class="n">grain1_flat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grain1_flatgb</span>
+        <span class="n">grain2_flat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grain2_flatgb</span>
+        <span class="n">box</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">box</span>
+
+        <span class="c1"># Decompose dislocation dipole in case of a stepped boundary</span>
+        <span class="n">tol</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">disconnection_start</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">tol</span>
+        <span class="n">disconnection_stop</span>  <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">tol</span>
+        <span class="n">diag_plt</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># True</span>
+        <span class="n">nodes_for_solid_angle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">image_number</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">size_along_period</span><span class="p">:</span>
+            <span class="n">nodes_modified</span> <span class="o">=</span> <span class="p">[</span><span class="n">nodes</span><span class="p">]</span>  <span class="c1"># + np.array([[-period/8,0],[period/8,0]])</span>
+            <span class="k">if</span> <span class="n">number_of_dipoles</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">transition_node_start</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">nodes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">gb_position</span><span class="p">],</span> <span class="p">[</span><span class="n">nodes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">nodes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]])</span>
+                <span class="n">transition_node_stop</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">nodes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">nodes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span> <span class="p">[</span><span class="n">nodes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">gb_position</span><span class="p">]])</span>
+                <span class="n">nodes_modified</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">transition_node_start</span><span class="p">)</span>
+                <span class="n">nodes_modified</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">transition_node_stop</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">nodes_modified</span> <span class="o">=</span> <span class="p">[</span><span class="n">nodes</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="n">period</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="n">period</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])]</span>
+            <span class="n">dipole_number</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="c1"># Create atoms in the transformed region with displacement due to dislocation dipole</span>
+        <span class="n">transformed_atoms</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">box_shift</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="n">grainA</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grain1_orientation</span>
+        <span class="n">grainB</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grain2_orientation</span>
+
+        <span class="n">disconnection_start</span> <span class="o">=</span> <span class="n">disconnection_start</span> <span class="k">if</span> <span class="n">disconnection_start</span> <span class="o">&gt;</span> <span class="o">-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="k">else</span> <span class="o">-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">disconnection_stop</span>  <span class="o">=</span> <span class="n">disconnection_stop</span>  <span class="k">if</span> <span class="n">disconnection_stop</span>  <span class="o">&lt;</span>  <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="k">else</span>  <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">step_height</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">grain2transform</span> <span class="o">=</span> <span class="n">grainA</span>
+            <span class="n">lower_bounds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">gb_position</span> <span class="o">+</span> <span class="n">step_height</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">disconnection_start</span><span class="p">,</span> <span class="o">-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+            <span class="n">upper_bounds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">gb_position</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">disconnection_stop</span><span class="p">,</span> <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+            <span class="n">eps_n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+            <span class="n">eps_p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">grain2transform</span> <span class="o">=</span> <span class="n">grainB</span>
+            <span class="n">lower_bounds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">gb_position</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">disconnection_start</span><span class="p">,</span> <span class="o">-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+            <span class="n">upper_bounds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">gb_position</span> <span class="o">+</span> <span class="n">step_height</span><span class="p">,</span> <span class="n">disconnection_stop</span><span class="p">,</span> <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+            <span class="n">eps_n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+            <span class="n">eps_p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">])</span>
+
+        <span class="k">for</span> <span class="n">nx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="n">nCells</span><span class="p">,</span> <span class="n">nCells</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">ny</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="n">nCells</span><span class="p">,</span> <span class="n">nCells</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">nz</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="n">nCells</span><span class="p">,</span> <span class="n">nCells</span><span class="p">):</span>
+                    <span class="n">loc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">nx</span><span class="p">],</span> <span class="p">[</span><span class="n">ny</span><span class="p">],</span> <span class="p">[</span><span class="n">nz</span><span class="p">]])</span>
+                    <span class="n">a</span> <span class="o">=</span> <span class="n">lat_par</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">grain2transform</span><span class="p">,</span> <span class="n">loc</span><span class="p">)[:,</span> <span class="mi">0</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">((</span><span class="n">a</span> <span class="o">-</span> <span class="n">box_shift</span> <span class="o">&gt;</span> <span class="n">lower_bounds</span> <span class="o">-</span> <span class="n">eps_n</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">box_shift</span> <span class="o">&lt;</span> <span class="n">upper_bounds</span> <span class="o">+</span> <span class="n">eps_p</span><span class="p">)):</span>
+                        <span class="n">point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+                        <span class="n">plastic_displacement</span> <span class="o">=</span> <span class="n">bicrystal</span><span class="o">.</span><span class="n">_apply_plastic_displacement</span><span class="p">(</span><span class="n">nodes_modified</span><span class="p">,</span><span class="n">period</span><span class="p">,</span><span class="n">burgers_vector</span><span class="p">,</span><span class="n">point</span><span class="p">,</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span><span class="o">-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+                        <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">plastic_displacement</span> <span class="o">&gt;</span> <span class="n">disconnection_stop</span><span class="p">:</span>
+                            <span class="n">plastic_displacement</span> <span class="o">+=</span><span class="p">(</span><span class="n">disconnection_stop</span> <span class="o">-</span> <span class="n">disconnection_start</span><span class="p">)</span>
+                        <span class="k">elif</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">plastic_displacement</span> <span class="o">&lt;</span> <span class="n">disconnection_start</span><span class="p">:</span>
+                            <span class="n">plastic_displacement</span> <span class="o">-=</span> <span class="p">(</span><span class="n">disconnection_start</span> <span class="o">-</span> <span class="n">disconnection_start</span><span class="p">)</span>
+                        <span class="n">transformed_atoms</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">plastic_displacement</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]])</span>
+
+        <span class="c1"># Compile atoms in regions</span>
+        <span class="n">epsx</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.1</span>
+        <span class="n">grain1_disconnection</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">grain2_disconnection</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">transformed_atoms_initial</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># Fill up atoms in the non-transformed region</span>
+        <span class="k">if</span> <span class="n">step_height</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">atoms</span> <span class="ow">in</span> <span class="n">grain2_flat</span><span class="p">:</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">atoms</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span><span class="n">gb_position</span><span class="o">+</span><span class="n">step_height</span> <span class="o">+</span><span class="n">epsx</span> <span class="ow">or</span>
+                        <span class="p">((</span><span class="n">atoms</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">&lt;</span><span class="n">disconnection_start</span> <span class="ow">or</span> <span class="n">atoms</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">&gt;</span><span class="n">disconnection_stop</span><span class="p">)</span> <span class="ow">and</span> <span class="n">atoms</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&lt;</span><span class="n">gb_position</span><span class="o">+</span><span class="n">epsx</span><span class="p">)):</span>
+                    <span class="n">point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">atoms</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">atoms</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+                    <span class="n">plastic_displacement</span> <span class="o">=</span> <span class="n">bicrystal</span><span class="o">.</span><span class="n">_apply_plastic_displacement</span><span class="p">(</span><span class="n">nodes_modified</span><span class="p">,</span><span class="n">period</span><span class="p">,</span><span class="n">burgers_vector</span><span class="p">,</span><span class="n">point</span><span class="p">,</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span><span class="o">-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+                    <span class="n">grain2_disconnection</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">atoms</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">atoms</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">plastic_displacement</span><span class="p">,</span> <span class="n">atoms</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">atoms</span><span class="p">[</span><span class="mi">3</span><span class="p">]])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">transformed_atoms_initial</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">atoms</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">atoms</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">atoms</span><span class="p">[</span><span class="mi">3</span><span class="p">]])</span>
+
+            <span class="k">for</span> <span class="n">atoms</span> <span class="ow">in</span> <span class="n">grain1_flat</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">atoms</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&gt;</span><span class="n">gb_position</span><span class="o">+</span><span class="n">epsx</span><span class="p">:</span>
+                    <span class="n">point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">atoms</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">atoms</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+                    <span class="n">plastic_displacement</span> <span class="o">=</span> <span class="n">bicrystal</span><span class="o">.</span><span class="n">_apply_plastic_displacement</span><span class="p">(</span><span class="n">nodes_modified</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span> <span class="n">burgers_vector</span><span class="p">,</span> <span class="n">point</span><span class="p">,</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span><span class="o">-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+                    <span class="n">grain1_disconnection</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">atoms</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">plastic_displacement</span><span class="p">,</span> <span class="n">atoms</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="mi">3</span><span class="p">]])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">atoms</span> <span class="ow">in</span> <span class="n">grain1_flat</span><span class="p">:</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">atoms</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">gb_position</span> <span class="o">+</span> <span class="n">step_height</span> <span class="o">+</span> <span class="n">epsx</span> <span class="ow">or</span>
+                        <span class="p">((</span><span class="n">atoms</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">disconnection_start</span> <span class="ow">or</span> <span class="n">atoms</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">disconnection_stop</span><span class="p">)</span> <span class="ow">and</span> <span class="n">atoms</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">gb_position</span> <span class="o">+</span> <span class="n">epsx</span><span class="p">)):</span>
+                    <span class="n">point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">atoms</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+                    <span class="n">plastic_displacement</span> <span class="o">=</span> <span class="n">bicrystal</span><span class="o">.</span><span class="n">_apply_plastic_displacement</span><span class="p">(</span><span class="n">nodes_modified</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span> <span class="n">burgers_vector</span><span class="p">,</span> <span class="n">point</span><span class="p">,</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span><span class="o">-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+                    <span class="n">grain1_disconnection</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">atoms</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">plastic_displacement</span><span class="p">,</span> <span class="n">atoms</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="mi">3</span><span class="p">]])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">transformed_atoms_initial</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">atoms</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="mi">3</span><span class="p">]])</span>
+
+            <span class="k">for</span> <span class="n">atoms</span> <span class="ow">in</span> <span class="n">grain2_flat</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">atoms</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">gb_position</span> <span class="o">-</span> <span class="n">epsx</span><span class="p">:</span>
+                    <span class="n">point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">atoms</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+                    <span class="n">plastic_displacement</span> <span class="o">=</span> <span class="n">bicrystal</span><span class="o">.</span><span class="n">_apply_plastic_displacement</span><span class="p">(</span><span class="n">nodes_modified</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span> <span class="n">burgers_vector</span><span class="p">,</span> <span class="n">point</span><span class="p">,</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span><span class="o">-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+                    <span class="n">grain2_disconnection</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">atoms</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">plastic_displacement</span><span class="p">,</span> <span class="n">atoms</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="mi">3</span><span class="p">]])</span>
+
+        <span class="c1"># Populate the transformed region</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">transformed_atoms_initial</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">transformed_atoms</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Atomic construction failed! Transformed region is not defined well&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Atoms in transformed region in base bicrystal:&quot;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">transformed_atoms_initial</span><span class="p">)))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Atoms in transformed region in new bicrystal:&quot;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">transformed_atoms</span><span class="p">)))</span>
+            <span class="n">filename</span> <span class="o">=</span>  <span class="s2">&quot;/Users/hj-home/Desktop/Research/GB_kinetics_oop/output/grain_diagnostics.txt&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_diagnostic_grain_writing</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">transformed_atoms_initial</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">transformed_atoms</span><span class="p">),</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">transformed_atoms</span><span class="p">:</span>
+            <span class="n">min_dist</span> <span class="o">=</span> <span class="mf">1e5</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">transformed_atoms_initial</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">transformed_atoms_initial</span><span class="p">)):</span>
+                    <span class="n">b_p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">atom</span><span class="p">)</span>
+                    <span class="n">a_p</span> <span class="o">=</span> <span class="n">transformed_atoms_initial</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                    <span class="n">dist</span> <span class="o">=</span> <span class="n">la</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">b_p</span> <span class="o">-</span> <span class="n">a_p</span><span class="p">[:</span><span class="mi">3</span><span class="p">])</span>
+                    <span class="k">if</span> <span class="n">min_dist</span> <span class="o">&gt;</span> <span class="n">dist</span><span class="p">:</span>
+                        <span class="n">atom_count</span> <span class="o">=</span> <span class="n">a_p</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+                        <span class="n">index</span> <span class="o">=</span> <span class="n">j</span>
+                        <span class="n">min_dist</span> <span class="o">=</span> <span class="n">dist</span>
+                <span class="n">transformed_atoms_initial</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+                <span class="n">atom</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">atom_count</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">step_height</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">:</span>
+                    <span class="n">grain1_disconnection</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">atom</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">grain2_disconnection</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">atom</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">grain1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">grain1_disconnection</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grain2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">grain2_disconnection</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="bicrystal.create_fix_eco_orientationfile">
+<a class="viewcode-back" href="../../bicrystal.html#src.bicrystal.bicrystal.create_fix_eco_orientationfile">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_fix_eco_orientationfile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">folder</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Writes the grain orientations to a `.ori` file compatible with the fix_eco</span>
+<span class="sd">            command in LAMMPS, saving it to the specified folder.</span>
+
+<span class="sd">            The file contains the lattice orientations of both grains, scaled by the</span>
+<span class="sd">            lattice parameter, and is named based on the grain boundary properties.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                folder (str): Directory path where the orientation file will be saved.</span>
+<span class="sd">                    The folder path should end with a slash (&#39;/&#39;).</span>
+
+<span class="sd">            Raises:</span>
+<span class="sd">                ValueError: If the bicrystal has not been fully set up (i.e., orientations</span>
+<span class="sd">                    are None). You must run `_setup_bicrystal` before calling this method.</span>
+
+<span class="sd">            Outputs:</span>
+<span class="sd">                Creates a file named `Sigma{sigma}_mis{mis}_inc{inc}.ori` in the given folder,</span>
+<span class="sd">                where `sigma`, `mis` (misorientation), and `inc` (inclination) are from `gb_data`.</span>
+<span class="sd">                The file contains the orientation matrices for the two grains, row-wise.</span>
+
+<span class="sd">            Prints:</span>
+<span class="sd">                Confirmation message indicating the successful creation of the orientation file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">grain1_orientation</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">grain2_orientation</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No bicrystal fully setup. Run _setup_bicrystal first.&quot;</span><span class="p">)</span>
+        <span class="n">first_grain</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grain1_orientation</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">lat_par</span>
+        <span class="n">second_grain</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grain2_orientation</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">lat_par</span>
+        <span class="n">gb_props</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gb_data</span>
+        <span class="n">sigma</span> <span class="o">=</span> <span class="n">gb_props</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">mis</span> <span class="o">=</span> <span class="n">gb_props</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">inc</span> <span class="o">=</span> <span class="n">gb_props</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">file</span> <span class="o">=</span> <span class="s2">&quot;Sigma&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;_mis&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">mis</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;_inc&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">inc</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.ori&quot;</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">folder</span> <span class="o">+</span> <span class="n">file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">first_grain</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%f</span><span class="s2"> </span><span class="si">%f</span><span class="s2"> </span><span class="si">%f</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">first_grain</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">first_grain</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">first_grain</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">]))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">second_grain</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%f</span><span class="s2"> </span><span class="si">%f</span><span class="s2"> </span><span class="si">%f</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">second_grain</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">second_grain</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">second_grain</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">]))</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Done writing fix eco orientation file : &quot;</span> <span class="o">+</span> <span class="n">folder</span> <span class="o">+</span> <span class="n">file</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="bicrystal.write">
+<a class="viewcode-back" href="../../bicrystal.html#src.bicrystal.bicrystal.write">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">folder</span><span class="p">,</span> <span class="n">elem</span><span class="p">,</span> <span class="n">suffix</span><span class="p">,</span><span class="n">mode</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Writes the bicrystal atomic configuration to a LAMMPS data file.</span>
+
+<span class="sd">            The output file contains atom positions for both grains along with box</span>
+<span class="sd">            dimensions and metadata required for LAMMPS simulations.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                folder (str): Directory path where the data file will be saved.</span>
+<span class="sd">                              Should end with a &#39;/&#39; or use os.path.join for safety.</span>
+<span class="sd">                elem (str): Element symbol or identifier for naming the output file.</span>
+<span class="sd">                suffix (str): Suffix string appended to the output filename.</span>
+<span class="sd">                mode (int, optional): Index selecting the dimension for box size from</span>
+<span class="sd">                                      self.box (default is 2).</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                str: The filename of the written data file.</span>
+
+<span class="sd">            Raises:</span>
+<span class="sd">                AttributeError: If bicrystal data (e.g., grain arrays or box) is not set.</span>
+
+<span class="sd">            Outputs:</span>
+<span class="sd">                Creates a LAMMPS data file named as:</span>
+<span class="sd">                `data.{elem}s{sigma}inc{inc}_{suffix}`, containing atomic coordinates</span>
+<span class="sd">                and simulation box details.</span>
+
+<span class="sd">            Prints:</span>
+<span class="sd">                Confirmation message after successful file write.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">gb_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gb_data</span>
+        <span class="n">sigma</span> <span class="o">=</span> <span class="n">gb_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">mis</span> <span class="o">=</span> <span class="n">gb_data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">inc</span> <span class="o">=</span> <span class="n">gb_data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">g_A</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grain1</span>
+        <span class="n">g_B</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grain2</span>
+        <span class="n">box</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">box</span>
+
+        <span class="n">file</span> <span class="o">=</span> <span class="s2">&quot;data.&quot;</span> <span class="o">+</span> <span class="n">elem</span> <span class="o">+</span> <span class="s2">&quot;s&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;inc&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">inc</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="n">suffix</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">folder</span> <span class="o">+</span> <span class="n">file</span>
+        <span class="n">natoms</span> <span class="o">=</span> <span class="n">g_A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">g_B</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+        <span class="n">eps</span> <span class="o">=</span> <span class="mf">0.1</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;# LAMMPS data file Sigma = </span><span class="si">%d</span><span class="s2">, inclination = </span><span class="si">%f</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span><span class="n">inc</span><span class="p">))</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;#LAMMPS data file</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> atoms</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">natoms</span><span class="p">))</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;2 atom types</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%0.10f</span><span class="s2"> </span><span class="si">%0.10f</span><span class="s2"> xlo xhi</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="o">-</span><span class="n">box</span><span class="p">[</span><span class="n">mode</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">eps</span><span class="p">,</span> <span class="n">box</span><span class="p">[</span><span class="n">mode</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">eps</span><span class="p">))</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%0.10f</span><span class="s2"> </span><span class="si">%0.10f</span><span class="s2"> ylo yhi</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="o">-</span><span class="n">box</span><span class="p">[</span><span class="n">mode</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">box</span><span class="p">[</span><span class="n">mode</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%0.10f</span><span class="s2"> </span><span class="si">%0.10f</span><span class="s2"> zlo zhi</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="o">-</span><span class="n">box</span><span class="p">[</span><span class="n">mode</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">box</span><span class="p">[</span><span class="n">mode</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]))</span>
+        <span class="n">box</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="n">box</span><span class="p">[</span><span class="n">mode</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">eps</span><span class="p">,</span> <span class="n">box</span><span class="p">[</span><span class="n">mode</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">eps</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="n">box</span><span class="p">[</span><span class="n">mode</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">box</span><span class="p">[</span><span class="n">mode</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span>
+                        <span class="p">[</span><span class="o">-</span><span class="n">box</span><span class="p">[</span><span class="n">mode</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">box</span><span class="p">[</span><span class="n">mode</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]])</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;0.0 0.0 0.0 xy xz yz</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Atoms # atomic</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">grain_A</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">grain_B</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">g_A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">grain_num</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> </span><span class="si">%d</span><span class="s2"> </span><span class="si">%0.10f</span><span class="s2"> </span><span class="si">%0.10f</span><span class="s2"> </span><span class="si">%0.10f</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">grain_num</span><span class="p">,</span> <span class="n">g_A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">g_A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">g_A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">]))</span>
+            <span class="n">grain_A</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">g_A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">g_A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">g_A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">k</span><span class="p">])</span>
+            <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">g_B</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">grain_num</span> <span class="o">=</span> <span class="mi">2</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> </span><span class="si">%d</span><span class="s2"> </span><span class="si">%0.10f</span><span class="s2"> </span><span class="si">%0.10f</span><span class="s2"> </span><span class="si">%0.10f</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">grain_num</span><span class="p">,</span> <span class="n">g_B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">g_B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">g_B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">]))</span>
+            <span class="n">grain_B</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">g_B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">g_B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">g_B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">k</span><span class="p">])</span>
+            <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Done writing bicrystal &quot;</span> <span class="o">+</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">file</span></div>
+
+
+<div class="viewcode-block" id="bicrystal.ordered_write">
+<a class="viewcode-back" href="../../bicrystal.html#src.bicrystal.bicrystal.ordered_write">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">ordered_write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">folder</span><span class="p">,</span> <span class="n">elem</span><span class="p">,</span> <span class="n">image_num</span><span class="p">,</span> <span class="n">xpos</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">stop</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span><span class="n">mode</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">             Write a LAMMPS data file of the bicrystal atomic configuration including dislocation or disconnection region labeling.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            folder (str): Directory path to save the output file.</span>
+<span class="sd">            elem (str): Element symbol or identifier used in filename.</span>
+<span class="sd">            h (int): Flag indicating which grain configuration to use:</span>
+<span class="sd">                     0 for flat grain boundary, else dislocated configuration.</span>
+<span class="sd">            image_num (int): Identifier for the image number in the filename.</span>
+<span class="sd">            xpos (float): Position value used for grain classification.</span>
+<span class="sd">            start (float): Lower bound along y-axis for dislocation region.</span>
+<span class="sd">            stop (float): Upper bound along y-axis for dislocation region.</span>
+<span class="sd">            mode (int, optional): Index to select box dimension (default 2).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The filename of the written data file.</span>
+
+<span class="sd">        Outputs:</span>
+<span class="sd">            Writes a LAMMPS data file named like</span>
+<span class="sd">            &#39;data.{elem}s{sigma}inc{inc}_size{size}disc{image_num}&#39;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">gb_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gb_data</span>
+        <span class="n">sigma</span> <span class="o">=</span> <span class="n">gb_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">mis</span> <span class="o">=</span> <span class="n">gb_data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">inc</span> <span class="o">=</span> <span class="n">gb_data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">h</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">g_A</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grain1_flatgb</span>
+            <span class="n">g_B</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grain2_flatgb</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">g_A</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grain1</span>
+            <span class="n">g_B</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grain2</span>
+        <span class="n">box</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">box</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size_along_period</span>
+        <span class="n">file</span> <span class="o">=</span> <span class="s2">&quot;data.&quot;</span> <span class="o">+</span> <span class="n">elem</span> <span class="o">+</span> <span class="s2">&quot;s&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;inc&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">inc</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;_size&quot;</span> <span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">size</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;disc&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">image_num</span><span class="p">)</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">folder</span> <span class="o">+</span> <span class="n">file</span>
+        <span class="n">natoms</span> <span class="o">=</span> <span class="n">g_A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">g_B</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+        <span class="n">eps</span> <span class="o">=</span> <span class="mf">0.1</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;# LAMMPS data file Sigma = </span><span class="si">%d</span><span class="s2">, inclination = </span><span class="si">%f</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span><span class="n">inc</span><span class="p">))</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;#LAMMPS data file</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> atoms</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">natoms</span><span class="p">))</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;2 atom types</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%0.10f</span><span class="s2"> </span><span class="si">%0.10f</span><span class="s2"> xlo xhi</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="o">-</span><span class="n">box</span><span class="p">[</span><span class="n">mode</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">eps</span><span class="p">,</span> <span class="n">box</span><span class="p">[</span><span class="n">mode</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">eps</span><span class="p">))</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%0.10f</span><span class="s2"> </span><span class="si">%0.10f</span><span class="s2"> ylo yhi</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="o">-</span><span class="n">box</span><span class="p">[</span><span class="n">mode</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">box</span><span class="p">[</span><span class="n">mode</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%0.10f</span><span class="s2"> </span><span class="si">%0.10f</span><span class="s2"> zlo zhi</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="o">-</span><span class="n">box</span><span class="p">[</span><span class="n">mode</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">box</span><span class="p">[</span><span class="n">mode</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]))</span>
+        <span class="n">box</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="n">box</span><span class="p">[</span><span class="n">mode</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">eps</span><span class="p">,</span> <span class="n">box</span><span class="p">[</span><span class="n">mode</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">eps</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="n">box</span><span class="p">[</span><span class="n">mode</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">box</span><span class="p">[</span><span class="n">mode</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span>
+                        <span class="p">[</span><span class="o">-</span><span class="n">box</span><span class="p">[</span><span class="n">mode</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">box</span><span class="p">[</span><span class="n">mode</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]])</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;0.0 0.0 0.0 xy xz yz</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Atoms # atomic</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">grain_A</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">grain_B</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">bicrystal</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">g_A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">grain_num</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">row</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">g_A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">g_A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">g_A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">g_A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">grain_num</span><span class="p">])</span>
+            <span class="n">bicrystal</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">g_B</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">g_B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">xpos</span> <span class="o">-</span> <span class="n">h</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.01</span> <span class="ow">and</span> <span class="n">g_B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">start</span> <span class="ow">and</span> <span class="n">g_B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">stop</span><span class="p">:</span>
+                <span class="n">grain_num</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">grain_num</span> <span class="o">=</span> <span class="mi">2</span>
+            <span class="n">row</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">g_B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">g_B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">g_B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">g_B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">grain_num</span><span class="p">])</span>
+            <span class="n">bicrystal</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">bicrystal</span><span class="p">)</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="p">[</span><span class="n">b</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">argsort</span><span class="p">()]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> </span><span class="si">%d</span><span class="s2"> </span><span class="si">%0.10f</span><span class="s2"> </span><span class="si">%0.10f</span><span class="s2"> </span><span class="si">%0.10f</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">]))</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Done writing bicrystal &quot;</span> <span class="o">+</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">file</span></div>
+
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_apply_plastic_displacement</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span><span class="n">period</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">point</span><span class="p">,</span><span class="n">boxlimhi</span><span class="p">,</span><span class="n">boxlimlo</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Calculate the total plastic displacement at a given point due to a set of dislocation dipoles.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                nodes (list or array): List of node pairs defining dislocation dipoles.</span>
+<span class="sd">                period (float): Periodicity length along the boundary.</span>
+<span class="sd">                b (float): Burgers vector of the dislocation.</span>
+<span class="sd">                point (array-like): Coordinates [x, y] at which displacement is calculated.</span>
+<span class="sd">                boxlimhi (float): Upper boundary limit along the gb period.</span>
+<span class="sd">                boxlimlo (float): Lower boundary limit along the gb period.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                float: Total plastic displacement at the point accounting for periodic boundary conditions.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">displacement</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">dislocation_nodes</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
+            <span class="n">dipole</span> <span class="o">=</span> <span class="n">dislocation_dipole</span><span class="p">(</span><span class="n">dislocation_nodes</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+            <span class="n">solidAngle</span><span class="p">,</span> <span class="n">disp_temp</span> <span class="o">=</span> <span class="n">dipole</span><span class="o">.</span><span class="n">plastic_displacement</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
+            <span class="n">displacement</span> <span class="o">+=</span> <span class="n">disp_temp</span>
+            <span class="k">del</span> <span class="n">dipole</span>
+        <span class="n">box_length</span> <span class="o">=</span> <span class="n">boxlimhi</span><span class="o">-</span><span class="n">boxlimlo</span>
+        <span class="k">if</span> <span class="n">point</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">displacement</span> <span class="o">&gt;</span> <span class="n">boxlimhi</span><span class="p">:</span>
+            <span class="n">displacement</span> <span class="o">+=</span> <span class="n">box_length</span>
+        <span class="k">elif</span> <span class="n">point</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">displacement</span> <span class="o">&lt;</span> <span class="n">boxlimlo</span><span class="p">:</span>
+            <span class="n">displacement</span> <span class="o">-=</span> <span class="n">box_length</span>
+        <span class="k">return</span> <span class="n">displacement</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_check_unique</span><span class="p">(</span><span class="n">point</span><span class="p">,</span><span class="n">grain</span><span class="p">,</span><span class="n">cutoff</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Check if a point is unique in the grain within a given cutoff distance.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                point (list or array-like): Coordinates [x, y, z] of the point to check.</span>
+<span class="sd">                grain (list of lists or arrays): Collection of points representing the grain.</span>
+<span class="sd">                cutoff (float): Distance threshold to determine uniqueness.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                int: 1 if point is unique, 0 if a similar point exists within cutoff.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">grain</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">grain</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">point</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">cutoff</span>
+            <span class="ow">and</span> <span class="nb">abs</span><span class="p">(</span><span class="n">grain</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">point</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">cutoff</span>
+            <span class="ow">and</span> <span class="nb">abs</span><span class="p">(</span><span class="n">grain</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">point</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">cutoff</span><span class="p">):</span>
+                <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="mi">1</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_diagnostic_grain_writing</span><span class="p">(</span><span class="n">grain1</span><span class="p">,</span><span class="n">grain2</span><span class="p">,</span><span class="n">filename</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Write diagnostic grain data to a file.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                grain1 (np.ndarray): Array of grain1 atoms with at least 3 columns (x,y,z).</span>
+<span class="sd">                grain2 (np.ndarray): Array of grain2 atoms with at least 3 columns (x,y,z).</span>
+<span class="sd">                filename (str): Path to the output file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">total_atoms</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grain1</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">grain2</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">total_atoms</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">grain1</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">atom</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">atom</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">atom</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2"> 1</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">grain2</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">atom</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">atom</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">atom</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2"> 2</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_diagnostic_plotting</span><span class="p">(</span><span class="n">grain1</span><span class="p">,</span><span class="n">grain2</span><span class="p">,</span><span class="n">minx</span><span class="p">,</span><span class="n">maxx</span><span class="p">,</span><span class="n">miny</span><span class="p">,</span><span class="n">maxy</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Plot two grain datasets for diagnostic visualization.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                grain1 (array-like): Coordinates of grain 1 atoms (Nx3 or similar).</span>
+<span class="sd">                grain2 (array-like): Coordinates of grain 2 atoms (Mx3 or similar).</span>
+<span class="sd">                minx (float): Minimum x-axis limit.</span>
+<span class="sd">                maxx (float): Maximum x-axis limit.</span>
+<span class="sd">                miny (float): Minimum y-axis limit.</span>
+<span class="sd">                maxy (float): Maximum y-axis limit.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">g1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">grain1</span><span class="p">)</span>
+        <span class="n">g2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">grain2</span><span class="p">)</span>
+
+        <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">g1</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">g1</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Grain 1&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">g2</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">g2</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Grain 2&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="n">minx</span><span class="p">,</span> <span class="n">maxx</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="n">miny</span><span class="p">,</span> <span class="n">maxy</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Y coordinate&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;X coordinate&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Grain Boundary Diagnostic Plot&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Himanshu Joshi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

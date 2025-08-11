@@ -1,0 +1,577 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>runLAMMPS module &mdash; GB Kinetics 2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=60dbed4a"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Data" href="data.html" />
+    <link rel="prev" title="plastic_slip module" href="plastic_slip.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            GB Kinetics
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#installations-required">Installations required</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#general-usage">General usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Source</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="GBKineticsRunController.html">GBKineticsRunController module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="IO.html">IO module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="IO.html#IO.find_gb_location"><code class="docutils literal notranslate"><span class="pre">find_gb_location()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="IO.html#IO.read_LAMMPS_datafile"><code class="docutils literal notranslate"><span class="pre">read_LAMMPS_datafile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="IO.html#IO.read_LAMMPS_dumpfile"><code class="docutils literal notranslate"><span class="pre">read_LAMMPS_dumpfile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="IO.html#IO.read_gridsearch_results"><code class="docutils literal notranslate"><span class="pre">read_gridsearch_results()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="IO.html#IO.read_neb_output_data"><code class="docutils literal notranslate"><span class="pre">read_neb_output_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="IO.html#IO.write_LAMMPSoutput_tstep"><code class="docutils literal notranslate"><span class="pre">write_LAMMPSoutput_tstep()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="IO.html#IO.write_gridsearch_results"><code class="docutils literal notranslate"><span class="pre">write_gridsearch_results()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="IO.html#IO.write_lammps_datafile"><code class="docutils literal notranslate"><span class="pre">write_lammps_datafile()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="bicrystal.html">bicrystal module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bicrystal.html#src.bicrystal.bicrystal"><code class="docutils literal notranslate"><span class="pre">bicrystal</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="bicrystal.html#src.bicrystal.bicrystal.create_disconnection_containing_bicrystal"><code class="docutils literal notranslate"><span class="pre">bicrystal.create_disconnection_containing_bicrystal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="bicrystal.html#src.bicrystal.bicrystal.create_fix_eco_orientationfile"><code class="docutils literal notranslate"><span class="pre">bicrystal.create_fix_eco_orientationfile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="bicrystal.html#src.bicrystal.bicrystal.create_flat_gb_bicrystal"><code class="docutils literal notranslate"><span class="pre">bicrystal.create_flat_gb_bicrystal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="bicrystal.html#src.bicrystal.bicrystal.ordered_write"><code class="docutils literal notranslate"><span class="pre">bicrystal.ordered_write()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="bicrystal.html#src.bicrystal.bicrystal.write"><code class="docutils literal notranslate"><span class="pre">bicrystal.write()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="bicrystallography.html">bicrystallography module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bicrystallography.html#bicrystallography.bicrystallography"><code class="docutils literal notranslate"><span class="pre">bicrystallography</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="bicrystallography.html#bicrystallography.bicrystallography.sigma"><code class="docutils literal notranslate"><span class="pre">bicrystallography.sigma</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="bicrystallography.html#bicrystallography.bicrystallography.misorientation"><code class="docutils literal notranslate"><span class="pre">bicrystallography.misorientation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="bicrystallography.html#bicrystallography.bicrystallography.inclination"><code class="docutils literal notranslate"><span class="pre">bicrystallography.inclination</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="bicrystallography.html#bicrystallography.bicrystallography.axis"><code class="docutils literal notranslate"><span class="pre">bicrystallography.axis</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="bicrystallography.html#bicrystallography.bicrystallography.lattice_parameter"><code class="docutils literal notranslate"><span class="pre">bicrystallography.lattice_parameter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="bicrystallography.html#bicrystallography.bicrystallography.gb_props"><code class="docutils literal notranslate"><span class="pre">bicrystallography.gb_props()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="min_shuffle.html">min_shuffle module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plastic_slip.html">plastic_slip module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="plastic_slip.html#plastic_slip.dislocation_dipole"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="plastic_slip.html#plastic_slip.dislocation_dipole.dislocation_points"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.dislocation_points</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="plastic_slip.html#plastic_slip.dislocation_dipole.period"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.period</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="plastic_slip.html#plastic_slip.dislocation_dipole.burgers_vector"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.burgers_vector</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="plastic_slip.html#plastic_slip.dislocation_dipole.dislocation_vector"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.dislocation_vector</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="plastic_slip.html#plastic_slip.dislocation_dipole.dislocation_distance"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.dislocation_distance</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="plastic_slip.html#plastic_slip.dislocation_dipole.plastic_displacement"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.plastic_displacement()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">runLAMMPS module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#src.runLAMMPS.run_LAMMPS"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#src.runLAMMPS.run_LAMMPS.folder"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.folder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.runLAMMPS.run_LAMMPS.element"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.element</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.runLAMMPS.run_LAMMPS.lattice_parameter"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.lattice_parameter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.runLAMMPS.run_LAMMPS.sigma"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.sigma</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.runLAMMPS.run_LAMMPS.misorientation"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.misorientation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.runLAMMPS.run_LAMMPS.inclination"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.inclination</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.runLAMMPS.run_LAMMPS.size_along_gb_period"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.size_along_gb_period</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.runLAMMPS.run_LAMMPS.potential"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.potential</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.runLAMMPS.run_LAMMPS.mpi_location"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.mpi_location</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.runLAMMPS.run_LAMMPS.lammps_location"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.lammps_location</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.runLAMMPS.run_LAMMPS.output_filename_gridsearch"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.output_filename_gridsearch</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.runLAMMPS.run_LAMMPS.gridsearch_output_setting"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.gridsearch_output_setting</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.runLAMMPS.run_LAMMPS.gridsearch_output_folder"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.gridsearch_output_folder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.runLAMMPS.run_LAMMPS.lammps_input_filename"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.lammps_input_filename</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.runLAMMPS.run_LAMMPS.neb_images"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.neb_images</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.runLAMMPS.run_LAMMPS.number_of_images_provided"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.number_of_images_provided</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.runLAMMPS.run_LAMMPS.burgers_vec"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.burgers_vec</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.runLAMMPS.run_LAMMPS.step_height"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.step_height</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.runLAMMPS.run_LAMMPS.neb_output_folder"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.neb_output_folder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.runLAMMPS.run_LAMMPS.post_process_gridsearch_data"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.post_process_gridsearch_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.runLAMMPS.run_LAMMPS.post_process_neb_output"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.post_process_neb_output()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.runLAMMPS.run_LAMMPS.run_grid_search"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.run_grid_search()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.runLAMMPS.run_LAMMPS.run_minimization"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.run_minimization()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.runLAMMPS.run_LAMMPS.run_neb_calc"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.run_neb_calc()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.runLAMMPS.run_LAMMPS.write_lammps_gridsearch_input"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.write_lammps_gridsearch_input()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.runLAMMPS.run_LAMMPS.write_lammps_neb_input_script"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.write_lammps_neb_input_script()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.runLAMMPS.run_LAMMPS.write_minimization_input"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.write_minimization_input()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data.html">Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example_gs.html">Example: Running Grid Search</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="example_gs.html#output">Output</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="example_gbkinetics.html">Example: Runnig GB Kinetics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="example_gbkinetics.html#output">Output</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">GB Kinetics</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Source</a></li>
+      <li class="breadcrumb-item active">runLAMMPS module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/runLAMMPS.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-src.runLAMMPS">
+<span id="runlammps-module"></span><h1>runLAMMPS module<a class="headerlink" href="#module-src.runLAMMPS" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.runLAMMPS.run_LAMMPS">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.runLAMMPS.</span></span><span class="sig-name descname"><span class="pre">run_LAMMPS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">element</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lattice_parameter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">misorientation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inclination</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size_along_gb_period</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">potential</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mpi_location</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lammps_location</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/runLAMMPS.html#run_LAMMPS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class to set up, run, and post-process LAMMPS simulations
+for grain boundary disconnection energy calculations.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.runLAMMPS.run_LAMMPS.folder">
+<span class="sig-name descname"><span class="pre">folder</span></span><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.folder" title="Link to this definition"></a></dt>
+<dd><p>Directory for simulation input/output files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.runLAMMPS.run_LAMMPS.element">
+<span class="sig-name descname"><span class="pre">element</span></span><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.element" title="Link to this definition"></a></dt>
+<dd><p>Chemical element symbol (e.g. ‘Cu’).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.runLAMMPS.run_LAMMPS.lattice_parameter">
+<span class="sig-name descname"><span class="pre">lattice_parameter</span></span><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.lattice_parameter" title="Link to this definition"></a></dt>
+<dd><p>Lattice parameter for the element.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.runLAMMPS.run_LAMMPS.sigma">
+<span class="sig-name descname"><span class="pre">sigma</span></span><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.sigma" title="Link to this definition"></a></dt>
+<dd><p>Sigma value for grain boundary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.runLAMMPS.run_LAMMPS.misorientation">
+<span class="sig-name descname"><span class="pre">misorientation</span></span><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.misorientation" title="Link to this definition"></a></dt>
+<dd><p>Misorientation angle.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.runLAMMPS.run_LAMMPS.inclination">
+<span class="sig-name descname"><span class="pre">inclination</span></span><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.inclination" title="Link to this definition"></a></dt>
+<dd><p>Grain boundary inclination.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.runLAMMPS.run_LAMMPS.size_along_gb_period">
+<span class="sig-name descname"><span class="pre">size_along_gb_period</span></span><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.size_along_gb_period" title="Link to this definition"></a></dt>
+<dd><p>Size along grain boundary periodicity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.runLAMMPS.run_LAMMPS.potential">
+<span class="sig-name descname"><span class="pre">potential</span></span><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.potential" title="Link to this definition"></a></dt>
+<dd><p>Path to interatomic potential file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.runLAMMPS.run_LAMMPS.mpi_location">
+<span class="sig-name descname"><span class="pre">mpi_location</span></span><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.mpi_location" title="Link to this definition"></a></dt>
+<dd><p>Path to MPI binaries.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.runLAMMPS.run_LAMMPS.lammps_location">
+<span class="sig-name descname"><span class="pre">lammps_location</span></span><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.lammps_location" title="Link to this definition"></a></dt>
+<dd><p>Path to LAMMPS binaries.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.runLAMMPS.run_LAMMPS.output_filename_gridsearch">
+<span class="sig-name descname"><span class="pre">output_filename_gridsearch</span></span><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.output_filename_gridsearch" title="Link to this definition"></a></dt>
+<dd><p>Filename for grid search output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.runLAMMPS.run_LAMMPS.gridsearch_output_setting">
+<span class="sig-name descname"><span class="pre">gridsearch_output_setting</span></span><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.gridsearch_output_setting" title="Link to this definition"></a></dt>
+<dd><p>Grid search output setting flag.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.runLAMMPS.run_LAMMPS.gridsearch_output_folder">
+<span class="sig-name descname"><span class="pre">gridsearch_output_folder</span></span><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.gridsearch_output_folder" title="Link to this definition"></a></dt>
+<dd><p>Folder for grid search outputs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.runLAMMPS.run_LAMMPS.lammps_input_filename">
+<span class="sig-name descname"><span class="pre">lammps_input_filename</span></span><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.lammps_input_filename" title="Link to this definition"></a></dt>
+<dd><p>Filename of the current LAMMPS input script.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.runLAMMPS.run_LAMMPS.neb_images">
+<span class="sig-name descname"><span class="pre">neb_images</span></span><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.neb_images" title="Link to this definition"></a></dt>
+<dd><p>Number of NEB images (partitions).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.runLAMMPS.run_LAMMPS.number_of_images_provided">
+<span class="sig-name descname"><span class="pre">number_of_images_provided</span></span><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.number_of_images_provided" title="Link to this definition"></a></dt>
+<dd><p>Number of images in NEB calculation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.runLAMMPS.run_LAMMPS.burgers_vec">
+<span class="sig-name descname"><span class="pre">burgers_vec</span></span><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.burgers_vec" title="Link to this definition"></a></dt>
+<dd><p>Burgers vector magnitude.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.runLAMMPS.run_LAMMPS.step_height">
+<span class="sig-name descname"><span class="pre">step_height</span></span><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.step_height" title="Link to this definition"></a></dt>
+<dd><p>Step height used in NEB calculation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.runLAMMPS.run_LAMMPS.neb_output_folder">
+<span class="sig-name descname"><span class="pre">neb_output_folder</span></span><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.neb_output_folder" title="Link to this definition"></a></dt>
+<dd><p>Folder for NEB output files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.runLAMMPS.run_LAMMPS.post_process_gridsearch_data">
+<span class="sig-name descname"><span class="pre">post_process_gridsearch_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plot_decision</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/runLAMMPS.html#run_LAMMPS.post_process_gridsearch_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.post_process_gridsearch_data" title="Link to this definition"></a></dt>
+<dd><p>Post-processes grid search results, sorting and optionally plotting the GB energy surface.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>plot_decision</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, generates and saves contour plots (default: False).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.runLAMMPS.run_LAMMPS.post_process_neb_output">
+<span class="sig-name descname"><span class="pre">post_process_neb_output</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">outfolder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_decision</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/runLAMMPS.html#run_LAMMPS.post_process_neb_output"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.post_process_neb_output" title="Link to this definition"></a></dt>
+<dd><p>Post-processes the NEB output dump files and optionally plots the energy profile.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>outfolder</strong> (<em>str</em>) – Folder to write processed output files.</p></li>
+<li><p><strong>plot_decision</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, generates and saves energy plot (default: False).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.runLAMMPS.run_LAMMPS.run_grid_search">
+<span class="sig-name descname"><span class="pre">run_grid_search</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">infile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outfolder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_cores</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_increments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_setting</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/runLAMMPS.html#run_LAMMPS.run_grid_search"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.run_grid_search" title="Link to this definition"></a></dt>
+<dd><p>Runs a grid search of displacements using MPI-parallelized LAMMPS.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>infile</strong> (<em>str</em>) – Input data filename.</p></li>
+<li><p><strong>outfolder</strong> (<em>str</em>) – Output folder for results.</p></li>
+<li><p><strong>number_of_cores</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of MPI cores to use (default: 6).</p></li>
+<li><p><strong>step_increments</strong> (<em>float</em><em>, </em><em>optional</em>) – Step size for grid search increments (default: 0.1).</p></li>
+<li><p><strong>limit</strong> (<em>float</em><em>, </em><em>optional</em>) – Maximum displacement limit (default: 1).</p></li>
+<li><p><strong>output_setting</strong> (<em>int</em><em>, </em><em>optional</em>) – Output verbosity setting (default: 0).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Filename of the grid search results.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – If the grid search LAMMPS run fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.runLAMMPS.run_LAMMPS.run_minimization">
+<span class="sig-name descname"><span class="pre">run_minimization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disp_along_gb_period</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disp_along_tilt_axis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimization_along_gb_directions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/runLAMMPS.html#run_LAMMPS.run_minimization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.run_minimization" title="Link to this definition"></a></dt>
+<dd><p>Runs a minimization calculation using LAMMPS.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_name</strong> (<em>str</em>) – Base filename for input/output files.</p></li>
+<li><p><strong>disp_along_gb_period</strong> (<em>float</em>) – Displacement along grain boundary period.</p></li>
+<li><p><strong>disp_along_tilt_axis</strong> (<em>float</em>) – Displacement along tilt axis.</p></li>
+<li><p><strong>minimization_along_gb_directions</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to perform box relaxations (default: False).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Filename of the minimized structure output.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – If the minimization LAMMPS run fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.runLAMMPS.run_LAMMPS.run_neb_calc">
+<span class="sig-name descname"><span class="pre">run_neb_calc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">burgers_vector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_steps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partitions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">40</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/runLAMMPS.html#run_LAMMPS.run_neb_calc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.run_neb_calc" title="Link to this definition"></a></dt>
+<dd><p>Runs the NEB calculation using MPI-parallelized LAMMPS.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>burgers_vector</strong> (<em>float</em>) – Burgers vector magnitude.</p></li>
+<li><p><strong>step_height</strong> (<em>float</em>) – Step height.</p></li>
+<li><p><strong>number_of_steps</strong> (<em>int</em>) – Number of NEB steps.</p></li>
+<li><p><strong>partitions</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of parallel partitions (default: 40).</p></li>
+<li><p><strong>mode</strong> (<em>int</em><em>, </em><em>optional</em>) – Mode flag for NEB input script generation (default: 1).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – If the NEB LAMMPS run fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.runLAMMPS.run_LAMMPS.write_lammps_gridsearch_input">
+<span class="sig-name descname"><span class="pre">write_lammps_gridsearch_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">infile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outfolder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_increments</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_setting</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/runLAMMPS.html#run_LAMMPS.write_lammps_gridsearch_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.write_lammps_gridsearch_input" title="Link to this definition"></a></dt>
+<dd><p>Writes a LAMMPS input script for performing a grid search over displacements.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>infile</strong> (<em>str</em>) – Name of the input data file.</p></li>
+<li><p><strong>outfolder</strong> (<em>str</em>) – Output folder to store results.</p></li>
+<li><p><strong>step_increments</strong> (<em>float</em>) – Incremental displacement step size.</p></li>
+<li><p><strong>limit</strong> (<em>float</em>) – Maximum displacement limit in both directions.</p></li>
+<li><p><strong>output_setting</strong> (<em>int</em>) – Flag to enable detailed output; 1 enables additional dumps.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.runLAMMPS.run_LAMMPS.write_lammps_neb_input_script">
+<span class="sig-name descname"><span class="pre">write_lammps_neb_input_script</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">burgers_vector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_steps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partitions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/runLAMMPS.html#run_LAMMPS.write_lammps_neb_input_script"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.write_lammps_neb_input_script" title="Link to this definition"></a></dt>
+<dd><p>Writes a LAMMPS input script for Nudged Elastic Band (NEB) calculations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>burgers_vector</strong> (<em>float</em>) – Burgers vector magnitude for disconnection.</p></li>
+<li><p><strong>step_height</strong> (<em>float</em>) – Step height for the disconnection mode.</p></li>
+<li><p><strong>num_steps</strong> (<em>int</em>) – Number of NEB images (steps).</p></li>
+<li><p><strong>partitions</strong> (<em>int</em>) – Number of parallel partitions for NEB.</p></li>
+<li><p><strong>mode</strong> (<em>int</em>) – Mode flag controlling file naming and step count behavior.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Path to the output folder for NEB calculation results.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.runLAMMPS.run_LAMMPS.write_minimization_input">
+<span class="sig-name descname"><span class="pre">write_minimization_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dispy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dispz</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimization_along_gb_directions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/runLAMMPS.html#run_LAMMPS.write_minimization_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.write_minimization_input" title="Link to this definition"></a></dt>
+<dd><p>Writes a LAMMPS input script for energy minimization with optional box relaxation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_name</strong> (<em>str</em>) – Base filename for input/output.</p></li>
+<li><p><strong>dispy</strong> (<em>float</em>) – Displacement along grain boundary periodic direction.</p></li>
+<li><p><strong>dispz</strong> (<em>float</em>) – Displacement along tilt axis.</p></li>
+<li><p><strong>minimization_along_gb_directions</strong> (<em>bool</em>) – If True, performs additional minimization
+steps with box relaxation along y and z directions.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="plastic_slip.html" class="btn btn-neutral float-left" title="plastic_slip module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="data.html" class="btn btn-neutral float-right" title="Data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Himanshu Joshi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

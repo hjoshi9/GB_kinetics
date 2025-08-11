@@ -1,0 +1,845 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.runLAMMPS &mdash; GB Kinetics 2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=60dbed4a"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            GB Kinetics
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../usage.html#installations-required">Installations required</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage.html#general-usage">General usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Source</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../GBKineticsRunController.html">GBKineticsRunController module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../IO.html">IO module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../IO.html#IO.find_gb_location"><code class="docutils literal notranslate"><span class="pre">find_gb_location()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../IO.html#IO.read_LAMMPS_datafile"><code class="docutils literal notranslate"><span class="pre">read_LAMMPS_datafile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../IO.html#IO.read_LAMMPS_dumpfile"><code class="docutils literal notranslate"><span class="pre">read_LAMMPS_dumpfile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../IO.html#IO.read_gridsearch_results"><code class="docutils literal notranslate"><span class="pre">read_gridsearch_results()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../IO.html#IO.read_neb_output_data"><code class="docutils literal notranslate"><span class="pre">read_neb_output_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../IO.html#IO.write_LAMMPSoutput_tstep"><code class="docutils literal notranslate"><span class="pre">write_LAMMPSoutput_tstep()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../IO.html#IO.write_gridsearch_results"><code class="docutils literal notranslate"><span class="pre">write_gridsearch_results()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../IO.html#IO.write_lammps_datafile"><code class="docutils literal notranslate"><span class="pre">write_lammps_datafile()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../bicrystal.html">bicrystal module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal"><code class="docutils literal notranslate"><span class="pre">bicrystal</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.create_disconnection_containing_bicrystal"><code class="docutils literal notranslate"><span class="pre">bicrystal.create_disconnection_containing_bicrystal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.create_fix_eco_orientationfile"><code class="docutils literal notranslate"><span class="pre">bicrystal.create_fix_eco_orientationfile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.create_flat_gb_bicrystal"><code class="docutils literal notranslate"><span class="pre">bicrystal.create_flat_gb_bicrystal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.ordered_write"><code class="docutils literal notranslate"><span class="pre">bicrystal.ordered_write()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.write"><code class="docutils literal notranslate"><span class="pre">bicrystal.write()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../bicrystallography.html">bicrystallography module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../bicrystallography.html#bicrystallography.bicrystallography"><code class="docutils literal notranslate"><span class="pre">bicrystallography</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystallography.html#bicrystallography.bicrystallography.sigma"><code class="docutils literal notranslate"><span class="pre">bicrystallography.sigma</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystallography.html#bicrystallography.bicrystallography.misorientation"><code class="docutils literal notranslate"><span class="pre">bicrystallography.misorientation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystallography.html#bicrystallography.bicrystallography.inclination"><code class="docutils literal notranslate"><span class="pre">bicrystallography.inclination</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystallography.html#bicrystallography.bicrystallography.axis"><code class="docutils literal notranslate"><span class="pre">bicrystallography.axis</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystallography.html#bicrystallography.bicrystallography.lattice_parameter"><code class="docutils literal notranslate"><span class="pre">bicrystallography.lattice_parameter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystallography.html#bicrystallography.bicrystallography.gb_props"><code class="docutils literal notranslate"><span class="pre">bicrystallography.gb_props()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../min_shuffle.html">min_shuffle module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../plastic_slip.html">plastic_slip module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../plastic_slip.html#plastic_slip.dislocation_dipole"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../plastic_slip.html#plastic_slip.dislocation_dipole.dislocation_points"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.dislocation_points</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../plastic_slip.html#plastic_slip.dislocation_dipole.period"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.period</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../plastic_slip.html#plastic_slip.dislocation_dipole.burgers_vector"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.burgers_vector</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../plastic_slip.html#plastic_slip.dislocation_dipole.dislocation_vector"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.dislocation_vector</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../plastic_slip.html#plastic_slip.dislocation_dipole.dislocation_distance"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.dislocation_distance</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../plastic_slip.html#plastic_slip.dislocation_dipole.plastic_displacement"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.plastic_displacement()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../runLAMMPS.html">runLAMMPS module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.folder"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.folder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.element"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.element</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.lattice_parameter"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.lattice_parameter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.sigma"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.sigma</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.misorientation"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.misorientation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.inclination"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.inclination</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.size_along_gb_period"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.size_along_gb_period</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.potential"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.potential</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.mpi_location"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.mpi_location</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.lammps_location"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.lammps_location</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.output_filename_gridsearch"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.output_filename_gridsearch</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.gridsearch_output_setting"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.gridsearch_output_setting</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.gridsearch_output_folder"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.gridsearch_output_folder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.lammps_input_filename"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.lammps_input_filename</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.neb_images"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.neb_images</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.number_of_images_provided"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.number_of_images_provided</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.burgers_vec"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.burgers_vec</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.step_height"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.step_height</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.neb_output_folder"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.neb_output_folder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.post_process_gridsearch_data"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.post_process_gridsearch_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.post_process_neb_output"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.post_process_neb_output()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.run_grid_search"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.run_grid_search()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.run_minimization"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.run_minimization()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.run_neb_calc"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.run_neb_calc()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.write_lammps_gridsearch_input"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.write_lammps_gridsearch_input()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.write_lammps_neb_input_script"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.write_lammps_neb_input_script()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.write_minimization_input"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.write_minimization_input()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../data.html">Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../example_gs.html">Example: Running Grid Search</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../example_gs.html#output">Output</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../example_gbkinetics.html">Example: Runnig GB Kinetics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../example_gbkinetics.html#output">Output</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">GB Kinetics</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">src.runLAMMPS</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for src.runLAMMPS</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits</span><span class="w"> </span><span class="kn">import</span> <span class="n">mplot3d</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.interpolate</span><span class="w"> </span><span class="kn">import</span> <span class="n">griddata</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.IO</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+<div class="viewcode-block" id="run_LAMMPS">
+<a class="viewcode-back" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">run_LAMMPS</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A class to set up, run, and post-process LAMMPS simulations</span>
+<span class="sd">        for grain boundary disconnection energy calculations.</span>
+
+<span class="sd">        Attributes:</span>
+<span class="sd">            folder (str): Directory for simulation input/output files.</span>
+<span class="sd">            element (str): Chemical element symbol (e.g. &#39;Cu&#39;).</span>
+<span class="sd">            lattice_parameter (float): Lattice parameter for the element.</span>
+<span class="sd">            sigma (int): Sigma value for grain boundary.</span>
+<span class="sd">            misorientation (float): Misorientation angle.</span>
+<span class="sd">            inclination (float): Grain boundary inclination.</span>
+<span class="sd">            size_along_gb_period (int): Size along grain boundary periodicity.</span>
+<span class="sd">            potential (str): Path to interatomic potential file.</span>
+<span class="sd">            mpi_location (str): Path to MPI binaries.</span>
+<span class="sd">            lammps_location (str): Path to LAMMPS binaries.</span>
+<span class="sd">            output_filename_gridsearch (str or None): Filename for grid search output.</span>
+<span class="sd">            gridsearch_output_setting (int or None): Grid search output setting flag.</span>
+<span class="sd">            gridsearch_output_folder (str or None): Folder for grid search outputs.</span>
+<span class="sd">            lammps_input_filename (str or None): Filename of the current LAMMPS input script.</span>
+<span class="sd">            neb_images (int or None): Number of NEB images (partitions).</span>
+<span class="sd">            number_of_images_provided (int or None): Number of images in NEB calculation.</span>
+<span class="sd">            burgers_vec (float or None): Burgers vector magnitude.</span>
+<span class="sd">            step_height (float or None): Step height used in NEB calculation.</span>
+<span class="sd">            neb_output_folder (str or None): Folder for NEB output files.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">folder</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">lattice_parameter</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">misorientation</span><span class="p">,</span>
+                 <span class="n">inclination</span><span class="p">,</span> <span class="n">size_along_gb_period</span><span class="p">,</span>
+                  <span class="n">potential</span><span class="p">,</span> <span class="n">mpi_location</span><span class="p">,</span> <span class="n">lammps_location</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Initializes the run_LAMMPS instance with simulation parameters.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                folder (str): Directory to store simulation files.</span>
+<span class="sd">                element (str): Chemical element symbol.</span>
+<span class="sd">                lattice_parameter (float): Lattice parameter.</span>
+<span class="sd">                sigma (int): Sigma value for grain boundary.</span>
+<span class="sd">                misorientation (float): Misorientation angle in degrees.</span>
+<span class="sd">                inclination (float): Grain boundary inclination angle.</span>
+<span class="sd">                size_along_gb_period (int): Size along grain boundary period.</span>
+<span class="sd">                potential (str): Path to interatomic potential file.</span>
+<span class="sd">                mpi_location (str): Path to MPI binaries.</span>
+<span class="sd">                lammps_location (str): Path to LAMMPS binaries.</span>
+<span class="sd">         &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">folder</span> <span class="o">=</span> <span class="n">folder</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">element</span> <span class="o">=</span> <span class="n">element</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lattice_parameter</span> <span class="o">=</span> <span class="n">lattice_parameter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span> <span class="o">=</span> <span class="n">sigma</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">misorientation</span> <span class="o">=</span> <span class="n">misorientation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inclination</span> <span class="o">=</span> <span class="n">inclination</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">size_along_gb_period</span> <span class="o">=</span> <span class="n">size_along_gb_period</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">potential</span> <span class="o">=</span> <span class="n">potential</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mpi_location</span> <span class="o">=</span> <span class="n">mpi_location</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lammps_location</span> <span class="o">=</span> <span class="n">lammps_location</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_filename_gridsearch</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridsearch_output_setting</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridsearch_output_folder</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">lammps_input_filename</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">neb_images</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">number_of_images_provided</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">burgers_vec</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">step_height</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">neb_output_folder</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="run_LAMMPS.write_minimization_input">
+<a class="viewcode-back" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.write_minimization_input">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">write_minimization_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">dispy</span><span class="p">,</span> <span class="n">dispz</span><span class="p">,</span><span class="n">minimization_along_gb_directions</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Writes a LAMMPS input script for energy minimization with optional box relaxation.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                file_name (str): Base filename for input/output.</span>
+<span class="sd">                dispy (float): Displacement along grain boundary periodic direction.</span>
+<span class="sd">                dispz (float): Displacement along tilt axis.</span>
+<span class="sd">                minimization_along_gb_directions (bool): If True, performs additional minimization</span>
+<span class="sd">                    steps with box relaxation along y and z directions.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sigma</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span>
+        <span class="n">mis</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">misorientation</span>
+        <span class="n">inc</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inclination</span>
+        <span class="n">lat_par</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lattice_parameter</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size_along_gb_period</span>
+        <span class="n">potential</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">potential</span>
+        <span class="n">elem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">element</span>
+        <span class="n">folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">folder</span>
+
+        <span class="n">min_file</span> <span class="o">=</span> <span class="s2">&quot;min.in&quot;</span>
+        <span class="n">file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">min_file</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lammps_input_filename</span> <span class="o">=</span> <span class="n">file</span>
+        <span class="n">min_outputfile</span> <span class="o">=</span> <span class="n">file_name</span> <span class="o">+</span> <span class="s2">&quot;_min&quot;</span>
+        <span class="n">min_output_movie</span> <span class="o">=</span> <span class="n">file_name</span> <span class="o">+</span> <span class="s2">&quot;_minmov&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_filename</span> <span class="o">=</span> <span class="n">min_outputfile</span>
+        <span class="n">images</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">size</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">minimization_along_gb_directions</span><span class="p">:</span>
+            <span class="n">extra_minimization_script</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">#-------- Minimize with box relaxation in y direction -------------</span>
+<span class="s2">fix 1 all box/relax y 0 vmax 0.001</span>
+<span class="s2">min_style cg</span>
+<span class="s2">minimize 1e-25 1e-25 5000 5000</span>
+
+<span class="s2">#------- Minimize with box relaxation in z direction ---------------</span>
+<span class="s2">fix 1 all box/relax z 0 vmax 0.001</span>
+<span class="s2">min_style cg</span>
+<span class="s2">minimize 1e-25 1e-25 5000 5000</span>
+
+<span class="s2">#--------------------- Minimize ------------------------------------</span>
+<span class="s2">min_style cg</span>
+<span class="s2">minimize 1e-25 1e-25 10000 10000</span>
+<span class="s2">            &quot;&quot;&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">extra_minimization_script</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+        <span class="n">lammps_script</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;# Minimization of Sigma</span><span class="si">{</span><span class="n">sigma</span><span class="si">}</span><span class="s2"> disconnections using LAMMPS</span>
+<span class="s2">#------------------General settings for simulation----------------------------</span>
+<span class="s2">clear</span>
+<span class="s2">units metal</span>
+<span class="s2">dimension 3</span>
+<span class="s2">boundary m p p</span>
+<span class="s2">atom_style atomic</span>
+<span class="s2">neighbor 0.3 bin</span>
+<span class="s2">neigh_modify delay 5</span>
+<span class="s2">atom_modify map array sort 0 0.0</span>
+
+<span class="s2">#----------------- Variable declaration---------------------------------------</span>
+<span class="s2">variable a equal </span><span class="si">{</span><span class="n">lat_par</span><span class="si">}</span>
+<span class="s2">variable potpath string </span><span class="si">{</span><span class="n">potential</span><span class="si">}</span>
+<span class="s2">variable sigma equal </span><span class="si">{</span><span class="n">sigma</span><span class="si">}</span>
+<span class="s2">variable y_image equal </span><span class="si">{</span><span class="n">size</span><span class="si">}</span>
+<span class="s2">variable dispy equal </span><span class="si">{</span><span class="n">dispy</span><span class="si">}</span>
+<span class="s2">variable dispz equal </span><span class="si">{</span><span class="n">dispz</span><span class="si">}</span>
+<span class="s2">variable elem string </span><span class="si">{</span><span class="n">elem</span><span class="si">}</span>
+<span class="s2">variable mis equal </span><span class="si">{</span><span class="n">mis</span><span class="si">}</span>
+<span class="s2">variable folder string </span><span class="si">{</span><span class="n">folder</span><span class="si">}</span>
+<span class="s2">variable file_name string $</span><span class="se">{{</span><span class="s2">folder</span><span class="se">}}</span><span class="si">{</span><span class="n">file_name</span><span class="si">}</span>
+<span class="s2">variable out_file1 string $</span><span class="se">{{</span><span class="s2">folder</span><span class="se">}}</span><span class="si">{</span><span class="n">min_outputfile</span><span class="si">}</span>
+<span class="s2">variable out_file_mov string $</span><span class="se">{{</span><span class="s2">folder</span><span class="se">}}</span><span class="si">{</span><span class="n">min_output_movie</span><span class="si">}</span>
+
+<span class="s2">#----------------------- Atomic structure ----------------------</span>
+<span class="s2">lattice fcc $a</span>
+<span class="s2">read_data $</span><span class="se">{{</span><span class="s2">file_name</span><span class="se">}}</span>
+<span class="s2">group upper type 1</span>
+<span class="s2">group lower type 2</span>
+
+<span class="s2">#----------------------- InterAtomic Potential --------------------</span>
+<span class="s2">pair_style eam/alloy</span>
+<span class="s2">pair_coeff * * $</span><span class="se">{{</span><span class="s2">potpath</span><span class="se">}}</span><span class="s2"> </span><span class="si">{</span><span class="n">elem</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">elem</span><span class="si">}</span>
+<span class="s2">neighbor 2 bin</span>
+<span class="s2">neigh_modify delay 10 check yes</span>
+
+<span class="s2">#-------------------- Define compute settings ------------------------</span>
+<span class="s2">compute csym all centro/atom fcc</span>
+<span class="s2">compute energy all pe/atom</span>
+<span class="s2">compute eng all reduce sum c_energy</span>
+
+<span class="s2">#---------- Displace top part for lowest energy structure ----------</span>
+<span class="s2">delete_atoms overlap 1 upper upper</span>
+<span class="s2">delete_atoms overlap 1 lower lower</span>
+<span class="s2">delete_atoms overlap 0.1 upper lower</span>
+<span class="s2">displace_atoms upper move 0 $</span><span class="se">{{</span><span class="s2">dispy</span><span class="se">}}</span><span class="s2"> $</span><span class="se">{{</span><span class="s2">dispz</span><span class="se">}}</span><span class="s2"> units box</span>
+
+<span class="s2"># Apply fix to tether centroid of the system to the center</span>
+
+<span class="s2">#--------------------- Minimize ------------------------------------</span>
+<span class="s2">thermo 250</span>
+<span class="s2">thermo_style custom step temp pe lx ly lz press pxx pyy pzz</span>
+<span class="s2">dump 1 all custom 100 $</span><span class="se">{{</span><span class="s2">out_file_mov</span><span class="se">}}</span><span class="s2"> id type x y z c_csym c_energy</span>
+<span class="s2">min_style cg</span>
+<span class="s2">minimize 1e-25 1e-25 10000 10000</span>
+<span class="si">{</span><span class="n">extra_minimization_script</span><span class="si">}</span>
+<span class="s2">write_data $</span><span class="se">{{</span><span class="s2">out_file1</span><span class="se">}}</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">lammps_script</span><span class="p">)</span>
+
+        <span class="n">outfile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">min_outputfile</span><span class="p">)</span> <span class="c1">#folder + min_outputfile</span></div>
+
+
+<div class="viewcode-block" id="run_LAMMPS.write_lammps_gridsearch_input">
+<a class="viewcode-back" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.write_lammps_gridsearch_input">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">write_lammps_gridsearch_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">infile</span><span class="p">,</span> <span class="n">outfolder</span><span class="p">,</span><span class="n">step_increments</span><span class="p">,</span> <span class="n">limit</span><span class="p">,</span> <span class="n">output_setting</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Writes a LAMMPS input script for performing a grid search over displacements.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                infile (str): Name of the input data file.</span>
+<span class="sd">                outfolder (str): Output folder to store results.</span>
+<span class="sd">                step_increments (float): Incremental displacement step size.</span>
+<span class="sd">                limit (float): Maximum displacement limit in both directions.</span>
+<span class="sd">                output_setting (int): Flag to enable detailed output; 1 enables additional dumps.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sigma</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span>
+        <span class="n">mis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">misorientation</span>
+        <span class="n">inc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inclination</span>
+        <span class="n">lat_par</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lattice_parameter</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size_along_gb_period</span>
+        <span class="n">potential</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">potential</span>
+        <span class="n">elem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">element</span>
+        <span class="n">folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">folder</span>
+
+        <span class="n">f_name</span> <span class="o">=</span> <span class="s2">&quot;grid_search.in&quot;</span>
+        <span class="n">file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">f_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lammps_input_filename</span> <span class="o">=</span> <span class="n">file</span>
+        <span class="n">outfile</span> <span class="o">=</span> <span class="n">elem</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="s2">&quot;sigma&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;_mis&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">mis</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;_size&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;_gridsearch_results.txt&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_filename_gridsearch</span> <span class="o">=</span> <span class="n">outfile</span>
+        <span class="n">yloop</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">limit</span><span class="o">/</span><span class="n">step_increments</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">zloop</span> <span class="o">=</span> <span class="n">yloop</span>
+        <span class="n">yloop0</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">limit</span><span class="o">/</span><span class="n">step_increments</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">zloop0</span> <span class="o">=</span> <span class="n">yloop0</span>
+        <span class="n">dispy_expr</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">step_increments</span><span class="si">}</span><span class="s2">*($</span><span class="se">{{</span><span class="s2">disp_county</span><span class="se">}}</span><span class="s2">-</span><span class="si">{</span><span class="n">yloop0</span><span class="si">}</span><span class="s2">)&quot;</span>
+        <span class="n">dispz_expr</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">step_increments</span><span class="si">}</span><span class="s2">*($</span><span class="se">{{</span><span class="s2">disp_countz</span><span class="se">}}</span><span class="s2">-</span><span class="si">{</span><span class="n">zloop0</span><span class="si">}</span><span class="s2">)&quot;</span>
+
+        <span class="n">outfile2_line</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">dump_line</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">outfolder2_line</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">output_setting</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">outfolder_configs</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">outfolder</span><span class="p">,</span> <span class="s2">&quot;/configs&quot;</span><span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">outfolder_configs</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">outfolder2_line</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;variable outfolder_configs string </span><span class="si">{</span><span class="n">outfolder_configs</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">outfile2_line</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;variable outfile2 string $</span><span class="se">{{</span><span class="s2">outfolder_configs</span><span class="se">}}</span><span class="s2">/</span><span class="si">{</span><span class="n">infile</span><span class="si">}</span><span class="s2">_dy$</span><span class="se">{{</span><span class="s2">dispy</span><span class="se">}}</span><span class="s2">dz$</span><span class="se">{{</span><span class="s2">dispz</span><span class="se">}}\n</span><span class="s2">&quot;</span>
+            <span class="n">dump_line</span> <span class="o">=</span> <span class="s2">&quot;dump            1 all custom 5000 $</span><span class="si">{outfile2}</span><span class="s2"> id type x y z c_csym c_eng</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+        <span class="n">script</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;# LAMMPS script to run a grid search</span>
+<span class="s2">variable disp_county loop </span><span class="si">{</span><span class="n">yloop</span><span class="si">}</span>
+<span class="s2">label loopy</span>
+<span class="s2">variable disp_countz loop </span><span class="si">{</span><span class="n">zloop</span><span class="si">}</span>
+<span class="s2">label loopz</span>
+<span class="s2">variable a equal </span><span class="si">{</span><span class="n">lat_par</span><span class="si">}</span>
+<span class="s2">variable potpath string </span><span class="si">{</span><span class="n">potential</span><span class="si">}</span>
+<span class="s2">variable sigma equal </span><span class="si">{</span><span class="n">sigma</span><span class="si">}</span>
+<span class="s2">variable y_image equal </span><span class="si">{</span><span class="n">size</span><span class="si">}</span>
+<span class="s2">variable dispy equal </span><span class="si">{</span><span class="n">dispy_expr</span><span class="si">}</span>
+<span class="s2">variable dispz equal </span><span class="si">{</span><span class="n">dispz_expr</span><span class="si">}</span>
+<span class="s2">variable step equal 0</span>
+<span class="s2">variable elem string </span><span class="si">{</span><span class="n">elem</span><span class="si">}</span>
+<span class="s2">variable mis equal </span><span class="si">{</span><span class="n">mis</span><span class="si">}</span>
+<span class="s2">variable folder string </span><span class="si">{</span><span class="n">outfolder</span><span class="si">}</span>
+<span class="s2">variable file_name string $</span><span class="se">{{</span><span class="s2">folder</span><span class="se">}}</span><span class="s2">/</span><span class="si">{</span><span class="n">infile</span><span class="si">}</span>
+<span class="si">{</span><span class="n">outfolder2_line</span><span class="si">}</span>
+<span class="si">{</span><span class="n">outfile2_line</span><span class="si">}</span>
+<span class="s2">variable outfile string $</span><span class="se">{{</span><span class="s2">folder</span><span class="se">}}</span><span class="s2">/</span><span class="si">{</span><span class="n">outfile</span><span class="si">}</span>
+
+<span class="s2">clear</span>
+<span class="s2">units metal</span>
+<span class="s2">dimension 3</span>
+<span class="s2">boundary m p p</span>
+<span class="s2">atom_style atomic</span>
+<span class="s2">echo both</span>
+<span class="s2">neighbor        0.3 bin</span>
+<span class="s2">neigh_modify    delay 1</span>
+<span class="s2">atom_modify  map array sort 0 0.0</span>
+<span class="s2">lattice fcc $a</span>
+<span class="s2">read_data $</span><span class="se">{{</span><span class="s2">file_name</span><span class="se">}}</span>
+<span class="s2">replicate 1 1 2</span>
+<span class="s2">group upper type 1</span>
+<span class="s2">group lower type 2</span>
+<span class="s2">variable midbox equal xhi/2+xlo/2</span>
+<span class="s2">variable gb_thickness equal 10</span>
+<span class="s2">variable gblo equal $</span><span class="se">{{</span><span class="s2">midbox</span><span class="se">}}</span><span class="s2">-$</span><span class="se">{{</span><span class="s2">gb_thickness</span><span class="se">}}</span>
+<span class="s2">variable gbhi equal $</span><span class="se">{{</span><span class="s2">midbox</span><span class="se">}}</span><span class="s2">+$</span><span class="se">{{</span><span class="s2">gb_thickness</span><span class="se">}}</span>
+<span class="s2">variable bulklo equal $</span><span class="se">{{</span><span class="s2">midbox</span><span class="se">}}</span><span class="s2">+1.2*$</span><span class="se">{{</span><span class="s2">gb_thickness</span><span class="se">}}</span>
+<span class="s2">variable bulkhi equal xhi-0.25*$</span><span class="se">{{</span><span class="s2">gb_thickness</span><span class="se">}}</span>
+<span class="s2">region BULK block $</span><span class="se">{{</span><span class="s2">bulklo</span><span class="se">}}</span><span class="s2"> $</span><span class="se">{{</span><span class="s2">bulkhi</span><span class="se">}}</span><span class="s2"> INF INF INF INF units box</span>
+<span class="s2">region GB block $</span><span class="se">{{</span><span class="s2">gblo</span><span class="se">}}</span><span class="s2"> $</span><span class="se">{{</span><span class="s2">gbhi</span><span class="se">}}</span><span class="s2"> INF INF INF INF units box</span>
+<span class="s2">variable area equal ly*lz</span>
+<span class="s2">pair_style eam/alloy</span>
+<span class="s2">pair_coeff * * $</span><span class="se">{{</span><span class="s2">potpath</span><span class="se">}}</span><span class="s2"> </span><span class="si">{</span><span class="n">elem</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">elem</span><span class="si">}</span>
+<span class="s2">neighbor 2 bin</span>
+<span class="s2">neigh_modify delay 10 check yes</span>
+<span class="s2">compute eng all pe/atom</span>
+<span class="s2">compute eatoms all reduce sum c_eng</span>
+<span class="s2">compute csym all centro/atom fcc</span>
+<span class="s2">group GB region GB</span>
+<span class="s2">group BULK region BULK</span>
+<span class="s2">compute peratom GB pe/atom</span>
+<span class="s2">compute peratombulk BULK pe/atom</span>
+<span class="s2">compute pe GB reduce sum c_peratom</span>
+<span class="s2">compute pebulk BULK reduce sum c_peratombulk</span>
+<span class="s2">variable peGB equal c_pe</span>
+<span class="s2">variable peBULK equal c_pebulk</span>
+<span class="s2">variable atomsGB equal count(GB)</span>
+<span class="s2">variable atomsBULK equal count(BULK)</span>
+<span class="s2">delete_atoms overlap 1 upper upper</span>
+<span class="s2">delete_atoms overlap 1 lower lower</span>
+<span class="s2">delete_atoms overlap 0.1 upper lower</span>
+<span class="s2">displace_atoms upper move 0 $</span><span class="se">{{</span><span class="s2">dispy</span><span class="se">}}</span><span class="s2"> $</span><span class="se">{{</span><span class="s2">dispz</span><span class="se">}}</span><span class="s2"> units box</span>
+<span class="s2">thermo 500</span>
+<span class="s2">thermo_style custom step temp pe lx ly lz press pxx pyy pzz c_eatoms</span>
+<span class="si">{</span><span class="n">dump_line</span><span class="si">}</span>
+<span class="s2">variable pot_eng equal pe</span>
+
+<span class="s2">min_style cg</span>
+<span class="s2">minimize 1e-25 1e-25 5000 5000</span>
+
+<span class="s2">variable coh equal ($</span><span class="se">{{</span><span class="s2">peBULK</span><span class="se">}}</span><span class="s2">/$</span><span class="se">{{</span><span class="s2">atomsBULK</span><span class="se">}}</span><span class="s2">)</span>
+<span class="s2">variable conversion_factor equal 16.02</span>
+<span class="s2">variable GBene equal ($</span><span class="se">{{</span><span class="s2">conversion_factor</span><span class="se">}}</span><span class="s2">*($</span><span class="se">{{</span><span class="s2">peGB</span><span class="se">}}</span><span class="s2">/$</span><span class="se">{{</span><span class="s2">area</span><span class="se">}}</span><span class="s2">-$</span><span class="se">{{</span><span class="s2">coh</span><span class="se">}}</span><span class="s2">*$</span><span class="se">{{</span><span class="s2">atomsGB</span><span class="se">}}</span><span class="s2">/$</span><span class="se">{{</span><span class="s2">area</span><span class="se">}}</span><span class="s2">))</span>
+<span class="s2">print &quot;dispy = $</span><span class="se">{{</span><span class="s2">dispy</span><span class="se">}}</span><span class="s2"> dispz = $</span><span class="se">{{</span><span class="s2">dispz</span><span class="se">}}</span><span class="s2"> GBene = $</span><span class="se">{{</span><span class="s2">GBene</span><span class="se">}}</span><span class="s2">&quot; append $</span><span class="se">{{</span><span class="s2">outfile</span><span class="se">}}</span>
+
+<span class="s2">next disp_countz</span>
+<span class="s2">jump SELF loopz</span>
+<span class="s2">next disp_county</span>
+<span class="s2">jump SELF loopy</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">script</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="run_LAMMPS.write_lammps_neb_input_script">
+<a class="viewcode-back" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.write_lammps_neb_input_script">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">write_lammps_neb_input_script</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">burgers_vector</span><span class="p">,</span> <span class="n">step_height</span><span class="p">,</span><span class="n">num_steps</span><span class="p">,</span> <span class="n">partitions</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Writes a LAMMPS input script for Nudged Elastic Band (NEB) calculations.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                burgers_vector (float): Burgers vector magnitude for disconnection.</span>
+<span class="sd">                step_height (float): Step height for the disconnection mode.</span>
+<span class="sd">                num_steps (int): Number of NEB images (steps).</span>
+<span class="sd">                partitions (int): Number of parallel partitions for NEB.</span>
+<span class="sd">                mode (int): Mode flag controlling file naming and step count behavior.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                str: Path to the output folder for NEB calculation results.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">folder</span>
+        <span class="n">elem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">element</span>
+        <span class="n">lat_par</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lattice_parameter</span>
+        <span class="n">sigma</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span>
+        <span class="n">mis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">misorientation</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size_along_gb_period</span>
+        <span class="n">potential</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">potential</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">burgers_vector</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">burgers_vec</span> <span class="o">=</span> <span class="n">b</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="n">step_height</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">step_height</span> <span class="o">=</span> <span class="n">h</span>
+        <span class="n">neb_file</span> <span class="o">=</span> <span class="s2">&quot;neb.in&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lammps_input_filename</span> <span class="o">=</span> <span class="n">neb_file</span>
+        <span class="n">file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">neb_file</span><span class="p">)</span>
+        <span class="n">output_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="s2">&quot;partitions&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">partitions</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">output_folder</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">number_of_steps</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">number_of_steps</span> <span class="o">=</span> <span class="n">num_steps</span>
+
+        <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">final_file_var</span> <span class="o">=</span> <span class="s2">&quot;variable final_file string $</span><span class="si">{folder}</span><span class="s2">/data.Cus$</span><span class="si">{sigma}</span><span class="s2">inc0.0_out_step$</span><span class="si">{size}</span><span class="s2">&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">final_file_var</span> <span class="o">=</span> <span class="s2">&quot;variable final_file string $</span><span class="si">{folder}</span><span class="s2">/data.Cus$</span><span class="si">{sigma}</span><span class="s2">inc0.0_out_step$</span><span class="si">{s}</span><span class="s2">&quot;</span>
+
+        <span class="n">script</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span><span class="se">\</span>
+<span class="s2">        # LAMMPS NEB input for Sigma = </span><span class="si">{</span><span class="n">sigma</span><span class="si">}</span><span class="s2">; misorientation = </span><span class="si">{</span><span class="n">mis</span><span class="si">}</span><span class="s2">; disconnection mode (b,h) = (</span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">h</span><span class="si">}</span><span class="s2">); size = </span><span class="si">{</span><span class="n">size</span><span class="si">}</span>
+<span class="s2">        variable s loop </span><span class="si">{</span><span class="n">number_of_steps</span><span class="si">}</span>
+<span class="s2">        label step_loop</span>
+<span class="s2">        variable a equal </span><span class="si">{</span><span class="n">lat_par</span><span class="si">}</span>
+<span class="s2">        variable elem string </span><span class="si">{</span><span class="n">elem</span><span class="si">}</span>
+<span class="s2">        variable potpath string </span><span class="si">{</span><span class="n">potential</span><span class="si">}</span>
+<span class="s2">        variable sigma equal </span><span class="si">{</span><span class="n">sigma</span><span class="si">}</span>
+<span class="s2">        variable mis equal </span><span class="si">{</span><span class="n">mis</span><span class="si">}</span>
+<span class="s2">        variable size equal </span><span class="si">{</span><span class="n">size</span><span class="si">}</span>
+<span class="s2">        variable folder string </span><span class="si">{</span><span class="n">folder</span><span class="si">}</span>
+<span class="s2">        variable outfolder string </span><span class="si">{</span><span class="n">output_folder</span><span class="si">}</span>
+<span class="s2">        variable step_number equal $s-1</span>
+<span class="s2">        variable b equal </span><span class="si">{</span><span class="n">b</span><span class="si">}</span>
+<span class="s2">        variable h equal </span><span class="si">{</span><span class="n">h</span><span class="si">}</span>
+<span class="s2">        variable initial_file string $</span><span class="se">{{</span><span class="s2">folder</span><span class="se">}}</span><span class="s2">/data.Cus$</span><span class="se">{{</span><span class="s2">sigma</span><span class="se">}}</span><span class="s2">inc0.0__step$</span><span class="se">{{</span><span class="s2">step_number</span><span class="se">}}</span>
+<span class="s2">        </span><span class="si">{</span><span class="n">final_file_var</span><span class="si">}</span>
+<span class="s2">        clear</span>
+<span class="s2">        units metal</span>
+<span class="s2">        boundary m p p</span>
+<span class="s2">        atom_style atomic</span>
+<span class="s2">        neighbor        0.3 bin</span>
+<span class="s2">        neigh_modify    delay 1</span>
+<span class="s2">        atom_modify  map array sort 0 0.0</span>
+<span class="s2">        echo both</span>
+<span class="s2">        lattice fcc $a</span>
+<span class="s2">        read_data $</span><span class="se">{{</span><span class="s2">initial_file</span><span class="se">}}</span>
+<span class="s2">        group upper type 1</span>
+<span class="s2">        group lower type 2</span>
+<span class="s2">        pair_style eam/alloy</span>
+<span class="s2">        pair_coeff * * $</span><span class="se">{{</span><span class="s2">potpath</span><span class="se">}}</span><span class="s2"> </span><span class="si">{</span><span class="n">elem</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">elem</span><span class="si">}</span>
+<span class="s2">        neighbor 2 bin</span>
+<span class="s2">        neigh_modify delay 10 check yes</span>
+<span class="s2">        compute csym all centro/atom fcc</span>
+<span class="s2">        compute eng all pe/atom</span>
+<span class="s2">        region nearGB block INF INF INF INF INF INF units box</span>
+<span class="s2">        group nebatoms region nearGB</span>
+<span class="s2">        group nonnebatoms subtract all nebatoms</span>
+<span class="s2">        timestep 0.01</span>
+<span class="s2">        fix 1b nebatoms neb 1.0 perp 1.0 parallel neigh</span>
+<span class="s2">        thermo 10</span>
+<span class="s2">        variable u uloop 100</span>
+<span class="s2">        min_style quickmin</span>
+<span class="s2">        dump 1 all custom 2000 $</span><span class="se">{{</span><span class="s2">outfolder</span><span class="se">}}</span><span class="s2">/dump.neb_$</span><span class="se">{{</span><span class="s2">elem</span><span class="se">}}</span><span class="s2">sigma$</span><span class="se">{{</span><span class="s2">sigma</span><span class="se">}}</span><span class="s2">size$</span><span class="se">{{</span><span class="s2">size</span><span class="se">}}</span><span class="s2">discb$</span><span class="se">{{</span><span class="s2">b</span><span class="se">}}</span><span class="s2">h$</span><span class="se">{{</span><span class="s2">h</span><span class="se">}}</span><span class="s2">_step$</span><span class="se">{{</span><span class="s2">s</span><span class="se">}}</span><span class="s2">.$u id type x y z c_eng c_csym</span>
+<span class="s2">        neb 0.0 0.0 10000 10000 1000 final $</span><span class="se">{{</span><span class="s2">final_file</span><span class="se">}}</span>
+<span class="s2">        next s</span>
+<span class="s2">        jump SELF step_loop</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">script</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">output_folder</span></div>
+
+
+<div class="viewcode-block" id="run_LAMMPS.run_neb_calc">
+<a class="viewcode-back" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.run_neb_calc">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run_neb_calc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">burgers_vector</span><span class="p">,</span> <span class="n">step_height</span><span class="p">,</span><span class="n">number_of_steps</span><span class="p">,</span> <span class="n">partitions</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Runs the NEB calculation using MPI-parallelized LAMMPS.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                burgers_vector (float): Burgers vector magnitude.</span>
+<span class="sd">                step_height (float): Step height.</span>
+<span class="sd">                number_of_steps (int): Number of NEB steps.</span>
+<span class="sd">                partitions (int, optional): Number of parallel partitions (default: 40).</span>
+<span class="sd">                mode (int, optional): Mode flag for NEB input script generation (default: 1).</span>
+
+<span class="sd">            Raises:</span>
+<span class="sd">                RuntimeError: If the NEB LAMMPS run fails.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">mpi_location</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mpi_location</span>
+        <span class="n">lammps_location</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lammps_location</span>
+        <span class="n">folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">folder</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">========================== Running neb calculations ==============================&quot;</span><span class="p">)</span>
+        <span class="n">neb_output_folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">write_lammps_neb_input_script</span><span class="p">(</span><span class="n">burgers_vector</span><span class="p">,</span> <span class="n">step_height</span><span class="p">,</span><span class="n">number_of_steps</span><span class="p">,</span> <span class="n">partitions</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The results from this calculation will be stored in &quot;</span> <span class="o">+</span> <span class="n">neb_output_folder</span><span class="p">)</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="n">mpi_location</span> <span class="o">+</span> <span class="s2">&quot;/mpirun --oversubscribe --use-hwthread-cpus -np &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span>
+            <span class="n">partitions</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">lammps_location</span> <span class="o">+</span> <span class="s2">&quot;/lmp_mpi  -partition &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">partitions</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;x1 -in &quot;</span> <span class="o">+</span> <span class="n">folder</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">lammps_input_filename</span>
+        <span class="c1">#subprocess.run([command], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">command</span><span class="p">],</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">returncode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;NEB run failed:</span><span class="se">\n</span><span class="s2">STDOUT:</span><span class="se">\n</span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="si">}</span><span class="se">\n</span><span class="s2">STDERR:</span><span class="se">\n</span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_remove_temp_files</span><span class="p">(</span><span class="n">neb_output_folder</span><span class="p">,</span><span class="s2">&quot;neb&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Done with NEB calculations!!&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">neb_images</span> <span class="o">=</span> <span class="n">partitions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">number_of_images_provided</span> <span class="o">=</span> <span class="n">number_of_steps</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">neb_output_folder</span> <span class="o">=</span> <span class="n">neb_output_folder</span></div>
+
+
+<div class="viewcode-block" id="run_LAMMPS.run_minimization">
+<a class="viewcode-back" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.run_minimization">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run_minimization</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file_name</span><span class="p">,</span><span class="n">disp_along_gb_period</span><span class="p">,</span><span class="n">disp_along_tilt_axis</span><span class="p">,</span><span class="n">minimization_along_gb_directions</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Runs a minimization calculation using LAMMPS.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                file_name (str): Base filename for input/output files.</span>
+<span class="sd">                disp_along_gb_period (float): Displacement along grain boundary period.</span>
+<span class="sd">                disp_along_tilt_axis (float): Displacement along tilt axis.</span>
+<span class="sd">                minimization_along_gb_directions (bool, optional): Whether to perform box relaxations (default: False).</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                str: Filename of the minimized structure output.</span>
+
+<span class="sd">            Raises:</span>
+<span class="sd">                RuntimeError: If the minimization LAMMPS run fails.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">lammps_location</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lammps_location</span>
+        <span class="n">dispy</span> <span class="o">=</span> <span class="n">disp_along_gb_period</span>
+        <span class="n">dispz</span> <span class="o">=</span> <span class="n">disp_along_tilt_axis</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;========================== Minimizing using LAMMPS ==========================&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write_minimization_input</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">dispy</span><span class="p">,</span> <span class="n">dispz</span><span class="p">,</span><span class="n">minimization_along_gb_directions</span><span class="p">)</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="n">lammps_location</span> <span class="o">+</span> <span class="s2">&quot;/lmp_serial -in &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">lammps_input_filename</span>
+        <span class="c1">#subprocess.run([command], shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">command</span><span class="p">],</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">returncode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;LAMMPS minimization failed:</span><span class="se">\n</span><span class="s2">STDOUT:</span><span class="se">\n</span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="si">}</span><span class="se">\n</span><span class="s2">STDERR:</span><span class="se">\n</span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Done writing minimized file &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_filename</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_filename</span></div>
+
+
+<div class="viewcode-block" id="run_LAMMPS.run_grid_search">
+<a class="viewcode-back" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.run_grid_search">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run_grid_search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">infile</span><span class="p">,</span> <span class="n">outfolder</span><span class="p">,</span><span class="n">number_of_cores</span> <span class="o">=</span> <span class="mi">6</span><span class="p">,</span><span class="n">step_increments</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span><span class="n">limit</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">output_setting</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Runs a grid search of displacements using MPI-parallelized LAMMPS.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                infile (str): Input data filename.</span>
+<span class="sd">                outfolder (str): Output folder for results.</span>
+<span class="sd">                number_of_cores (int, optional): Number of MPI cores to use (default: 6).</span>
+<span class="sd">                step_increments (float, optional): Step size for grid search increments (default: 0.1).</span>
+<span class="sd">                limit (float, optional): Maximum displacement limit (default: 1).</span>
+<span class="sd">                output_setting (int, optional): Output verbosity setting (default: 0).</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                str: Filename of the grid search results.</span>
+
+<span class="sd">            Raises:</span>
+<span class="sd">                RuntimeError: If the grid search LAMMPS run fails.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">=================================== Running grid search  ========================================&quot;</span><span class="p">)</span>
+        <span class="n">mpi_location</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mpi_location</span>
+        <span class="n">lammps_location</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lammps_location</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write_lammps_gridsearch_input</span><span class="p">(</span><span class="n">infile</span><span class="p">,</span> <span class="n">outfolder</span><span class="p">,</span><span class="n">step_increments</span><span class="p">,</span><span class="n">limit</span><span class="p">,</span> <span class="n">output_setting</span><span class="p">)</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="n">mpi_location</span> <span class="o">+</span> <span class="s2">&quot;/mpirun -np &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">number_of_cores</span><span class="p">)</span><span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">lammps_location</span> <span class="o">+</span> <span class="s2">&quot;/lmp_mpi -in &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">lammps_input_filename</span>
+        <span class="c1">#subprocess.run([command], shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">command</span><span class="p">],</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">returncode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Grid search run failed:</span><span class="se">\n</span><span class="s2">STDOUT:</span><span class="se">\n</span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="si">}</span><span class="se">\n</span><span class="s2">STDERR:</span><span class="se">\n</span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Done with grid search!!&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Results stored in : &quot;</span> <span class="o">+</span><span class="n">outfolder</span><span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_filename_gridsearch</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridsearch_output_setting</span> <span class="o">=</span> <span class="n">output_setting</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridsearch_output_folder</span> <span class="o">=</span> <span class="n">outfolder</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_remove_temp_files</span><span class="p">(</span><span class="n">outfolder</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_filename_gridsearch</span></div>
+
+
+<div class="viewcode-block" id="run_LAMMPS.post_process_neb_output">
+<a class="viewcode-back" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.post_process_neb_output">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">post_process_neb_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">outfolder</span><span class="p">,</span><span class="n">plot_decision</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Post-processes the NEB output dump files and optionally plots the energy profile.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                outfolder (str): Folder to write processed output files.</span>
+<span class="sd">                plot_decision (bool, optional): If True, generates and saves energy plot (default: False).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sigma</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size_along_gb_period</span>
+        <span class="n">partitions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">neb_images</span>
+        <span class="n">steps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">number_of_images_provided</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">burgers_vec</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_height</span>
+        <span class="n">folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">neb_output_folder</span>
+        <span class="n">mis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">misorientation</span>
+        <span class="n">elem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">element</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;================================ Running neb post-processing ==================================&quot;</span><span class="p">)</span>
+        <span class="n">out_file</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;dump.neb_</span><span class="si">{</span><span class="n">elem</span><span class="si">}</span><span class="s2">sigma</span><span class="si">{</span><span class="n">sigma</span><span class="si">}</span><span class="s2">_mis</span><span class="si">{</span><span class="n">mis</span><span class="si">}</span><span class="s2">_size</span><span class="si">{</span><span class="n">size</span><span class="si">}</span><span class="s2">_discb</span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s2">h</span><span class="si">{</span><span class="n">h</span><span class="si">}</span><span class="s2">_partition</span><span class="si">{</span><span class="n">partitions</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Writing output dump file: &quot;</span> <span class="o">+</span> <span class="n">folder</span> <span class="o">+</span> <span class="n">out_file</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="n">pot_eng</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">steps</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">partitions</span><span class="p">):</span>
+                <span class="n">file</span> <span class="o">=</span> <span class="n">folder</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;dump.neb_</span><span class="si">{</span><span class="n">elem</span><span class="si">}</span><span class="s2">sigma</span><span class="si">{</span><span class="n">sigma</span><span class="si">}</span><span class="s2">size</span><span class="si">{</span><span class="n">size</span><span class="si">}</span><span class="s2">discb</span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s2">h</span><span class="si">{</span><span class="n">h</span><span class="si">}</span><span class="s2">_step</span><span class="si">{</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">read_neb_output_data</span><span class="p">(</span><span class="n">file</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+                <span class="n">tstep</span> <span class="o">=</span> <span class="n">partitions</span><span class="o">*</span><span class="n">k</span><span class="o">+</span><span class="n">j</span>
+                <span class="n">box</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+                <span class="n">Atoms</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span>
+                <span class="n">natoms</span> <span class="o">=</span> <span class="n">Atoms</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">pe</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Atoms</span><span class="p">[:,</span><span class="mi">5</span><span class="p">])</span>
+                <span class="n">area</span> <span class="o">=</span> <span class="p">(</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span><span class="o">*</span><span class="p">(</span><span class="n">box</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">box</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="mi">100</span> <span class="c1">#nm^2</span>
+                <span class="n">pot_eng</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">tstep</span><span class="p">,</span><span class="n">pe</span><span class="p">,</span><span class="n">area</span><span class="p">])</span>
+                <span class="n">f</span> <span class="o">=</span> <span class="n">write_LAMMPSoutput_tstep</span><span class="p">(</span><span class="n">natoms</span><span class="p">,</span><span class="n">Atoms</span><span class="p">,</span><span class="n">box</span><span class="p">,</span><span class="n">outfolder</span><span class="p">,</span><span class="n">out_file</span><span class="p">,</span><span class="n">tstep</span><span class="p">)</span>
+        <span class="n">peng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pot_eng</span><span class="p">)</span>
+
+        <span class="n">out_name</span> <span class="o">=</span> <span class="n">outfolder</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">elem</span><span class="si">}</span><span class="s2">sigma</span><span class="si">{</span><span class="n">sigma</span><span class="si">}</span><span class="s2">_mis</span><span class="si">{</span><span class="n">mis</span><span class="si">}</span><span class="s2">_size</span><span class="si">{</span><span class="n">size</span><span class="si">}</span><span class="s2">_discb</span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s2">h</span><span class="si">{</span><span class="n">h</span><span class="si">}</span><span class="s2">_partition</span><span class="si">{</span><span class="n">partitions</span><span class="si">}</span><span class="s2">.txt&quot;</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Writing output dump file: &quot;</span> <span class="o">+</span> <span class="n">out_name</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="n">out_name</span><span class="p">,</span><span class="n">peng</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">plot_decision</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="c1"># plotting</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">peng</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">peng</span><span class="p">),(</span><span class="n">peng</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">peng</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="n">peng</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Reaction coordinate&quot;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\Delta$E/a (eV/nm$^2$)&quot;</span><span class="p">)</span>
+            <span class="n">fig_name</span> <span class="o">=</span> <span class="n">outfolder</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">elem</span><span class="si">}</span><span class="s2">sigma</span><span class="si">{</span><span class="n">sigma</span><span class="si">}</span><span class="s2">_mis</span><span class="si">{</span><span class="n">mis</span><span class="si">}</span><span class="s2">_size</span><span class="si">{</span><span class="n">size</span><span class="si">}</span><span class="s2">_discb</span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s2">h</span><span class="si">{</span><span class="n">h</span><span class="si">}</span><span class="s2">_partition</span><span class="si">{</span><span class="n">partitions</span><span class="si">}</span><span class="s2">.png&quot;</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Writing output dump file: &quot;</span> <span class="o">+</span> <span class="n">fig_name</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">fig_name</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="run_LAMMPS.post_process_gridsearch_data">
+<a class="viewcode-back" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.post_process_gridsearch_data">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">post_process_gridsearch_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">plot_decision</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Post-processes grid search results, sorting and optionally plotting the GB energy surface.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                plot_decision (bool, optional): If True, generates and saves contour plots (default: False).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sigma</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size_along_gb_period</span>
+        <span class="n">mis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">misorientation</span>
+        <span class="n">elem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">element</span>
+        <span class="n">outfolder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gridsearch_output_folder</span>
+        <span class="n">infile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_filename_gridsearch</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=========================== Running grid search post-processing ==================================&quot;</span><span class="p">)</span>
+        <span class="n">gs_data</span> <span class="o">=</span> <span class="n">read_gridsearch_results</span><span class="p">(</span><span class="n">outfolder</span><span class="o">+</span><span class="n">infile</span><span class="p">)</span>
+        <span class="n">gs_data</span> <span class="o">=</span> <span class="n">gs_data</span><span class="p">[</span><span class="n">gs_data</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">argsort</span><span class="p">()]</span>
+        <span class="n">outfile</span> <span class="o">=</span> <span class="n">outfolder</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">elem</span><span class="si">}</span><span class="s2">_sigma</span><span class="si">{</span><span class="n">sigma</span><span class="si">}</span><span class="s2">_mis</span><span class="si">{</span><span class="n">mis</span><span class="si">}</span><span class="s2">_size</span><span class="si">{</span><span class="n">size</span><span class="si">}</span><span class="s2">_gridsearch_sorted.txt&quot;</span>
+        <span class="n">write_gridsearch_results</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span> <span class="n">gs_data</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">plot_decision</span><span class="p">:</span>
+            <span class="c1"># Create a regular grid to interpolate onto</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">gs_data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">gs_data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="n">z</span> <span class="o">=</span> <span class="n">gs_data</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
+            <span class="n">segments</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span>
+            <span class="n">xi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">segments</span><span class="p">)</span>
+            <span class="n">yi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">segments</span><span class="p">)</span>
+            <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">yi</span><span class="p">)</span>
+            <span class="c1"># Interpolate z values onto the grid</span>
+            <span class="n">Z</span> <span class="o">=</span> <span class="n">griddata</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">z</span><span class="p">,</span> <span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">),</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;cubic&#39;</span><span class="p">,</span> <span class="n">rescale</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="c1"># Plot</span>
+            <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">dpi</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+            <span class="n">contour</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">segments</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;RdBu_r&#39;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">segments</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">0.00001</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Displacement along gb period&quot;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Displacement along tilt axis&quot;</span><span class="p">)</span>
+            <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">contour</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s2">&quot;vertical&quot;</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                         <span class="n">label</span><span class="o">=</span><span class="s2">&quot;GB energy&quot;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">z</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu_r&quot;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+            <span class="n">outfile</span> <span class="o">=</span> <span class="n">outfolder</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">elem</span><span class="si">}</span><span class="s2">_sigma</span><span class="si">{</span><span class="n">sigma</span><span class="si">}</span><span class="s2">_mis</span><span class="si">{</span><span class="n">mis</span><span class="si">}</span><span class="s2">_size</span><span class="si">{</span><span class="n">size</span><span class="si">}</span><span class="s2">_gridsearch_sorted.png&quot;</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span></div>
+
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_remove_temp_files</span><span class="p">(</span><span class="n">output_folder</span><span class="p">,</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;non-neb&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Moves the LAMMPS log file to output folder and removes temporary files.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                output_folder (str): Folder where output files are stored.</span>
+<span class="sd">                mode (str, optional): If &quot;neb&quot;, removes additional NEB-related temp files (default: &quot;non-neb&quot;).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Move log file to results folder</span>
+        <span class="n">log_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_folder</span><span class="p">,</span> <span class="s2">&quot;log.lammps&quot;</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;log.lammps&quot;</span><span class="p">,</span> <span class="n">log_file</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;neb&quot;</span><span class="p">:</span>
+            <span class="c1"># Remove temp files generated by lammps neb</span>
+            <span class="n">command</span> <span class="o">=</span> <span class="s2">&quot;rm screen.*&quot;</span>
+            <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">DEVNULL</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">DEVNULL</span><span class="p">)</span>
+            <span class="n">command</span> <span class="o">=</span> <span class="s2">&quot;rm log.lammps*&quot;</span>
+            <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">DEVNULL</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">DEVNULL</span><span class="p">)</span>
+            <span class="n">command</span> <span class="o">=</span> <span class="s2">&quot;rm tmp.lammps.variable&quot;</span>
+            <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">DEVNULL</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">DEVNULL</span><span class="p">)</span></div>
+
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Himanshu Joshi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

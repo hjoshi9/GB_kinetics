@@ -5,7 +5,7 @@ permissions:
 
 on:
   push:
-    branches: [oop]  # Update if your default branch is different
+    branches: [oop] 
     paths:
       - 'docs/**'
       - 'requirements.txt'
@@ -27,7 +27,6 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          pip install sphinx
 
       - name: Build HTML docs
         run: |

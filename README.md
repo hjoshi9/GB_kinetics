@@ -4,6 +4,9 @@ Implementation of disconnection image creation algorithm outlined in the paper:<
 The paper in under review and a pre-print is available at http://dx.doi.org/10.13140/RG.2.2.23055.09129 <br />
 <br />
 <br />
+
+Documentation for this project is hosted at : https://hjoshi9.github.io/GB_kinetics/ <br />
+
 NOTE : This is the OOP implementaiton of GB kinetics code. The repository is under active development!!
 <br />
 <br />

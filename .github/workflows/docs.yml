@@ -24,12 +24,18 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Show project structure
+        run: |
+          pwd
+          ls -R
+
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
 
       - name: Build HTML docs
         run: |
+          rm -rf docs/_build
           sphinx-build -b html docs/source docs/_build/html
 
       - name: Deploy to GitHub Pages

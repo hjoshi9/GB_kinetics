@@ -1,0 +1,1021 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.min_shuffle &mdash; GB Kinetics 2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=60dbed4a"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            GB Kinetics
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../usage.html#installations-required">Installations required</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage.html#general-usage">General usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Source</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../GBKineticsRunController.html">GBKineticsRunController module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../GBKineticsRunController.html#src.GBKineticsRunController.runGBkinetics"><code class="docutils literal notranslate"><span class="pre">runGBkinetics()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../GBKineticsRunController.html#src.GBKineticsRunController.runGridSearch"><code class="docutils literal notranslate"><span class="pre">runGridSearch()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../IO.html">IO module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../IO.html#IO.find_gb_location"><code class="docutils literal notranslate"><span class="pre">find_gb_location()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../IO.html#IO.read_LAMMPS_datafile"><code class="docutils literal notranslate"><span class="pre">read_LAMMPS_datafile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../IO.html#IO.read_LAMMPS_dumpfile"><code class="docutils literal notranslate"><span class="pre">read_LAMMPS_dumpfile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../IO.html#IO.read_gridsearch_results"><code class="docutils literal notranslate"><span class="pre">read_gridsearch_results()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../IO.html#IO.read_neb_output_data"><code class="docutils literal notranslate"><span class="pre">read_neb_output_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../IO.html#IO.write_LAMMPSoutput_tstep"><code class="docutils literal notranslate"><span class="pre">write_LAMMPSoutput_tstep()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../IO.html#IO.write_gridsearch_results"><code class="docutils literal notranslate"><span class="pre">write_gridsearch_results()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../IO.html#IO.write_lammps_datafile"><code class="docutils literal notranslate"><span class="pre">write_lammps_datafile()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../bicrystal.html">bicrystal module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal"><code class="docutils literal notranslate"><span class="pre">bicrystal</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.create_disconnection_containing_bicrystal"><code class="docutils literal notranslate"><span class="pre">bicrystal.create_disconnection_containing_bicrystal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.create_fix_eco_orientationfile"><code class="docutils literal notranslate"><span class="pre">bicrystal.create_fix_eco_orientationfile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.create_flat_gb_bicrystal"><code class="docutils literal notranslate"><span class="pre">bicrystal.create_flat_gb_bicrystal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.ordered_write"><code class="docutils literal notranslate"><span class="pre">bicrystal.ordered_write()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.write"><code class="docutils literal notranslate"><span class="pre">bicrystal.write()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../bicrystallography.html">bicrystallography module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../bicrystallography.html#bicrystallography.bicrystallography"><code class="docutils literal notranslate"><span class="pre">bicrystallography</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystallography.html#bicrystallography.bicrystallography.sigma"><code class="docutils literal notranslate"><span class="pre">bicrystallography.sigma</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystallography.html#bicrystallography.bicrystallography.misorientation"><code class="docutils literal notranslate"><span class="pre">bicrystallography.misorientation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystallography.html#bicrystallography.bicrystallography.inclination"><code class="docutils literal notranslate"><span class="pre">bicrystallography.inclination</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystallography.html#bicrystallography.bicrystallography.axis"><code class="docutils literal notranslate"><span class="pre">bicrystallography.axis</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystallography.html#bicrystallography.bicrystallography.lattice_parameter"><code class="docutils literal notranslate"><span class="pre">bicrystallography.lattice_parameter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystallography.html#bicrystallography.bicrystallography.gb_props"><code class="docutils literal notranslate"><span class="pre">bicrystallography.gb_props()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../min_shuffle.html">min_shuffle module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle"><code class="docutils literal notranslate"><span class="pre">min_shuffle</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.format_input"><code class="docutils literal notranslate"><span class="pre">min_shuffle.format_input()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.gb_info"><code class="docutils literal notranslate"><span class="pre">min_shuffle.gb_info()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.load_data"><code class="docutils literal notranslate"><span class="pre">min_shuffle.load_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.pbcdist"><code class="docutils literal notranslate"><span class="pre">min_shuffle.pbcdist()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.pbcwrap"><code class="docutils literal notranslate"><span class="pre">min_shuffle.pbcwrap()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.plot_min_shuffle_2d"><code class="docutils literal notranslate"><span class="pre">min_shuffle.plot_min_shuffle_2d()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.plot_min_shuffle_3d"><code class="docutils literal notranslate"><span class="pre">min_shuffle.plot_min_shuffle_3d()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.replicate"><code class="docutils literal notranslate"><span class="pre">min_shuffle.replicate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.run"><code class="docutils literal notranslate"><span class="pre">min_shuffle.run()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.write_images"><code class="docutils literal notranslate"><span class="pre">min_shuffle.write_images()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../plastic_slip.html">plastic_slip module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../plastic_slip.html#plastic_slip.dislocation_dipole"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../plastic_slip.html#plastic_slip.dislocation_dipole.dislocation_points"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.dislocation_points</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../plastic_slip.html#plastic_slip.dislocation_dipole.period"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.period</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../plastic_slip.html#plastic_slip.dislocation_dipole.burgers_vector"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.burgers_vector</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../plastic_slip.html#plastic_slip.dislocation_dipole.dislocation_vector"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.dislocation_vector</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../plastic_slip.html#plastic_slip.dislocation_dipole.dislocation_distance"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.dislocation_distance</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../plastic_slip.html#plastic_slip.dislocation_dipole.plastic_displacement"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.plastic_displacement()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../runLAMMPS.html">runLAMMPS module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.folder"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.folder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.element"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.element</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.lattice_parameter"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.lattice_parameter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.sigma"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.sigma</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.misorientation"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.misorientation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.inclination"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.inclination</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.size_along_gb_period"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.size_along_gb_period</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.potential"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.potential</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.mpi_location"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.mpi_location</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.lammps_location"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.lammps_location</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.output_filename_gridsearch"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.output_filename_gridsearch</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.gridsearch_output_setting"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.gridsearch_output_setting</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.gridsearch_output_folder"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.gridsearch_output_folder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.lammps_input_filename"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.lammps_input_filename</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.neb_images"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.neb_images</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.number_of_images_provided"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.number_of_images_provided</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.burgers_vec"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.burgers_vec</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.step_height"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.step_height</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.neb_output_folder"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.neb_output_folder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.post_process_gridsearch_data"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.post_process_gridsearch_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.post_process_neb_output"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.post_process_neb_output()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.run_grid_search"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.run_grid_search()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.run_minimization"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.run_minimization()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.run_neb_calc"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.run_neb_calc()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.write_lammps_gridsearch_input"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.write_lammps_gridsearch_input()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.write_lammps_neb_input_script"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.write_lammps_neb_input_script()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.write_minimization_input"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.write_minimization_input()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../data.html">Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../example_gs.html">Example: Running Grid Search</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../example_gs.html#output">Output</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../example_gbkinetics.html">Example: Runnig GB Kinetics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../example_gbkinetics.html#output">Output</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">GB Kinetics</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">src.min_shuffle</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for src.min_shuffle</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy.linalg</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">la</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ot</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ot.plot</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.IO</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+<div class="viewcode-block" id="min_shuffle">
+<a class="viewcode-back" href="../../min_shuffle.html#src.min_shuffle.min_shuffle">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">min_shuffle</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Class to perform minimal atomic shuffling analysis between two grain boundary configurations</span>
+<span class="sd">        using optimal transport (Sinkhorn algorithm).</span>
+
+<span class="sd">        This class reads initial and final atomic configurations from LAMMPS data files, identifies</span>
+<span class="sd">        a region around a grain boundary and a disconnection, formats the data, applies periodic boundary</span>
+<span class="sd">        conditions, replicates the simulation box if necessary, and runs the Sinkhorn optimal transport</span>
+<span class="sd">        to find minimal atomic displacement mappings.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">lattice_parameter</span><span class="p">,</span><span class="n">sigma</span><span class="p">,</span><span class="n">misorientation</span><span class="p">,</span><span class="n">inclination</span><span class="p">,</span>
+                 <span class="n">period</span><span class="p">,</span><span class="n">folder</span><span class="p">,</span><span class="n">elem</span><span class="p">,</span><span class="n">reg_param</span><span class="p">,</span><span class="n">max_iters</span><span class="p">,</span>
+                 <span class="n">box_expansion_factor</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">dimension</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the min_shuffle object with simulation parameters and placeholders for atomic data.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            lattice_parameter (float): The lattice parameter of the crystal structure (in angstroms).</span>
+<span class="sd">            sigma (float): Sigma value related to the grain boundary type or misorientation.</span>
+<span class="sd">            misorientation (float): The misorientation angle between grains (in degrees).</span>
+<span class="sd">            inclination (float): The inclination angle of the grain boundary (in degrees).</span>
+<span class="sd">            period (int): The period or repeat length of the grain boundary.</span>
+<span class="sd">            folder (str): Directory path where output files and data will be stored.</span>
+<span class="sd">            elem (str): Chemical element symbol of the material (e.g., &#39;Al&#39;, &#39;Cu&#39;).</span>
+<span class="sd">            reg_param (float): Regularization parameter used in the Sinkhorn optimal transport algorithm.</span>
+<span class="sd">            max_iters (int): Maximum number of iterations allowed in the Sinkhorn solver.</span>
+<span class="sd">            box_expansion_factor (float, optional): Factor to expand the simulation box dimensions, defaults to 0 (no expansion).</span>
+<span class="sd">            dimension (int, optional): Dimensionality of the simulation system, defaults to 3 (3D).</span>
+
+<span class="sd">        Attributes:</span>
+<span class="sd">            grainA_pretransform (np.ndarray or None): Atomic positions of grain A before transformation.</span>
+<span class="sd">            grainB_pretransform (np.ndarray or None): Atomic positions of grain B before transformation.</span>
+<span class="sd">            grainA_posttransform (np.ndarray or None): Atomic positions of grain A after transformation.</span>
+<span class="sd">            grainB_posttransform (np.ndarray or None): Atomic positions of grain B after transformation.</span>
+<span class="sd">            initial_grain (np.ndarray or None): Complete initial atomic configuration.</span>
+<span class="sd">            final_grain (np.ndarray or None): Complete final atomic configuration.</span>
+<span class="sd">            box (np.ndarray or None): Simulation box dimensions.</span>
+<span class="sd">            gb_location (float or None): Grain boundary location coordinate.</span>
+<span class="sd">            step_height (float or None): Step height parameter defining the shuffle domain.</span>
+<span class="sd">            dislocation_start (float or None): Start coordinate of the dislocation region.</span>
+<span class="sd">            dislocation_end (float or None): End coordinate of the dislocation region.</span>
+<span class="sd">            atoms_minshuf (np.ndarray or None): Atomic coordinates involved in minimal shuffle.</span>
+<span class="sd">            types_minshuf (int or None): Number of atom types in minimal shuffle domain.</span>
+<span class="sd">            box_minshuf (np.ndarray or None): Simulation box dimensions for minimal shuffle domain.</span>
+<span class="sd">            initial_atoms_transformed_region (np.ndarray or None): Initial atom coordinates of the transformed region.</span>
+<span class="sd">            final_atoms_transformed_region (np.ndarray or None): Final atom coordinates of the transformed region.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lattice_parameter</span> <span class="o">=</span> <span class="n">lattice_parameter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span> <span class="o">=</span> <span class="n">sigma</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">misorientation</span> <span class="o">=</span> <span class="n">misorientation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inclination</span> <span class="o">=</span> <span class="n">inclination</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">period</span> <span class="o">=</span> <span class="n">period</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">folder</span> <span class="o">=</span> <span class="n">folder</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">element</span> <span class="o">=</span> <span class="n">elem</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reg_param</span> <span class="o">=</span> <span class="n">reg_param</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_iters</span> <span class="o">=</span> <span class="n">max_iters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">box_expansion_factor</span> <span class="o">=</span> <span class="n">box_expansion_factor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dimension</span> <span class="o">=</span> <span class="n">dimension</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">grainA_pretransform</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grainB_pretransform</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grainA_posttransform</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grainB_posttransform</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initial_grain</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">final_grain</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">box</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">gb_location</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">step_height</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dislocation_start</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dislocation_end</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">atoms_minshuf</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">types_minshuf</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">box_minshuf</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">initial_atoms_transformed_region</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">final_atoms_transformed_region</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="min_shuffle.gb_info">
+<a class="viewcode-back" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.gb_info">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">gb_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">filepath</span><span class="p">,</span><span class="n">st_height</span><span class="p">,</span><span class="n">disloc1</span><span class="p">,</span><span class="n">disloc2</span><span class="p">,</span>
+                <span class="n">min_shuffle_domain_expansion_factor</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span><span class="n">disconnection_extension</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Computes grain boundary location, step height, and dislocation region based on input parameters.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                filepath (str): Path to the file to extract grain boundary info.</span>
+<span class="sd">                st_height (float): Step height direction and magnitude.</span>
+<span class="sd">                disloc1 (tuple): Coordinates of the start of the dislocation.</span>
+<span class="sd">                disloc2 (tuple): Coordinates of the end of the dislocation.</span>
+<span class="sd">                min_shuffle_domain_expansion_factor (float, optional): Expansion factor of minimal shuffle domain. Defaults to 1.5.</span>
+<span class="sd">                disconnection_extension (int, optional): Extension length for dislocation region. Defaults to 5.</span>
+
+<span class="sd">            Sets:</span>
+<span class="sd">                self.gb_location (float): Calculated grain boundary location.</span>
+<span class="sd">                self.step_height (float): Adjusted step height of the shuffle domain.</span>
+<span class="sd">                self.dislocation_start (float): Start coordinate of the dislocation region.</span>
+<span class="sd">                self.dislocation_end (float): End coordinate of the dislocation region.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">lat_par</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lattice_parameter</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">period</span>
+        <span class="n">average_gb_loc</span><span class="p">,</span> <span class="n">gb_hi</span><span class="p">,</span> <span class="n">gb_lo</span> <span class="o">=</span> <span class="n">find_gb_location</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">st_height</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">gb_location</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">*</span> <span class="n">average_gb_loc</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">lat_par</span> <span class="o">*</span> <span class="n">p</span> <span class="o">/</span> <span class="mi">16</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">gb_location</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">*</span> <span class="n">average_gb_loc</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">lat_par</span> <span class="o">*</span> <span class="n">p</span> <span class="o">/</span> <span class="mi">16</span>
+        <span class="n">d_start</span> <span class="o">=</span> <span class="n">disloc1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">disconnection_extension</span>
+        <span class="n">d_stop</span> <span class="o">=</span> <span class="n">disloc2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">disconnection_extension</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gb_location</span> <span class="o">=</span> <span class="n">gb_location</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">step_height</span> <span class="o">=</span> <span class="n">st_height</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span> <span class="n">min_shuffle_domain_expansion_factor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dislocation_start</span> <span class="o">=</span> <span class="n">d_start</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dislocation_end</span> <span class="o">=</span> <span class="n">d_stop</span></div>
+
+
+
+<div class="viewcode-block" id="min_shuffle.load_data">
+<a class="viewcode-back" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.load_data">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file_mode</span><span class="p">,</span><span class="n">file_flat</span><span class="p">,</span><span class="n">file_disconnection</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Loads atomic positions from initial and final LAMMPS data files.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                file_mode (str): Mode for reading the LAMMPS data files.</span>
+<span class="sd">                file_flat (str): Path to the initial (flat) atomic configuration file.</span>
+<span class="sd">                file_disconnection (str): Path to the final atomic configuration file.</span>
+
+<span class="sd">            Sets:</span>
+<span class="sd">                self.grainA_pretransform (np.ndarray): Atoms in grain A before transformation.</span>
+<span class="sd">                self.grainB_pretransform (np.ndarray): Atoms in grain B before transformation.</span>
+<span class="sd">                self.grainA_posttransform (np.ndarray): Atoms in grain A after transformation.</span>
+<span class="sd">                self.grainB_posttransform (np.ndarray): Atoms in grain B after transformation.</span>
+<span class="sd">                self.box (np.ndarray): Simulation box.</span>
+<span class="sd">                self.initial_grain (np.ndarray): Initial atomic data.</span>
+<span class="sd">                self.final_grain (np.ndarray): Final atomic data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=============================== Generating atomic trajectories =====================================&quot;</span><span class="p">)</span>
+        <span class="n">data_init</span> <span class="o">=</span> <span class="n">read_LAMMPS_datafile</span><span class="p">(</span><span class="n">file_flat</span><span class="p">,</span> <span class="n">file_mode</span><span class="p">)</span>
+        <span class="n">data_final</span> <span class="o">=</span> <span class="n">read_LAMMPS_datafile</span><span class="p">(</span><span class="n">file_disconnection</span><span class="p">,</span> <span class="n">file_mode</span><span class="p">)</span>
+        <span class="n">atoms</span> <span class="o">=</span> <span class="n">data_init</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">box</span> <span class="o">=</span> <span class="n">data_init</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">Ai</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">Bi</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">neb_init</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">atoms</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="k">if</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mf">1.0</span><span class="p">:</span>
+                <span class="n">Ai</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+            <span class="c1"># elif atoms</span>
+            <span class="k">elif</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mf">2.0</span><span class="p">:</span>
+                <span class="n">Bi</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">neb_init</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+        <span class="n">Ai</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">Ai</span><span class="p">)</span>
+        <span class="n">Bi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">Bi</span><span class="p">)</span>
+        <span class="n">initial</span> <span class="o">=</span> <span class="n">atoms</span>
+
+        <span class="n">atoms</span> <span class="o">=</span> <span class="n">data_final</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">Af</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">Bf</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">neb_final</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">atoms</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="k">if</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mf">1.0</span><span class="p">:</span>
+                <span class="n">Af</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+            <span class="k">elif</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mf">2.0</span><span class="p">:</span>
+                <span class="n">Bf</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">neb_final</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+        <span class="n">Af</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">Af</span><span class="p">)</span>
+        <span class="n">Bf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">Bf</span><span class="p">)</span>
+        <span class="n">final</span> <span class="o">=</span> <span class="n">atoms</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">grainA_pretransform</span> <span class="o">=</span> <span class="n">Ai</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grainB_pretransform</span> <span class="o">=</span> <span class="n">Bi</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grainA_posttransform</span> <span class="o">=</span> <span class="n">Af</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grainB_posttransform</span> <span class="o">=</span> <span class="n">Bf</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">box</span> <span class="o">=</span> <span class="n">box</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initial_grain</span> <span class="o">=</span> <span class="n">initial</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">final_grain</span> <span class="o">=</span> <span class="n">final</span></div>
+
+
+<div class="viewcode-block" id="min_shuffle.format_input">
+<a class="viewcode-back" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.format_input">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">format_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">folder</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Formats the input by selecting atoms in the minimal shuffle domain and writes data files.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                folder (str): Directory to write formatted data files.</span>
+
+<span class="sd">            Raises:</span>
+<span class="sd">                ValueError: If grain boundary info or atomic data is missing.</span>
+
+<span class="sd">            Sets:</span>
+<span class="sd">                self.atoms_minshuf (np.ndarray): Formatted atoms array for minimal shuffling.</span>
+<span class="sd">                self.types_minshuf (int): Number of atom types.</span>
+<span class="sd">                self.box_minshuf (np.ndarray): Simulation box for the minimal shuffle domain.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_height</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;GB details not defined. Run gb_info()&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">grainA_posttransform</span> <span class="ow">is</span>  <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Data not loaded. Run load_data()&quot;</span><span class="p">)</span>
+        <span class="n">Ai</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grainA_pretransform</span>
+        <span class="n">Bi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grainB_pretransform</span>
+        <span class="n">Af</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grainA_posttransform</span>
+        <span class="n">Bf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grainB_posttransform</span>
+        <span class="n">box</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">box</span>
+        <span class="n">gb_loc</span> <span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">gb_location</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_height</span>
+        <span class="n">disc_start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dislocation_start</span>
+        <span class="n">disc_end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dislocation_end</span>
+        <span class="n">elem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">element</span>
+        <span class="n">sigma</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span>
+        <span class="n">inc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inclination</span>
+
+        <span class="n">data_A</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">data_B</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">eps</span> <span class="o">=</span> <span class="mf">1e-1</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">h</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">initial</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">Ai</span><span class="p">,</span> <span class="n">Bi</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">initial</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+                <span class="k">if</span> <span class="n">initial</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">gb_loc</span> <span class="o">+</span> <span class="n">h</span> <span class="o">-</span> <span class="n">eps</span> <span class="ow">and</span> <span class="n">initial</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">gb_loc</span> <span class="o">-</span> <span class="n">eps</span> <span class="ow">and</span> <span class="n">initial</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">disc_start</span> <span class="ow">and</span> <span class="n">initial</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">disc_end</span><span class="p">:</span>
+                    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">data_A</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">initial</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">initial</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">initial</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">initial</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">3</span><span class="p">]])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Bi</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+                <span class="k">if</span> <span class="n">Bi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">gb_loc</span> <span class="o">+</span> <span class="n">h</span> <span class="o">-</span> <span class="n">eps</span> <span class="ow">and</span> <span class="n">Bi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">gb_loc</span> <span class="o">-</span> <span class="n">eps</span> <span class="ow">and</span> <span class="n">Bi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">disc_start</span> <span class="ow">and</span> <span class="n">Bi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">disc_end</span><span class="p">:</span>
+                    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">data_A</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">Bi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">Bi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">Bi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">Bi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">3</span><span class="p">]])</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data_A</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Af</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data_A</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">Af</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
+                    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">data_B</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">Af</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">Af</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">Af</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">Af</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">3</span><span class="p">]])</span>
+                    <span class="k">break</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Bf</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data_A</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">Bf</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
+                    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">data_B</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">Bf</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">Bf</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">Bf</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">Bf</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">3</span><span class="p">]])</span>
+                    <span class="k">break</span>
+        <span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data_B</span><span class="p">)</span>
+        <span class="c1"># Write to data file</span>
+        <span class="n">suffix</span> <span class="o">=</span> <span class="s2">&quot;min_shuffle&quot;</span>
+        <span class="n">file</span> <span class="o">=</span> <span class="s2">&quot;data.&quot;</span> <span class="o">+</span> <span class="n">elem</span> <span class="o">+</span> <span class="s2">&quot;s&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;inc&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">inc</span><span class="p">)</span>
+        <span class="n">outfile</span> <span class="o">=</span> <span class="n">write_lammps_datafile</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">suffix</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">box</span><span class="p">)</span>
+        <span class="c1"># Prepare output</span>
+        <span class="n">atoms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">types</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="n">eps2</span> <span class="o">=</span> <span class="mf">0.1</span>
+        <span class="n">xlo</span> <span class="o">=</span> <span class="n">gb_loc</span> <span class="o">-</span> <span class="n">h</span> <span class="o">+</span> <span class="n">eps2</span>
+        <span class="n">xhi</span> <span class="o">=</span> <span class="n">gb_loc</span> <span class="o">+</span> <span class="n">h</span> <span class="o">+</span> <span class="n">eps2</span>
+        <span class="n">scale</span> <span class="o">=</span> <span class="mf">1.05</span>
+        <span class="n">box</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">scale</span> <span class="o">*</span> <span class="n">xlo</span><span class="p">,</span> <span class="n">scale</span> <span class="o">*</span> <span class="n">xhi</span><span class="p">],</span>
+                        <span class="p">[</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span>
+                        <span class="p">[</span><span class="n">box</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mf">1e-2</span><span class="p">,</span> <span class="n">box</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">atoms_minshuf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">B</span><span class="p">),</span><span class="mi">5</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">atoms_minshuf</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">atoms_minshuf</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">atoms_minshuf</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">2</span><span class="p">:]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,:</span><span class="mi">3</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">B</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">atoms_minshuf</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">atoms_minshuf</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">),</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">atoms_minshuf</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">),</span> <span class="mi">2</span><span class="p">:]</span> <span class="o">=</span> <span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">types_minshuf</span> <span class="o">=</span> <span class="n">types</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">box_minshuf</span> <span class="o">=</span> <span class="n">box</span></div>
+
+
+<div class="viewcode-block" id="min_shuffle.replicate">
+<a class="viewcode-back" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.replicate">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">replicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">rep_scheme</span><span class="p">,</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">box</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Replicates atomic configurations according to the specified replication scheme.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                rep_scheme (list): List of 6 integers defining replication multipliers [xlo, xhi, ylo, yhi, zlo, zhi].</span>
+<span class="sd">                X (np.ndarray): Initial atomic coordinates.</span>
+<span class="sd">                Y (np.ndarray): Final atomic coordinates.</span>
+<span class="sd">                box (np.ndarray): Simulation box dimensions.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                tuple: (X_rep, Y_rep, rep_box)</span>
+<span class="sd">                    X_rep (np.ndarray): Replicated initial coordinates.</span>
+<span class="sd">                    Y_rep (np.ndarray): Replicated final coordinates.</span>
+<span class="sd">                    rep_box (np.ndarray): Updated simulation box after replication.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimension</span>
+        <span class="c1"># Define outputs</span>
+        <span class="n">rep_box</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">*</span> <span class="n">box</span>
+
+        <span class="c1"># Define multipliers</span>
+        <span class="n">xlo_mult</span> <span class="o">=</span> <span class="n">rep_scheme</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">xhi_mult</span> <span class="o">=</span> <span class="n">rep_scheme</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">ylo_mult</span> <span class="o">=</span> <span class="n">rep_scheme</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">yhi_mult</span> <span class="o">=</span> <span class="n">rep_scheme</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">zlo_mult</span> <span class="o">=</span> <span class="n">rep_scheme</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+        <span class="n">zhi_mult</span> <span class="o">=</span> <span class="n">rep_scheme</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+
+        <span class="n">x_range</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">xlo_mult</span><span class="p">,</span> <span class="n">xhi_mult</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">y_range</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">ylo_mult</span><span class="p">,</span> <span class="n">yhi_mult</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">z_range</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">zlo_mult</span><span class="p">,</span> <span class="n">zhi_mult</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">nx</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x_range</span><span class="p">)</span>
+        <span class="n">ny</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_range</span><span class="p">)</span>
+        <span class="n">nz</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">z_range</span><span class="p">)</span>
+
+        <span class="c1"># Find lenght of box along each of the axes</span>
+        <span class="n">Lx</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">box</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">Ly</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">Lz</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">box</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">nx</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="n">ny</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span>
+
+        <span class="n">X_rep</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">nx</span> <span class="o">*</span> <span class="n">ny</span> <span class="o">*</span> <span class="n">nz</span><span class="p">,</span> <span class="n">dim</span><span class="p">))</span>
+        <span class="n">Y_rep</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">Y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">nx</span> <span class="o">*</span> <span class="n">ny</span> <span class="o">*</span> <span class="n">nz</span><span class="p">,</span> <span class="n">dim</span><span class="p">))</span>
+        <span class="c1"># Replicate</span>
+        <span class="n">ind_count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x_range</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">y_range</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">z_range</span><span class="p">:</span>
+                    <span class="n">x_add</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="n">Lx</span>
+                    <span class="n">y_add</span> <span class="o">=</span> <span class="n">j</span> <span class="o">*</span> <span class="n">Ly</span>
+                    <span class="n">z_add</span> <span class="o">=</span> <span class="n">k</span> <span class="o">*</span> <span class="n">Lz</span>
+
+                    <span class="n">x_new</span> <span class="o">=</span> <span class="n">X</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x_add</span><span class="p">,</span> <span class="n">y_add</span><span class="p">,</span> <span class="n">z_add</span><span class="p">)</span>
+                    <span class="n">y_new</span> <span class="o">=</span> <span class="n">Y</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x_add</span><span class="p">,</span> <span class="n">y_add</span><span class="p">,</span> <span class="n">z_add</span><span class="p">)</span>
+
+                    <span class="n">start</span> <span class="o">=</span> <span class="n">ind_count</span> <span class="o">*</span> <span class="n">nx</span>
+                    <span class="n">end</span> <span class="o">=</span> <span class="p">(</span><span class="n">ind_count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">nx</span>
+                    <span class="n">X_rep</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">x_new</span>
+                    <span class="n">Y_rep</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">y_new</span>
+                    <span class="n">ind_count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="c1"># Update box</span>
+        <span class="n">rep_box</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">xlo_mult</span> <span class="o">*</span> <span class="n">Lx</span>
+        <span class="n">rep_box</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">xhi_mult</span> <span class="o">*</span> <span class="n">Lx</span>
+        <span class="n">rep_box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">ylo_mult</span> <span class="o">*</span> <span class="n">Ly</span>
+        <span class="n">rep_box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">yhi_mult</span> <span class="o">*</span> <span class="n">Ly</span>
+        <span class="n">rep_box</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">zlo_mult</span> <span class="o">*</span> <span class="n">Lz</span>
+        <span class="n">rep_box</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">zhi_mult</span> <span class="o">*</span> <span class="n">Lz</span>
+
+        <span class="k">return</span> <span class="n">X_rep</span><span class="p">,</span> <span class="n">Y_rep</span><span class="p">,</span> <span class="n">rep_box</span></div>
+
+
+<div class="viewcode-block" id="min_shuffle.pbcdist">
+<a class="viewcode-back" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.pbcdist">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">pbcdist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">dp</span><span class="p">,</span><span class="n">Lx</span><span class="p">,</span><span class="n">Ly</span><span class="p">,</span><span class="n">Lz</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Applies periodic boundary conditions to displacement vectors.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                dp (np.ndarray): Displacement vectors.</span>
+<span class="sd">                Lx (float): Box length along x-axis.</span>
+<span class="sd">                Ly (float): Box length along y-axis.</span>
+<span class="sd">                Lz (float): Box length along z-axis.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                np.ndarray: Adjusted displacement vectors considering periodic boundaries.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimension</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">dp</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">dim</span>
+        <span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">Lx</span><span class="p">,</span> <span class="n">Ly</span><span class="p">,</span> <span class="n">Lz</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">Li</span> <span class="o">=</span> <span class="n">L</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dp</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+                <span class="k">if</span> <span class="n">dp</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">Li</span><span class="p">:</span>
+                    <span class="n">d</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">Li</span>
+                <span class="k">elif</span> <span class="n">dp</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">Li</span><span class="p">:</span>
+                    <span class="n">d</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">-=</span> <span class="n">Li</span>
+        <span class="k">return</span> <span class="n">d</span></div>
+
+
+<div class="viewcode-block" id="min_shuffle.pbcwrap">
+<a class="viewcode-back" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.pbcwrap">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">pbcwrap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">box</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Wraps coordinates into the primary simulation box applying periodic boundary conditions.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                d (np.ndarray): Coordinates to wrap.</span>
+<span class="sd">                box (np.ndarray): Simulation box dimensions.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                np.ndarray: Coordinates wrapped within the simulation box.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimension</span>
+        <span class="n">dpbc</span> <span class="o">=</span> <span class="n">d</span>
+
+        <span class="n">xlo</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">ylo</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">zlo</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">xhi</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">yhi</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">zhi</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">Lx</span> <span class="o">=</span> <span class="n">xhi</span> <span class="o">-</span> <span class="n">xlo</span>
+        <span class="n">Ly</span> <span class="o">=</span> <span class="n">yhi</span> <span class="o">-</span> <span class="n">ylo</span>
+        <span class="n">Lz</span> <span class="o">=</span> <span class="n">zhi</span> <span class="o">-</span> <span class="n">zlo</span>
+
+        <span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">Lx</span><span class="p">,</span> <span class="n">Ly</span><span class="p">,</span> <span class="n">Lz</span><span class="p">])</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dim</span><span class="p">):</span>
+            <span class="n">di</span> <span class="o">=</span> <span class="n">d</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span>
+            <span class="n">Li</span> <span class="o">=</span> <span class="n">L</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">lo</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+            <span class="n">hi</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">d</span><span class="p">)):</span>
+                <span class="n">xj</span> <span class="o">=</span> <span class="n">di</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">xj</span> <span class="o">&lt;</span> <span class="n">lo</span><span class="p">:</span>
+                    <span class="k">while</span> <span class="n">xj</span> <span class="o">&lt;</span> <span class="n">lo</span><span class="p">:</span>
+                        <span class="n">xj</span> <span class="o">+=</span> <span class="n">Li</span>
+                <span class="k">if</span> <span class="n">xj</span> <span class="o">&gt;=</span> <span class="n">hi</span><span class="p">:</span>
+                    <span class="k">while</span> <span class="n">xj</span> <span class="o">&gt;=</span> <span class="n">hi</span><span class="p">:</span>
+                        <span class="n">xj</span> <span class="o">-=</span> <span class="n">Li</span>
+                <span class="n">dpbc</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">xj</span>
+        <span class="k">return</span> <span class="n">dpbc</span></div>
+
+
+<div class="viewcode-block" id="min_shuffle.run">
+<a class="viewcode-back" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.run">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Runs the Sinkhorn optimal transport algorithm to compute minimal shuffling displacement vectors</span>
+<span class="sd">            between initial and final atomic configurations in the minimal shuffle domain.</span>
+
+<span class="sd">            Raises:</span>
+<span class="sd">                ValueError: If input formatting is not done or atoms mismatch.</span>
+
+<span class="sd">            Sets:</span>
+<span class="sd">                self.initial_atoms_transformed_region (np.ndarray): Initial atomic positions after transformation.</span>
+<span class="sd">                self.final_atoms_transformed_region (np.ndarray): Final atomic positions after transformation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Import input parameters</span>
+        <span class="n">reg_param</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reg_param</span>
+        <span class="n">iter_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_iters</span>
+        <span class="n">box_expansion_factor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">box_expansion_factor</span>
+        <span class="n">dim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimension</span>
+        <span class="c1">#lattice_parameter = self.lattice_parameter  # angstroms</span>
+        <span class="c1">#r0 = lattice_parameter / np.sqrt(2)  # nearest neighbor distance in perfect FCC crystal</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">types_minshuf</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Input formatting not done yet. Run format_input()&quot;</span><span class="p">)</span>
+        <span class="n">atoms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">atoms_minshuf</span>
+        <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">types_minshuf</span>
+        <span class="n">box</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">box_minshuf</span>
+
+        <span class="c1"># Find box size and atom positions for each of the types of particles</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="n">atoms</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">box</span> <span class="o">+=</span> <span class="n">box_expansion_factor</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+        <span class="n">xlo</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">ylo</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">zlo</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">xhi</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">yhi</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">zhi</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">Lx</span> <span class="o">=</span> <span class="n">xhi</span> <span class="o">-</span> <span class="n">xlo</span>
+        <span class="n">Ly</span> <span class="o">=</span> <span class="n">yhi</span> <span class="o">-</span> <span class="n">ylo</span>
+        <span class="n">Lz</span> <span class="o">=</span> <span class="n">zhi</span> <span class="o">-</span> <span class="n">zlo</span>
+
+        <span class="n">type_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">types</span><span class="p">)]</span>
+        <span class="c1"># Find the particles of each of the grains: X is grain 1 Y is grain 2</span>
+        <span class="n">Xbasis</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># type 1</span>
+        <span class="n">Ybasis</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># type 2</span>
+        <span class="n">indicies</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">Xbasis</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">2</span><span class="p">:])</span>
+                <span class="n">indicies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+            <span class="k">elif</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">Ybasis</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">2</span><span class="p">:])</span>
+        <span class="n">Xbasis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Xbasis</span><span class="p">)</span>
+        <span class="n">Ybasis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Ybasis</span><span class="p">)</span>
+        <span class="c1"># print(Xbasis.shape)</span>
+        <span class="k">if</span> <span class="n">Xbasis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">Ybasis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Xbasis and Ybasis must have same non-zero length&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">Xbasis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">Ybasis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The number of atoms do not match for the two grains. One-to-one mapping not possible&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">N</span> <span class="o">=</span> <span class="n">Xbasis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># Find displacement vectors with pbcs</span>
+        <span class="n">pbcon</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">dist_mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+            <span class="n">dvec</span> <span class="o">=</span> <span class="n">Ybasis</span> <span class="o">-</span> <span class="n">Xbasis</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span>
+            <span class="n">dvec_pbc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pbcdist</span><span class="p">(</span><span class="n">dvec</span><span class="p">,</span> <span class="n">Lx</span><span class="p">,</span> <span class="n">Ly</span><span class="p">,</span> <span class="n">Lz</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+                <span class="n">dist_mat</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">la</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">dvec_pbc</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="p">:])</span>
+
+        <span class="k">if</span> <span class="n">pbcon</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">dist_mat</span> <span class="o">=</span> <span class="n">dist_mat</span> <span class="o">**</span> <span class="mi">2</span>
+
+        <span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">dim</span><span class="p">)</span>  <span class="c1"># Recomputed, set to [0,0,0] if unknown and results will match TDP</span>
+
+        <span class="c1"># Sinkhorn&#39;s algorithm</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">/</span> <span class="n">N</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">/</span> <span class="n">N</span>
+        <span class="n">Gamma</span> <span class="o">=</span> <span class="n">ot</span><span class="o">.</span><span class="n">bregman</span><span class="o">.</span><span class="n">sinkhorn_log</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">dist_mat</span><span class="p">,</span> <span class="n">reg_param</span><span class="p">,</span> <span class="n">iter_max</span><span class="p">)</span>
+
+        <span class="c1"># Recover the displacement vectors from OT matrix(gamma)</span>
+        <span class="n">cutoff</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">N</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">gamma_mod</span> <span class="o">=</span> <span class="n">min_shuffle</span><span class="o">.</span><span class="n">_threshold</span><span class="p">(</span><span class="n">Gamma</span><span class="p">,</span> <span class="n">cutoff</span><span class="p">)</span>
+        <span class="n">I</span><span class="p">,</span> <span class="n">J</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">gamma_mod</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="c1"># I,J = np.where(Gamma!=0)</span>
+        <span class="n">maxNp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">gamma_mod</span><span class="p">)</span>
+        <span class="n">disp_vecs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">I</span><span class="p">),</span> <span class="mi">11</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">I</span><span class="p">)):</span>
+            <span class="n">K</span> <span class="o">=</span> <span class="n">gamma_mod</span><span class="p">[</span><span class="n">I</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">J</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>  <span class="c1"># path prob</span>
+            <span class="n">Xcoords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="n">dim</span><span class="p">))</span>
+            <span class="n">Ycoords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="n">dim</span><span class="p">))</span>
+            <span class="n">Xcoords</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">Xbasis</span><span class="p">[</span><span class="n">I</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">0</span><span class="p">],</span> <span class="n">Xbasis</span><span class="p">[</span><span class="n">I</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">1</span><span class="p">],</span> <span class="n">Xbasis</span><span class="p">[</span><span class="n">I</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">2</span><span class="p">]])</span>
+            <span class="n">Ycoords</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">Ybasis</span><span class="p">[</span><span class="n">J</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">0</span><span class="p">],</span> <span class="n">Ybasis</span><span class="p">[</span><span class="n">J</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">1</span><span class="p">],</span> <span class="n">Ybasis</span><span class="p">[</span><span class="n">J</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">2</span><span class="p">]])</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="n">indicies</span><span class="p">[</span><span class="n">I</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+
+            <span class="c1"># Vector connecting X and Y</span>
+            <span class="n">disp_vec_new</span> <span class="o">=</span> <span class="n">Ycoords</span> <span class="o">-</span> <span class="n">Xcoords</span>
+            <span class="k">if</span> <span class="n">pbcon</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">disp_pbc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pbcdist</span><span class="p">(</span><span class="n">disp_vec_new</span><span class="p">,</span> <span class="n">Lx</span><span class="p">,</span> <span class="n">Ly</span><span class="p">,</span> <span class="n">Lz</span><span class="p">)</span>
+            <span class="n">newYcoords</span> <span class="o">=</span> <span class="n">Xcoords</span> <span class="o">+</span> <span class="n">disp_pbc</span>
+
+            <span class="n">disp_vecs</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">disp_pbc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">disp_pbc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">disp_pbc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">K</span><span class="p">,</span> <span class="n">Xcoords</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                                        <span class="n">Xcoords</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">Xcoords</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">newYcoords</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">newYcoords</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                                        <span class="n">newYcoords</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">index</span><span class="p">])</span>
+
+        <span class="c1"># Data in different frames</span>
+        <span class="n">ndisps</span> <span class="o">=</span> <span class="n">disp_vecs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">Kvec</span> <span class="o">=</span> <span class="n">disp_vecs</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span>
+        <span class="n">Kvecrenorm</span> <span class="o">=</span> <span class="n">la</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">Kvec</span><span class="p">)</span>
+
+        <span class="n">Xcoords</span> <span class="o">=</span> <span class="n">disp_vecs</span><span class="p">[:,</span> <span class="mi">4</span><span class="p">:</span><span class="mi">7</span><span class="p">]</span>
+        <span class="n">Ycoords</span> <span class="o">=</span> <span class="n">disp_vecs</span><span class="p">[:,</span> <span class="mi">7</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span>
+        <span class="n">dTDP</span> <span class="o">=</span> <span class="n">disp_vecs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">XTDP</span> <span class="o">=</span> <span class="n">Xcoords</span>
+        <span class="n">YTDP</span> <span class="o">=</span> <span class="n">Ycoords</span>
+        <span class="n">dCDP</span> <span class="o">=</span> <span class="n">dTDP</span> <span class="o">-</span> <span class="n">p</span>
+        <span class="n">XCDP</span> <span class="o">=</span> <span class="n">Xcoords</span>
+        <span class="n">YCDP</span> <span class="o">=</span> <span class="n">Ycoords</span> <span class="o">-</span> <span class="n">p</span>
+        <span class="n">prob</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">Kvec</span><span class="p">),</span> <span class="mi">3</span><span class="p">))</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">disp_vecs</span><span class="p">[:,</span> <span class="mi">10</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Kvec</span><span class="p">)):</span>
+            <span class="n">prob</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">Kvec</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">dTDP</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span>
+        <span class="n">Dvec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">prob</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># probabilistic expression for total net displacement/atom</span>
+        <span class="n">dSDP</span> <span class="o">=</span> <span class="n">dTDP</span> <span class="o">-</span> <span class="n">Dvec</span>
+        <span class="n">XSDP</span> <span class="o">=</span> <span class="n">Xcoords</span>
+        <span class="n">YSDP</span> <span class="o">=</span> <span class="n">Ycoords</span> <span class="o">-</span> <span class="n">Dvec</span>
+
+        <span class="n">Mvecest</span> <span class="o">=</span> <span class="n">Dvec</span> <span class="o">-</span> <span class="n">p</span>
+        <span class="n">microvecs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+                              <span class="n">Mvecest</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Mvecest</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">Mvecest</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+                              <span class="n">Dvec</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Dvec</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">Dvec</span><span class="p">[</span><span class="mi">2</span><span class="p">]])</span>
+        <span class="n">Xp</span> <span class="o">=</span> <span class="n">XTDP</span>
+        <span class="n">Yp</span> <span class="o">=</span> <span class="n">YTDP</span>
+
+        <span class="n">Xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">ndisps</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+        <span class="n">Ys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">ndisps</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>  <span class="c1"># copies of coordinates to overwrite with sheared coordinates</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">prob_cutoff</span> <span class="o">=</span> <span class="mf">1e-8</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ndisps</span><span class="p">):</span>
+            <span class="n">path_prob</span> <span class="o">=</span> <span class="n">Kvec</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">path_prob</span> <span class="o">&gt;</span> <span class="n">prob_cutoff</span><span class="p">:</span>
+                <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+                <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+                <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">Xp</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span>
+                <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">Yp</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span>
+                <span class="k">if</span> <span class="n">pbcon</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+                    <span class="n">dp_new</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pbcdist</span><span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="n">a</span><span class="p">,</span> <span class="n">Lx</span><span class="p">,</span> <span class="n">Ly</span><span class="p">,</span> <span class="n">Lz</span><span class="p">)</span>
+                <span class="n">b_new</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">dp_new</span>
+                <span class="n">Xs</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span>
+                <span class="n">Xs</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">idx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">Xs</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">k</span>
+                <span class="n">Ys</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">b_new</span>
+                <span class="n">Ys</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">idx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">Ys</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">k</span>
+                <span class="n">flag</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="c1"># Check for PBCs along y and z</span>
+                <span class="k">if</span> <span class="n">b_new</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">yhi</span><span class="p">:</span>
+                    <span class="n">b_new</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-=</span> <span class="n">Ly</span>
+                    <span class="n">flag</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">b_new</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">zhi</span><span class="p">:</span>
+                    <span class="n">b_new</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">-=</span> <span class="n">Lz</span>
+                    <span class="n">flag</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">b_new</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">ylo</span><span class="p">:</span>
+                    <span class="n">b_new</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">Ly</span>
+                    <span class="n">flag</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">b_new</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">zlo</span> <span class="o">+</span> <span class="mf">0.1</span><span class="p">:</span>
+                    <span class="n">b_new</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+=</span> <span class="n">Lz</span>
+                    <span class="n">flag</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="c1"># if b_new</span>
+                <span class="n">Ys</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">b_new</span>
+                <span class="c1"># print(b_new)</span>
+                <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">b_new</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">b_new</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span> <span class="p">[</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">b_new</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">initial_atoms_transformed_region</span> <span class="o">=</span> <span class="n">Xs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">final_atoms_transformed_region</span> <span class="o">=</span> <span class="n">Ys</span></div>
+
+
+
+<div class="viewcode-block" id="min_shuffle.write_images">
+<a class="viewcode-back" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.write_images">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">write_images</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">folder</span><span class="p">,</span> <span class="n">image_num</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Writes LAMMPS data files for atomic configurations at specified image numbers.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                folder (str): Directory to save output files.</span>
+<span class="sd">                image_num (int): Image index (e.g., 0 for initial flat GB, 1 for final transformed state).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">write_header</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">natoms</span><span class="p">,</span><span class="n">box</span><span class="p">):</span>
+            <span class="n">eps</span> <span class="o">=</span> <span class="mf">0.1</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;#LAMMPS data file</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> atoms</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">natoms</span><span class="p">))</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;2 atom types</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%0.10f</span><span class="s2"> </span><span class="si">%0.10f</span><span class="s2"> xlo xhi</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">box</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">eps</span><span class="p">,</span> <span class="n">box</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">eps</span><span class="p">))</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%0.10f</span><span class="s2"> </span><span class="si">%0.10f</span><span class="s2"> ylo yhi</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%0.10f</span><span class="s2"> </span><span class="si">%0.10f</span><span class="s2"> zlo zhi</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">box</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">box</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;0.0 0.0 0.0 xy xz yz</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Atoms # atomic</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">write_atoms</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">atoms</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">atoms</span><span class="p">)):</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> </span><span class="si">%d</span><span class="s2"> </span><span class="si">%f</span><span class="s2"> </span><span class="si">%f</span><span class="s2"> </span><span class="si">%f</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">4</span><span class="p">]))</span>
+
+        <span class="n">box</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">box</span>
+        <span class="n">sigma</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span>
+        <span class="n">inc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inclination</span>
+        <span class="n">elem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">element</span>
+        <span class="c1"># Write image 0 (flat gb)</span>
+        <span class="k">if</span> <span class="n">image_num</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">initial</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_grain</span>
+            <span class="n">file</span> <span class="o">=</span> <span class="s2">&quot;data.&quot;</span> <span class="o">+</span> <span class="n">elem</span> <span class="o">+</span> <span class="s2">&quot;s&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;inc&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">inc</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;__step0&quot;</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">folder</span> <span class="o">+</span> <span class="n">file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f0</span><span class="p">:</span>
+                <span class="n">write_header</span><span class="p">(</span><span class="n">f0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">initial</span><span class="p">),</span><span class="n">box</span><span class="p">)</span>
+                <span class="n">write_atoms</span><span class="p">(</span><span class="n">f0</span><span class="p">,</span><span class="n">initial</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Done writing bicrystal </span><span class="si">{</span><span class="n">folder</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">final</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">final_grain</span>
+        <span class="n">Ys</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">final_atoms_transformed_region</span>
+        <span class="n">initial</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_grain</span>
+        <span class="n">Xs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_atoms_transformed_region</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_height</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">grain_num</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">grain_num</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="c1"># Build lookup dictionaries for quick ID-based matching</span>
+        <span class="n">Xs_dict</span> <span class="o">=</span> <span class="p">{</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">]):</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">Xs</span><span class="p">}</span>
+        <span class="n">final</span> <span class="o">=</span> <span class="n">final</span><span class="p">[</span><span class="n">final</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">argsort</span><span class="p">()]</span>
+        <span class="n">final_dict</span> <span class="o">=</span> <span class="p">{</span><span class="nb">int</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span> <span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">final</span><span class="p">}</span>
+        <span class="c1">#print(Xs_dict,Ys)</span>
+        <span class="c1"># Populate a matrix with correct atom indices and positions</span>
+        <span class="n">final_atoms</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">initial</span><span class="p">)):</span>
+            <span class="n">atom_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">initial</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">atom_id</span> <span class="ow">in</span> <span class="n">Xs_dict</span><span class="p">:</span>
+                <span class="n">j</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">Xs_dict</span><span class="p">[</span><span class="n">atom_id</span><span class="p">][</span><span class="mi">4</span><span class="p">])</span>
+                <span class="n">final_atoms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">atom_id</span><span class="p">,</span> <span class="n">grain_num</span><span class="p">,</span> <span class="n">Ys</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">Ys</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">Ys</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]))</span>
+            <span class="k">elif</span> <span class="n">atom_id</span> <span class="ow">in</span> <span class="n">final_dict</span><span class="p">:</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">final_dict</span><span class="p">[</span><span class="n">atom_id</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span><span class="o">-</span><span class="mi">1</span>
+                <span class="n">final_atoms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">final</span><span class="p">[</span><span class="n">index</span><span class="p">,:])</span>
+
+        <span class="n">final_atoms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">final_atoms</span><span class="p">)</span>
+
+
+        <span class="c1"># Write data</span>
+        <span class="n">file</span> <span class="o">=</span> <span class="s2">&quot;data.&quot;</span> <span class="o">+</span> <span class="n">elem</span> <span class="o">+</span> <span class="s2">&quot;s&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;inc&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">inc</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;__step&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">image_num</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">folder</span> <span class="o">+</span> <span class="n">file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">write_header</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">final_atoms</span><span class="p">),</span><span class="n">box</span><span class="p">)</span>
+            <span class="n">write_atoms</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">final_atoms</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Done writing bicrystal </span><span class="si">{</span><span class="n">folder</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_write_neb_input_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">folder</span><span class="p">,</span> <span class="n">image_num</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Writes a LAMMPS NEB (Nudged Elastic Band) input data file for a specific image number.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                folder (str): Path to the directory containing input and output files.</span>
+<span class="sd">                image_num (int): Image number used to generate input/output file names.</span>
+
+<span class="sd">            Side Effects:</span>
+<span class="sd">                Reads LAMMPS data from an input file and writes a processed output file</span>
+<span class="sd">                in the specified folder. Prints confirmation upon completion.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sigma</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span>
+        <span class="n">file</span> <span class="o">=</span> <span class="s2">&quot;data.Cus&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;inc0.0__step&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">image_num</span><span class="p">)</span>
+        <span class="n">outfile</span> <span class="o">=</span> <span class="s2">&quot;data.Cus&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;inc0.0_out_step&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">image_num</span><span class="p">)</span>
+        <span class="n">in_file</span> <span class="o">=</span> <span class="n">folder</span> <span class="o">+</span> <span class="n">file</span>
+        <span class="n">out_file</span> <span class="o">=</span> <span class="n">folder</span> <span class="o">+</span> <span class="n">outfile</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">read_LAMMPS_datafile</span><span class="p">(</span><span class="n">in_file</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">natoms</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">atoms</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">out_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">natoms</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">atoms</span><span class="p">)):</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> </span><span class="si">%f</span><span class="s2"> </span><span class="si">%f</span><span class="s2"> </span><span class="si">%f</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">4</span><span class="p">]))</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Done writing bicrystal &quot;</span> <span class="o">+</span> <span class="n">out_file</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_threshold</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">cutoff</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Applies a threshold to a matrix, setting elements less than the cutoff to zero.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                g (np.ndarray): Input matrix of values.</span>
+<span class="sd">                cutoff (float): Threshold cutoff value.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                np.ndarray: Matrix with values below cutoff set to zero.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">G</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+        <span class="n">row_ind</span><span class="p">,</span> <span class="n">col_ind</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">g</span> <span class="o">&lt;</span> <span class="n">cutoff</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">row_ind</span><span class="p">)):</span>
+            <span class="n">G</span><span class="p">[</span><span class="n">row_ind</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">col_ind</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="n">G</span>
+
+<div class="viewcode-block" id="min_shuffle.plot_min_shuffle_3d">
+<a class="viewcode-back" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.plot_min_shuffle_3d">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot_min_shuffle_3d</span><span class="p">(</span><span class="n">Xs</span><span class="p">,</span> <span class="n">Ys</span><span class="p">,</span> <span class="n">box</span><span class="p">,</span><span class="n">sigma</span><span class="p">,</span><span class="n">reg_param</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Creates a 3D scatter plot comparing initial and final atomic configurations within a simulation box.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                Xs (np.ndarray): Coordinates of initial atomic positions, shape (N, 3).</span>
+<span class="sd">                Ys (np.ndarray): Coordinates of final atomic positions, shape (N, 3).</span>
+<span class="sd">                box (np.ndarray): Simulation box boundaries, shape (3, 2) with [[xlo, xhi], [ylo, yhi], [zlo, zhi]].</span>
+<span class="sd">                sigma (float): Grain boundary sigma value used for labeling.</span>
+<span class="sd">                reg_param (float): Regularization parameter used for labeling.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                int: Returns 1 upon completion (placeholder return value).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Plot simulation box</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+        <span class="n">xlo</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">ylo</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">zlo</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">xhi</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">yhi</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">zhi</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xlo</span><span class="p">,</span> <span class="n">xhi</span><span class="p">],</span> <span class="p">[</span><span class="n">yhi</span><span class="p">,</span> <span class="n">yhi</span><span class="p">],</span> <span class="p">[</span><span class="n">zhi</span><span class="p">,</span> <span class="n">zhi</span><span class="p">],</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xlo</span><span class="p">,</span> <span class="n">xhi</span><span class="p">],</span> <span class="p">[</span><span class="n">ylo</span><span class="p">,</span> <span class="n">ylo</span><span class="p">],</span> <span class="p">[</span><span class="n">zhi</span><span class="p">,</span> <span class="n">zhi</span><span class="p">],</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xlo</span><span class="p">,</span> <span class="n">xhi</span><span class="p">],</span> <span class="p">[</span><span class="n">yhi</span><span class="p">,</span> <span class="n">yhi</span><span class="p">],</span> <span class="p">[</span><span class="n">zlo</span><span class="p">,</span> <span class="n">zlo</span><span class="p">],</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xlo</span><span class="p">,</span> <span class="n">xhi</span><span class="p">],</span> <span class="p">[</span><span class="n">ylo</span><span class="p">,</span> <span class="n">ylo</span><span class="p">],</span> <span class="p">[</span><span class="n">zlo</span><span class="p">,</span> <span class="n">zlo</span><span class="p">],</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xlo</span><span class="p">,</span> <span class="n">xlo</span><span class="p">],</span> <span class="p">[</span><span class="n">ylo</span><span class="p">,</span> <span class="n">yhi</span><span class="p">],</span> <span class="p">[</span><span class="n">zhi</span><span class="p">,</span> <span class="n">zhi</span><span class="p">],</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xlo</span><span class="p">,</span> <span class="n">xlo</span><span class="p">],</span> <span class="p">[</span><span class="n">ylo</span><span class="p">,</span> <span class="n">yhi</span><span class="p">],</span> <span class="p">[</span><span class="n">zlo</span><span class="p">,</span> <span class="n">zlo</span><span class="p">],</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xhi</span><span class="p">,</span> <span class="n">xhi</span><span class="p">],</span> <span class="p">[</span><span class="n">ylo</span><span class="p">,</span> <span class="n">yhi</span><span class="p">],</span> <span class="p">[</span><span class="n">zlo</span><span class="p">,</span> <span class="n">zlo</span><span class="p">],</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xhi</span><span class="p">,</span> <span class="n">xhi</span><span class="p">],</span> <span class="p">[</span><span class="n">ylo</span><span class="p">,</span> <span class="n">yhi</span><span class="p">],</span> <span class="p">[</span><span class="n">zhi</span><span class="p">,</span> <span class="n">zhi</span><span class="p">],</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xlo</span><span class="p">,</span> <span class="n">xlo</span><span class="p">],</span> <span class="p">[</span><span class="n">ylo</span><span class="p">,</span> <span class="n">ylo</span><span class="p">],</span> <span class="p">[</span><span class="n">zlo</span><span class="p">,</span> <span class="n">zhi</span><span class="p">],</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xlo</span><span class="p">,</span> <span class="n">xlo</span><span class="p">],</span> <span class="p">[</span><span class="n">yhi</span><span class="p">,</span> <span class="n">yhi</span><span class="p">],</span> <span class="p">[</span><span class="n">zlo</span><span class="p">,</span> <span class="n">zhi</span><span class="p">],</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xhi</span><span class="p">,</span> <span class="n">xhi</span><span class="p">],</span> <span class="p">[</span><span class="n">ylo</span><span class="p">,</span> <span class="n">ylo</span><span class="p">],</span> <span class="p">[</span><span class="n">zlo</span><span class="p">,</span> <span class="n">zhi</span><span class="p">],</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xhi</span><span class="p">,</span> <span class="n">xhi</span><span class="p">],</span> <span class="p">[</span><span class="n">yhi</span><span class="p">,</span> <span class="n">yhi</span><span class="p">],</span> <span class="p">[</span><span class="n">zlo</span><span class="p">,</span> <span class="n">zhi</span><span class="p">],</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Plot particles</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">Xs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">Xs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">Xs</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Initial&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">Ys</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">Ys</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">Ys</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Final&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Y&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s2">&quot;Z&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;sigma&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;inc0.0_optimalBeta_min_shuffle_eps&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">reg_param</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.png&quot;</span>
+        <span class="k">return</span> <span class="mi">1</span></div>
+
+
+<div class="viewcode-block" id="min_shuffle.plot_min_shuffle_2d">
+<a class="viewcode-back" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.plot_min_shuffle_2d">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot_min_shuffle_2d</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span><span class="n">Xbasis</span><span class="p">,</span><span class="n">Ybasis</span><span class="p">,</span><span class="n">Gamma</span><span class="p">,</span><span class="n">sigma</span><span class="p">,</span><span class="n">reg_param</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Generates and saves a 2D plot of optimal transport mapping between source and target atomic configurations.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                folder (str): Directory path to save the plot image.</span>
+<span class="sd">                Xbasis (np.ndarray): Source sample coordinates, shape (N, 2).</span>
+<span class="sd">                Ybasis (np.ndarray): Target sample coordinates, shape (N, 2).</span>
+<span class="sd">                Gamma (np.ndarray): Transport plan matrix.</span>
+<span class="sd">                sigma (float): Grain boundary sigma value for plot labeling.</span>
+<span class="sd">                reg_param (float): Regularization parameter for plot labeling.</span>
+
+<span class="sd">            Side Effects:</span>
+<span class="sd">                Saves the generated plot as a PNG file in the specified folder.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+        <span class="n">ot</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">plot2D_samples_mat</span><span class="p">(</span><span class="n">Xbasis</span><span class="p">,</span> <span class="n">Ybasis</span><span class="p">,</span> <span class="n">Gamma</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="p">[</span><span class="mf">.5</span><span class="p">,</span> <span class="mf">.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">Xbasis</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">Xbasis</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Source samples&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">Ybasis</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">Ybasis</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Target samples&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Sigma&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;min shuffle optimal beta eps=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">reg_param</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">folder</span><span class="o">+</span><span class="n">name</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Himanshu Joshi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

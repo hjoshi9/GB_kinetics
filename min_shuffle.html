@@ -49,7 +49,11 @@
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">Source</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="GBKineticsRunController.html">GBKineticsRunController module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="GBKineticsRunController.html">GBKineticsRunController module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="GBKineticsRunController.html#src.GBKineticsRunController.runGBkinetics"><code class="docutils literal notranslate"><span class="pre">runGBkinetics()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="GBKineticsRunController.html#src.GBKineticsRunController.runGridSearch"><code class="docutils literal notranslate"><span class="pre">runGridSearch()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="IO.html">IO module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="IO.html#IO.find_gb_location"><code class="docutils literal notranslate"><span class="pre">find_gb_location()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="IO.html#IO.read_LAMMPS_datafile"><code class="docutils literal notranslate"><span class="pre">read_LAMMPS_datafile()</span></code></a></li>
@@ -84,7 +88,22 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">min_shuffle module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">min_shuffle module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#src.min_shuffle.min_shuffle"><code class="docutils literal notranslate"><span class="pre">min_shuffle</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#src.min_shuffle.min_shuffle.format_input"><code class="docutils literal notranslate"><span class="pre">min_shuffle.format_input()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.min_shuffle.min_shuffle.gb_info"><code class="docutils literal notranslate"><span class="pre">min_shuffle.gb_info()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.min_shuffle.min_shuffle.load_data"><code class="docutils literal notranslate"><span class="pre">min_shuffle.load_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.min_shuffle.min_shuffle.pbcdist"><code class="docutils literal notranslate"><span class="pre">min_shuffle.pbcdist()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.min_shuffle.min_shuffle.pbcwrap"><code class="docutils literal notranslate"><span class="pre">min_shuffle.pbcwrap()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.min_shuffle.min_shuffle.plot_min_shuffle_2d"><code class="docutils literal notranslate"><span class="pre">min_shuffle.plot_min_shuffle_2d()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.min_shuffle.min_shuffle.plot_min_shuffle_3d"><code class="docutils literal notranslate"><span class="pre">min_shuffle.plot_min_shuffle_3d()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.min_shuffle.min_shuffle.replicate"><code class="docutils literal notranslate"><span class="pre">min_shuffle.replicate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.min_shuffle.min_shuffle.run"><code class="docutils literal notranslate"><span class="pre">min_shuffle.run()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.min_shuffle.min_shuffle.write_images"><code class="docutils literal notranslate"><span class="pre">min_shuffle.write_images()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="plastic_slip.html">plastic_slip module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="plastic_slip.html#plastic_slip.dislocation_dipole"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="plastic_slip.html#plastic_slip.dislocation_dipole.dislocation_points"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.dislocation_points</span></code></a></li>
@@ -168,8 +187,236 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="min-shuffle-module">
-<h1>min_shuffle module<a class="headerlink" href="#min-shuffle-module" title="Link to this heading"></a></h1>
+  <section id="module-src.min_shuffle">
+<span id="min-shuffle-module"></span><h1>min_shuffle module<a class="headerlink" href="#module-src.min_shuffle" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.min_shuffle.min_shuffle">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.min_shuffle.</span></span><span class="sig-name descname"><span class="pre">min_shuffle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lattice_parameter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">misorientation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inclination</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reg_param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_expansion_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dimension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/min_shuffle.html#min_shuffle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.min_shuffle.min_shuffle" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class to perform minimal atomic shuffling analysis between two grain boundary configurations
+using optimal transport (Sinkhorn algorithm).</p>
+<p>This class reads initial and final atomic configurations from LAMMPS data files, identifies
+a region around a grain boundary and a disconnection, formats the data, applies periodic boundary
+conditions, replicates the simulation box if necessary, and runs the Sinkhorn optimal transport
+to find minimal atomic displacement mappings.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.min_shuffle.min_shuffle.format_input">
+<span class="sig-name descname"><span class="pre">format_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/min_shuffle.html#min_shuffle.format_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.min_shuffle.min_shuffle.format_input" title="Link to this definition"></a></dt>
+<dd><p>Formats the input by selecting atoms in the minimal shuffle domain and writes data files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>folder</strong> (<em>str</em>) – Directory to write formatted data files.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If grain boundary info or atomic data is missing.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Sets:</dt><dd><p>self.atoms_minshuf (np.ndarray): Formatted atoms array for minimal shuffling.
+self.types_minshuf (int): Number of atom types.
+self.box_minshuf (np.ndarray): Simulation box for the minimal shuffle domain.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.min_shuffle.min_shuffle.gb_info">
+<span class="sig-name descname"><span class="pre">gb_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">st_height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disloc1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disloc2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_shuffle_domain_expansion_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disconnection_extension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/min_shuffle.html#min_shuffle.gb_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.min_shuffle.min_shuffle.gb_info" title="Link to this definition"></a></dt>
+<dd><p>Computes grain boundary location, step height, and dislocation region based on input parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath</strong> (<em>str</em>) – Path to the file to extract grain boundary info.</p></li>
+<li><p><strong>st_height</strong> (<em>float</em>) – Step height direction and magnitude.</p></li>
+<li><p><strong>disloc1</strong> (<em>tuple</em>) – Coordinates of the start of the dislocation.</p></li>
+<li><p><strong>disloc2</strong> (<em>tuple</em>) – Coordinates of the end of the dislocation.</p></li>
+<li><p><strong>min_shuffle_domain_expansion_factor</strong> (<em>float</em><em>, </em><em>optional</em>) – Expansion factor of minimal shuffle domain. Defaults to 1.5.</p></li>
+<li><p><strong>disconnection_extension</strong> (<em>int</em><em>, </em><em>optional</em>) – Extension length for dislocation region. Defaults to 5.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Sets:</dt><dd><p>self.gb_location (float): Calculated grain boundary location.
+self.step_height (float): Adjusted step height of the shuffle domain.
+self.dislocation_start (float): Start coordinate of the dislocation region.
+self.dislocation_end (float): End coordinate of the dislocation region.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.min_shuffle.min_shuffle.load_data">
+<span class="sig-name descname"><span class="pre">load_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_mode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_flat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_disconnection</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/min_shuffle.html#min_shuffle.load_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.min_shuffle.min_shuffle.load_data" title="Link to this definition"></a></dt>
+<dd><p>Loads atomic positions from initial and final LAMMPS data files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_mode</strong> (<em>str</em>) – Mode for reading the LAMMPS data files.</p></li>
+<li><p><strong>file_flat</strong> (<em>str</em>) – Path to the initial (flat) atomic configuration file.</p></li>
+<li><p><strong>file_disconnection</strong> (<em>str</em>) – Path to the final atomic configuration file.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Sets:</dt><dd><p>self.grainA_pretransform (np.ndarray): Atoms in grain A before transformation.
+self.grainB_pretransform (np.ndarray): Atoms in grain B before transformation.
+self.grainA_posttransform (np.ndarray): Atoms in grain A after transformation.
+self.grainB_posttransform (np.ndarray): Atoms in grain B after transformation.
+self.box (np.ndarray): Simulation box.
+self.initial_grain (np.ndarray): Initial atomic data.
+self.final_grain (np.ndarray): Final atomic data.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.min_shuffle.min_shuffle.pbcdist">
+<span class="sig-name descname"><span class="pre">pbcdist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Lx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ly</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Lz</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/min_shuffle.html#min_shuffle.pbcdist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.min_shuffle.min_shuffle.pbcdist" title="Link to this definition"></a></dt>
+<dd><p>Applies periodic boundary conditions to displacement vectors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dp</strong> (<em>np.ndarray</em>) – Displacement vectors.</p></li>
+<li><p><strong>Lx</strong> (<em>float</em>) – Box length along x-axis.</p></li>
+<li><p><strong>Ly</strong> (<em>float</em>) – Box length along y-axis.</p></li>
+<li><p><strong>Lz</strong> (<em>float</em>) – Box length along z-axis.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Adjusted displacement vectors considering periodic boundaries.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.min_shuffle.min_shuffle.pbcwrap">
+<span class="sig-name descname"><span class="pre">pbcwrap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/min_shuffle.html#min_shuffle.pbcwrap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.min_shuffle.min_shuffle.pbcwrap" title="Link to this definition"></a></dt>
+<dd><p>Wraps coordinates into the primary simulation box applying periodic boundary conditions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>d</strong> (<em>np.ndarray</em>) – Coordinates to wrap.</p></li>
+<li><p><strong>box</strong> (<em>np.ndarray</em>) – Simulation box dimensions.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Coordinates wrapped within the simulation box.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.min_shuffle.min_shuffle.plot_min_shuffle_2d">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">plot_min_shuffle_2d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Xbasis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ybasis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Gamma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reg_param</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/min_shuffle.html#min_shuffle.plot_min_shuffle_2d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.min_shuffle.min_shuffle.plot_min_shuffle_2d" title="Link to this definition"></a></dt>
+<dd><p>Generates and saves a 2D plot of optimal transport mapping between source and target atomic configurations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>folder</strong> (<em>str</em>) – Directory path to save the plot image.</p></li>
+<li><p><strong>Xbasis</strong> (<em>np.ndarray</em>) – Source sample coordinates, shape (N, 2).</p></li>
+<li><p><strong>Ybasis</strong> (<em>np.ndarray</em>) – Target sample coordinates, shape (N, 2).</p></li>
+<li><p><strong>Gamma</strong> (<em>np.ndarray</em>) – Transport plan matrix.</p></li>
+<li><p><strong>sigma</strong> (<em>float</em>) – Grain boundary sigma value for plot labeling.</p></li>
+<li><p><strong>reg_param</strong> (<em>float</em>) – Regularization parameter for plot labeling.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Side Effects:</dt><dd><p>Saves the generated plot as a PNG file in the specified folder.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.min_shuffle.min_shuffle.plot_min_shuffle_3d">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">plot_min_shuffle_3d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Xs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ys</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reg_param</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/min_shuffle.html#min_shuffle.plot_min_shuffle_3d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.min_shuffle.min_shuffle.plot_min_shuffle_3d" title="Link to this definition"></a></dt>
+<dd><p>Creates a 3D scatter plot comparing initial and final atomic configurations within a simulation box.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Xs</strong> (<em>np.ndarray</em>) – Coordinates of initial atomic positions, shape (N, 3).</p></li>
+<li><p><strong>Ys</strong> (<em>np.ndarray</em>) – Coordinates of final atomic positions, shape (N, 3).</p></li>
+<li><p><strong>box</strong> (<em>np.ndarray</em>) – Simulation box boundaries, shape (3, 2) with [[xlo, xhi], [ylo, yhi], [zlo, zhi]].</p></li>
+<li><p><strong>sigma</strong> (<em>float</em>) – Grain boundary sigma value used for labeling.</p></li>
+<li><p><strong>reg_param</strong> (<em>float</em>) – Regularization parameter used for labeling.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Returns 1 upon completion (placeholder return value).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.min_shuffle.min_shuffle.replicate">
+<span class="sig-name descname"><span class="pre">replicate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rep_scheme</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/min_shuffle.html#min_shuffle.replicate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.min_shuffle.min_shuffle.replicate" title="Link to this definition"></a></dt>
+<dd><p>Replicates atomic configurations according to the specified replication scheme.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rep_scheme</strong> (<em>list</em>) – List of 6 integers defining replication multipliers [xlo, xhi, ylo, yhi, zlo, zhi].</p></li>
+<li><p><strong>X</strong> (<em>np.ndarray</em>) – Initial atomic coordinates.</p></li>
+<li><p><strong>Y</strong> (<em>np.ndarray</em>) – Final atomic coordinates.</p></li>
+<li><p><strong>box</strong> (<em>np.ndarray</em>) – Simulation box dimensions.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>(X_rep, Y_rep, rep_box)</dt><dd><p>X_rep (np.ndarray): Replicated initial coordinates.
+Y_rep (np.ndarray): Replicated final coordinates.
+rep_box (np.ndarray): Updated simulation box after replication.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.min_shuffle.min_shuffle.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/min_shuffle.html#min_shuffle.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.min_shuffle.min_shuffle.run" title="Link to this definition"></a></dt>
+<dd><p>Runs the Sinkhorn optimal transport algorithm to compute minimal shuffling displacement vectors
+between initial and final atomic configurations in the minimal shuffle domain.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If input formatting is not done or atoms mismatch.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Sets:</dt><dd><p>self.initial_atoms_transformed_region (np.ndarray): Initial atomic positions after transformation.
+self.final_atoms_transformed_region (np.ndarray): Final atomic positions after transformation.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.min_shuffle.min_shuffle.write_images">
+<span class="sig-name descname"><span class="pre">write_images</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_num</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/min_shuffle.html#min_shuffle.write_images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.min_shuffle.min_shuffle.write_images" title="Link to this definition"></a></dt>
+<dd><p>Writes LAMMPS data files for atomic configurations at specified image numbers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>folder</strong> (<em>str</em>) – Directory to save output files.</p></li>
+<li><p><strong>image_num</strong> (<em>int</em>) – Image index (e.g., 0 for initial flat GB, 1 for final transformed state).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
 

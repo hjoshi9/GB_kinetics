@@ -191,24 +191,112 @@
 <ul class="simple">
 <li><p>Open GB_kinetics.py and input Gb information, displacements recorded earlier and parameters for optimal transport calculations. Start with specifing the parameters required to identify the material and GB such as sigma number, misorientation, inclination, material symbol, and tilt axis. <code class="docutils literal notranslate"><span class="pre">size_along_gb_period</span></code> determines the length of the box along the gb period. The length of the box generated is 2*period*size_along_gb_period. <code class="docutils literal notranslate"><span class="pre">size_along_tilt_axis</span></code> determines the length of the box along the tilt axis. The length of the box generated is 2*(CSL length along tilt axis)*size_along_tilt_axis. <code class="docutils literal notranslate"><span class="pre">lattive_Vectors</span></code> determine what crystal system is under consideration.</p></li>
 </ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="c1">#---------- Input parameters for GB in question ---------------#</span>
+<span class="linenos"> 2</span><span class="c1"># Element</span>
+<span class="linenos"> 3</span><span class="n">element</span> <span class="o">=</span> <span class="s2">&quot;Cu&quot;</span>
+<span class="linenos"> 4</span><span class="c1"># Sigma value of Gb under consideration</span>
+<span class="linenos"> 5</span><span class="n">sigma</span> <span class="o">=</span> <span class="mi">17</span>
+<span class="linenos"> 6</span><span class="c1"># Misorientation of the Gb</span>
+<span class="linenos"> 7</span><span class="n">misorientation</span> <span class="o">=</span> <span class="mi">28</span>
+<span class="linenos"> 8</span><span class="c1"># Inclination of the GB</span>
+<span class="linenos"> 9</span><span class="n">inclination</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="linenos">10</span><span class="c1"># Lattice parameter of the element (try using the lat par corresponding to the potential you intend to use)</span>
+<span class="linenos">11</span><span class="n">latticeParameter</span> <span class="o">=</span> <span class="mf">3.615</span>
+<span class="linenos">12</span><span class="c1"># Tilt axis of GB</span>
+<span class="linenos">13</span><span class="n">axis</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="linenos">14</span><span class="c1"># Size of system along the GB period in terms of 2*CSL period</span>
+<span class="linenos">15</span><span class="n">size_along_gb_period</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="linenos">16</span><span class="c1"># Size of system along the tilt axis in terms of 2*CSL period</span>
+<span class="linenos">17</span><span class="n">size__along_tilt_axis</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="linenos">18</span><span class="c1"># Lattice Vectors for the crystal system (current implementation is tested for fcc only)</span>
+<span class="linenos">19</span><span class="n">lattice_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+<span class="linenos">20</span>                           <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span>
+<span class="linenos">21</span>                           <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span><span class="mf">0.5</span><span class="p">]])</span>
+</pre></div>
+</div>
 <ul class="simple">
 <li><p>Next specify the parameters for Sinkhorn Algorithm run which determines the atomic trajectories in transformed region. <code class="docutils literal notranslate"><span class="pre">regularizationParameter</span></code> determines the regularization for Sinkhorn algorithm. It can be loosely thought of as a measure of temperature. Lower <code class="docutils literal notranslate"><span class="pre">regularizationParameter</span></code> means algorithm is more contrained and gives out only the smallest displacement maps. Higher <code class="docutils literal notranslate"><span class="pre">regularizationParameter</span></code> might give out multiple atomic mappings some of them might not be the lowest displacement. <code class="docutils literal notranslate"><span class="pre">maximumIterations</span></code> determines the maximum number of iterations done by Sinkhorn Algorithm. If the algorithm does not converge (code will raise this error), increase this parameter. <code class="docutils literal notranslate"><span class="pre">chooseDisconnection</span></code> is an optional argument which allows users to choose the disconnection mode if they want. Set <code class="docutils literal notranslate"><span class="pre">chooseDisconnection</span> <span class="pre">=</span> <span class="pre">True</span></code> if you want to choose the disconnection mode, <code class="docutils literal notranslate"><span class="pre">choose_disconnection</span> <span class="pre">=</span> <span class="pre">False</span></code> will automatically create disconnection mode with smallest burgers vector and corresponding step height.</p></li>
 </ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="c1">#-------------- Parameters for min-shuffle algorithm --------------#</span>
+<span class="linenos">2</span><span class="c1"># Regularization parameter for min-shuffle algorithm</span>
+<span class="linenos">3</span><span class="n">regularizationParameter</span> <span class="o">=</span> <span class="mf">0.005</span>
+<span class="linenos">4</span><span class="c1"># Maximum iterations for min-shuffle algorithm</span>
+<span class="linenos">5</span><span class="n">maximumIterations</span> <span class="o">=</span> <span class="mi">1000000</span>
+<span class="linenos">6</span><span class="c1"># Put True if you want to choose the disconnection mode, False will automatically create disconnection mode with</span>
+<span class="linenos">7</span><span class="c1"># smallest burgers vector and corresponding step height</span>
+<span class="linenos">8</span><span class="n">chooseDisconnection</span> <span class="o">=</span> <span class="kc">True</span>
+</pre></div>
+</div>
 <ul class="simple">
 <li><p>Specify the file that contains bicrystallography data from oilab output in <code class="docutils literal notranslate"><span class="pre">oilab_output_file</span></code>. Current implementation has output files included for 3 tilt axes ([001],[110],[111]), stored in <code class="docutils literal notranslate"><span class="pre">Data</span></code> folder. <code class="docutils literal notranslate"><span class="pre">output_folder</span></code> is the folder in which the output of this program is stored.</p></li>
 </ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="c1"># ------------------------- Input and output folders -------------------- #</span>
+<span class="linenos">2</span><span class="c1"># Location of bicrystallographic data obtained using oILAB</span>
+<span class="linenos">3</span><span class="n">oilab_output_file</span> <span class="o">=</span> <span class="s2">&quot;data/fcc0-10.txt&quot;</span>
+<span class="linenos">4</span><span class="c1"># Location of directory where output is to be stored, the program creates subdirectories</span>
+<span class="linenos">5</span><span class="c1"># for each element, sigma value , misorientation and disconnection mode within it</span>
+<span class="linenos">6</span><span class="n">output_folder</span> <span class="o">=</span> <span class="s2">&quot;output/&quot;</span>
+</pre></div>
+</div>
 <ul class="simple">
 <li><p>Specify locations of external programs needed for running this code. This includes location of lammps installation, mpi installation. Also indicate the full path to the lammps potential file you want to use.</p></li>
 </ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="c1"># ---------- Location of programs needed to run this (change these) ----------------------#</span>
+<span class="linenos">2</span><span class="c1"># Location of directory where lmp_serial and lmp_mpi are stored</span>
+<span class="linenos">3</span><span class="n">lammps_location</span> <span class="o">=</span> <span class="s2">&quot;/opt/homebrew/bin&quot;</span>
+<span class="linenos">4</span><span class="c1"># Location of directory where mpirun is stored</span>
+<span class="linenos">5</span><span class="n">mpi_location</span> <span class="o">=</span> <span class="s2">&quot;/opt/homebrew/bin&quot;</span>
+<span class="linenos">6</span><span class="c1"># Full path to the potential to be used</span>
+<span class="linenos">7</span><span class="n">lammps_potential</span> <span class="o">=</span> <span class="s2">&quot;/opt/homebrew/Cellar/lammps/20240829-update1/share/lammps/potentials/Cu_mishin1.eam.alloy&quot;</span>
+</pre></div>
+</div>
 <ul class="simple">
 <li><p>Input the displacements that minimize GB to minimum energy structure. Can be obtained using <code class="docutils literal notranslate"><span class="pre">gridSearch.py</span></code> script.</p></li>
 </ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="c1"># Displacements obtained from running grid_search script</span>
+<span class="linenos">2</span><span class="n">disp_along_gb</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="linenos">3</span><span class="n">disp_along_tilt</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.9</span>
+</pre></div>
+</div>
 <ul class="simple">
 <li><p>Specify the parameters for NEB run. <code class="docutils literal notranslate"><span class="pre">partitions</span></code> is the linearly interpolated images used in NEB run. <code class="docutils literal notranslate"><span class="pre">neb_mode</span></code> lets you choose if you want to run intermediate images through NEB or not. <code class="docutils literal notranslate"><span class="pre">neb_mode</span></code> = 1 -&gt; NEB with intermediate images, <code class="docutils literal notranslate"><span class="pre">neb_mode</span></code> = 0 -&gt; NEb with just the initial and final GB images</p></li>
 </ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="c1"># Parameters for neb run on lammps</span>
+<span class="linenos">2</span><span class="c1"># Number of partitions used for neb calculations</span>
+<span class="linenos">3</span><span class="n">partitions</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="linenos">4</span><span class="c1"># Variable lets you choose if you want to run intermediate images through NEB or not.</span>
+<span class="linenos">5</span><span class="c1"># mode = 1 -&gt; NEB with intermediate images, mode = 0 -&gt; NEb with just the initial and final GB images</span>
+<span class="linenos">6</span><span class="n">neb_mode</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="linenos">7</span><span class="c1"># Variable which allows for switching off automatically triggering neb calculations (in case you only need disconnection images)</span>
+<span class="linenos">8</span><span class="n">run_neb</span> <span class="o">=</span> <span class="kc">True</span>
+</pre></div>
+</div>
 <ul class="simple">
 <li><p>Finally call the function that calls the required functions and carries out the procedure detailed in the paper.</p></li>
 </ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="c1"># Run</span>
+<span class="linenos"> 2</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="linenos"> 3</span>    <span class="n">results_folder_path</span> <span class="o">=</span> <span class="n">runGBkinetics</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span>
+<span class="linenos"> 4</span>                                        <span class="n">misorientation</span><span class="p">,</span>
+<span class="linenos"> 5</span>                                        <span class="n">inclination</span><span class="p">,</span>
+<span class="linenos"> 6</span>                                        <span class="n">latticeParameter</span><span class="p">,</span>
+<span class="linenos"> 7</span>                                        <span class="n">lattice_vector</span><span class="p">,</span>
+<span class="linenos"> 8</span>                                        <span class="n">axis</span><span class="p">,</span>
+<span class="linenos"> 9</span>                                        <span class="n">size_along_gb_period</span><span class="p">,</span>
+<span class="linenos">10</span>                                        <span class="n">size__along_tilt_axis</span><span class="p">,</span>
+<span class="linenos">11</span>                                        <span class="n">element</span><span class="p">,</span>
+<span class="linenos">12</span>                                        <span class="n">regularizationParameter</span><span class="p">,</span>
+<span class="linenos">13</span>                                        <span class="n">maximumIterations</span><span class="p">,</span>
+<span class="linenos">14</span>                                        <span class="n">lammps_location</span><span class="p">,</span>
+<span class="linenos">15</span>                                        <span class="n">mpi_location</span><span class="p">,</span>
+<span class="linenos">16</span>                                        <span class="n">output_folder</span><span class="p">,</span>
+<span class="linenos">17</span>                                        <span class="n">lammps_potential</span><span class="p">,</span>
+<span class="linenos">18</span>                                        <span class="n">disp_along_gb</span><span class="p">,</span>
+<span class="linenos">19</span>                                        <span class="n">disp_along_tilt</span><span class="p">,</span>
+<span class="linenos">20</span>                                        <span class="n">oilab_output_file</span><span class="p">,</span>
+<span class="linenos">21</span>                                        <span class="n">chooseDisconnection</span><span class="p">,</span>
+</pre></div>
+</div>
 <ul class="simple">
 <li><p>Save and run GB_kinetics.py</p></li>
 </ul>

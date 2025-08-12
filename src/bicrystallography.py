@@ -131,7 +131,7 @@ class bicrystallography:
 
     def gb_props(self,oilab_output_file = "/data/fcc0-10.txt",choose_decision=1):
         """
-            Calculate GB properties and optionally prompt user to choose a disconnection mode.
+            Assigns GB properties required for the calculation (read from oILAB output) and optionally prompt user to choose a disconnection mode.
 
             Args:
                 oilab_output_file (str, optional): Path to the OILAB output file. Defaults to "/data/fcc0-10.txt".
@@ -176,7 +176,6 @@ class bicrystallography:
             print("Example of a few of the possible disconnection modes are:")
             headers = ["m", "n", "|b|", "h", "coupling factor"]
             table_contents = []
-            # print("m \t n \t |b| \t h \t coupling factor")
             for i in range(-3, 3, 1):
                 for j in range(-3, 3, 1):
                     if i == 0 and j == 0:

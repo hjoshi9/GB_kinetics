@@ -19,6 +19,8 @@ release = '2.0'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
+#autodoc_mock_imports = ['ot']
+
 
 extensions = ['sphinx.ext.autodoc',
     'sphinx.ext.napoleon',    # For Google/NumPy style docstrings

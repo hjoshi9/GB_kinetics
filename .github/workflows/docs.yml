@@ -5,7 +5,7 @@ permissions:
 
 on:
   push:
-    branches: [oop] 
+    branches: [main] 
     paths:
       - 'docs/**'
       - 'requirements.txt'

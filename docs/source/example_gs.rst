@@ -1,4 +1,4 @@
-Example: Running Grid Search
+Grid Search Example
 ============================
 
 This example demonstrates how to run grid search script and interpret the results.

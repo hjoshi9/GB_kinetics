@@ -1,4 +1,4 @@
-Example: Runnig GB Kinetics
+GB Kinetics Example
 =============================
 
 This example demonstrates how to run the GB kinetics script and walks through where the results are stored.

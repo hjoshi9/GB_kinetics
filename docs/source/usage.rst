@@ -21,8 +21,8 @@ Installations required
     $ pip install -r requirements.txt
 
 
-General usage
---------------
+Workflow
+---------
 
 | The method can be divided into 5 steps:
 
@@ -32,9 +32,13 @@ General usage
 #. Mapping the atomic shuffles
 #. Evaluation of the energy barrier and trajectories using NEB.
 
-|  A typical workflow consists of:
+These steps are discussed in detail in :doc:`Theory <theory>`
+
+Usage
+---------
 
 #. Running gridSearch.py script to determine the displacements which need to be applied to as but bicrystal to get to lowest energy microstate.
 #. Inputting the displacements in GB_kinetics.py script and running it to generate disconnection images and neb.
 
-Examples section goes over a sample run which demonstrates this workflow
+An example run of Grid search procedure is shown in :doc:`Grid Search Example <example_gs>`
+and an example run of disconnection image generation is shown in :doc:`GB Kinetics Example<example_gbkinetics>`

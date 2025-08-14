@@ -24,10 +24,11 @@ Contents
    :maxdepth: 1
 
    usage
-   modules
+   theory
    data
    example_gs
    example_gbkinetics
+   modules
 
 Indices and tables
 ==================

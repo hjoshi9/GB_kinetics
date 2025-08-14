@@ -23,6 +23,7 @@ release = '2.0'
 
 
 extensions = ['sphinx.ext.autodoc',
+    'sphinx.ext.mathjax',
     'sphinx.ext.napoleon',    # For Google/NumPy style docstrings
     'sphinx.ext.viewcode',    # Optional: adds links to source code
 ]

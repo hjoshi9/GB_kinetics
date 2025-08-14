@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>plastic_slip module &mdash; GB Kinetics 2.0 documentation</title>
+  <title>Theory &mdash; GB Kinetics 2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
@@ -16,11 +16,12 @@
       <script src="_static/documentation_options.js?v=60dbed4a"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="runLAMMPS module" href="runLAMMPS.html" />
-    <link rel="prev" title="min_shuffle module" href="min_shuffle.html" /> 
+    <link rel="next" title="Data" href="data.html" />
+    <link rel="prev" title="Installation" href="usage.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -49,12 +50,12 @@
 <li class="toctree-l2"><a class="reference internal" href="usage.html#usage">Usage</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="theory.html">Theory</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="theory.html#construction-of-stgb-microstate">Construction of STGB microstate</a></li>
-<li class="toctree-l2"><a class="reference internal" href="theory.html#enumeration-of-disconnection-modes">Enumeration of disconnection modes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="theory.html#construction-of-atomistic-gb-migration-images">Construction of atomistic GB migration images</a></li>
-<li class="toctree-l2"><a class="reference internal" href="theory.html#mapping-the-atomic-shuffles">Mapping the atomic shuffles</a></li>
-<li class="toctree-l2"><a class="reference internal" href="theory.html#evaluation-of-the-energy-barrier-and-trajectories">Evaluation of the energy barrier and trajectories</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Theory</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#construction-of-stgb-microstate">Construction of STGB microstate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#enumeration-of-disconnection-modes">Enumeration of disconnection modes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#construction-of-atomistic-gb-migration-images">Construction of atomistic GB migration images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mapping-the-atomic-shuffles">Mapping the atomic shuffles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#evaluation-of-the-energy-barrier-and-trajectories">Evaluation of the energy barrier and trajectories</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="data.html">Data</a></li>
@@ -66,7 +67,7 @@
 <li class="toctree-l2"><a class="reference internal" href="example_gbkinetics.html#output">Output</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Source</a><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Source</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="GBKineticsRunController.html">GBKineticsRunController module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="GBKineticsRunController.html#src.GBKineticsRunController.runGBkinetics"><code class="docutils literal notranslate"><span class="pre">runGBkinetics()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="GBKineticsRunController.html#src.GBKineticsRunController.runGridSearch"><code class="docutils literal notranslate"><span class="pre">runGridSearch()</span></code></a></li>
@@ -125,15 +126,15 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">plastic_slip module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#plastic_slip.dislocation_dipole"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#plastic_slip.dislocation_dipole.dislocation_points"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.dislocation_points</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#plastic_slip.dislocation_dipole.period"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.period</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#plastic_slip.dislocation_dipole.burgers_vector"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.burgers_vector</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#plastic_slip.dislocation_dipole.dislocation_vector"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.dislocation_vector</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#plastic_slip.dislocation_dipole.dislocation_distance"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.dislocation_distance</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#plastic_slip.dislocation_dipole.__init__"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.__init__()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#plastic_slip.dislocation_dipole.plastic_displacement"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.plastic_displacement()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="plastic_slip.html">plastic_slip module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="plastic_slip.html#plastic_slip.dislocation_dipole"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="plastic_slip.html#plastic_slip.dislocation_dipole.dislocation_points"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.dislocation_points</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="plastic_slip.html#plastic_slip.dislocation_dipole.period"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.period</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="plastic_slip.html#plastic_slip.dislocation_dipole.burgers_vector"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.burgers_vector</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="plastic_slip.html#plastic_slip.dislocation_dipole.dislocation_vector"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.dislocation_vector</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="plastic_slip.html#plastic_slip.dislocation_dipole.dislocation_distance"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.dislocation_distance</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="plastic_slip.html#plastic_slip.dislocation_dipole.__init__"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="plastic_slip.html#plastic_slip.dislocation_dipole.plastic_displacement"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.plastic_displacement()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -190,10 +191,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="modules.html">Source</a></li>
-      <li class="breadcrumb-item active">plastic_slip module</li>
+      <li class="breadcrumb-item active">Theory</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/plastic_slip.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/theory.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -201,117 +201,139 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-plastic_slip">
-<span id="plastic-slip-module"></span><h1>plastic_slip module<a class="headerlink" href="#module-plastic_slip" title="Link to this heading"></a></h1>
-<dl class="py class">
-<dt class="sig sig-object py" id="plastic_slip.dislocation_dipole">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">plastic_slip.</span></span><span class="sig-name descname"><span class="pre">dislocation_dipole</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dislocation_points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">burgers_vector</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plastic_slip.html#dislocation_dipole"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plastic_slip.dislocation_dipole" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Class to calculate plastic slip due to a dislocation dipole.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="plastic_slip.dislocation_dipole.dislocation_points">
-<span class="sig-name descname"><span class="pre">dislocation_points</span></span><a class="headerlink" href="#plastic_slip.dislocation_dipole.dislocation_points" title="Link to this definition"></a></dt>
-<dd><p>Array of coordinates for dislocations (2D points).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>np.ndarray</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="plastic_slip.dislocation_dipole.period">
-<span class="sig-name descname"><span class="pre">period</span></span><a class="headerlink" href="#plastic_slip.dislocation_dipole.period" title="Link to this definition"></a></dt>
-<dd><p>Periodicity of the system (typically along GB direction).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="plastic_slip.dislocation_dipole.burgers_vector">
-<span class="sig-name descname"><span class="pre">burgers_vector</span></span><a class="headerlink" href="#plastic_slip.dislocation_dipole.burgers_vector" title="Link to this definition"></a></dt>
-<dd><p>Magnitude of the Burgers vector.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="plastic_slip.dislocation_dipole.dislocation_vector">
-<span class="sig-name descname"><span class="pre">dislocation_vector</span></span><a class="headerlink" href="#plastic_slip.dislocation_dipole.dislocation_vector" title="Link to this definition"></a></dt>
-<dd><p>Vector from first to second dislocation.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>np.ndarray</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="plastic_slip.dislocation_dipole.dislocation_distance">
-<span class="sig-name descname"><span class="pre">dislocation_distance</span></span><a class="headerlink" href="#plastic_slip.dislocation_dipole.dislocation_distance" title="Link to this definition"></a></dt>
-<dd><p>Distance between the two dislocations.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="plastic_slip.dislocation_dipole.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dislocation_points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">burgers_vector</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plastic_slip.html#dislocation_dipole.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plastic_slip.dislocation_dipole.__init__" title="Link to this definition"></a></dt>
-<dd><p>Initialize a dislocation dipole object.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>dislocation_points</strong> (<em>np.ndarray</em>) – Coordinates of the dislocation pair (shape: 2x2).</p></li>
-<li><p><strong>period</strong> (<em>float</em>) – Periodicity of the system (along grain boundary direction).</p></li>
-<li><p><strong>burgers_vector</strong> (<em>float</em>) – Magnitude of the Burgers vector.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="plastic_slip.dislocation_dipole.plastic_displacement">
-<span class="sig-name descname"><span class="pre">plastic_displacement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nImages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plastic_slip.html#dislocation_dipole.plastic_displacement"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plastic_slip.dislocation_dipole.plastic_displacement" title="Link to this definition"></a></dt>
-<dd><p>Compute the plastic displacement at a point <cite>x</cite> due to a dislocation dipole.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>x</strong> (<em>np.ndarray</em>) – 2D point at which displacement is calculated.</p></li>
-<li><p><strong>nImages</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of periodic image dipoles to consider. Defaults to 2.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p>float: Total angle of plastic distortion (radians).</p></li>
-<li><p>float: Plastic displacement at the point <cite>x</cite>.</p></li>
-</ul>
-</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tuple</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
+  <section id="theory">
+<h1>Theory<a class="headerlink" href="#theory" title="Link to this heading"></a></h1>
+<p>This general workflow followed by the code can be summarized as:</p>
+<figure class="align-center" id="id1">
+<a class="reference internal image-reference" href="_images/theory_workflow.png"><img alt="_images/theory_workflow.png" src="_images/theory_workflow.png" style="width: 800px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Code workflow</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>We now detail what each of the steps given in the flowchart signify and add important details on how it is implemented.</p>
+<section id="construction-of-stgb-microstate">
+<h2>Construction of STGB microstate<a class="headerlink" href="#construction-of-stgb-microstate" title="Link to this heading"></a></h2>
+<p>Each STGB is constructed by:</p>
+<ol class="arabic simple">
+<li><p>Creating an interpenetrating lattice by combining two lattices, one rotated by <span class="math notranslate nohighlight">\(\theta/2\)</span> andthe other by <span class="math notranslate nohighlight">\(-\theta/2\)</span>, where:math:<cite>theta</cite> is the misorientation angle.</p></li>
+<li><p>Selecting a gb location (with a parameter <code class="docutils literal notranslate"><span class="pre">gb_position</span></code> used in <code class="docutils literal notranslate"><span class="pre">GBKineticsRunController.py</span></code>) and deleting atoms of grain 1 from one side of the gb position and from grain 2 on the other side.</p></li>
+</ol>
+<p>This results in creation of a bicrystal as shown below:</p>
+<figure class="align-center" id="id2">
+<a class="reference internal image-reference" href="_images/sigma17_size1_disc0000.png"><img alt="_images/sigma17_size1_disc0000.png" src="_images/sigma17_size1_disc0000.png" style="width: 300px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">STGB</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>The bicrystal thus created is not typically in the ground state. To arrive at the ground state,
+we use the γ-surface
+method, wherein the two grains are displaced relative to each other in the GB plane and
+energy is minimized (carried out using <code class="docutils literal notranslate"><span class="pre">gridSearch.py</span></code>).
+This results in creation of bicrystal with GB in its ground state, as shown below:</p>
+<figure class="align-center" id="id3">
+<a class="reference internal image-reference" href="_images/sigma17_size1_min0000.png"><img alt="_images/sigma17_size1_min0000.png" src="_images/sigma17_size1_min0000.png" style="width: 300px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">STGB in ground state</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>The relative displacement that results in the lowest post-minimized energy is recorded, as it serves as input to the latter part of the workflow.</p>
+</section>
+<section id="enumeration-of-disconnection-modes">
+<h2>Enumeration of disconnection modes<a class="headerlink" href="#enumeration-of-disconnection-modes" title="Link to this heading"></a></h2>
+<p>We use Smith normal norm (SNF) bicrystallography to enumerate the disconnection modes (b, h) of the
+STGB, where b and h denote the disconnection’s Burgers vector and step height, respectively.
+SNF bicrystallography is a powerful framework based on integer matrix algebra to automate
+the generation of rational GBs, and enumerate disconnection modes in GBs.
+For further details on SNF bicrystallography, we refer the reader to Admal et al.
+(<a class="reference external" href="https://doi.org/10.1016/j.actamat.2022.118340">https://doi.org/10.1016/j.actamat.2022.118340</a>).</p>
+</section>
+<section id="construction-of-atomistic-gb-migration-images">
+<h2>Construction of atomistic GB migration images<a class="headerlink" href="#construction-of-atomistic-gb-migration-images" title="Link to this heading"></a></h2>
+<p>We assume that GB migrates due to nucleation and migration of disconnections along the GB.
+A pictorial representation of such a migration is shown below:</p>
+<figure class="align-center" id="id4">
+<a class="reference internal image-reference" href="_images/gb_migration_cartoon.png"><img alt="_images/gb_migration_cartoon.png" src="_images/gb_migration_cartoon.png" style="width: 800px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Pictorial representation of GB migration due to disconnection nucleation and glide</span><a class="headerlink" href="#id4" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>To construct a bicrystal with a disconnection step, we follow the following procedure:</p>
+<ol class="arabic simple">
+<li><p>Create an interpenetrating lattice by combining two lattices, one rotated by <span class="math notranslate nohighlight">\(\theta/2\)</span> and the other by <span class="math notranslate nohighlight">\(-\theta/2\)</span></p></li>
+<li><p>To generate a disconnection of burgers vector <em>b</em>, step height <em>h</em> and width <em>w</em> (as shown in the figure below), we displace all atoms in the dichromatic pattern according to the plastic displacement field:</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[u(\boldsymbol{x};\mathcal S) = -\frac{\boldsymbol{b}\Omega(\boldsymbol{x};\mathcal S)}{4\pi}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\Omega(\boldsymbol{x})\)</span> is the solid angle subtended by the dislocation dipole on a particle at position <span class="math notranslate nohighlight">\(\boldsymbol{x}\)</span>.</p>
+<figure class="align-center" id="id5">
+<a class="reference internal image-reference" href="_images/disconnection_cartoon.png"><img alt="_images/disconnection_cartoon.png" src="_images/disconnection_cartoon.png" style="width: 250px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Pictorial representation of a GB with disconnection on it</span><a class="headerlink" href="#id5" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<ol class="arabic simple" start="3">
+<li><p>Next, a stepped GB is formed by deleting respective atoms on either side of GB, as shown in step 2 of figure above.</p></li>
+</ol>
+<p>This results in creation of atomic configuration of a bicrystal with a disconnection inserted in it.
+The displacement jump at the GB can be readily observed in the following figure:</p>
+<figure class="align-center" id="id6">
+<a class="reference internal image-reference" href="_images/disconnection_atomic.png"><img alt="_images/disconnection_atomic.png" src="_images/disconnection_atomic.png" style="width: 300px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Atomic configuration after insertion of a disconnection</span><a class="headerlink" href="#id6" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<ol class="arabic simple" start="4">
+<li><p>The atomix configuration created in not at ground state. To get to the ground state energy structure, we minimize the structure using LAMMPS and get the actual GB microstate with disconnection inserted.</p></li>
+</ol>
+<p>Running Step 1-4 such that disconnection glides through the whole GB provides us the atomic configurations we are after,
+shown in the figures below:</p>
+<figure class="align-center" id="id7">
+<a class="reference internal image-reference" href="_images/gb_migration_disc_images.png"><img alt="_images/gb_migration_disc_images.png" src="_images/gb_migration_disc_images.png" style="width: 800px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Atomic configurations generated,
+showing GB migration based on disconnection nucleation and glide.</span><a class="headerlink" href="#id7" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="id8">
+<a class="reference internal image-reference" href="_images/gb_migration_disc_min_images.png"><img alt="_images/gb_migration_disc_min_images.png" src="_images/gb_migration_disc_min_images.png" style="width: 800px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Final (minimized) atomic configurations generated,
+showing GB migration based on disconnection nucleation and glide.</span><a class="headerlink" href="#id8" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="mapping-the-atomic-shuffles">
+<h2>Mapping the atomic shuffles<a class="headerlink" href="#mapping-the-atomic-shuffles" title="Link to this heading"></a></h2>
+<p>We now compute the shuffle maps for the atoms that have transformed from one grain to another
+during disconnection nucleation and glide. Such maps serve as intermediate images for NEB calculation
+in the next step. Shuffle maps are calculated using the optimal transport method developed by Chesser et al. [18, 19].
+The chosen shuffle map, <em>the min-shuffle map</em>, minimizes net shuffle distance in the dichromatic
+pattern. By increasing the <code class="docutils literal notranslate"><span class="pre">regularization</span> <span class="pre">parameter</span></code>, it is possible to select
+for mappings with larger net displacements such as those observed at high temperatures in specific GBs.</p>
+</section>
+<section id="evaluation-of-the-energy-barrier-and-trajectories">
+<h2>Evaluation of the energy barrier and trajectories<a class="headerlink" href="#evaluation-of-the-energy-barrier-and-trajectories" title="Link to this heading"></a></h2>
+<p>We employ climbing image NEB method [21] to calculate the minimum energy paths (MEPs), i.e. plots of energy
+versus the reaction coordinate (width or the normalized width of the disconnection dipole), of
+disconnection modes in the absence of external loads. The NEB is implemented using the LAMMPS <em>neb</em> module with nudging forces
+parallel and perpendicular to the configurational path with a unitary spring constant.</p>
+</section>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="min_shuffle.html" class="btn btn-neutral float-left" title="min_shuffle module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="runLAMMPS.html" class="btn btn-neutral float-right" title="runLAMMPS module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="usage.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="data.html" class="btn btn-neutral float-right" title="Data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

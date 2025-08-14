@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Example: Runnig GB Kinetics &mdash; GB Kinetics 2.0 documentation</title>
+  <title>GB Kinetics Example &mdash; GB Kinetics 2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
@@ -19,7 +19,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Example: Running Grid Search" href="example_gs.html" /> 
+    <link rel="next" title="Source" href="modules.html" />
+    <link rel="prev" title="Grid Search Example" href="example_gs.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -44,7 +45,25 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="usage.html#installations-required">Installations required</a></li>
-<li class="toctree-l2"><a class="reference internal" href="usage.html#general-usage">General usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#workflow">Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="theory.html">Theory</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="theory.html#construction-of-stgb-microstate">Construction of STGB microstate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory.html#enumeration-of-disconnection-modes">Enumeration of disconnection modes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory.html#construction-of-atomistic-gb-migration-images">Construction of atomistic GB migration images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory.html#mapping-the-atomic-shuffles">Mapping the atomic shuffles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory.html#evaluation-of-the-energy-barrier-and-trajectories">Evaluation of the energy barrier and trajectories</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data.html">Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example_gs.html">Grid Search Example</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="example_gs.html#output">Output</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">GB Kinetics Example</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#output">Output</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">Source</a><ul>
@@ -155,15 +174,6 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="data.html">Data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="example_gs.html">Example: Running Grid Search</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="example_gs.html#output">Output</a></li>
-</ul>
-</li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Example: Runnig GB Kinetics</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#output">Output</a></li>
-</ul>
-</li>
 </ul>
 
         </div>
@@ -180,7 +190,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Example: Runnig GB Kinetics</li>
+      <li class="breadcrumb-item active">GB Kinetics Example</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/example_gbkinetics.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -190,8 +200,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="example-runnig-gb-kinetics">
-<h1>Example: Runnig GB Kinetics<a class="headerlink" href="#example-runnig-gb-kinetics" title="Link to this heading"></a></h1>
+  <section id="gb-kinetics-example">
+<h1>GB Kinetics Example<a class="headerlink" href="#gb-kinetics-example" title="Link to this heading"></a></h1>
 <p>This example demonstrates how to run the GB kinetics script and walks through where the results are stored.</p>
 <ul class="simple">
 <li><p>Open GB_kinetics.py and input Gb information, displacements recorded earlier and parameters for optimal transport calculations. Start with specifing the parameters required to identify the material and GB such as sigma number, misorientation, inclination, material symbol, and tilt axis. <code class="docutils literal notranslate"><span class="pre">size_along_gb_period</span></code> determines the length of the box along the gb period. The length of the box generated is 2*period*size_along_gb_period. <code class="docutils literal notranslate"><span class="pre">size_along_tilt_axis</span></code> determines the length of the box along the tilt axis. The length of the box generated is 2*(CSL length along tilt axis)*size_along_tilt_axis. <code class="docutils literal notranslate"><span class="pre">lattive_Vectors</span></code> determine what crystal system is under consideration.</p></li>
@@ -342,7 +352,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="example_gs.html" class="btn btn-neutral float-left" title="Example: Running Grid Search" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="example_gs.html" class="btn btn-neutral float-left" title="Grid Search Example" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="modules.html" class="btn btn-neutral float-right" title="Source" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

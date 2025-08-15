@@ -10,11 +10,16 @@ Documentation for this project is hosted at : https://hjoshi9.github.io/GB_kinet
 NOTE : This is the OOP implementaiton of GB kinetics code. The repository is under active development!!
 <br />
 <br />
-The method (described in detail in the paper) can be broken down in 5 steps.<br />
-Run grid_search.py to carry out Step 1.<br />
-data folder contains output from Step 2 (implemented in oILAB, available on the Github repository: https://github.com/oiLAB-project/oILAB)<br />
-Run main.py to carry out Step 3, 4 and 5.<br />
-Output it stored in /output/<element>/Misorientation<misorientation>/size<size>/<disconnection_mode> folder <br />
+
+The workflow for GB Kinetics can be broken down in 5 steps:
+
+1. Construction of STGB microstate (run gridSearch.py)<br />
+2. Enumeration of disconnection modes (implemented in oILAB, available on the Github repository: https://github.com/oiLAB-project/oILAB)<br />
+3. Atomistic construction of a disconnection mode <br />
+4. Mapping the atomic shuffles <br />
+5. Evaluation of the energy barrier and trajectories using NEB <br />
+GB_kinetics.py carries out the steps 2-4.
+
 <br />
 <br />
 Necessary installations: <br />

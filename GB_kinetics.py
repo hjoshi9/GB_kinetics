@@ -15,9 +15,9 @@ latticeParameter = 3.615
 # Tilt axis of GB
 axis = [0, 0, 1]
 # Size of system along the GB period in terms of 2*CSL period
-size_along_gb_period = 1
+size_along_gb_period = 4
 # Size of system along the tilt axis in terms of 2*CSL period
-size__along_tilt_axis = 1
+size__along_tilt_axis = 2
 # Lattice Vectors for the crystal system (current implementation is tested for fcc only)
 lattice_vector = np.array([[0.5, 0.5, 0.0],
                            [0.0, 0.5, 0.5],
@@ -58,7 +58,7 @@ partitions = 4
 # mode = 1 -> NEB with intermediate images, mode = 0 -> NEb with just the initial and final GB images
 neb_mode = 1
 # Variable which allows for switching off automatically triggering neb calculations (in case you only need disconnection images)
-run_neb = True
+run_neb = False
 
 # Run
 if __name__ == "__main__":

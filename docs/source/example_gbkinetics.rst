@@ -1,7 +1,11 @@
 GB Kinetics Example
 =============================
 
-This example demonstrates how to run the GB kinetics script and walks through where the results are stored.
+This example demonstrates how to run the GB kinetics script and
+walks through where the results are stored.
+For this example, we focus on a :math:`\Sigma` 17[001](410) STGB in Copper (Cu)
+with box length along the GB = 8 x GB period and
+box length along tilt axis = 4 x CSL length along tilt axis.
 
 - Open GB_kinetics.py and input Gb information, displacements recorded earlier and parameters for optimal transport calculations. Start with specifing the parameters required to identify the material and GB such as sigma number, misorientation, inclination, material symbol, and tilt axis. ``size_along_gb_period`` determines the length of the box along the gb period. The length of the box generated is 2*period*size_along_gb_period. ``size_along_tilt_axis`` determines the length of the box along the tilt axis. The length of the box generated is 2*(CSL length along tilt axis)*size_along_tilt_axis. ``lattive_Vectors`` determine what crystal system is under consideration.
 
@@ -92,48 +96,41 @@ location of the output generated.
 
 Output
 -------
-
-This code generates atomic configurations of different types:
-
-#. LAMMPS data files for bicrystal with atoms obtained from bicrystallographic data and an applied plastic displacement , as discussed in :doc:`theory`.
-
-#. LAMMPS data files for minimized bicrystal with atoms now representing GB ground state.
-
-#. A LAMMPS data file containing multiple timesteps showing minimization of the bicrystal generated from bicrystallography.
-
-#. LAMMPS data files for bicrystals with atomic trajectories calculated using min-shuffle algorithm.
-
-#. Data file corresponding to the bicrystals with atomic trajectories, containing the atoms that are to be included in ``neb`` calculations.
-
 All the generated configurations are stored in:
 ``output/<Element>/Sigma<GB sigma number>/Misorientation<GB misorientation>.0/size<Size of box along GB>/b<Disconnection burgers vector>h<disconnection step height>``
 
-- The first output is the disconnection images constructed using bicrytallographic information. No elastic fields are applied to these images.
+This code generates atomic configurations of different types:
+
+1. LAMMPS data files for bicrystal with atoms obtained from bicrystallographic data and an applied plastic displacement , as discussed in :doc:`theory`. These files are named as : ``data.Cus<GB Sigma>.0inc<GB inclination>_size<Size along GB period>disc<configuration number>``.
 
 .. image:: /_static/sigma17_ascut.gif
    :alt: Disconnection images without any elastic relaxation
    :width: 800px
 
-- Then the code minimizes the images using displacements derived from gridSearch run
+2. LAMMPS data files for minimized bicrystal with atoms now representing GB ground state. These files are named as : ``data.Cus<GB Sigma>.0inc<GB inclination>_size<Size along GB period>disc<configuration number>_min``.
 
 .. image:: /_static/sigma17_min.gif
    :alt: Disconnection images without any elastic relaxation
    :width: 800px
 
-- The code then finds out the atomic trajectories using min-shuffle algorithm
+3. LAMMPS data files for bicrystals with atomic trajectories calculated using min-shuffle algorithm. These files are named as : ``data.Cus<GB Sigma>.0inc<GB inclination>_size<Size along GB period>__step<configuration number>``.
 
 .. image:: /_static/sigma17_min_shuffle.gif
    :alt: Disconnection images without any elastic relaxation
    :width: 800px
 
-- Finally it uses the images generated to run a neb calculation on the images.
+4. Data file corresponding to the bicrystals with atomic trajectories, containing the atoms that are to be included in ``neb`` calculations.  These files are named as : ``data.Cus<GB Sigma>.0inc<GB inclination>_size<Size along GB period>_out_step<configuration number>``.
 
-.. image:: /_static/sigma17_size1_nebresults.gif
+.. image:: /_static/sigma17_neb.gif
    :alt: NEB GB migration mechanism
-   :width: 600px
+   :width: 800px
 
-- The post processing function also plots the MEP w.r.t the reaction coordinates
+5. A LAMMPS data file containing multiple timesteps showing minimization of the bicrystal generated from bicrystallography. These files are named as : ``data.Cus<GB Sigma>.0inc<GB inclination>_size<Size along GB period>disc<configuration number>_minmov``.
 
-.. image:: /_static/Cusigma17_mis28.0_size1_discb0.88h1.75_partition4.png
+- The post processing function also plots the MEP w.r.t the reaction coordinates.Here, we present the results obtained by running this code and for comparison to existing method,we compare it with MEP calculated by Combe et. al. [1] for the same GB and box dimensions.
+
+.. image:: /_static/Sigma17size_effect_absolute.png
    :alt: Disconnection images without any elastic relaxation
    :width: 600px
+
+

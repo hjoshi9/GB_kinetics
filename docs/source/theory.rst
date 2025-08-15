@@ -121,6 +121,13 @@ The chosen shuffle map, *the min-shuffle map*, minimizes net shuffle distance in
 pattern. By increasing the ``regularization parameter``, it is possible to select
 for mappings with larger net displacements such as those observed at high temperatures in specific GBs.
 
+.. figure:: /_static/min_shuffle_theory.png
+   :width: 800px
+   :align: center
+
+   Atomic configurations used as input for min-shuffle algorithm and final
+   trajectories generated.
+
 
 Evaluation of the energy barrier and trajectories
 -------------------------------------------------
@@ -128,4 +135,10 @@ We employ climbing image NEB method [21] to calculate the minimum energy paths (
 versus the reaction coordinate (width or the normalized width of the disconnection dipole), of
 disconnection modes in the absence of external loads. The NEB is implemented using the LAMMPS *neb* module with nudging forces
 parallel and perpendicular to the configurational path with a unitary spring constant.
+
+.. figure:: /_static/Cusigma17_mis28.0_size1_discb0.88h1.75_partition4.png
+   :width: 300px
+   :align: center
+
+   MEP generated using NEB calculations using 4 intermediate images
 

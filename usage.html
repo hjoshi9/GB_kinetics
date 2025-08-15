@@ -20,7 +20,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Theory" href="theory.html" />
-    <link rel="prev" title="Welcome to GB kinetics documentation!" href="index.html" /> 
+    <link rel="prev" title="Download" href="download.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -43,8 +43,14 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="download.html">Download</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#installations-required">Installations required</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pre-installed-programs">Pre-installed programs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#install-gb-kinetics">Install GB Kinetics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#windows">Windows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mac-linux">Mac/Linux</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#workflow">Workflow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a></li>
 </ul>
@@ -63,6 +69,8 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="example_gbkinetics.html">GB Kinetics Example</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="example_gbkinetics.html#user-input">User input</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_gbkinetics.html#command-line-output">Command line Output</a></li>
 <li class="toctree-l2"><a class="reference internal" href="example_gbkinetics.html#output">Output</a></li>
 </ul>
 </li>
@@ -202,24 +210,39 @@
              
   <section id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h1>
-<section id="installations-required">
-<h2>Installations required<a class="headerlink" href="#installations-required" title="Link to this heading"></a></h2>
+<section id="pre-installed-programs">
+<h2>Pre-installed programs<a class="headerlink" href="#pre-installed-programs" title="Link to this heading"></a></h2>
 <div class="line-block">
-<div class="line">Repository is avaialble at <a class="reference external" href="https://github.com/hjoshi9/GB_kinetics.git">https://github.com/hjoshi9/GB_kinetics.git</a></div>
-<div class="line">Clone the repository</div>
+<div class="line">GB Kinetics requires <code class="docutils literal notranslate"><span class="pre">python3</span></code>, <code class="docutils literal notranslate"><span class="pre">LAMMPS</span></code> and <code class="docutils literal notranslate"><span class="pre">openmpi</span></code> installations on the system.</div>
+<div class="line">Details on installation of <code class="docutils literal notranslate"><span class="pre">LAMMPS</span></code> can be found at <a class="reference external" href="https://docs.lammps.org/Install.html">https://docs.lammps.org/Install.html</a></div>
+<div class="line">Details on installation of <code class="docutils literal notranslate"><span class="pre">openmpi</span></code> can be found at <a class="reference external" href="https://docs.open-mpi.org/en/v5.0.x/installing-open-mpi/quickstart.html">https://docs.open-mpi.org/en/v5.0.x/installing-open-mpi/quickstart.html</a></div>
 </div>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>-b<span class="w"> </span>main<span class="w"> </span>https://github.com/hjoshi9/GB_kinetics.git
+</section>
+<section id="install-gb-kinetics">
+<h2>Install GB Kinetics<a class="headerlink" href="#install-gb-kinetics" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line">Create a new python environment for GB Kinetics and activate the new environment:</div>
+</div>
+<section id="windows">
+<h3>Windows<a class="headerlink" href="#windows" title="Link to this heading"></a></h3>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>GB_kinetics_env
+<span class="gp">$ </span>GB_kinetics_env<span class="se">\S</span>cripts<span class="se">\a</span>ctivate
+</pre></div>
+</div>
+</section>
+<section id="mac-linux">
+<h3>Mac/Linux<a class="headerlink" href="#mac-linux" title="Link to this heading"></a></h3>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>GB_kinetics_env
+<span class="gp">$ </span><span class="nb">source</span><span class="w"> </span>GB_kinetics_env<span class="se">\S</span>cripts<span class="se">\a</span>ctivate
 </pre></div>
 </div>
 <div class="line-block">
-<div class="line">The program requires python3, LAMMPS and openmpi installations on the system.</div>
-<div class="line">Details on installation of LAMMPS can be found at <a class="reference external" href="https://docs.lammps.org/Install.html">https://docs.lammps.org/Install.html</a></div>
-<div class="line">Details on installation of openmpi can be found at <a class="reference external" href="https://docs.open-mpi.org/en/v5.0.x/installing-open-mpi/quickstart.html">https://docs.open-mpi.org/en/v5.0.x/installing-open-mpi/quickstart.html</a></div>
 <div class="line">Necessary packages for python code are listed in requirements.txt and can be installed by</div>
 </div>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
 </pre></div>
 </div>
+</section>
 </section>
 <section id="workflow">
 <h2>Workflow<a class="headerlink" href="#workflow" title="Link to this heading"></a></h2>
@@ -250,7 +273,7 @@ and an example run of disconnection image generation is shown in <a class="refer
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to GB kinetics documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="download.html" class="btn btn-neutral float-left" title="Download" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="theory.html" class="btn btn-neutral float-right" title="Theory" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

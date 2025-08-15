@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GBKineticsRunController module &mdash; GB Kinetics 2.0 documentation</title>
+  <title>Download &mdash; GB Kinetics 2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
@@ -19,8 +19,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="IO module" href="IO.html" />
-    <link rel="prev" title="Source" href="modules.html" /> 
+    <link rel="next" title="Installation" href="usage.html" />
+    <link rel="prev" title="Welcome to GB Kinetics documentation!" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -43,7 +43,7 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="download.html">Download</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Download</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="usage.html#pre-installed-programs">Pre-installed programs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="usage.html#install-gb-kinetics">Install GB Kinetics</a><ul>
@@ -74,10 +74,10 @@
 <li class="toctree-l2"><a class="reference internal" href="example_gbkinetics.html#output">Output</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Source</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">GBKineticsRunController module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#src.GBKineticsRunController.runGBkinetics"><code class="docutils literal notranslate"><span class="pre">runGBkinetics()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#src.GBKineticsRunController.runGridSearch"><code class="docutils literal notranslate"><span class="pre">runGridSearch()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Source</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="GBKineticsRunController.html">GBKineticsRunController module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="GBKineticsRunController.html#src.GBKineticsRunController.runGBkinetics"><code class="docutils literal notranslate"><span class="pre">runGBkinetics()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="GBKineticsRunController.html#src.GBKineticsRunController.runGridSearch"><code class="docutils literal notranslate"><span class="pre">runGridSearch()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="IO.html">IO module</a><ul>
@@ -198,10 +198,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="modules.html">Source</a></li>
-      <li class="breadcrumb-item active">GBKineticsRunController module</li>
+      <li class="breadcrumb-item active">Download</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/GBKineticsRunController.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/download.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -209,95 +208,21 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-src.GBKineticsRunController">
-<span id="gbkineticsruncontroller-module"></span><h1>GBKineticsRunController module<a class="headerlink" href="#module-src.GBKineticsRunController" title="Link to this heading"></a></h1>
-<dl class="py function">
-<dt class="sig sig-object py" id="src.GBKineticsRunController.runGBkinetics">
-<span class="sig-prename descclassname"><span class="pre">src.GBKineticsRunController.</span></span><span class="sig-name descname"><span class="pre">runGBkinetics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lat_par</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lat_Vec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size_y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size_z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reg_parameter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lammps_location</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mpi_location</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">potential</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dispy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dispz</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">oilab_output_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">choose_disconnection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_neb</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neb_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partitions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">40</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/GBKineticsRunController.html#runGBkinetics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.GBKineticsRunController.runGBkinetics" title="Link to this definition"></a></dt>
-<dd><p>Run a grain boundary kinetics simulation using input parameters and LAMMPS.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>sigma</strong> (<em>int</em>) – Sigma value of the grain boundary.</p></li>
-<li><p><strong>misorientation</strong> (<em>float</em>) – Misorientation angle in degrees.</p></li>
-<li><p><strong>inclination</strong> (<em>float</em>) – Inclination angle in degrees.</p></li>
-<li><p><strong>lattice_parameter</strong> (<em>float</em>) – Lattice parameter of the element.</p></li>
-<li><p><strong>lattice_vector</strong> (<em>np.ndarray</em>) – Lattice vectors for the crystal (3x3 matrix).</p></li>
-<li><p><strong>axis</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Tilt axis vector.</p></li>
-<li><p><strong>size_y</strong> (<em>int</em>) – System size along the GB period (in 2×CSL units).</p></li>
-<li><p><strong>size_z</strong> (<em>int</em>) – System size along the tilt axis (in 2×CSL units).</p></li>
-<li><p><strong>element</strong> (<em>str</em>) – Chemical element symbol (e.g., “Cu”).</p></li>
-<li><p><strong>reg</strong> (<em>float</em>) – Regularization parameter for the min-shuffle algorithm.</p></li>
-<li><p><strong>iterMax</strong> (<em>int</em>) – Maximum number of iterations for the min-shuffle algorithm.</p></li>
-<li><p><strong>lammps_location</strong> (<em>str</em>) – Path to the directory containing LAMMPS binaries.</p></li>
-<li><p><strong>mpi_location</strong> (<em>str</em>) – Path to the directory containing the MPI executable.</p></li>
-<li><p><strong>output_folder</strong> (<em>str</em>) – Root folder where output data will be stored.</p></li>
-<li><p><strong>lammps_potential</strong> (<em>str</em>) – Full path to the LAMMPS potential file.</p></li>
-<li><p><strong>disp_along_gb</strong> (<em>float</em>) – Displacement along the grain boundary direction.</p></li>
-<li><p><strong>disp_along_tilt</strong> (<em>float</em>) – Displacement along the tilt axis direction.</p></li>
-<li><p><strong>oilab_output_file</strong> (<em>str</em>) – Path to the bicrystallographic data file from oILAB.</p></li>
-<li><p><strong>choose_disconnection</strong> (<em>bool</em>) – Whether to manually choose the disconnection mode.</p></li>
-<li><p><strong>run_neb</strong> (<em>bool</em>) – Whether to run NEB calculations.</p></li>
-<li><p><strong>neb_mode</strong> (<em>int</em>) – NEB mode.</p></li>
-<li><p><strong>partitions</strong> (<em>int</em>) – Number of intermediate images used for NEB calculations.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Path to the folder containing the simulation results.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="src.GBKineticsRunController.runGridSearch">
-<span class="sig-prename descclassname"><span class="pre">src.GBKineticsRunController.</span></span><span class="sig-name descname"><span class="pre">runGridSearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lat_par</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lat_Vec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size_y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size_z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lammps_location</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mpi_location</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">potential</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">oilab_output_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">choose_disconnection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_cores</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_increments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_setting</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/GBKineticsRunController.html#runGridSearch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.GBKineticsRunController.runGridSearch" title="Link to this definition"></a></dt>
-<dd><p>Run a grid search to identify minimum energy configurations of a grain boundary structure.</p>
-<p>This function builds a bicrystal based on bicrystallographic parameters and performs
-a systematic grid search using LAMMPS simulations to evaluate different GB displacements.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>sig</strong> (<em>int</em>) – Sigma value of the grain boundary.</p></li>
-<li><p><strong>mis</strong> (<em>float</em>) – Misorientation angle in degrees.</p></li>
-<li><p><strong>inc</strong> (<em>float</em>) – Inclination angle in degrees.</p></li>
-<li><p><strong>lat_par</strong> (<em>float</em>) – Lattice parameter of the element.</p></li>
-<li><p><strong>lat_Vec</strong> (<em>np.ndarray</em>) – Lattice vectors (3x3 matrix) for the crystal.</p></li>
-<li><p><strong>axis</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Tilt axis vector of the grain boundary.</p></li>
-<li><p><strong>size_y</strong> (<em>int</em>) – System size along the grain boundary period (in 2×CSL units).</p></li>
-<li><p><strong>size_z</strong> (<em>int</em>) – System size along the tilt axis (in 2×CSL units).</p></li>
-<li><p><strong>elem</strong> (<em>str</em>) – Chemical symbol of the element (e.g., “Cu”).</p></li>
-<li><p><strong>lammps_location</strong> (<em>str</em>) – Path to the directory containing LAMMPS binaries.</p></li>
-<li><p><strong>mpi_location</strong> (<em>str</em>) – Path to the directory containing the MPI executable.</p></li>
-<li><p><strong>folder</strong> (<em>str</em>) – Root folder to store all output data.</p></li>
-<li><p><strong>potential</strong> (<em>str</em>) – Full path to the LAMMPS potential file.</p></li>
-<li><p><strong>oilab_output_file</strong> (<em>str</em>) – Path to the bicrystallographic data file from oILAB.</p></li>
-<li><p><strong>choose_disconnection</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to manually select a disconnection mode. Defaults to False.</p></li>
-<li><p><strong>number_of_cores</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of processor cores to use for LAMMPS. Defaults to 6.</p></li>
-<li><p><strong>step_increments</strong> (<em>float</em><em>, </em><em>optional</em>) – Step size (in lattice units) for displacement search. Defaults to 0.1.</p></li>
-<li><p><strong>limit</strong> (<em>float</em><em>, </em><em>optional</em>) – Maximum displacement range to search (in lattice units). Defaults to 1.</p></li>
-<li><p><strong>output_setting</strong> (<em>int</em><em>, </em><em>optional</em>) – Output format/type flag for LAMMPS scripts. Defaults to 0.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Output from the grid search post-processing routine (usually energy data or selected configuration).</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Any</p>
-</dd>
-</dl>
-</dd></dl>
-
+  <section id="download">
+<h1>Download<a class="headerlink" href="#download" title="Link to this heading"></a></h1>
+<p>GB kinetics is available at github repository at <a class="reference external" href="https://github.com/hjoshi9/GB_kinetics.git">https://github.com/hjoshi9/GB_kinetics.git</a></p>
+<p>To download the latest release:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>-b<span class="w"> </span>main<span class="w"> </span>https://github.com/hjoshi9/GB_kinetics.git
+</pre></div>
+</div>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="modules.html" class="btn btn-neutral float-left" title="Source" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="IO.html" class="btn btn-neutral float-right" title="IO module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to GB Kinetics documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="usage.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

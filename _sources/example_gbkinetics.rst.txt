@@ -58,26 +58,73 @@ This example demonstrates how to run the GB kinetics script and walks through wh
 
     $ python3 GB_kinetics.py
 
+User input
+-----------
+After running ``GB_kinetics.py``, the program will show the input parameters pertinent to system
+user wants to explore.
+
+.. image:: /_static/user_input1.png
+   :alt: Disconnection images without any elastic relaxation
+   :width: 600px
+
+Then the program asks the user to choose the disconnection mode they want to construct. To do this, it
+lists out the disconnection modes calculated using GB information
+
+.. image:: /_static/user_input2.png
+   :alt: Disconnection images without any elastic relaxation
+   :width: 600px
+
+User can input the values of ``m`` and ``n``, that corresponds to the disconnection mode they want to
+construct. The program confirms the disconnection mode entered.
+
+.. image:: /_static/user_input3.png
+   :alt: Disconnection images without any elastic relaxation
+   :width: 600px
+
+Command line Output
+-------------------
+The code prints out which configuration it is generating and when completed, prints out the
+location of the output generated.
+
+.. image:: /_static/user_input4.png
+   :alt: Disconnection images without any elastic relaxation
+   :width: 600px
+
 Output
 -------
 
+This code generates atomic configurations of different types:
+
+#. LAMMPS data files for bicrystal with atoms obtained from bicrystallographic data and an applied plastic displacement , as discussed in :doc:`theory`.
+
+#. LAMMPS data files for minimized bicrystal with atoms now representing GB ground state.
+
+#. A LAMMPS data file containing multiple timesteps showing minimization of the bicrystal generated from bicrystallography.
+
+#. LAMMPS data files for bicrystals with atomic trajectories calculated using min-shuffle algorithm.
+
+#. Data file corresponding to the bicrystals with atomic trajectories, containing the atoms that are to be included in ``neb`` calculations.
+
+All the generated configurations are stored in:
+``output/<Element>/Sigma<GB sigma number>/Misorientation<GB misorientation>.0/size<Size of box along GB>/b<Disconnection burgers vector>h<disconnection step height>``
+
 - The first output is the disconnection images constructed using bicrytallographic information. No elastic fields are applied to these images.
 
-.. image:: /_static/disconnection_ascut.png
+.. image:: /_static/sigma17_ascut.gif
    :alt: Disconnection images without any elastic relaxation
-   :width: 600px
+   :width: 800px
 
 - Then the code minimizes the images using displacements derived from gridSearch run
 
-.. image:: /_static/disconnection_minimized.png
+.. image:: /_static/sigma17_min.gif
    :alt: Disconnection images without any elastic relaxation
-   :width: 600px
+   :width: 800px
 
 - The code then finds out the atomic trajectories using min-shuffle algorithm
 
-.. image:: /_static/disconnection_minshuffle.png
+.. image:: /_static/sigma17_min_shuffle.gif
    :alt: Disconnection images without any elastic relaxation
-   :width: 600px
+   :width: 800px
 
 - Finally it uses the images generated to run a neb calculation on the images.
 

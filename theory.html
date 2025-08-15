@@ -44,8 +44,14 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="download.html">Download</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="usage.html#installations-required">Installations required</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#pre-installed-programs">Pre-installed programs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#install-gb-kinetics">Install GB Kinetics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="usage.html#windows">Windows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage.html#mac-linux">Mac/Linux</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="usage.html#workflow">Workflow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="usage.html#usage">Usage</a></li>
 </ul>
@@ -64,6 +70,8 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="example_gbkinetics.html">GB Kinetics Example</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="example_gbkinetics.html#user-input">User input</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_gbkinetics.html#command-line-output">Command line Output</a></li>
 <li class="toctree-l2"><a class="reference internal" href="example_gbkinetics.html#output">Output</a></li>
 </ul>
 </li>
@@ -216,7 +224,7 @@
 <h2>Construction of STGB microstate<a class="headerlink" href="#construction-of-stgb-microstate" title="Link to this heading"></a></h2>
 <p>Each STGB is constructed by:</p>
 <ol class="arabic simple">
-<li><p>Creating an interpenetrating lattice by combining two lattices, one rotated by <span class="math notranslate nohighlight">\(\theta/2\)</span> andthe other by <span class="math notranslate nohighlight">\(-\theta/2\)</span>, where:math:<cite>theta</cite> is the misorientation angle.</p></li>
+<li><p>Creating an interpenetrating lattice by combining two lattices, one rotated by <span class="math notranslate nohighlight">\(\theta/2\)</span> andthe other by <span class="math notranslate nohighlight">\(-\theta/2\)</span>, where <span class="math notranslate nohighlight">\(\theta\)</span> is the misorientation angle.</p></li>
 <li><p>Selecting a gb location (with a parameter <code class="docutils literal notranslate"><span class="pre">gb_position</span></code> used in <code class="docutils literal notranslate"><span class="pre">GBKineticsRunController.py</span></code>) and deleting atoms of grain 1 from one side of the gb position and from grain 2 on the other side.</p></li>
 </ol>
 <p>This results in creation of a bicrystal as shown below:</p>

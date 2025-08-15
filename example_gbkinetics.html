@@ -43,8 +43,14 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="download.html">Download</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="usage.html#installations-required">Installations required</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#pre-installed-programs">Pre-installed programs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#install-gb-kinetics">Install GB Kinetics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="usage.html#windows">Windows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage.html#mac-linux">Mac/Linux</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="usage.html#workflow">Workflow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="usage.html#usage">Usage</a></li>
 </ul>
@@ -63,6 +69,8 @@
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">GB Kinetics Example</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#user-input">User input</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#command-line-output">Command line Output</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#output">Output</a></li>
 </ul>
 </li>
@@ -318,22 +326,54 @@
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python3<span class="w"> </span>GB_kinetics.py
 </pre></div>
 </div>
+<section id="user-input">
+<h2>User input<a class="headerlink" href="#user-input" title="Link to this heading"></a></h2>
+<p>After running <code class="docutils literal notranslate"><span class="pre">GB_kinetics.py</span></code>, the program will show the input parameters pertinent to system
+user wants to explore.</p>
+<a class="reference internal image-reference" href="_images/user_input1.png"><img alt="Disconnection images without any elastic relaxation" src="_images/user_input1.png" style="width: 600px;" />
+</a>
+<p>Then the program asks the user to choose the disconnection mode they want to construct. To do this, it
+lists out the disconnection modes calculated using GB information</p>
+<a class="reference internal image-reference" href="_images/user_input2.png"><img alt="Disconnection images without any elastic relaxation" src="_images/user_input2.png" style="width: 600px;" />
+</a>
+<p>User can input the values of <code class="docutils literal notranslate"><span class="pre">m</span></code> and <code class="docutils literal notranslate"><span class="pre">n</span></code>, that corresponds to the disconnection mode they want to
+construct. The program confirms the disconnection mode entered.</p>
+<a class="reference internal image-reference" href="_images/user_input3.png"><img alt="Disconnection images without any elastic relaxation" src="_images/user_input3.png" style="width: 600px;" />
+</a>
+</section>
+<section id="command-line-output">
+<h2>Command line Output<a class="headerlink" href="#command-line-output" title="Link to this heading"></a></h2>
+<p>The code prints out which configuration it is generating and when completed, prints out the
+location of the output generated.</p>
+<a class="reference internal image-reference" href="_images/user_input4.png"><img alt="Disconnection images without any elastic relaxation" src="_images/user_input4.png" style="width: 600px;" />
+</a>
+</section>
 <section id="output">
 <h2>Output<a class="headerlink" href="#output" title="Link to this heading"></a></h2>
+<p>This code generates atomic configurations of different types:</p>
+<ol class="arabic simple">
+<li><p>LAMMPS data files for bicrystal with atoms obtained from bicrystallographic data and an applied plastic displacement , as discussed in <a class="reference internal" href="theory.html"><span class="doc">Theory</span></a>.</p></li>
+<li><p>LAMMPS data files for minimized bicrystal with atoms now representing GB ground state.</p></li>
+<li><p>A LAMMPS data file containing multiple timesteps showing minimization of the bicrystal generated from bicrystallography.</p></li>
+<li><p>LAMMPS data files for bicrystals with atomic trajectories calculated using min-shuffle algorithm.</p></li>
+<li><p>Data file corresponding to the bicrystals with atomic trajectories, containing the atoms that are to be included in <code class="docutils literal notranslate"><span class="pre">neb</span></code> calculations.</p></li>
+</ol>
+<p>All the generated configurations are stored in:
+<code class="docutils literal notranslate"><span class="pre">output/&lt;Element&gt;/Sigma&lt;GB</span> <span class="pre">sigma</span> <span class="pre">number&gt;/Misorientation&lt;GB</span> <span class="pre">misorientation&gt;.0/size&lt;Size</span> <span class="pre">of</span> <span class="pre">box</span> <span class="pre">along</span> <span class="pre">GB&gt;/b&lt;Disconnection</span> <span class="pre">burgers</span> <span class="pre">vector&gt;h&lt;disconnection</span> <span class="pre">step</span> <span class="pre">height&gt;</span></code></p>
 <ul class="simple">
 <li><p>The first output is the disconnection images constructed using bicrytallographic information. No elastic fields are applied to these images.</p></li>
 </ul>
-<a class="reference internal image-reference" href="_images/disconnection_ascut.png"><img alt="Disconnection images without any elastic relaxation" src="_images/disconnection_ascut.png" style="width: 600px;" />
+<a class="reference internal image-reference" href="_images/sigma17_ascut.gif"><img alt="Disconnection images without any elastic relaxation" src="_images/sigma17_ascut.gif" style="width: 800px;" />
 </a>
 <ul class="simple">
 <li><p>Then the code minimizes the images using displacements derived from gridSearch run</p></li>
 </ul>
-<a class="reference internal image-reference" href="_images/disconnection_minimized.png"><img alt="Disconnection images without any elastic relaxation" src="_images/disconnection_minimized.png" style="width: 600px;" />
+<a class="reference internal image-reference" href="_images/sigma17_min.gif"><img alt="Disconnection images without any elastic relaxation" src="_images/sigma17_min.gif" style="width: 800px;" />
 </a>
 <ul class="simple">
 <li><p>The code then finds out the atomic trajectories using min-shuffle algorithm</p></li>
 </ul>
-<a class="reference internal image-reference" href="_images/disconnection_minshuffle.png"><img alt="Disconnection images without any elastic relaxation" src="_images/disconnection_minshuffle.png" style="width: 600px;" />
+<a class="reference internal image-reference" href="_images/sigma17_min_shuffle.gif"><img alt="Disconnection images without any elastic relaxation" src="_images/sigma17_min_shuffle.gif" style="width: 800px;" />
 </a>
 <ul class="simple">
 <li><p>Finally it uses the images generated to run a neb calculation on the images.</p></li>

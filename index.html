@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome to GB kinetics documentation! &mdash; GB Kinetics 2.0 documentation</title>
+  <title>Welcome to GB Kinetics documentation! &mdash; GB Kinetics 2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
@@ -16,10 +16,11 @@
       <script src="_static/documentation_options.js?v=60dbed4a"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Installation" href="usage.html" /> 
+    <link rel="next" title="Download" href="download.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -42,8 +43,14 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
+<li class="toctree-l1"><a class="reference internal" href="download.html">Download</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="usage.html#installations-required">Installations required</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#pre-installed-programs">Pre-installed programs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#install-gb-kinetics">Install GB Kinetics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="usage.html#windows">Windows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage.html#mac-linux">Mac/Linux</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="usage.html#workflow">Workflow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="usage.html#usage">Usage</a></li>
 </ul>
@@ -62,6 +69,8 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="example_gbkinetics.html">GB Kinetics Example</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="example_gbkinetics.html#user-input">User input</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_gbkinetics.html#command-line-output">Command line Output</a></li>
 <li class="toctree-l2"><a class="reference internal" href="example_gbkinetics.html#output">Output</a></li>
 </ul>
 </li>
@@ -189,7 +198,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Welcome to GB kinetics documentation!</li>
+      <li class="breadcrumb-item active">Welcome to GB Kinetics documentation!</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -200,18 +209,21 @@
            <div itemprop="articleBody">
              
   <section id="welcome-to-gb-kinetics-documentation">
-<h1>Welcome to GB kinetics documentation!<a class="headerlink" href="#welcome-to-gb-kinetics-documentation" title="Link to this heading"></a></h1>
-<div class="line-block">
-<div class="line">This python project is the implementation of method developed in the paper:</div>
-</div>
-<div class="line-block">
-<div class="line">Joshi, Himanshu, Ian Chesser, Brandon Runnels, and Nikhil Chandra Admal. “Energetics of the nucleation and glide of disconnection modes in symmetric tilt grain boundaries.” arXiv preprint arXiv:2504.16854 (2025).</div>
-<div class="line">doi : <a class="reference external" href="https://doi.org/10.48550/arXiv.2504.16854">https://doi.org/10.48550/arXiv.2504.16854</a></div>
-</div>
-<div class="line-block">
-<div class="line">This method helps investigate the mechanisms involved with motion of a GB assuming that disconnection glide and migration is the underlying mechanism.</div>
-<div class="line">The program creates atomistic systems showing nucleation and glide of a chosen disconnection mode and uses Nugded Elastic Band (NEB) method to calculate the Minimum Energy Path(MEP).</div>
-</div>
+<h1>Welcome to GB Kinetics documentation!<a class="headerlink" href="#welcome-to-gb-kinetics-documentation" title="Link to this heading"></a></h1>
+<p>GB Kinetics is an open source python library to explore mechanisms for Grain Boundary (GB) migration mediated
+by nucleation and glide of disconnections. Some key features are:</p>
+<ol class="arabic simple">
+<li><p>Generation of bicrystals using bicrystallographic data from oILAB.</p></li>
+<li><p>Exploration of energy landscape of GB microstates using <span class="math notranslate nohighlight">\(\gamma\)</span>-surface method.</p></li>
+<li><p>Creation of atomic configurations for motion of GB due to nucleation and glide of any disconnection mode.</p></li>
+<li><p>Calculation of Minimum energy path (MEP) GB motion using Nudged Elastic Band (NEB) method.</p></li>
+</ol>
+<p>For citing the GB Kinetics project, consider the reference</p>
+<p>Joshi, Himanshu, Ian Chesser, Brandon Runnels, and Nikhil Chandra Admal.
+“Energetics of the nucleation and glide of disconnection modes in symmetric tilt grain boundaries.”
+arXiv preprint arXiv:2504.16854 (2025).doi : https://doi.org/10.48550/arXiv.2504.16854</p>
+<p>Author:
+Himanshu Joshi</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This repository is under active development.</p>
@@ -220,6 +232,7 @@
 <h2>Contents<a class="headerlink" href="#contents" title="Link to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="download.html">Download</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory.html">Theory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data.html">Data</a></li>
@@ -243,7 +256,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="usage.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="download.html" class="btn btn-neutral float-right" title="Download" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

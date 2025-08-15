@@ -134,3 +134,9 @@ This code generates atomic configurations of different types:
    :width: 600px
 
 
+References
+^^^^^^^^^^
+[1] N. Combe, F. Mompiou, M. Legros, Disconnections kinks and competing modes in
+shear-coupled grain boundary migration, Physical Review B 93 (2016) 024109.
+
+

@@ -318,6 +318,14 @@ in the next step. Shuffle maps are calculated using the optimal transport method
 The chosen shuffle map, <em>the min-shuffle map</em>, minimizes net shuffle distance in the dichromatic
 pattern. By increasing the <code class="docutils literal notranslate"><span class="pre">regularization</span> <span class="pre">parameter</span></code>, it is possible to select
 for mappings with larger net displacements such as those observed at high temperatures in specific GBs.</p>
+<figure class="align-center" id="id9">
+<a class="reference internal image-reference" href="_images/min_shuffle_theory.png"><img alt="_images/min_shuffle_theory.png" src="_images/min_shuffle_theory.png" style="width: 800px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Atomic configurations used as input for min-shuffle algorithm and final
+trajectories generated.</span><a class="headerlink" href="#id9" title="Link to this image"></a></p>
+</figcaption>
+</figure>
 </section>
 <section id="evaluation-of-the-energy-barrier-and-trajectories">
 <h2>Evaluation of the energy barrier and trajectories<a class="headerlink" href="#evaluation-of-the-energy-barrier-and-trajectories" title="Link to this heading"></a></h2>
@@ -325,6 +333,13 @@ for mappings with larger net displacements such as those observed at high temper
 versus the reaction coordinate (width or the normalized width of the disconnection dipole), of
 disconnection modes in the absence of external loads. The NEB is implemented using the LAMMPS <em>neb</em> module with nudging forces
 parallel and perpendicular to the configurational path with a unitary spring constant.</p>
+<figure class="align-center" id="id10">
+<a class="reference internal image-reference" href="_images/Cusigma17_mis28.0_size1_discb0.88h1.75_partition4.png"><img alt="_images/Cusigma17_mis28.0_size1_discb0.88h1.75_partition4.png" src="_images/Cusigma17_mis28.0_size1_discb0.88h1.75_partition4.png" style="width: 300px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">MEP generated using NEB calculations using 4 intermediate images</span><a class="headerlink" href="#id10" title="Link to this image"></a></p>
+</figcaption>
+</figure>
 </section>
 </section>
 

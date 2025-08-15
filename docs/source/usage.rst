@@ -1,24 +1,38 @@
 Installation
 ============
 
-Installations required
-----------------------
+Pre-installed programs
+-----------------------
 
-| Repository is avaialble at https://github.com/hjoshi9/GB_kinetics.git
-| Clone the repository
+| GB Kinetics requires ``python3``, ``LAMMPS`` and ``openmpi`` installations on the system.
+| Details on installation of ``LAMMPS`` can be found at https://docs.lammps.org/Install.html
+| Details on installation of ``openmpi`` can be found at https://docs.open-mpi.org/en/v5.0.x/installing-open-mpi/quickstart.html
+
+Install GB Kinetics
+--------------------
+| Create a new python environment for GB Kinetics and activate the new environment:
+
+Windows
+^^^^^^^^
 
 .. code-block:: console
 
-	$ git clone -b main https://github.com/hjoshi9/GB_kinetics.git
+   $ python -m venv GB_kinetics_env
+   $ GB_kinetics_env\Scripts\activate
 
-| The program requires python3, LAMMPS and openmpi installations on the system.
-| Details on installation of LAMMPS can be found at https://docs.lammps.org/Install.html
-| Details on installation of openmpi can be found at https://docs.open-mpi.org/en/v5.0.x/installing-open-mpi/quickstart.html
+Mac/Linux
+^^^^^^^^^^
+
+.. code-block:: console
+
+   $ python3 -m venv GB_kinetics_env
+   $ source GB_kinetics_env\Scripts\activate
+
 | Necessary packages for python code are listed in requirements.txt and can be installed by 
 
 .. code-block:: console
 
-    $ pip install -r requirements.txt
+   $ pip install -r requirements.txt
 
 
 Workflow

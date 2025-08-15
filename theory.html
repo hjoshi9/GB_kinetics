@@ -61,7 +61,10 @@
 <li class="toctree-l2"><a class="reference internal" href="#enumeration-of-disconnection-modes">Enumeration of disconnection modes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#construction-of-atomistic-gb-migration-images">Construction of atomistic GB migration images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#mapping-the-atomic-shuffles">Mapping the atomic shuffles</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#evaluation-of-the-energy-barrier-and-trajectories">Evaluation of the energy barrier and trajectories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#evaluation-of-the-energy-barrier-and-trajectories">Evaluation of the energy barrier and trajectories</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="data.html">Data</a></li>
@@ -72,7 +75,10 @@
 <li class="toctree-l1"><a class="reference internal" href="example_gbkinetics.html">GB Kinetics Example</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="example_gbkinetics.html#user-input">User input</a></li>
 <li class="toctree-l2"><a class="reference internal" href="example_gbkinetics.html#command-line-output">Command line Output</a></li>
-<li class="toctree-l2"><a class="reference internal" href="example_gbkinetics.html#output">Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_gbkinetics.html#output">Output</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="example_gbkinetics.html#references">References</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">Source</a><ul>
@@ -255,7 +261,7 @@ This results in creation of bicrystal with GB in its ground state, as shown belo
 STGB, where b and h denote the disconnection’s Burgers vector and step height, respectively.
 SNF bicrystallography is a powerful framework based on integer matrix algebra to automate
 the generation of rational GBs, and enumerate disconnection modes in GBs.
-For further details on SNF bicrystallography, we refer the reader to Admal et al.
+For further details on SNF bicrystallography, we refer the reader to Admal et al.[1]
 (<a class="reference external" href="https://doi.org/10.1016/j.actamat.2022.118340">https://doi.org/10.1016/j.actamat.2022.118340</a>).</p>
 </section>
 <section id="construction-of-atomistic-gb-migration-images">
@@ -322,7 +328,7 @@ showing GB migration based on disconnection nucleation and glide.</span><a class
 <h2>Mapping the atomic shuffles<a class="headerlink" href="#mapping-the-atomic-shuffles" title="Link to this heading"></a></h2>
 <p>We now compute the shuffle maps for the atoms that have transformed from one grain to another
 during disconnection nucleation and glide. Such maps serve as intermediate images for NEB calculation
-in the next step. Shuffle maps are calculated using the optimal transport method developed by Chesser et al. [18, 19].
+in the next step. Shuffle maps are calculated using the optimal transport method developed by Chesser et al. [2,3].
 The chosen shuffle map, <em>the min-shuffle map</em>, minimizes net shuffle distance in the dichromatic
 pattern. By increasing the <code class="docutils literal notranslate"><span class="pre">regularization</span> <span class="pre">parameter</span></code>, it is possible to select
 for mappings with larger net displacements such as those observed at high temperatures in specific GBs.</p>
@@ -337,7 +343,7 @@ trajectories generated.</span><a class="headerlink" href="#id9" title="Link to t
 </section>
 <section id="evaluation-of-the-energy-barrier-and-trajectories">
 <h2>Evaluation of the energy barrier and trajectories<a class="headerlink" href="#evaluation-of-the-energy-barrier-and-trajectories" title="Link to this heading"></a></h2>
-<p>We employ climbing image NEB method [21] to calculate the minimum energy paths (MEPs), i.e. plots of energy
+<p>We employ climbing image NEB method [4] to calculate the minimum energy paths (MEPs), i.e. plots of energy
 versus the reaction coordinate (width or the normalized width of the disconnection dipole), of
 disconnection modes in the absence of external loads. The NEB is implemented using the LAMMPS <em>neb</em> module with nudging forces
 parallel and perpendicular to the configurational path with a unitary spring constant.</p>
@@ -348,6 +354,18 @@ parallel and perpendicular to the configurational path with a unitary spring con
 <p><span class="caption-text">MEP generated using NEB calculations using 4 intermediate images</span><a class="headerlink" href="#id10" title="Link to this image"></a></p>
 </figcaption>
 </figure>
+<section id="references">
+<h3>References<a class="headerlink" href="#references" title="Link to this heading"></a></h3>
+<p>[1] N. C. Admal, T. Ahmed, E. Martinez, G. Po, Interface dislocations and grain boundary
+disconnections using smith normal bicrystallography, Acta Materialia 240 (2022)118340.</p>
+<p>[2] I. Chesser, B. Runnels, E. Holm, A taxonomy of grain boundary migration mechanisms
+via displacement texture characterization, Acta Materialia 222 (2022) 117425.</p>
+<p>[3] I. Chesser, E. Holm, B. Runnels, Optimal transportation of grain boundaries: A forward
+model for predicting migration mechanisms, Acta Materialia 210 (2021) 116823.</p>
+<p>[4] G. Henkelman, B. P. Uberuaga, H. Jonsson, A climbing image nudged elastic band
+method for finding saddle points and minimum energy paths, The Journal of chemical
+physics 113 (2000) 9901–9904.</p>
+</section>
 </section>
 </section>
 

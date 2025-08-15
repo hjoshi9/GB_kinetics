@@ -16,6 +16,7 @@
       <script src="_static/documentation_options.js?v=60dbed4a"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -210,7 +211,11 @@
              
   <section id="gb-kinetics-example">
 <h1>GB Kinetics Example<a class="headerlink" href="#gb-kinetics-example" title="Link to this heading"></a></h1>
-<p>This example demonstrates how to run the GB kinetics script and walks through where the results are stored.</p>
+<p>This example demonstrates how to run the GB kinetics script and
+walks through where the results are stored.
+For this example, we focus on a <span class="math notranslate nohighlight">\(\Sigma\)</span> 17[001](410) STGB in Copper (Cu)
+with box length along the GB = 8 x GB period and
+box length along tilt axis = 4 x CSL length along tilt axis.</p>
 <ul class="simple">
 <li><p>Open GB_kinetics.py and input Gb information, displacements recorded earlier and parameters for optimal transport calculations. Start with specifing the parameters required to identify the material and GB such as sigma number, misorientation, inclination, material symbol, and tilt axis. <code class="docutils literal notranslate"><span class="pre">size_along_gb_period</span></code> determines the length of the box along the gb period. The length of the box generated is 2*period*size_along_gb_period. <code class="docutils literal notranslate"><span class="pre">size_along_tilt_axis</span></code> determines the length of the box along the tilt axis. The length of the box generated is 2*(CSL length along tilt axis)*size_along_tilt_axis. <code class="docutils literal notranslate"><span class="pre">lattive_Vectors</span></code> determine what crystal system is under consideration.</p></li>
 </ul>
@@ -228,9 +233,9 @@
 <span class="linenos">12</span><span class="c1"># Tilt axis of GB</span>
 <span class="linenos">13</span><span class="n">axis</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
 <span class="linenos">14</span><span class="c1"># Size of system along the GB period in terms of 2*CSL period</span>
-<span class="linenos">15</span><span class="n">size_along_gb_period</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="linenos">15</span><span class="n">size_along_gb_period</span> <span class="o">=</span> <span class="mi">4</span>
 <span class="linenos">16</span><span class="c1"># Size of system along the tilt axis in terms of 2*CSL period</span>
-<span class="linenos">17</span><span class="n">size__along_tilt_axis</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="linenos">17</span><span class="n">size__along_tilt_axis</span> <span class="o">=</span> <span class="mi">2</span>
 <span class="linenos">18</span><span class="c1"># Lattice Vectors for the crystal system (current implementation is tested for fcc only)</span>
 <span class="linenos">19</span><span class="n">lattice_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
 <span class="linenos">20</span>                           <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span>
@@ -291,7 +296,7 @@
 <span class="linenos">5</span><span class="c1"># mode = 1 -&gt; NEB with intermediate images, mode = 0 -&gt; NEb with just the initial and final GB images</span>
 <span class="linenos">6</span><span class="n">neb_mode</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="linenos">7</span><span class="c1"># Variable which allows for switching off automatically triggering neb calculations (in case you only need disconnection images)</span>
-<span class="linenos">8</span><span class="n">run_neb</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="linenos">8</span><span class="n">run_neb</span> <span class="o">=</span> <span class="kc">False</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -350,40 +355,36 @@ location of the output generated.</p>
 </section>
 <section id="output">
 <h2>Output<a class="headerlink" href="#output" title="Link to this heading"></a></h2>
-<p>This code generates atomic configurations of different types:</p>
-<ol class="arabic simple">
-<li><p>LAMMPS data files for bicrystal with atoms obtained from bicrystallographic data and an applied plastic displacement , as discussed in <a class="reference internal" href="theory.html"><span class="doc">Theory</span></a>.</p></li>
-<li><p>LAMMPS data files for minimized bicrystal with atoms now representing GB ground state.</p></li>
-<li><p>A LAMMPS data file containing multiple timesteps showing minimization of the bicrystal generated from bicrystallography.</p></li>
-<li><p>LAMMPS data files for bicrystals with atomic trajectories calculated using min-shuffle algorithm.</p></li>
-<li><p>Data file corresponding to the bicrystals with atomic trajectories, containing the atoms that are to be included in <code class="docutils literal notranslate"><span class="pre">neb</span></code> calculations.</p></li>
-</ol>
 <p>All the generated configurations are stored in:
 <code class="docutils literal notranslate"><span class="pre">output/&lt;Element&gt;/Sigma&lt;GB</span> <span class="pre">sigma</span> <span class="pre">number&gt;/Misorientation&lt;GB</span> <span class="pre">misorientation&gt;.0/size&lt;Size</span> <span class="pre">of</span> <span class="pre">box</span> <span class="pre">along</span> <span class="pre">GB&gt;/b&lt;Disconnection</span> <span class="pre">burgers</span> <span class="pre">vector&gt;h&lt;disconnection</span> <span class="pre">step</span> <span class="pre">height&gt;</span></code></p>
-<ul class="simple">
-<li><p>The first output is the disconnection images constructed using bicrytallographic information. No elastic fields are applied to these images.</p></li>
-</ul>
+<p>This code generates atomic configurations of different types:</p>
+<ol class="arabic simple">
+<li><p>LAMMPS data files for bicrystal with atoms obtained from bicrystallographic data and an applied plastic displacement , as discussed in <a class="reference internal" href="theory.html"><span class="doc">Theory</span></a>. These files are named as : <code class="docutils literal notranslate"><span class="pre">data.Cus&lt;GB</span> <span class="pre">Sigma&gt;.0inc&lt;GB</span> <span class="pre">inclination&gt;_size&lt;Size</span> <span class="pre">along</span> <span class="pre">GB</span> <span class="pre">period&gt;disc&lt;configuration</span> <span class="pre">number&gt;</span></code>.</p></li>
+</ol>
 <a class="reference internal image-reference" href="_images/sigma17_ascut.gif"><img alt="Disconnection images without any elastic relaxation" src="_images/sigma17_ascut.gif" style="width: 800px;" />
 </a>
-<ul class="simple">
-<li><p>Then the code minimizes the images using displacements derived from gridSearch run</p></li>
-</ul>
+<ol class="arabic simple" start="2">
+<li><p>LAMMPS data files for minimized bicrystal with atoms now representing GB ground state. These files are named as : <code class="docutils literal notranslate"><span class="pre">data.Cus&lt;GB</span> <span class="pre">Sigma&gt;.0inc&lt;GB</span> <span class="pre">inclination&gt;_size&lt;Size</span> <span class="pre">along</span> <span class="pre">GB</span> <span class="pre">period&gt;disc&lt;configuration</span> <span class="pre">number&gt;_min</span></code>.</p></li>
+</ol>
 <a class="reference internal image-reference" href="_images/sigma17_min.gif"><img alt="Disconnection images without any elastic relaxation" src="_images/sigma17_min.gif" style="width: 800px;" />
 </a>
-<ul class="simple">
-<li><p>The code then finds out the atomic trajectories using min-shuffle algorithm</p></li>
-</ul>
+<ol class="arabic simple" start="3">
+<li><p>LAMMPS data files for bicrystals with atomic trajectories calculated using min-shuffle algorithm. These files are named as : <code class="docutils literal notranslate"><span class="pre">data.Cus&lt;GB</span> <span class="pre">Sigma&gt;.0inc&lt;GB</span> <span class="pre">inclination&gt;_size&lt;Size</span> <span class="pre">along</span> <span class="pre">GB</span> <span class="pre">period&gt;__step&lt;configuration</span> <span class="pre">number&gt;</span></code>.</p></li>
+</ol>
 <a class="reference internal image-reference" href="_images/sigma17_min_shuffle.gif"><img alt="Disconnection images without any elastic relaxation" src="_images/sigma17_min_shuffle.gif" style="width: 800px;" />
 </a>
-<ul class="simple">
-<li><p>Finally it uses the images generated to run a neb calculation on the images.</p></li>
-</ul>
-<a class="reference internal image-reference" href="_images/sigma17_size1_nebresults.gif"><img alt="NEB GB migration mechanism" src="_images/sigma17_size1_nebresults.gif" style="width: 600px;" />
+<ol class="arabic simple" start="4">
+<li><p>Data file corresponding to the bicrystals with atomic trajectories, containing the atoms that are to be included in <code class="docutils literal notranslate"><span class="pre">neb</span></code> calculations.  These files are named as : <code class="docutils literal notranslate"><span class="pre">data.Cus&lt;GB</span> <span class="pre">Sigma&gt;.0inc&lt;GB</span> <span class="pre">inclination&gt;_size&lt;Size</span> <span class="pre">along</span> <span class="pre">GB</span> <span class="pre">period&gt;_out_step&lt;configuration</span> <span class="pre">number&gt;</span></code>.</p></li>
+</ol>
+<a class="reference internal image-reference" href="_images/sigma17_neb.gif"><img alt="NEB GB migration mechanism" src="_images/sigma17_neb.gif" style="width: 800px;" />
 </a>
+<ol class="arabic simple" start="5">
+<li><p>A LAMMPS data file containing multiple timesteps showing minimization of the bicrystal generated from bicrystallography. These files are named as : <code class="docutils literal notranslate"><span class="pre">data.Cus&lt;GB</span> <span class="pre">Sigma&gt;.0inc&lt;GB</span> <span class="pre">inclination&gt;_size&lt;Size</span> <span class="pre">along</span> <span class="pre">GB</span> <span class="pre">period&gt;disc&lt;configuration</span> <span class="pre">number&gt;_minmov</span></code>.</p></li>
+</ol>
 <ul class="simple">
-<li><p>The post processing function also plots the MEP w.r.t the reaction coordinates</p></li>
+<li><p>The post processing function also plots the MEP w.r.t the reaction coordinates.Here, we present the results obtained by running this code and for comparison to existing method,we compare it with MEP calculated by Combe et. al. [1] for the same GB and box dimensions.</p></li>
 </ul>
-<a class="reference internal image-reference" href="_images/Cusigma17_mis28.0_size1_discb0.88h1.75_partition4.png"><img alt="Disconnection images without any elastic relaxation" src="_images/Cusigma17_mis28.0_size1_discb0.88h1.75_partition4.png" style="width: 600px;" />
+<a class="reference internal image-reference" href="_images/Sigma17size_effect_absolute.png"><img alt="Disconnection images without any elastic relaxation" src="_images/Sigma17size_effect_absolute.png" style="width: 600px;" />
 </a>
 </section>
 </section>

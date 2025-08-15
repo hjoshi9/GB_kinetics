@@ -15,7 +15,7 @@ Construction of STGB microstate
 
 Each STGB is constructed by:
 
-#. Creating an interpenetrating lattice by combining two lattices, one rotated by :math:`\theta/2` andthe other by :math:`-\theta/2`, where:math:`\theta` is the misorientation angle.
+#. Creating an interpenetrating lattice by combining two lattices, one rotated by :math:`\theta/2` andthe other by :math:`-\theta/2`, where :math:`\theta` is the misorientation angle.
 
 #. Selecting a gb location (with a parameter ``gb_position`` used in ``GBKineticsRunController.py``) and deleting atoms of grain 1 from one side of the gb position and from grain 2 on the other side.
 

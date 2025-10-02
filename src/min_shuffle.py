@@ -140,6 +140,7 @@ class min_shuffle:
         data_init = read_LAMMPS_datafile(file_flat, file_mode)
         data_final = read_LAMMPS_datafile(file_disconnection, file_mode)
         atoms = data_init[0][3]
+        atoms = atoms[atoms[:, 0].argsort()]
         box = data_init[0][2]
         Ai = []
         Bi = []
@@ -157,6 +158,7 @@ class min_shuffle:
         initial = atoms
 
         atoms = data_final[0][3]
+        atoms = atoms[atoms[:, 0].argsort()]
         Af = []
         Bf = []
         neb_final = []
@@ -249,10 +251,7 @@ class min_shuffle:
         atoms = np.concatenate((A, B), axis=0)
         types = 2
         eps2 = 0.1
-        xlo = gb_loc - h + eps2
-        xhi = gb_loc + h + eps2
-        scale = 1.05
-        box = np.array([[scale * xlo, scale * xhi],
+        box = np.array([[box[0, 0], box[0, 1]],
                         [box[1, 0], box[1, 1]],
                         [box[2, 0] + 1e-2, box[2, 1]]])
         self.atoms_minshuf = np.zeros((len(A)+len(B),5))
@@ -460,6 +459,7 @@ class min_shuffle:
                 Ybasis.append(atoms[i,2:])
         Xbasis = np.array(Xbasis)
         Ybasis = np.array(Ybasis)
+
         # print(Xbasis.shape)
         if Xbasis.shape[0] == 0 or Ybasis.shape[0] == 0:
             raise ValueError("Xbasis and Ybasis must have same non-zero length")
@@ -584,6 +584,7 @@ class min_shuffle:
 
         self.initial_atoms_transformed_region = Xs
         self.final_atoms_transformed_region = Ys
+
 
 
     def write_images(self,folder, image_num):

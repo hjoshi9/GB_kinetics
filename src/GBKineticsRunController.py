@@ -71,7 +71,7 @@ def runGBkinetics(sig, mis, inc, lat_par, lat_Vec, axis, size_y, size_z, elem,
     # Decision variables for testing and isolated runs
     create_bicrystal_decision = True  # or False
     min_decision = True  # or False
-    min_shuffle_decision = True  # or False
+    min_shuffle_decision = False  # or False
     create_eco_input = False
 
     # Define a bicrystal

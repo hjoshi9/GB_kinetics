@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import numpy.linalg as la
+from scipy.spatial import cKDTree
 from src.bicrystallography import *
 from src.plastic_slip import dislocation_dipole
 
@@ -73,9 +74,7 @@ class bicrystal:
 
             This method performs:
                 - Construction of grain rotation matrices using Rodrigues’ rotation formula.
-                - Application of inclination and misorientation angles.
                 - Alignment of the tilt axis with the [001] direction via coordinate transformation.
-                - Final transformation of lattice vectors into crystal orientations.
 
             Sets:
                 grain1_orientation (np.ndarray): Rotated lattice vectors for grain 1 in the final coordinate system.
@@ -84,7 +83,6 @@ class bicrystal:
             Notes:
                 - The tilt axis is aligned to the global Z-axis [0, 0, 1].
                 - Uses Rodrigues’ formula to compute rotations from GB data.
-                - Applies an additional rotation if the tilt axis is [1 1 1] or [1 1 0], to align the grains properly.
         """
         dim = 3
         axis    = self.axis
@@ -143,9 +141,7 @@ class bicrystal:
 
             This function:
                 - Constructs a 3D dichromatic pattern for both grains using lattice translations.
-                - Filters atoms within a simulation box, optionally shifted.
                 - Selects atoms for each grain based on their position relative to the GB plane.
-                - Removes duplicate atoms using a distance-based uniqueness check.
 
             Args:
                 gb_position (float): The X-coordinate (along GB normal) at which the GB plane is located.
@@ -156,8 +152,6 @@ class bicrystal:
                 box (np.ndarray): Dimensions of the simulation box used for filtering and placement.
 
             Notes:
-                - Atom uniqueness is checked using `_check_unique()` with a distance tolerance of 0.5 Å.
-                - Atoms on or near the GB plane are discarded to create a clean flat interface.
                 - The structure is built from `-nCells` to `+nCells` in lattice units in all three dimensions.
         """
         print("\n============================= Generating initial flat GB  =======================================")
@@ -171,53 +165,41 @@ class bicrystal:
 
         grainA = self.grain1_orientation
         grainB = self.grain2_orientation
-        grainA_dichromatic = []
-        grainB_dichromatic = []
 
         box = np.array([[self.size_along_period * period , self.non_periodic_direction_size, la.norm(axis) * lat_par * self.size_along_tilt_axis],
                         [self.non_periodic_direction_size, self.size_along_period * period , la.norm(axis) * lat_par * self.size_along_tilt_axis]])
-        eps_p = np.array([0,-0.1,0.1])
-        eps_n = np.array([0,0.0,0.0])
+
         box_shift = np.array([0,0,0])
-
-        # Create dichromatic pattern
-        for nx in range(-nCells, nCells):
-            for ny in range(-nCells, nCells):
-                for nz in range(-nCells, nCells):
-                    loc = np.array([[nx], [ny], [nz]])
-                    a = lat_par * np.matmul(grainA, loc)[:, 0]
-                    if np.all((a-box_shift>-box[1,:]-eps_n) & (a-box_shift<box[1,:]+eps_p)):
-                        grainA_dichromatic.append([a[0], a[1] , a[2]])
-                    b = lat_par * np.matmul(grainB, loc)[:, 0]
-                    if np.all((b-box_shift>-box[1,:]-eps_n) & (b-box_shift<box[1,:]+eps_p)):
-                        grainB_dichromatic.append([b[0], b[1] , b[2]])
-
-
-        # Creation of a bicrystal by deleting atoms on the GB
-        gA = []
-        gB = []
         eps = 0.1
-        atom_count = 1
-        for i in range(len(grainA_dichromatic)):
-            if grainA_dichromatic[i][0] >= gb_position - eps:
-                point = [grainA_dichromatic[i][0], grainA_dichromatic[i][1], grainA_dichromatic[i][2]]
-                flag = bicrystal._check_unique(point, gA, 0.5)
-                if flag == 1:
-                    point.append(atom_count)
-                    gA.append(point)
-                    atom_count += 1
 
-        for i in range(len(grainB_dichromatic)):
-            if grainB_dichromatic[i][0] < gb_position - eps:
-                point = [grainB_dichromatic[i][0], grainB_dichromatic[i][1], grainB_dichromatic[i][2]]
-                flag = bicrystal._check_unique(point, gB, 0.5)
-                if flag == 1:
-                    point.append(atom_count)
-                    gB.append(point)
-                    atom_count += 1
+        # Create atom grid
+        coords = np.mgrid[-nCells:nCells, -nCells:nCells, -nCells:nCells].reshape(3, -1)
 
-        self.grain1_flatgb = np.array(gA)
-        self.grain2_flatgb = np.array(gB)
+        # Transform lattice for both grains
+        grainA_points = lat_par * (grainA @ coords).T
+        grainB_points = lat_par * (grainB @ coords).T
+
+        # Apply bounding box masks
+        lowerA = np.array([gb_position - eps, -box[1, 1], -box[1, 2]+eps])
+        upperA = np.array([box[1, 0], box[1, 1]+eps, box[1, 2] + eps])
+        lowerB = np.array([-box[1, 0], -box[1, 1], -box[1, 2]+eps])
+        upperB = np.array([gb_position - eps, box[1, 1]+eps, box[1, 2] + eps])
+
+        maskA = np.all((grainA_points - box_shift >= lowerA) & (grainA_points - box_shift <= upperA), axis=1)
+        maskB = np.all((grainB_points - box_shift >= lowerB) & (grainB_points - box_shift <= upperB), axis=1)
+
+        # Create bicrystal
+        gA = bicrystal._unique_atoms(grainA_points[maskA])
+        gB = bicrystal._unique_atoms(grainB_points[maskB])
+
+        # Assign atom id
+        atom_id_A = np.arange(1, len(gA) + 1)
+        atom_id_B = np.arange(len(gA) + 1, len(gA)+len(gB) + 1)
+        gA = np.insert(gA, 3, atom_id_A,axis=1)
+        gB = np.insert(gB, 3, atom_id_B,axis=1)
+
+        self.grain1_flatgb = gA
+        self.grain2_flatgb = gB
         self.box = box
 
 
@@ -228,12 +210,10 @@ class bicrystal:
             based on the bicrystallographic configuration.
 
             This method:
-                - Validates the presence of a flat GB structure.
                 - Determines regions affected by the dislocation dipole.
-                - Applies displacement fields to atoms in the transformed region based on
+                - Applies displacement fields to atoms based on
                   the dipole configuration and Burgers vector.
                 - Combines atoms from transformed and non-transformed regions to form a new GB image.
-                - Assigns unique atom IDs while avoiding duplicate atoms.
 
             Args:
                 image_number (int): Identifier for the GB image being generated, used to determine
@@ -315,19 +295,28 @@ class bicrystal:
             eps_n = np.array([0, 0, 0.0])
             eps_p = np.array([0, -0.1, 0.1])
 
-        for nx in range(-nCells, nCells):
-            for ny in range(-nCells, nCells):
-                for nz in range(-nCells, nCells):
-                    loc = np.array([[nx], [ny], [nz]])
-                    a = lat_par * np.matmul(grain2transform, loc)[:, 0]
-                    if np.all((a - box_shift > lower_bounds - eps_n) & (a - box_shift < upper_bounds + eps_p)):
-                        point = np.array([a[1], a[0]])
-                        plastic_displacement = bicrystal._apply_plastic_displacement(nodes_modified,period,burgers_vector,point,box[1,1],-box[1,1])
-                        if a[1]-plastic_displacement > disconnection_stop:
-                            plastic_displacement +=(disconnection_stop - disconnection_start)
-                        elif a[1]-plastic_displacement < disconnection_start:
-                            plastic_displacement -= (disconnection_start - disconnection_start)
-                        transformed_atoms.append([a[0], a[1] - plastic_displacement, a[2]])
+        # Create atom grid
+        coords = np.mgrid[-nCells:nCells, -nCells:nCells, -nCells:nCells].reshape(3, -1)
+
+        # Create lattice for atoms to be transformed
+        grain2transform_lattice = lat_par * (grain2transform @ coords).T
+        mask = np.all((grain2transform_lattice - box_shift > lower_bounds - eps_n) &
+                      (grain2transform_lattice - box_shift < upper_bounds + eps_p), axis=1)
+        grain2transform_nodisplacement = grain2transform_lattice[mask]
+
+        # Apply displacement to transform atoms from one grain to another
+        for atom  in grain2transform_nodisplacement:
+            point = np.array([atom[1],atom[0]])
+            plastic_displacement = bicrystal._apply_plastic_displacement(nodes_modified,period,burgers_vector,
+                                                                         point,box[1,1],-box[1,1])
+            if abs(atom[0]-(gb_position+step_height))<0.1:
+                plastic_displacement *= -1 #-(step_height/abs(step_height))*burgers_vector
+            if atom[1] - plastic_displacement > disconnection_stop:
+                plastic_displacement += (disconnection_stop - disconnection_start)
+            elif atom[1] - plastic_displacement < disconnection_start:
+                plastic_displacement -= (disconnection_stop - disconnection_start)
+
+            transformed_atoms.append([atom[0],atom[1]-plastic_displacement,atom[2]])
 
         # Compile atoms in regions
         epsx = -0.1
@@ -353,7 +342,8 @@ class bicrystal:
         else:
             for atoms in grain1_flat:
                 if (atoms[0] > gb_position + step_height + epsx or
-                        ((atoms[1] < disconnection_start or atoms[1] > disconnection_stop) and atoms[0] > gb_position + epsx)):
+                        ((atoms[1] < disconnection_start or atoms[1] > disconnection_stop)
+                         and atoms[0] > gb_position + epsx)):
                     point = np.array([atoms[1], atoms[0]])
                     plastic_displacement = bicrystal._apply_plastic_displacement(nodes_modified, period, burgers_vector, point,box[1, 1],-box[1,1])
                     grain1_disconnection.append([atoms[0], atoms[1] - plastic_displacement, atoms[2], atoms[3]])
@@ -627,6 +617,26 @@ class bicrystal:
             and abs(grain[i][2] - point[2]) < cutoff):
                 return 0
         return 1
+
+    @staticmethod
+    def _unique_atoms(atoms, tol=1e-3):
+        """
+        Find unique atoms in a given set of atoms.
+        Args:
+            atoms (list): List of atoms.
+            tol (float): Tolerance for finding unique atoms.
+
+        Returns:
+            atoms (list): Unique atoms.
+        """
+        tree = cKDTree(atoms)
+        pairs = tree.query_pairs(tol)
+
+        # Mark duplicates
+        mask = np.ones(len(atoms), dtype=bool)
+        for i, j in pairs:
+            mask[j] = False  # keep only first
+        return atoms[mask]
 
     @staticmethod
     def _diagnostic_grain_writing(grain1,grain2,filename):

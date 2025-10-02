@@ -5,9 +5,9 @@ from src.GBKineticsRunController import *
 # Element
 element = "Cu"
 # Sigma value of Gb under consideration
-sigma = 17
+sigma = 29
 # Misorientation of the Gb
-misorientation = 28
+misorientation = 43.6
 # Inclination of the GB
 inclination = 0.0
 # Lattice parameter of the element (try using the lat par corresponding to the potential you intend to use)
@@ -15,9 +15,9 @@ latticeParameter = 3.615
 # Tilt axis of GB
 axis = [0, 0, 1]
 # Size of system along the GB period in terms of 2*CSL period
-size_along_gb_period = 4
+size_along_gb_period = 10
 # Size of system along the tilt axis in terms of 2*CSL period
-size__along_tilt_axis = 2
+size__along_tilt_axis = 1
 # Lattice Vectors for the crystal system (current implementation is tested for fcc only)
 lattice_vector = np.array([[0.5, 0.5, 0.0],
                            [0.0, 0.5, 0.5],
@@ -48,7 +48,7 @@ mpi_location = "/opt/homebrew/bin"
 lammps_potential = "/opt/homebrew/Cellar/lammps/20240829-update1/share/lammps/potentials/Cu_mishin1.eam.alloy"
 
 # Displacements obtained from running grid_search script
-disp_along_gb = 0.0
+disp_along_gb = -0.1
 disp_along_tilt = -0.9
 
 # Parameters for neb run on lammps
@@ -62,25 +62,9 @@ run_neb = False
 
 # Run
 if __name__ == "__main__":
-    results_folder_path = runGBkinetics(sigma,
-                                        misorientation,
-                                        inclination,
-                                        latticeParameter,
-                                        lattice_vector,
-                                        axis,
-                                        size_along_gb_period,
-                                        size__along_tilt_axis,
-                                        element,
-                                        regularizationParameter,
-                                        maximumIterations,
-                                        lammps_location,
-                                        mpi_location,
-                                        output_folder,
-                                        lammps_potential,
-                                        disp_along_gb,
-                                        disp_along_tilt,
-                                        oilab_output_file,
-                                        chooseDisconnection,
-                                        run_neb,
-                                        neb_mode,
-                                        partitions)
+    results_folder_path = runGBkinetics(sigma,misorientation,inclination,latticeParameter,lattice_vector,
+                                        axis,size_along_gb_period,size__along_tilt_axis,element,
+                                        regularizationParameter,maximumIterations,
+                                        lammps_location,mpi_location,output_folder,lammps_potential,
+                                        disp_along_gb,disp_along_tilt,oilab_output_file,
+                                        chooseDisconnection,run_neb,neb_mode,partitions)

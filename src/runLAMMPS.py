@@ -437,7 +437,7 @@ jump SELF loopy
         self.number_of_images_provided = number_of_steps
         self.neb_output_folder = neb_output_folder
 
-    def run_minimization(self,file_name,disp_along_gb_period,disp_along_tilt_axis,minimization_along_gb_directions=False):
+    def run_minimization(self,file_name,disp_along_gb_period,disp_along_tilt_axis,minimization_along_gb_directions=False,number_of_cores=6):
         """
             Runs a minimization calculation using LAMMPS.
 
@@ -454,11 +454,13 @@ jump SELF loopy
                 RuntimeError: If the minimization LAMMPS run fails.
         """
         lammps_location = self.lammps_location
+        mpi_location = self.mpi_location
         dispy = disp_along_gb_period
         dispz = disp_along_tilt_axis
         print("========================== Minimizing using LAMMPS ==========================")
         self.write_minimization_input(file_name, dispy, dispz,minimization_along_gb_directions)
-        command = lammps_location + "/lmp_serial -in " + self.lammps_input_filename
+        #command = lammps_location + "/lmp_serial -in " + self.lammps_input_filename
+        command = mpi_location + "/mpirun -np " + str(number_of_cores)+ " " + lammps_location + "/lmp_mpi -in " + self.lammps_input_filename
         #subprocess.run([command], shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         result = subprocess.run([command], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         if result.returncode != 0:

@@ -50,6 +50,7 @@
 <li class="toctree-l2"><a class="reference internal" href="usage.html#install-gb-kinetics">Install GB Kinetics</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="usage.html#windows">Windows</a></li>
 <li class="toctree-l3"><a class="reference internal" href="usage.html#mac-linux">Mac/Linux</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage.html#conda">Conda</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="usage.html#workflow">Workflow</a></li>
@@ -79,6 +80,7 @@
 <li class="toctree-l3"><a class="reference internal" href="example_gbkinetics.html#references">References</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="example_gbkinetics.html#summary-of-important-functions-classes-used-in-the-workflow">Summary of important functions/classes used in the workflow</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">Source</a><ul>
@@ -227,24 +229,24 @@
 </figure>
 <p>We now detail what each of the steps given in the flowchart signify and add important details on how it is implemented.</p>
 <section id="construction-of-stgb-microstate">
-<h2>Construction of STGB microstate<a class="headerlink" href="#construction-of-stgb-microstate" title="Link to this heading"></a></h2>
-<p>Each STGB is constructed by:</p>
+<span id="stgb-construction"></span><h2>Construction of STGB microstate<a class="headerlink" href="#construction-of-stgb-microstate" title="Link to this heading"></a></h2>
+<p>Each bicrystal containing the required symmetric tilt grain boundary is constructed by:</p>
 <ol class="arabic simple">
 <li><p>Creating an interpenetrating lattice by combining two lattices, one rotated by <span class="math notranslate nohighlight">\(\theta/2\)</span> andthe other by <span class="math notranslate nohighlight">\(-\theta/2\)</span>, where <span class="math notranslate nohighlight">\(\theta\)</span> is the misorientation angle.</p></li>
-<li><p>Selecting a gb location (with a parameter <code class="docutils literal notranslate"><span class="pre">gb_position</span></code> used in <code class="docutils literal notranslate"><span class="pre">GBKineticsRunController.py</span></code>) and deleting atoms of grain 1 from one side of the gb position and from grain 2 on the other side.</p></li>
+<li><p>Selecting a gb location (with a parameter <code class="docutils literal notranslate"><span class="pre">gb_position</span></code> used in <a class="reference internal" href="GBKineticsRunController.html#src.GBKineticsRunController.runGBkinetics" title="src.GBKineticsRunController.runGBkinetics"><code class="xref py py-meth docutils literal notranslate"><span class="pre">src.GBKineticsRunController.runGBkinetics()</span></code></a>) and deleting atoms of grain 1 from one side of the gb position and from grain 2 on the other side.</p></li>
 </ol>
 <p>This results in creation of a bicrystal as shown below:</p>
 <figure class="align-center" id="id2">
 <a class="reference internal image-reference" href="_images/sigma17_size1_disc0000.png"><img alt="_images/sigma17_size1_disc0000.png" src="_images/sigma17_size1_disc0000.png" style="width: 300px;" />
 </a>
 <figcaption>
-<p><span class="caption-text">STGB</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
+<p><span class="caption-text"><span class="math notranslate nohighlight">\(\Sigma\)</span> 17 [001](410) symmetric tilt grain boundary as-cut configuration</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>The bicrystal thus created is not typically in the ground state. To arrive at the ground state,
 we use the γ-surface
 method, wherein the two grains are displaced relative to each other in the GB plane and
-energy is minimized (carried out using <code class="docutils literal notranslate"><span class="pre">gridSearch.py</span></code>).
+energy is minimized (carried out by running <code class="xref py py-mod docutils literal notranslate"><span class="pre">gridSearch</span></code>).
 This results in creation of bicrystal with GB in its ground state, as shown below:</p>
 <figure class="align-center" id="id3">
 <a class="reference internal image-reference" href="_images/sigma17_size1_min0000.png"><img alt="_images/sigma17_size1_min0000.png" src="_images/sigma17_size1_min0000.png" style="width: 300px;" />
@@ -256,7 +258,7 @@ This results in creation of bicrystal with GB in its ground state, as shown belo
 <p>The relative displacement that results in the lowest post-minimized energy is recorded, as it serves as input to the latter part of the workflow.</p>
 </section>
 <section id="enumeration-of-disconnection-modes">
-<h2>Enumeration of disconnection modes<a class="headerlink" href="#enumeration-of-disconnection-modes" title="Link to this heading"></a></h2>
+<span id="discon-enumeration"></span><h2>Enumeration of disconnection modes<a class="headerlink" href="#enumeration-of-disconnection-modes" title="Link to this heading"></a></h2>
 <p>We use Smith normal norm (SNF) bicrystallography to enumerate the disconnection modes (b, h) of the
 STGB, where b and h denote the disconnection’s Burgers vector and step height, respectively.
 SNF bicrystallography is a powerful framework based on integer matrix algebra to automate
@@ -265,7 +267,7 @@ For further details on SNF bicrystallography, we refer the reader to Admal et al
 (<a class="reference external" href="https://doi.org/10.1016/j.actamat.2022.118340">https://doi.org/10.1016/j.actamat.2022.118340</a>).</p>
 </section>
 <section id="construction-of-atomistic-gb-migration-images">
-<h2>Construction of atomistic GB migration images<a class="headerlink" href="#construction-of-atomistic-gb-migration-images" title="Link to this heading"></a></h2>
+<span id="discon-construction"></span><h2>Construction of atomistic GB migration images<a class="headerlink" href="#construction-of-atomistic-gb-migration-images" title="Link to this heading"></a></h2>
 <p>We assume that GB migrates due to nucleation and migration of disconnections along the GB.
 A pictorial representation of such a migration is shown below:</p>
 <figure class="align-center" id="id4">
@@ -325,7 +327,7 @@ showing GB migration based on disconnection nucleation and glide.</span><a class
 </figure>
 </section>
 <section id="mapping-the-atomic-shuffles">
-<h2>Mapping the atomic shuffles<a class="headerlink" href="#mapping-the-atomic-shuffles" title="Link to this heading"></a></h2>
+<span id="mapping"></span><h2>Mapping the atomic shuffles<a class="headerlink" href="#mapping-the-atomic-shuffles" title="Link to this heading"></a></h2>
 <p>We now compute the shuffle maps for the atoms that have transformed from one grain to another
 during disconnection nucleation and glide. Such maps serve as intermediate images for NEB calculation
 in the next step. Shuffle maps are calculated using the optimal transport method developed by Chesser et al. [2,3].
@@ -342,7 +344,7 @@ trajectories generated.</span><a class="headerlink" href="#id9" title="Link to t
 </figure>
 </section>
 <section id="evaluation-of-the-energy-barrier-and-trajectories">
-<h2>Evaluation of the energy barrier and trajectories<a class="headerlink" href="#evaluation-of-the-energy-barrier-and-trajectories" title="Link to this heading"></a></h2>
+<span id="neb"></span><h2>Evaluation of the energy barrier and trajectories<a class="headerlink" href="#evaluation-of-the-energy-barrier-and-trajectories" title="Link to this heading"></a></h2>
 <p>We employ climbing image NEB method [4] to calculate the minimum energy paths (MEPs), i.e. plots of energy
 versus the reaction coordinate (width or the normalized width of the disconnection dipole), of
 disconnection modes in the absence of external loads. The NEB is implemented using the LAMMPS <em>neb</em> module with nudging forces

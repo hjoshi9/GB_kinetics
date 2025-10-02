@@ -46,6 +46,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../usage.html#install-gb-kinetics">Install GB Kinetics</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../usage.html#windows">Windows</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage.html#mac-linux">Mac/Linux</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage.html#conda">Conda</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../usage.html#workflow">Workflow</a></li>
@@ -75,6 +76,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../example_gbkinetics.html#references">References</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../../example_gbkinetics.html#summary-of-important-functions-classes-used-in-the-workflow">Summary of important functions/classes used in the workflow</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../modules.html">Source</a><ul>
@@ -215,6 +217,7 @@
 <span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy.linalg</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">la</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.spatial</span><span class="w"> </span><span class="kn">import</span> <span class="n">cKDTree</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.bicrystallography</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.plastic_slip</span><span class="w"> </span><span class="kn">import</span> <span class="n">dislocation_dipole</span>
 
@@ -292,9 +295,7 @@
 
 <span class="sd">            This method performs:</span>
 <span class="sd">                - Construction of grain rotation matrices using Rodrigues’ rotation formula.</span>
-<span class="sd">                - Application of inclination and misorientation angles.</span>
 <span class="sd">                - Alignment of the tilt axis with the [001] direction via coordinate transformation.</span>
-<span class="sd">                - Final transformation of lattice vectors into crystal orientations.</span>
 
 <span class="sd">            Sets:</span>
 <span class="sd">                grain1_orientation (np.ndarray): Rotated lattice vectors for grain 1 in the final coordinate system.</span>
@@ -303,7 +304,6 @@
 <span class="sd">            Notes:</span>
 <span class="sd">                - The tilt axis is aligned to the global Z-axis [0, 0, 1].</span>
 <span class="sd">                - Uses Rodrigues’ formula to compute rotations from GB data.</span>
-<span class="sd">                - Applies an additional rotation if the tilt axis is [1 1 1] or [1 1 0], to align the grains properly.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">dim</span> <span class="o">=</span> <span class="mi">3</span>
         <span class="n">axis</span>    <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">axis</span>
@@ -364,9 +364,7 @@
 
 <span class="sd">            This function:</span>
 <span class="sd">                - Constructs a 3D dichromatic pattern for both grains using lattice translations.</span>
-<span class="sd">                - Filters atoms within a simulation box, optionally shifted.</span>
 <span class="sd">                - Selects atoms for each grain based on their position relative to the GB plane.</span>
-<span class="sd">                - Removes duplicate atoms using a distance-based uniqueness check.</span>
 
 <span class="sd">            Args:</span>
 <span class="sd">                gb_position (float): The X-coordinate (along GB normal) at which the GB plane is located.</span>
@@ -377,8 +375,6 @@
 <span class="sd">                box (np.ndarray): Dimensions of the simulation box used for filtering and placement.</span>
 
 <span class="sd">            Notes:</span>
-<span class="sd">                - Atom uniqueness is checked using `_check_unique()` with a distance tolerance of 0.5 Å.</span>
-<span class="sd">                - Atoms on or near the GB plane are discarded to create a clean flat interface.</span>
 <span class="sd">                - The structure is built from `-nCells` to `+nCells` in lattice units in all three dimensions.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">============================= Generating initial flat GB  =======================================&quot;</span><span class="p">)</span>
@@ -392,53 +388,41 @@
 
         <span class="n">grainA</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grain1_orientation</span>
         <span class="n">grainB</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grain2_orientation</span>
-        <span class="n">grainA_dichromatic</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">grainB_dichromatic</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="n">box</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="bp">self</span><span class="o">.</span><span class="n">size_along_period</span> <span class="o">*</span> <span class="n">period</span> <span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">non_periodic_direction_size</span><span class="p">,</span> <span class="n">la</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span> <span class="o">*</span> <span class="n">lat_par</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">size_along_tilt_axis</span><span class="p">],</span>
                         <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">non_periodic_direction_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">size_along_period</span> <span class="o">*</span> <span class="n">period</span> <span class="p">,</span> <span class="n">la</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span> <span class="o">*</span> <span class="n">lat_par</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">size_along_tilt_axis</span><span class="p">]])</span>
-        <span class="n">eps_p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.1</span><span class="p">])</span>
-        <span class="n">eps_n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">])</span>
+
         <span class="n">box_shift</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
-
-        <span class="c1"># Create dichromatic pattern</span>
-        <span class="k">for</span> <span class="n">nx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="n">nCells</span><span class="p">,</span> <span class="n">nCells</span><span class="p">):</span>
-            <span class="k">for</span> <span class="n">ny</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="n">nCells</span><span class="p">,</span> <span class="n">nCells</span><span class="p">):</span>
-                <span class="k">for</span> <span class="n">nz</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="n">nCells</span><span class="p">,</span> <span class="n">nCells</span><span class="p">):</span>
-                    <span class="n">loc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">nx</span><span class="p">],</span> <span class="p">[</span><span class="n">ny</span><span class="p">],</span> <span class="p">[</span><span class="n">nz</span><span class="p">]])</span>
-                    <span class="n">a</span> <span class="o">=</span> <span class="n">lat_par</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">grainA</span><span class="p">,</span> <span class="n">loc</span><span class="p">)[:,</span> <span class="mi">0</span><span class="p">]</span>
-                    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">((</span><span class="n">a</span><span class="o">-</span><span class="n">box_shift</span><span class="o">&gt;-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,:]</span><span class="o">-</span><span class="n">eps_n</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">a</span><span class="o">-</span><span class="n">box_shift</span><span class="o">&lt;</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,:]</span><span class="o">+</span><span class="n">eps_p</span><span class="p">)):</span>
-                        <span class="n">grainA_dichromatic</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]])</span>
-                    <span class="n">b</span> <span class="o">=</span> <span class="n">lat_par</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">grainB</span><span class="p">,</span> <span class="n">loc</span><span class="p">)[:,</span> <span class="mi">0</span><span class="p">]</span>
-                    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">((</span><span class="n">b</span><span class="o">-</span><span class="n">box_shift</span><span class="o">&gt;-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,:]</span><span class="o">-</span><span class="n">eps_n</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">b</span><span class="o">-</span><span class="n">box_shift</span><span class="o">&lt;</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,:]</span><span class="o">+</span><span class="n">eps_p</span><span class="p">)):</span>
-                        <span class="n">grainB_dichromatic</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">,</span> <span class="n">b</span><span class="p">[</span><span class="mi">2</span><span class="p">]])</span>
-
-
-        <span class="c1"># Creation of a bicrystal by deleting atoms on the GB</span>
-        <span class="n">gA</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">gB</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">eps</span> <span class="o">=</span> <span class="mf">0.1</span>
-        <span class="n">atom_count</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">grainA_dichromatic</span><span class="p">)):</span>
-            <span class="k">if</span> <span class="n">grainA_dichromatic</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">gb_position</span> <span class="o">-</span> <span class="n">eps</span><span class="p">:</span>
-                <span class="n">point</span> <span class="o">=</span> <span class="p">[</span><span class="n">grainA_dichromatic</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">grainA_dichromatic</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">grainA_dichromatic</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]]</span>
-                <span class="n">flag</span> <span class="o">=</span> <span class="n">bicrystal</span><span class="o">.</span><span class="n">_check_unique</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">gA</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">flag</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-                    <span class="n">point</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">atom_count</span><span class="p">)</span>
-                    <span class="n">gA</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
-                    <span class="n">atom_count</span> <span class="o">+=</span> <span class="mi">1</span>
 
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">grainB_dichromatic</span><span class="p">)):</span>
-            <span class="k">if</span> <span class="n">grainB_dichromatic</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">gb_position</span> <span class="o">-</span> <span class="n">eps</span><span class="p">:</span>
-                <span class="n">point</span> <span class="o">=</span> <span class="p">[</span><span class="n">grainB_dichromatic</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">grainB_dichromatic</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">grainB_dichromatic</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]]</span>
-                <span class="n">flag</span> <span class="o">=</span> <span class="n">bicrystal</span><span class="o">.</span><span class="n">_check_unique</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">gB</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">flag</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-                    <span class="n">point</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">atom_count</span><span class="p">)</span>
-                    <span class="n">gB</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
-                    <span class="n">atom_count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="c1"># Create atom grid</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mgrid</span><span class="p">[</span><span class="o">-</span><span class="n">nCells</span><span class="p">:</span><span class="n">nCells</span><span class="p">,</span> <span class="o">-</span><span class="n">nCells</span><span class="p">:</span><span class="n">nCells</span><span class="p">,</span> <span class="o">-</span><span class="n">nCells</span><span class="p">:</span><span class="n">nCells</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">grain1_flatgb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">gA</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">grain2_flatgb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">gB</span><span class="p">)</span>
+        <span class="c1"># Transform lattice for both grains</span>
+        <span class="n">grainA_points</span> <span class="o">=</span> <span class="n">lat_par</span> <span class="o">*</span> <span class="p">(</span><span class="n">grainA</span> <span class="o">@</span> <span class="n">coords</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">grainB_points</span> <span class="o">=</span> <span class="n">lat_par</span> <span class="o">*</span> <span class="p">(</span><span class="n">grainB</span> <span class="o">@</span> <span class="n">coords</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+
+        <span class="c1"># Apply bounding box masks</span>
+        <span class="n">lowerA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">gb_position</span> <span class="o">-</span> <span class="n">eps</span><span class="p">,</span> <span class="o">-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="o">-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="n">eps</span><span class="p">])</span>
+        <span class="n">upperA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">eps</span><span class="p">,</span> <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">eps</span><span class="p">])</span>
+        <span class="n">lowerB</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="o">-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="n">eps</span><span class="p">])</span>
+        <span class="n">upperB</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">gb_position</span> <span class="o">-</span> <span class="n">eps</span><span class="p">,</span> <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">eps</span><span class="p">,</span> <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">eps</span><span class="p">])</span>
+
+        <span class="n">maskA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">((</span><span class="n">grainA_points</span> <span class="o">-</span> <span class="n">box_shift</span> <span class="o">&gt;=</span> <span class="n">lowerA</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">grainA_points</span> <span class="o">-</span> <span class="n">box_shift</span> <span class="o">&lt;=</span> <span class="n">upperA</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">maskB</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">((</span><span class="n">grainB_points</span> <span class="o">-</span> <span class="n">box_shift</span> <span class="o">&gt;=</span> <span class="n">lowerB</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">grainB_points</span> <span class="o">-</span> <span class="n">box_shift</span> <span class="o">&lt;=</span> <span class="n">upperB</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Create bicrystal</span>
+        <span class="n">gA</span> <span class="o">=</span> <span class="n">bicrystal</span><span class="o">.</span><span class="n">_unique_atoms</span><span class="p">(</span><span class="n">grainA_points</span><span class="p">[</span><span class="n">maskA</span><span class="p">])</span>
+        <span class="n">gB</span> <span class="o">=</span> <span class="n">bicrystal</span><span class="o">.</span><span class="n">_unique_atoms</span><span class="p">(</span><span class="n">grainB_points</span><span class="p">[</span><span class="n">maskB</span><span class="p">])</span>
+
+        <span class="c1"># Assign atom id</span>
+        <span class="n">atom_id_A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">gA</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">atom_id_B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">gA</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">gA</span><span class="p">)</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">gB</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">gA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">gA</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">atom_id_A</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">gB</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">gB</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">atom_id_B</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">grain1_flatgb</span> <span class="o">=</span> <span class="n">gA</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grain2_flatgb</span> <span class="o">=</span> <span class="n">gB</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">box</span> <span class="o">=</span> <span class="n">box</span></div>
 
 
@@ -452,12 +436,10 @@
 <span class="sd">            based on the bicrystallographic configuration.</span>
 
 <span class="sd">            This method:</span>
-<span class="sd">                - Validates the presence of a flat GB structure.</span>
 <span class="sd">                - Determines regions affected by the dislocation dipole.</span>
-<span class="sd">                - Applies displacement fields to atoms in the transformed region based on</span>
+<span class="sd">                - Applies displacement fields to atoms based on</span>
 <span class="sd">                  the dipole configuration and Burgers vector.</span>
 <span class="sd">                - Combines atoms from transformed and non-transformed regions to form a new GB image.</span>
-<span class="sd">                - Assigns unique atom IDs while avoiding duplicate atoms.</span>
 
 <span class="sd">            Args:</span>
 <span class="sd">                image_number (int): Identifier for the GB image being generated, used to determine</span>
@@ -539,19 +521,28 @@
             <span class="n">eps_n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
             <span class="n">eps_p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">])</span>
 
-        <span class="k">for</span> <span class="n">nx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="n">nCells</span><span class="p">,</span> <span class="n">nCells</span><span class="p">):</span>
-            <span class="k">for</span> <span class="n">ny</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="n">nCells</span><span class="p">,</span> <span class="n">nCells</span><span class="p">):</span>
-                <span class="k">for</span> <span class="n">nz</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="n">nCells</span><span class="p">,</span> <span class="n">nCells</span><span class="p">):</span>
-                    <span class="n">loc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">nx</span><span class="p">],</span> <span class="p">[</span><span class="n">ny</span><span class="p">],</span> <span class="p">[</span><span class="n">nz</span><span class="p">]])</span>
-                    <span class="n">a</span> <span class="o">=</span> <span class="n">lat_par</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">grain2transform</span><span class="p">,</span> <span class="n">loc</span><span class="p">)[:,</span> <span class="mi">0</span><span class="p">]</span>
-                    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">((</span><span class="n">a</span> <span class="o">-</span> <span class="n">box_shift</span> <span class="o">&gt;</span> <span class="n">lower_bounds</span> <span class="o">-</span> <span class="n">eps_n</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">box_shift</span> <span class="o">&lt;</span> <span class="n">upper_bounds</span> <span class="o">+</span> <span class="n">eps_p</span><span class="p">)):</span>
-                        <span class="n">point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
-                        <span class="n">plastic_displacement</span> <span class="o">=</span> <span class="n">bicrystal</span><span class="o">.</span><span class="n">_apply_plastic_displacement</span><span class="p">(</span><span class="n">nodes_modified</span><span class="p">,</span><span class="n">period</span><span class="p">,</span><span class="n">burgers_vector</span><span class="p">,</span><span class="n">point</span><span class="p">,</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span><span class="o">-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
-                        <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">plastic_displacement</span> <span class="o">&gt;</span> <span class="n">disconnection_stop</span><span class="p">:</span>
-                            <span class="n">plastic_displacement</span> <span class="o">+=</span><span class="p">(</span><span class="n">disconnection_stop</span> <span class="o">-</span> <span class="n">disconnection_start</span><span class="p">)</span>
-                        <span class="k">elif</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">plastic_displacement</span> <span class="o">&lt;</span> <span class="n">disconnection_start</span><span class="p">:</span>
-                            <span class="n">plastic_displacement</span> <span class="o">-=</span> <span class="p">(</span><span class="n">disconnection_start</span> <span class="o">-</span> <span class="n">disconnection_start</span><span class="p">)</span>
-                        <span class="n">transformed_atoms</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">plastic_displacement</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]])</span>
+        <span class="c1"># Create atom grid</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mgrid</span><span class="p">[</span><span class="o">-</span><span class="n">nCells</span><span class="p">:</span><span class="n">nCells</span><span class="p">,</span> <span class="o">-</span><span class="n">nCells</span><span class="p">:</span><span class="n">nCells</span><span class="p">,</span> <span class="o">-</span><span class="n">nCells</span><span class="p">:</span><span class="n">nCells</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Create lattice for atoms to be transformed</span>
+        <span class="n">grain2transform_lattice</span> <span class="o">=</span> <span class="n">lat_par</span> <span class="o">*</span> <span class="p">(</span><span class="n">grain2transform</span> <span class="o">@</span> <span class="n">coords</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">((</span><span class="n">grain2transform_lattice</span> <span class="o">-</span> <span class="n">box_shift</span> <span class="o">&gt;</span> <span class="n">lower_bounds</span> <span class="o">-</span> <span class="n">eps_n</span><span class="p">)</span> <span class="o">&amp;</span>
+                      <span class="p">(</span><span class="n">grain2transform_lattice</span> <span class="o">-</span> <span class="n">box_shift</span> <span class="o">&lt;</span> <span class="n">upper_bounds</span> <span class="o">+</span> <span class="n">eps_p</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">grain2transform_nodisplacement</span> <span class="o">=</span> <span class="n">grain2transform_lattice</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+
+        <span class="c1"># Apply displacement to transform atoms from one grain to another</span>
+        <span class="k">for</span> <span class="n">atom</span>  <span class="ow">in</span> <span class="n">grain2transform_nodisplacement</span><span class="p">:</span>
+            <span class="n">point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">atom</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">atom</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+            <span class="n">plastic_displacement</span> <span class="o">=</span> <span class="n">bicrystal</span><span class="o">.</span><span class="n">_apply_plastic_displacement</span><span class="p">(</span><span class="n">nodes_modified</span><span class="p">,</span><span class="n">period</span><span class="p">,</span><span class="n">burgers_vector</span><span class="p">,</span>
+                                                                         <span class="n">point</span><span class="p">,</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span><span class="o">-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+            <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">atom</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="p">(</span><span class="n">gb_position</span><span class="o">+</span><span class="n">step_height</span><span class="p">))</span><span class="o">&lt;</span><span class="mf">0.1</span><span class="p">:</span>
+                <span class="n">plastic_displacement</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span> <span class="c1">#-(step_height/abs(step_height))*burgers_vector</span>
+            <span class="k">if</span> <span class="n">atom</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">plastic_displacement</span> <span class="o">&gt;</span> <span class="n">disconnection_stop</span><span class="p">:</span>
+                <span class="n">plastic_displacement</span> <span class="o">+=</span> <span class="p">(</span><span class="n">disconnection_stop</span> <span class="o">-</span> <span class="n">disconnection_start</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">atom</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">plastic_displacement</span> <span class="o">&lt;</span> <span class="n">disconnection_start</span><span class="p">:</span>
+                <span class="n">plastic_displacement</span> <span class="o">-=</span> <span class="p">(</span><span class="n">disconnection_stop</span> <span class="o">-</span> <span class="n">disconnection_start</span><span class="p">)</span>
+
+            <span class="n">transformed_atoms</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">atom</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">atom</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">plastic_displacement</span><span class="p">,</span><span class="n">atom</span><span class="p">[</span><span class="mi">2</span><span class="p">]])</span>
 
         <span class="c1"># Compile atoms in regions</span>
         <span class="n">epsx</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.1</span>
@@ -577,7 +568,8 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">atoms</span> <span class="ow">in</span> <span class="n">grain1_flat</span><span class="p">:</span>
                 <span class="k">if</span> <span class="p">(</span><span class="n">atoms</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">gb_position</span> <span class="o">+</span> <span class="n">step_height</span> <span class="o">+</span> <span class="n">epsx</span> <span class="ow">or</span>
-                        <span class="p">((</span><span class="n">atoms</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">disconnection_start</span> <span class="ow">or</span> <span class="n">atoms</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">disconnection_stop</span><span class="p">)</span> <span class="ow">and</span> <span class="n">atoms</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">gb_position</span> <span class="o">+</span> <span class="n">epsx</span><span class="p">)):</span>
+                        <span class="p">((</span><span class="n">atoms</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">disconnection_start</span> <span class="ow">or</span> <span class="n">atoms</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">disconnection_stop</span><span class="p">)</span>
+                         <span class="ow">and</span> <span class="n">atoms</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">gb_position</span> <span class="o">+</span> <span class="n">epsx</span><span class="p">)):</span>
                     <span class="n">point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">atoms</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
                     <span class="n">plastic_displacement</span> <span class="o">=</span> <span class="n">bicrystal</span><span class="o">.</span><span class="n">_apply_plastic_displacement</span><span class="p">(</span><span class="n">nodes_modified</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span> <span class="n">burgers_vector</span><span class="p">,</span> <span class="n">point</span><span class="p">,</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span><span class="o">-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
                     <span class="n">grain1_disconnection</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">atoms</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">plastic_displacement</span><span class="p">,</span> <span class="n">atoms</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="mi">3</span><span class="p">]])</span>
@@ -861,6 +853,26 @@
             <span class="ow">and</span> <span class="nb">abs</span><span class="p">(</span><span class="n">grain</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">point</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">cutoff</span><span class="p">):</span>
                 <span class="k">return</span> <span class="mi">0</span>
         <span class="k">return</span> <span class="mi">1</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_unique_atoms</span><span class="p">(</span><span class="n">atoms</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Find unique atoms in a given set of atoms.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            atoms (list): List of atoms.</span>
+<span class="sd">            tol (float): Tolerance for finding unique atoms.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            atoms (list): Unique atoms.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="n">cKDTree</span><span class="p">(</span><span class="n">atoms</span><span class="p">)</span>
+        <span class="n">pairs</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">query_pairs</span><span class="p">(</span><span class="n">tol</span><span class="p">)</span>
+
+        <span class="c1"># Mark duplicates</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">atoms</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">pairs</span><span class="p">:</span>
+            <span class="n">mask</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># keep only first</span>
+        <span class="k">return</span> <span class="n">atoms</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_diagnostic_grain_writing</span><span class="p">(</span><span class="n">grain1</span><span class="p">,</span><span class="n">grain2</span><span class="p">,</span><span class="n">filename</span><span class="p">):</span>

@@ -49,6 +49,7 @@
 <li class="toctree-l2"><a class="reference internal" href="usage.html#install-gb-kinetics">Install GB Kinetics</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="usage.html#windows">Windows</a></li>
 <li class="toctree-l3"><a class="reference internal" href="usage.html#mac-linux">Mac/Linux</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage.html#conda">Conda</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="usage.html#workflow">Workflow</a></li>
@@ -78,6 +79,7 @@
 <li class="toctree-l3"><a class="reference internal" href="example_gbkinetics.html#references">References</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="example_gbkinetics.html#summary-of-important-functions-classes-used-in-the-workflow">Summary of important functions/classes used in the workflow</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">Source</a><ul class="current">
@@ -419,12 +421,10 @@ to the GB plane, in angstroms. Defaults to 50.</p></li>
 based on the bicrystallographic configuration.</p>
 <dl class="simple">
 <dt>This method:</dt><dd><ul class="simple">
-<li><p>Validates the presence of a flat GB structure.</p></li>
 <li><p>Determines regions affected by the dislocation dipole.</p></li>
-<li><p>Applies displacement fields to atoms in the transformed region based on
+<li><p>Applies displacement fields to atoms based on
 the dipole configuration and Burgers vector.</p></li>
 <li><p>Combines atoms from transformed and non-transformed regions to form a new GB image.</p></li>
-<li><p>Assigns unique atom IDs while avoiding duplicate atoms.</p></li>
 </ul>
 </dd>
 </dl>
@@ -500,9 +500,7 @@ from the two grain orientations and selecting atoms to form a bicrystal.</p>
 <dl class="simple">
 <dt>This function:</dt><dd><ul class="simple">
 <li><p>Constructs a 3D dichromatic pattern for both grains using lattice translations.</p></li>
-<li><p>Filters atoms within a simulation box, optionally shifted.</p></li>
 <li><p>Selects atoms for each grain based on their position relative to the GB plane.</p></li>
-<li><p>Removes duplicate atoms using a distance-based uniqueness check.</p></li>
 </ul>
 </dd>
 </dl>
@@ -519,8 +517,6 @@ box (np.ndarray): Dimensions of the simulation box used for filtering and placem
 </dl>
 <p class="rubric">Notes</p>
 <ul class="simple">
-<li><p>Atom uniqueness is checked using <cite>_check_unique()</cite> with a distance tolerance of 0.5 Å.</p></li>
-<li><p>Atoms on or near the GB plane are discarded to create a clean flat interface.</p></li>
 <li><p>The structure is built from <cite>-nCells</cite> to <cite>+nCells</cite> in lattice units in all three dimensions.</p></li>
 </ul>
 </dd></dl>

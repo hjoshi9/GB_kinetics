@@ -48,6 +48,7 @@
 <li class="toctree-l2"><a class="reference internal" href="usage.html#install-gb-kinetics">Install GB Kinetics</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="usage.html#windows">Windows</a></li>
 <li class="toctree-l3"><a class="reference internal" href="usage.html#mac-linux">Mac/Linux</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage.html#conda">Conda</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="usage.html#workflow">Workflow</a></li>
@@ -77,6 +78,7 @@
 <li class="toctree-l3"><a class="reference internal" href="example_gbkinetics.html#references">References</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="example_gbkinetics.html#summary-of-important-functions-classes-used-in-the-workflow">Summary of important functions/classes used in the workflow</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">Source</a><ul class="current">
@@ -507,7 +509,7 @@ for grain boundary disconnection energy calculations.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.runLAMMPS.run_LAMMPS.run_minimization">
-<span class="sig-name descname"><span class="pre">run_minimization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disp_along_gb_period</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disp_along_tilt_axis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimization_along_gb_directions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/runLAMMPS.html#run_LAMMPS.run_minimization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.run_minimization" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">run_minimization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disp_along_gb_period</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disp_along_tilt_axis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimization_along_gb_directions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_cores</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/runLAMMPS.html#run_LAMMPS.run_minimization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.run_minimization" title="Link to this definition"></a></dt>
 <dd><p>Runs a minimization calculation using LAMMPS.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>

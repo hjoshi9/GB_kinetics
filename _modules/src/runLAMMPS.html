@@ -46,6 +46,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../usage.html#install-gb-kinetics">Install GB Kinetics</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../usage.html#windows">Windows</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage.html#mac-linux">Mac/Linux</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage.html#conda">Conda</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../usage.html#workflow">Workflow</a></li>
@@ -75,6 +76,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../example_gbkinetics.html#references">References</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../../example_gbkinetics.html#summary-of-important-functions-classes-used-in-the-workflow">Summary of important functions/classes used in the workflow</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../modules.html">Source</a><ul>
@@ -670,7 +672,7 @@
 
 <div class="viewcode-block" id="run_LAMMPS.run_minimization">
 <a class="viewcode-back" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.run_minimization">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">run_minimization</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file_name</span><span class="p">,</span><span class="n">disp_along_gb_period</span><span class="p">,</span><span class="n">disp_along_tilt_axis</span><span class="p">,</span><span class="n">minimization_along_gb_directions</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run_minimization</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file_name</span><span class="p">,</span><span class="n">disp_along_gb_period</span><span class="p">,</span><span class="n">disp_along_tilt_axis</span><span class="p">,</span><span class="n">minimization_along_gb_directions</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">number_of_cores</span><span class="o">=</span><span class="mi">6</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Runs a minimization calculation using LAMMPS.</span>
 
@@ -687,11 +689,13 @@
 <span class="sd">                RuntimeError: If the minimization LAMMPS run fails.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">lammps_location</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lammps_location</span>
+        <span class="n">mpi_location</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mpi_location</span>
         <span class="n">dispy</span> <span class="o">=</span> <span class="n">disp_along_gb_period</span>
         <span class="n">dispz</span> <span class="o">=</span> <span class="n">disp_along_tilt_axis</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;========================== Minimizing using LAMMPS ==========================&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write_minimization_input</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">dispy</span><span class="p">,</span> <span class="n">dispz</span><span class="p">,</span><span class="n">minimization_along_gb_directions</span><span class="p">)</span>
-        <span class="n">command</span> <span class="o">=</span> <span class="n">lammps_location</span> <span class="o">+</span> <span class="s2">&quot;/lmp_serial -in &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">lammps_input_filename</span>
+        <span class="c1">#command = lammps_location + &quot;/lmp_serial -in &quot; + self.lammps_input_filename</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="n">mpi_location</span> <span class="o">+</span> <span class="s2">&quot;/mpirun -np &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">number_of_cores</span><span class="p">)</span><span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">lammps_location</span> <span class="o">+</span> <span class="s2">&quot;/lmp_mpi -in &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">lammps_input_filename</span>
         <span class="c1">#subprocess.run([command], shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">command</span><span class="p">],</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">returncode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>

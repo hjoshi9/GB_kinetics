@@ -14,35 +14,35 @@ atom_modify map array sort 0 0.0
 variable a equal 3.615
 variable potpath string /opt/homebrew/Cellar/lammps/20240829-update1/share/lammps/potentials/Cu_mishin1.eam.alloy
 variable sigma equal 29
-variable y_image equal 10
-variable dispy equal -0.1
-variable dispz equal -0.9
+variable y_image equal 6
+variable dispy equal 0.0
+variable dispz equal -0.45
 variable elem string Cu
 variable mis equal 44.0
-variable folder string output/Cu/Sigma29/Misorientation44.0/size10/b2.01h-2.35/
-variable file_name string ${folder}data.Cus29.0inc0.0_size10disc0
-variable file_name string output/Cu/Sigma29/Misorientation44.0/size10/b2.01h-2.35/data.Cus29.0inc0.0_size10disc0
-variable out_file1 string ${folder}data.Cus29.0inc0.0_size10disc0_min
-variable out_file1 string output/Cu/Sigma29/Misorientation44.0/size10/b2.01h-2.35/data.Cus29.0inc0.0_size10disc0_min
-variable out_file_mov string ${folder}data.Cus29.0inc0.0_size10disc0_minmov
-variable out_file_mov string output/Cu/Sigma29/Misorientation44.0/size10/b2.01h-2.35/data.Cus29.0inc0.0_size10disc0_minmov
+variable folder string output/Cu/Sigma29/Misorientation44.0/size6/b2.01h-2.35/
+variable file_name string ${folder}data.Cus29.0inc0.0_size6disc12
+variable file_name string output/Cu/Sigma29/Misorientation44.0/size6/b2.01h-2.35/data.Cus29.0inc0.0_size6disc12
+variable out_file1 string ${folder}data.Cus29.0inc0.0_size6disc12_min
+variable out_file1 string output/Cu/Sigma29/Misorientation44.0/size6/b2.01h-2.35/data.Cus29.0inc0.0_size6disc12_min
+variable out_file_mov string ${folder}data.Cus29.0inc0.0_size6disc12_minmov
+variable out_file_mov string output/Cu/Sigma29/Misorientation44.0/size6/b2.01h-2.35/data.Cus29.0inc0.0_size6disc12_minmov
 
 #----------------------- Atomic structure ----------------------
 lattice fcc $a
 lattice fcc 3.615
 Lattice spacing in x,y,z = 3.615 3.615 3.615
 read_data ${file_name}
-read_data output/Cu/Sigma29/Misorientation44.0/size10/b2.01h-2.35/data.Cus29.0inc0.0_size10disc0
+read_data output/Cu/Sigma29/Misorientation44.0/size6/b2.01h-2.35/data.Cus29.0inc0.0_size6disc12
 Reading data file ...
-  triclinic box = (-100.1 -194.67353 -3.615) to (100.1 194.67353 3.615) with tilt (0 0 0)
+  triclinic box = (-100.1 -116.80412 -3.615) to (100.1 116.80412 3.615) with tilt (0 0 0)
   2 by 3 by 1 MPI processor grid
   reading atoms ...
-  47600 atoms
-  read_data CPU = 0.122 seconds
+  28560 atoms
+  read_data CPU = 0.129 seconds
 group upper type 1
-23840 atoms in group upper
+14640 atoms in group upper
 group lower type 2
-23760 atoms in group lower
+13920 atoms in group lower
 
 #----------------------- InterAtomic Potential --------------------
 pair_style eam/alloy
@@ -65,7 +65,7 @@ Neighbor list info ...
   max neighbors/atom: 2000, page size: 100000
   master list distance cutoff = 7.50679
   ghost atom cutoff = 7.50679
-  binsize = 3.753395, bins = 54 104 2
+  binsize = 3.753395, bins = 54 63 2
   3 neighbor lists, perpetual/occasional/extra = 1 2 0
   (1) command delete_atoms, occasional
       attributes: full, newton on
@@ -82,7 +82,7 @@ Neighbor list info ...
       pair build: full/bin/atomonly
       stencil: full/bin/3d
       bin: standard
-Deleted 0 atoms, new total = 47600
+Deleted 0 atoms, new total = 28560
 delete_atoms overlap 1 lower lower
 System init for delete_atoms ...
 Neighbor list info ...
@@ -90,7 +90,7 @@ Neighbor list info ...
   max neighbors/atom: 2000, page size: 100000
   master list distance cutoff = 7.50679
   ghost atom cutoff = 7.50679
-  binsize = 3.753395, bins = 54 104 2
+  binsize = 3.753395, bins = 54 63 2
   3 neighbor lists, perpetual/occasional/extra = 1 2 0
   (1) command delete_atoms, occasional
       attributes: full, newton on
@@ -103,4 +103,135 @@ Neighbor list info ...
       stencil: half/bin/3d/tri
       bin: standard
   (3) compute centro/atom, occasional
-     
+      attributes: full, newton on
+      pair build: full/bin/atomonly
+      stencil: full/bin/3d
+      bin: standard
+Deleted 0 atoms, new total = 28560
+delete_atoms overlap 0.1 upper lower
+System init for delete_atoms ...
+Neighbor list info ...
+  update: every = 1 steps, delay = 10 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 7.50679
+  ghost atom cutoff = 7.50679
+  binsize = 3.753395, bins = 54 63 2
+  3 neighbor lists, perpetual/occasional/extra = 1 2 0
+  (1) command delete_atoms, occasional
+      attributes: full, newton on
+      pair build: full/bin/atomonly
+      stencil: full/bin/3d
+      bin: standard
+  (2) pair eam/alloy, perpetual
+      attributes: half, newton on
+      pair build: half/bin/atomonly/newton/tri
+      stencil: half/bin/3d/tri
+      bin: standard
+  (3) compute centro/atom, occasional
+      attributes: full, newton on
+      pair build: full/bin/atomonly
+      stencil: full/bin/3d
+      bin: standard
+Deleted 0 atoms, new total = 28560
+displace_atoms upper move 0 ${dispy} ${dispz} units box
+displace_atoms upper move 0 0 ${dispz} units box
+displace_atoms upper move 0 0 -0.45 units box
+Displacing atoms ...
+
+# Apply fix to tether centroid of the system to the center
+
+#--------------------- Minimize ------------------------------------
+thermo 250
+thermo_style custom step temp pe lx ly lz press pxx pyy pzz
+dump 1 all custom 100 ${out_file_mov} id type x y z c_csym c_energy
+dump 1 all custom 100 output/Cu/Sigma29/Misorientation44.0/size6/b2.01h-2.35/data.Cus29.0inc0.0_size6disc12_minmov id type x y z c_csym c_energy
+min_style cg
+minimize 1e-25 1e-25 10000 10000
+
+CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
+
+Your simulation uses code contributions which should be cited:
+
+- Type Label Framework: https://doi.org/10.1021/acs.jpcb.3c08419
+
+@Article{Gissinger24,
+ author = {Jacob R. Gissinger, Ilia Nikiforov, Yaser Afshar, Brendon Waters, Moon-ki Choi, Daniel S. Karls, Alexander Stukowski, Wonpil Im, Hendrik Heinz, Axel Kohlmeyer, and Ellad B. Tadmor},
+ title = {Type Label Framework for Bonded Force Fields in LAMMPS},
+ journal = {J. Phys. Chem. B},
+ year =    2024,
+ volume =  128,
+ number =  13,
+ pages =   {3282–-3297}
+}
+
+CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
+
+Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 7.50679
+  ghost atom cutoff = 7.50679
+  binsize = 3.753395, bins = 54 63 2
+  2 neighbor lists, perpetual/occasional/extra = 1 1 0
+  (1) pair eam/alloy, perpetual
+      attributes: half, newton on
+      pair build: half/bin/atomonly/newton/tri
+      stencil: half/bin/3d/tri
+      bin: standard
+  (2) compute centro/atom, occasional
+      attributes: full, newton on
+      pair build: full/bin/atomonly
+      stencil: full/bin/3d
+      bin: standard
+Per MPI rank memory allocation (min/avg/max) = 11.69 | 11.7 | 11.71 Mbytes
+   Step          Temp          PotEng           Lx             Ly             Lz           Press           Pxx            Pyy            Pzz      
+         0   0             -87034.681      200.2          233.60824      7.23           88207.298      190134.53     -1930.2724      76417.633    
+       250   0             -100682.28      200.2          233.60824      7.23          -1514.2176     -411.31714     -2212.3785     -1918.9571    
+       500   0             -100682.3       200.2          233.60824      7.23          -1192.1603     -0.11592767    -1943.598      -1632.7669    
+       750   0             -100682.3       200.2          233.60824      7.23          -1192.7988     -0.06099492    -1945.0082     -1633.3272    
+      1000   0             -100682.3       200.2          233.60824      7.23          -1192.7359      0.00018683389 -1944.9367     -1633.2713    
+      1110   0             -100682.3       200.2          233.60824      7.23          -1192.736       9.918303e-05  -1944.9368     -1633.2714    
+Loop time of 26.4616 on 6 procs for 1110 steps with 28560 atoms
+
+96.9% CPU use with 6 MPI tasks x no OpenMP threads
+
+Minimization stats:
+  Stopping criterion = energy tolerance
+  Energy initial, next-to-last, final = 
+     -87034.6810473506  -100682.299801417  -100682.299801417
+  Force two-norm initial, final = 13226.423 3.0990073e-08
+  Force max component initial, final = 1119.8638 2.1225218e-09
+  Final line search alpha, max atom move = 1 2.1225218e-09
+  Iterations, force evaluations = 1110 2204
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 25.349     | 25.368     | 25.378     |   0.2 | 95.87
+Neigh   | 0.015532   | 0.017282   | 0.01863    |   0.9 |  0.07
+Comm    | 0.40381    | 0.42006    | 0.44725    |   2.4 |  1.59
+Output  | 0.24048    | 0.243      | 0.24748    |   0.5 |  0.92
+Modify  | 0          | 0          | 0          |   0.0 |  0.00
+Other   |            | 0.4137     |            |       |  1.56
+
+Nlocal:           4760 ave        4774 max        4746 min
+Histogram: 1 0 1 0 1 1 0 1 0 1
+Nghost:        14178.7 ave       14881 max       13466 min
+Histogram: 3 0 0 0 0 0 0 0 0 3
+Neighs:         328862 ave      329600 max      328062 min
+Histogram: 1 0 1 0 0 2 0 1 0 1
+FullNghs:       657358 ave      659182 max      655530 min
+Histogram: 1 0 1 0 1 1 0 1 0 1
+
+Total # of neighbors = 3944148
+Ave neighs/atom = 138.10042
+Neighbor list builds = 1
+Dangerous builds = 0
+
+
+write_data ${out_file1}
+write_data output/Cu/Sigma29/Misorientation44.0/size6/b2.01h-2.35/data.Cus29.0inc0.0_size6disc12_min
+System init for write_data ...
+        
+Total wall time: 0:00:26

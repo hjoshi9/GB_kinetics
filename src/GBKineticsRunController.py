@@ -58,7 +58,7 @@ def runGBkinetics(sig, mis, inc, lat_par, lat_Vec, axis, size_y, size_z, elem,
     size_along_tilt_axis = size_z
 
     # Geometric GB properties
-    offset = 1 * p / 16
+    offset = 2.25 * p / 16
     gb_position = 0
     section_factor = 2
     total_images = int(size_along_period * section_factor) + 1

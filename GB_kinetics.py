@@ -15,7 +15,7 @@ latticeParameter = 3.615
 # Tilt axis of GB
 axis = [0, 0, 1]
 # Size of system along the GB period in terms of 2*CSL period
-size_along_gb_period = 10
+size_along_gb_period = 6
 # Size of system along the tilt axis in terms of 2*CSL period
 size__along_tilt_axis = 1
 # Lattice Vectors for the crystal system (current implementation is tested for fcc only)
@@ -48,8 +48,8 @@ mpi_location = "/opt/homebrew/bin"
 lammps_potential = "/opt/homebrew/Cellar/lammps/20240829-update1/share/lammps/potentials/Cu_mishin1.eam.alloy"
 
 # Displacements obtained from running grid_search script
-disp_along_gb = -0.1
-disp_along_tilt = -0.9
+disp_along_gb = 0.0
+disp_along_tilt = -0.45
 
 # Parameters for neb run on lammps
 # Number of partitions used for neb calculations

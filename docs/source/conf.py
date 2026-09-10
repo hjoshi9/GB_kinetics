@@ -31,6 +31,12 @@ extensions = ['sphinx.ext.autodoc',
 templates_path = ['_templates']
 exclude_patterns = []
 
+# Docstrings throughout this project write code fragments in single backticks
+# (`gb_position`, `create_flat_gb_bicrystal`).  Without a default role Sphinx reads
+# those as title references and italicises them; 'literal' renders them as inline
+# code, which is what they are meant to be.
+default_role = 'literal'
+
 autodoc_default_options = {
     'members': True,
     'undoc-members': True,

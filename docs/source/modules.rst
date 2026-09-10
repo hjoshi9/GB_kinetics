@@ -10,6 +10,7 @@ This section contains documentation for all major modules in the GB Kinetics pro
    IO
    bicrystal
    bicrystallography
+   executables
    min_shuffle
    plastic_slip
    runLAMMPS

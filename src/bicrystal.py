@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import numpy.linalg as la
+from scipy.spatial import cKDTree
 from src.bicrystallography import *
 from src.plastic_slip import dislocation_dipole
 
@@ -8,6 +9,21 @@ class bicrystal:
     """
     Represents a bicrystal
     """
+
+    # Tie-breaker for atoms sitting exactly on a periodic box face.  It has to be
+    # far larger than the round-off of the rotated coordinates (~1e-13 A) and far
+    # smaller than any interplanar spacing, otherwise a whole plane of atoms drops
+    # in or out of the cell depending on the last bit of the rotation matrix.
+    # Every periodic face is half-open: [-L, +L).
+    _EPS_FACE = 1e-6
+    # Tie-breaker for the GB / cut plane, which passes exactly through a plane of
+    # atoms.  The coincident plane is assigned to grain A.
+    _EPS_GB = 1e-4
+    # Two lattice sites closer than this are the same site generated twice.  The
+    # shortest interatomic distance in any real lattice is ~1e3 times larger, so
+    # this only ever removes genuine duplicates - unlike a cutoff of the order of
+    # the lattice parameter, which silently deletes distinct atoms.
+    _EPS_DUPLICATE = 1e-3
     def __init__(self,gb_data,axis,lat_par,lat_Vec,
                  size_along_period=1,size_along_tilt_axis=1,
                  non_periodic_direction_size=50):
@@ -35,10 +51,6 @@ class bicrystal:
             size_along_period (int): Size along GB period (CSL multiples).
             size_along_tilt_axis (int): Size along tilt axis (CSL multiples).
             non_periodic_direction_size (float): Size normal to the GB plane in angstroms.
-            nCells (int): Number of unit cells in the bicrystal. Computed as
-                `size_factor * size_along_period`, where `size_factor` is
-                40 if `size_along_period == 1`, else 25.
-
             grain1_orientation (Any): Orientation matrix or parameters for grain 1 (initialized as None).
             grain2_orientation (Any): Orientation matrix or parameters for grain 2 (initialized as None).
             grain1_flatgb (Any): Flat grain boundary structure for grain 1 (initialized as None).
@@ -54,8 +66,6 @@ class bicrystal:
         self.size_along_period = size_along_period
         self.size_along_tilt_axis = size_along_tilt_axis
         self.non_periodic_direction_size = non_periodic_direction_size
-        size_factor = 40 if size_along_period==1 else 25
-        self.nCells = size_factor*size_along_period
 
         self.grain1_orientation = None
         self.grain2_orientation = None
@@ -64,6 +74,16 @@ class bicrystal:
         self.grain1 = None
         self.grain2 = None
         self.box = None
+
+        # Reference (undisplaced) dichromatic pattern, built once and shared by the
+        # flat GB and every disconnection image.  See _build_reference_lattice.
+        self._refA = None
+        self._refB = None
+        # Boolean masks and atom IDs of the flat GB, indexed into _refA / _refB.
+        self._maskA_flat = None
+        self._maskB_flat = None
+        self._idA = None
+        self._idB = None
 
     def _setup_bicrystal(self):
         """
@@ -136,155 +156,173 @@ class bicrystal:
         self.grain1_orientation = grain1_orientation
         self.grain2_orientation = grain2_orientation
 
+    def _build_reference_lattice(self):
+        """
+            Generates the reference (undisplaced) dichromatic pattern once.
+
+            Both the flat GB and every disconnection image are selected out of these
+            two arrays, so an atom that survives into both configurations is literally
+            the same row of the same array.  That is what makes the atom IDs of image 0
+            and image k refer to the same physical atom, which the whole downstream
+            pipeline relies on: `min_shuffle.format_input` pairs the two configurations
+            by atom ID alone, and `min_shuffle.run` refuses to proceed unless the two
+            sets have the same size.
+
+            Only the lattice points that can land inside the box are enumerated.  The
+            required range is derived from the box corners rather than from a fixed
+            index bound, which for `size_along_period = 4` enumerated 8e6 points per
+            grain and discarded over 99% of them.
+
+            Sets:
+                _refA (np.ndarray): (N,3) reference sites of grain 1, deduplicated and
+                    in a deterministic (z, y, x) order.
+                _refB (np.ndarray): (M,3) reference sites of grain 2, likewise.
+                box (np.ndarray): Simulation box (unchanged convention).
+        """
+        axis = self.axis
+        lat_par = self.lat_par
+        period = self.gb_data[3] * lat_par
+
+        box = np.array([[self.size_along_period * period , self.non_periodic_direction_size, la.norm(axis) * lat_par * self.size_along_tilt_axis],
+                        [self.non_periodic_direction_size, self.size_along_period * period , la.norm(axis) * lat_par * self.size_along_tilt_axis]])
+
+        eps_face = bicrystal._EPS_FACE
+        # x is a free surface, so both ends are closed; y and z are periodic and are
+        # half-open, [-L, +L), so that the atom on the +L face is not a duplicate of
+        # the one on the -L face.
+        #
+        # The tie-breaker has to be applied to BOTH ends of a periodic direction.  A
+        # bare `>= -L` splits the plane of atoms sitting at -L down the middle: the
+        # rotation leaves them at -L +/- 1e-13, so whichever way the last bit fell
+        # decides whether each atom is kept.  Shifting the whole window by -eps_face
+        # keeps all of the -L plane and drops all of the +L plane, deterministically.
+        lower = np.array([-box[1, 0] - eps_face, -box[1, 1] - eps_face, -box[1, 2] - eps_face])
+        upper = np.array([ box[1, 0] + eps_face,  box[1, 1] - eps_face,  box[1, 2] - eps_face])
+
+        refs = []
+        for orientation in (self.grain1_orientation, self.grain2_orientation):
+            basis = lat_par * orientation                 # columns = lattice vectors
+            # n = basis^-1 r is linear, so each component of n attains its extremes at
+            # a corner of the box; the eight corners therefore bound the integer range.
+            corners = np.array([[cx, cy, cz] for cx in (lower[0], upper[0])
+                                             for cy in (lower[1], upper[1])
+                                             for cz in (lower[2], upper[2])])
+            n_needed = int(np.ceil(np.abs(la.solve(basis, corners.T)).max())) + 1
+            grid = np.mgrid[-n_needed:n_needed+1, -n_needed:n_needed+1, -n_needed:n_needed+1]
+            coords = grid.reshape(3, -1)
+            pts = (basis @ coords).T
+            mask = np.all((pts >= lower) & (pts <= upper), axis=1)
+            pts = bicrystal._unique_atoms(pts[mask])
+            # A deterministic order so the atom IDs do not depend on the order numpy
+            # happened to produce.
+            pts = pts[np.lexsort((pts[:, 0], pts[:, 1], pts[:, 2]))]
+            refs.append(pts)
+
+        self._refA, self._refB = refs
+        self.box = box
+
     def create_flat_gb_bicrystal(self,gb_position):
         """
-            Generates the initial flat grain boundary (GB) structure by constructing a dichromatic pattern
-            from the two grain orientations and selecting atoms to form a bicrystal.
-
-            This function:
-                - Constructs a 3D dichromatic pattern for both grains using lattice translations.
-                - Filters atoms within a simulation box, optionally shifted.
-                - Selects atoms for each grain based on their position relative to the GB plane.
-                - Removes duplicate atoms using a distance-based uniqueness check.
+            Generates the initial flat grain boundary (GB) structure by selecting each
+            grain out of the shared reference lattice.
 
             Args:
                 gb_position (float): The X-coordinate (along GB normal) at which the GB plane is located.
 
             Sets:
-                grain1_flatgb (np.ndarray): Filtered atomic positions for grain 1, including unique atom IDs.
-                grain2_flatgb (np.ndarray): Filtered atomic positions for grain 2, including unique atom IDs.
-                box (np.ndarray): Dimensions of the simulation box used for filtering and placement.
+                grain1_flatgb (np.ndarray): Atomic positions of grain 1 with atom IDs in column 3.
+                grain2_flatgb (np.ndarray): Atomic positions of grain 2 with atom IDs in column 3.
+                box (np.ndarray): Dimensions of the simulation box.
 
             Notes:
-                - Atom uniqueness is checked using `_check_unique()` with a distance tolerance of 0.5 Å.
-                - Atoms on or near the GB plane are discarded to create a clean flat interface.
-                - The structure is built from `-nCells` to `+nCells` in lattice units in all three dimensions.
+                - The coincident CSL plane at `gb_position` belongs to grain A, so it is
+                  not duplicated into grain B.
+                - Atom IDs run 1..N over grain 1 and then grain 2, matching the order
+                  `ordered_write` writes them in.
         """
         print("\n============================= Generating initial flat GB  =======================================")
-        # Declare relevant variables
-        axis = self.axis
-        lat_par = self.lat_par
-        gb_data = self.gb_data
-        lat_Vec = self.lat_Vec
-        period = gb_data[3]*lat_par
-        nCells = self.nCells
+        if self._refA is None:
+            self._build_reference_lattice()
+        refA, refB = self._refA, self._refB
+        eps_gb = bicrystal._EPS_GB
 
-        grainA = self.grain1_orientation
-        grainB = self.grain2_orientation
-        grainA_dichromatic = []
-        grainB_dichromatic = []
+        self._maskA_flat = refA[:, 0] >= gb_position - eps_gb
+        self._maskB_flat = refB[:, 0] <  gb_position - eps_gb
 
-        box = np.array([[self.size_along_period * period , self.non_periodic_direction_size, la.norm(axis) * lat_par * self.size_along_tilt_axis],
-                        [self.non_periodic_direction_size, self.size_along_period * period , la.norm(axis) * lat_par * self.size_along_tilt_axis]])
-        eps_p = np.array([0,-0.1,0.1])
-        eps_n = np.array([0,0.0,0.0])
-        box_shift = np.array([0,0,0])
+        gA = refA[self._maskA_flat]
+        gB = refB[self._maskB_flat]
 
-        # Create dichromatic pattern
-        for nx in range(-nCells, nCells):
-            for ny in range(-nCells, nCells):
-                for nz in range(-nCells, nCells):
-                    loc = np.array([[nx], [ny], [nz]])
-                    a = lat_par * np.matmul(grainA, loc)[:, 0]
-                    if np.all((a-box_shift>-box[1,:]-eps_n) & (a-box_shift<box[1,:]+eps_p)):
-                        grainA_dichromatic.append([a[0], a[1] , a[2]])
-                    b = lat_par * np.matmul(grainB, loc)[:, 0]
-                    if np.all((b-box_shift>-box[1,:]-eps_n) & (b-box_shift<box[1,:]+eps_p)):
-                        grainB_dichromatic.append([b[0], b[1] , b[2]])
+        # IDs live on the reference arrays so that every image can look up the ID of
+        # a site without matching coordinates.
+        self._idA = np.zeros(len(refA))
+        self._idB = np.zeros(len(refB))
+        self._idA[self._maskA_flat] = np.arange(1, len(gA) + 1)
+        self._idB[self._maskB_flat] = np.arange(len(gA) + 1, len(gA) + len(gB) + 1)
 
-
-        # Creation of a bicrystal by deleting atoms on the GB
-        gA = []
-        gB = []
-        eps = 0.1
-        atom_count = 1
-        for i in range(len(grainA_dichromatic)):
-            if grainA_dichromatic[i][0] >= gb_position - eps:
-                point = [grainA_dichromatic[i][0], grainA_dichromatic[i][1], grainA_dichromatic[i][2]]
-                flag = bicrystal._check_unique(point, gA, 0.5)
-                if flag == 1:
-                    point.append(atom_count)
-                    gA.append(point)
-                    atom_count += 1
-
-        for i in range(len(grainB_dichromatic)):
-            if grainB_dichromatic[i][0] < gb_position - eps:
-                point = [grainB_dichromatic[i][0], grainB_dichromatic[i][1], grainB_dichromatic[i][2]]
-                flag = bicrystal._check_unique(point, gB, 0.5)
-                if flag == 1:
-                    point.append(atom_count)
-                    gB.append(point)
-                    atom_count += 1
-
-        self.grain1_flatgb = np.array(gA)
-        self.grain2_flatgb = np.array(gB)
-        self.box = box
-
+        self.grain1_flatgb = np.column_stack([gA, self._idA[self._maskA_flat]])
+        self.grain2_flatgb = np.column_stack([gB, self._idB[self._maskB_flat]])
 
     def create_disconnection_containing_bicrystal(self,nodes,burgers_vector,step_height,gb_position,
                                                   image_number,nImages = 2,number_of_dipoles=3):
         """
-            Generates a grain boundary (GB) image with a disconnection dipole and possible steps
-            based on the bicrystallographic configuration.
+            Generates a GB image containing a disconnection dipole, selected out of the
+            same reference lattice as the flat GB so that the atom IDs stay consistent.
 
-            This method:
-                - Validates the presence of a flat GB structure.
-                - Determines regions affected by the dislocation dipole.
-                - Applies displacement fields to atoms in the transformed region based on
-                  the dipole configuration and Burgers vector.
-                - Combines atoms from transformed and non-transformed regions to form a new GB image.
-                - Assigns unique atom IDs while avoiding duplicate atoms.
+            The two grains are separated by a stepped cut plane
+
+                x_cut(y) = gb_position + step_height   inside the disconnection loop
+                x_cut(y) = gb_position                 outside it
+
+            with grain 1 at `x >= x_cut` and grain 2 at `x < x_cut`.  One formula covers
+            both signs of `step_height`: a positive step moves the boundary up into
+            grain 1, a negative one down into grain 2.
+
+            Atom IDs are handled by bookkeeping on the reference lattice rather than by
+            matching coordinates.  A site that is occupied by the same grain in both the
+            flat GB and this image simply keeps its ID.  The sites one grain vacates
+            inside the loop and the sites the other grain fills are equal in number (CSL
+            geometry), so the freed IDs are handed to the filled sites through a
+            canonical (z, y, x) ordering on both sides.  Which vacated site donates its
+            ID to which filled site is physically irrelevant - `min_shuffle` re-solves
+            the correspondence from scratch with optimal transport - so any bijection
+            will do; all the pipeline requires is that image 0 and image k carry the
+            same ID set.
 
             Args:
-                image_number (int): Identifier for the GB image being generated, used to determine
-                    whether dipole transitions are included.
-                gb_position (float): X-coordinate of the GB plane, defining the boundary between grains.
-                nodes (np.ndarray): 2x2 array of disconnection node coordinates in the GB plane.
-                step_height (float): Height of the step at the GB (positive or negative), used to
-                    determine which grain is displaced.
-                burgers_vector (np.ndarray): Displacement vector representing the dislocation.
+                nodes (np.ndarray): 2x2 array of disconnection node coordinates.
+                burgers_vector (float): Magnitude of the Burgers vector (glide, along y).
+                step_height (float): Height of the step at the GB (either sign).
+                gb_position (float): X-coordinate of the flat GB plane.
+                image_number (int): Identifier for the GB image being generated.
+                nImages (int): Number of periodic images used for the solid angle.
                 number_of_dipoles (int): Number of dipoles introduced in the bicrystal.
 
             Sets:
-                grain1 (np.ndarray): Atom positions for grain 1, including plastic displacement and unique IDs.
-                grain2 (np.ndarray): Atom positions for grain 2, similarly displaced and labeled.
+                grain1 (np.ndarray): Grain 1 atoms, displaced, with IDs in column 3.
+                grain2 (np.ndarray): Grain 2 atoms, displaced, with IDs in column 3.
 
             Raises:
-                ValueError: If the flat GB structure has not been created via `create_flat_gb_bicrystal`.
-
-            Notes:
-                - Atoms in the transformed region are displaced based on the disconnection geometry.
-                - Overlapping atoms are checked using Euclidean distance and matched to maintain continuity.
-                - Diagnostics are written to file if mismatch occurs between atom counts in transformed regions.
-
-            Diagnostic Output:
-                If atom mismatches are detected in the transformed region, a diagnostic file is written to:
-                `/Users/hj-home/Desktop/Research/GB_kinetics_oop/output/grain_diagnostics.txt`
+                ValueError: If the flat GB has not been built, or if the number of
+                    vacated and filled sites differ (which would break the ID contract).
         """
 
         print("\n================= Generating GB image " + str(image_number) + " bicrystallographically ==============")
-        # Declare relevant variables
-        axis = self.axis
         lat_par = self.lat_par
         gb_data = self.gb_data
         period = gb_data[3] * lat_par
-        nCells = self.nCells
-
 
         if self.grain1_flatgb is None or self.grain2_flatgb is None:
             raise ValueError("Bicrystal with flat GB not constructed. Run create_flat_gb_bicrystal first.")
-        grain1_flat = self.grain1_flatgb
-        grain2_flat = self.grain2_flatgb
+        refA, refB = self._refA, self._refB
         box = self.box
+        eps_gb = bicrystal._EPS_GB
+        eps_face = bicrystal._EPS_FACE
 
         # Decompose dislocation dipole in case of a stepped boundary
-        tol = 0.0
-        disconnection_start = nodes[0, 0] - tol
-        disconnection_stop  = nodes[1, 0] + tol
-        diag_plt = False  # True
-        nodes_for_solid_angle = np.zeros((2, 2))
+        disconnection_start = nodes[0, 0]
+        disconnection_stop  = nodes[1, 0]
         if image_number < 2 * self.size_along_period:
-            nodes_modified = [nodes]  # + np.array([[-period/8,0],[period/8,0]])
+            nodes_modified = [nodes]
             if number_of_dipoles > 1:
                 transition_node_start = np.array([[nodes[0, 0], gb_position], [nodes[0, 0], nodes[0, 1]]])
                 transition_node_stop = np.array([[nodes[1, 0], nodes[1, 1]], [nodes[1, 0], gb_position]])
@@ -292,107 +330,65 @@ class bicrystal:
                 nodes_modified.append(transition_node_stop)
         else:
             nodes_modified = [nodes + np.array([[-period / 4, 0], [period / 4, 0]])]
-            dipole_number = 1
 
-        # Create atoms in the transformed region with displacement due to dislocation dipole
-        transformed_atoms = []
-        box_shift = np.array([0, 0, 0])
-        grainA = self.grain1_orientation
-        grainB = self.grain2_orientation
+        disconnection_start = max(disconnection_start, -box[1, 1])
+        disconnection_stop  = min(disconnection_stop ,  box[1, 1])
 
-        disconnection_start = disconnection_start if disconnection_start > -box[1, 1] else -box[1, 1]
-        disconnection_stop  = disconnection_stop  if disconnection_stop  <  box[1, 1] else  box[1, 1]
-        if step_height < 0:
-            grain2transform = grainA
-            lower_bounds = np.array([gb_position + step_height-0.1, disconnection_start, -box[1, 2]])
-            upper_bounds = np.array([gb_position-0.1, disconnection_stop, box[1, 2]])
-            eps_n = np.array([0, 0, 0.0])
-            eps_p = np.array([0, -0.1, 0.1])
-        else:
-            grain2transform = grainB
-            lower_bounds = np.array([gb_position-0.1, disconnection_start, -box[1, 2]])
-            upper_bounds = np.array([gb_position + step_height, disconnection_stop, box[1, 2]])
-            eps_n = np.array([0, 0, 0.0])
-            eps_p = np.array([0, -0.1, 0.1])
+        # --- Select both grains on the reference lattice ------------------------
+        # A single half-open window, [start, stop), for every use of "inside the
+        # loop".  The old code used a closed window when carrying atoms over from the
+        # flat GB and a half-open one shrunk by 0.1 A when regenerating the stepped
+        # region, and that inconsistency is what made the two atom counts diverge.
+        def in_loop(p):
+            return ((p[:, 1] >= disconnection_start - eps_face) &
+                    (p[:, 1] <  disconnection_stop  - eps_face))
 
-        for nx in range(-nCells, nCells):
-            for ny in range(-nCells, nCells):
-                for nz in range(-nCells, nCells):
-                    loc = np.array([[nx], [ny], [nz]])
-                    a = lat_par * np.matmul(grain2transform, loc)[:, 0]
-                    if np.all((a - box_shift > lower_bounds - eps_n) & (a - box_shift < upper_bounds + eps_p)):
-                        point = np.array([a[1], a[0]])
-                        plastic_displacement = bicrystal._apply_plastic_displacement(nodes_modified,period,burgers_vector,point,box[1,1],-box[1,1])
-                        if a[1]-plastic_displacement > disconnection_stop:
-                            plastic_displacement +=(disconnection_stop - disconnection_start)
-                        elif a[1]-plastic_displacement < disconnection_start:
-                            plastic_displacement -= (disconnection_start - disconnection_start)
-                        transformed_atoms.append([a[0], a[1] - plastic_displacement, a[2]])
+        def x_cut(p):
+            return gb_position + np.where(in_loop(p), step_height, 0.0)
 
-        # Compile atoms in regions
-        epsx = -0.1
-        grain1_disconnection = []
-        grain2_disconnection = []
-        transformed_atoms_initial = []
-        # Fill up atoms in the non-transformed region
-        if step_height<0:
-            for atoms in grain2_flat:
-                if(atoms[0] <gb_position+step_height +epsx or
-                        ((atoms[1]<disconnection_start or atoms[1]>disconnection_stop) and atoms[0]<gb_position+epsx)):
-                    point = np.array([atoms[1],atoms[0]])
-                    plastic_displacement = bicrystal._apply_plastic_displacement(nodes_modified,period,burgers_vector,point,box[1,1],-box[1,1])
-                    grain2_disconnection.append([atoms[0],atoms[1] - plastic_displacement, atoms[2],atoms[3]])
-                else:
-                    transformed_atoms_initial.append([atoms[0],atoms[1], atoms[2],atoms[3]])
+        maskA_step = refA[:, 0] >= x_cut(refA) - eps_gb
+        maskB_step = refB[:, 0] <  x_cut(refB) - eps_gb
 
-            for atoms in grain1_flat:
-                if atoms[0]>gb_position+epsx:
-                    point = np.array([atoms[1],atoms[0]])
-                    plastic_displacement = bicrystal._apply_plastic_displacement(nodes_modified, period, burgers_vector, point,box[1, 1],-box[1,1])
-                    grain1_disconnection.append([atoms[0], atoms[1] - plastic_displacement, atoms[2], atoms[3]])
-        else:
-            for atoms in grain1_flat:
-                if (atoms[0] > gb_position + step_height + epsx or
-                        ((atoms[1] < disconnection_start or atoms[1] > disconnection_stop) and atoms[0] > gb_position + epsx)):
-                    point = np.array([atoms[1], atoms[0]])
-                    plastic_displacement = bicrystal._apply_plastic_displacement(nodes_modified, period, burgers_vector, point,box[1, 1],-box[1,1])
-                    grain1_disconnection.append([atoms[0], atoms[1] - plastic_displacement, atoms[2], atoms[3]])
-                else:
-                    transformed_atoms_initial.append([atoms[0], atoms[1], atoms[2], atoms[3]])
+        # --- Transfer the atom IDs of the sites that changed grain --------------
+        lost_A = np.where(self._maskA_flat & ~maskA_step)[0]
+        gain_A = np.where(~self._maskA_flat & maskA_step)[0]
+        lost_B = np.where(self._maskB_flat & ~maskB_step)[0]
+        gain_B = np.where(~self._maskB_flat & maskB_step)[0]
 
-            for atoms in grain2_flat:
-                if atoms[0] < gb_position - epsx:
-                    point = np.array([atoms[1], atoms[0]])
-                    plastic_displacement = bicrystal._apply_plastic_displacement(nodes_modified, period, burgers_vector, point,box[1, 1],-box[1,1])
-                    grain2_disconnection.append([atoms[0], atoms[1] - plastic_displacement, atoms[2], atoms[3]])
+        freed_ids = np.concatenate([self._idA[lost_A], self._idB[lost_B]])
+        freed_pos = np.vstack([refA[lost_A], refB[lost_B]]) if len(freed_ids) else np.zeros((0, 3))
+        gained_pos = np.vstack([refA[gain_A], refB[gain_B]]) if (len(gain_A) + len(gain_B)) else np.zeros((0, 3))
 
-        # Populate the transformed region
-        if len(transformed_atoms_initial) != len(transformed_atoms):
-            print("Atomic construction failed! Transformed region is not defined well")
-            print("Atoms in transformed region in base bicrystal:"+ str(len(transformed_atoms_initial)))
-            print("Atoms in transformed region in new bicrystal:"+ str(len(transformed_atoms)))
-            filename =  "/Users/hj-home/Desktop/Research/GB_kinetics_oop/output/grain_diagnostics.txt"
-            self._diagnostic_grain_writing(np.array(transformed_atoms_initial), np.array(transformed_atoms), filename)
-        for atom in transformed_atoms:
-            min_dist = 1e5
-            if len(transformed_atoms_initial) > 0:
-                for j in range(len(transformed_atoms_initial)):
-                    b_p = np.array(atom)
-                    a_p = transformed_atoms_initial[j]
-                    dist = la.norm(b_p - a_p[:3])
-                    if min_dist > dist:
-                        atom_count = a_p[3]
-                        index = j
-                        min_dist = dist
-                transformed_atoms_initial.pop(index)
-                atom.append(atom_count)
-                if step_height<0:
-                    grain1_disconnection.append(atom)
-                else:
-                    grain2_disconnection.append(atom)
+        if len(freed_ids) != len(gained_pos):
+            raise ValueError(
+                "Atomic construction failed for image %d: %d sites were vacated but %d "
+                "were filled, so the atom IDs of the flat GB and this image cannot be "
+                "put in one-to-one correspondence.  The disconnection loop probably does "
+                "not span a whole number of CSL periods."
+                % (image_number, len(freed_ids), len(gained_pos)))
 
-        self.grain1 = np.array(grain1_disconnection)
-        self.grain2 = np.array(grain2_disconnection)
+        order_freed  = np.lexsort((freed_pos[:, 0], freed_pos[:, 1], freed_pos[:, 2]))
+        order_gained = np.lexsort((gained_pos[:, 0], gained_pos[:, 1], gained_pos[:, 2]))
+        transferred = np.empty(len(gained_pos))
+        transferred[order_gained] = freed_ids[order_freed]
+
+        idA = self._idA.copy()
+        idB = self._idB.copy()
+        idA[gain_A] = transferred[:len(gain_A)]
+        idB[gain_B] = transferred[len(gain_A):]
+
+        gA = np.column_stack([refA[maskA_step], idA[maskA_step]])
+        gB = np.column_stack([refB[maskB_step], idB[maskB_step]])
+
+        # --- Apply the plastic (solid angle) displacement -----------------------
+        for grain in (gA, gB):
+            for i in range(len(grain)):
+                point = np.array([grain[i, 1], grain[i, 0]])
+                grain[i, 1] -= bicrystal._apply_plastic_displacement(
+                    nodes_modified, period, burgers_vector, point, box[1, 1], -box[1, 1])
+
+        self.grain1 = gA
+        self.grain2 = gB
 
     def create_fix_eco_orientationfile(self,folder):
         """
@@ -609,42 +605,32 @@ class bicrystal:
         return displacement
 
     @staticmethod
-    def _check_unique(point,grain,cutoff):
+    def _unique_atoms(atoms, tol=None):
         """
-            Check if a point is unique in the grain within a given cutoff distance.
+            Removes lattice sites that were generated more than once.
 
             Args:
-                point (list or array-like): Coordinates [x, y, z] of the point to check.
-                grain (list of lists or arrays): Collection of points representing the grain.
-                cutoff (float): Distance threshold to determine uniqueness.
+                atoms (np.ndarray): (N,3) array of positions.
+                tol (float, optional): Separation below which two entries are the same
+                    site. Defaults to `_EPS_DUPLICATE` (1e-3 A).
 
             Returns:
-                int: 1 if point is unique, 0 if a similar point exists within cutoff.
-        """
-        for i in range(len(grain)):
-            if (abs(grain[i][0] - point[0]) < cutoff
-            and abs(grain[i][1] - point[1]) < cutoff
-            and abs(grain[i][2] - point[2]) < cutoff):
-                return 0
-        return 1
+                np.ndarray: `atoms` with duplicates dropped, original order preserved.
 
-    @staticmethod
-    def _diagnostic_grain_writing(grain1,grain2,filename):
+            Notes:
+                Uses a KD-tree rather than the O(N^2) pairwise loop this replaced.  That
+                loop also compared a 0.5 A per-component *box* rather than a distance,
+                which is large enough to delete genuinely distinct atoms in a lattice
+                with a small interplanar spacing.
         """
-            Write diagnostic grain data to a file.
-
-            Args:
-                grain1 (np.ndarray): Array of grain1 atoms with at least 3 columns (x,y,z).
-                grain2 (np.ndarray): Array of grain2 atoms with at least 3 columns (x,y,z).
-                filename (str): Path to the output file.
-        """
-        total_atoms = len(grain1) + len(grain2)
-        with open(filename, "w") as f:
-            f.write(f"{total_atoms}\n\n")
-            for atom in grain1:
-                f.write(f"{atom[0]:.6f} {atom[1]:.6f} {atom[2]:.6f} 1\n")
-            for atom in grain2:
-                f.write(f"{atom[0]:.6f} {atom[1]:.6f} {atom[2]:.6f} 2\n")
+        if tol is None:
+            tol = bicrystal._EPS_DUPLICATE
+        if len(atoms) == 0:
+            return atoms
+        mask = np.ones(len(atoms), dtype=bool)
+        for i, j in cKDTree(atoms).query_pairs(tol):
+            mask[max(i, j)] = False
+        return atoms[mask]
 
     @staticmethod
     def _diagnostic_plotting(grain1,grain2,minx,maxx,miny,maxy):

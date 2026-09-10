@@ -6,3 +6,9 @@ _build/
 build/
 *.log
 *.doctree
+docs/source/_autosummary/
+docs/source/generated/
+
+# Large oILAB axis dumps (~142 MB total) - regenerate with oILAB, do not commit
+data/fcc_axis*.txt
+data/bcc_axis*.txt

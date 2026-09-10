@@ -131,6 +131,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../min_shuffle.html">min_shuffle module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle"><code class="docutils literal notranslate"><span class="pre">min_shuffle</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.__init__"><code class="docutils literal notranslate"><span class="pre">min_shuffle.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.branch_folder"><code class="docutils literal notranslate"><span class="pre">min_shuffle.branch_folder()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.format_input"><code class="docutils literal notranslate"><span class="pre">min_shuffle.format_input()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.gb_info"><code class="docutils literal notranslate"><span class="pre">min_shuffle.gb_info()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.load_data"><code class="docutils literal notranslate"><span class="pre">min_shuffle.load_data()</span></code></a></li>
@@ -225,36 +226,24 @@
              
   <h1>Source code for src.executables</h1><div class="highlight"><pre>
 <span></span><span class="sd">"""</span>
-<span class="sd">    Locates the LAMMPS and MPI executables that are actually installed on the</span>
-<span class="sd">    machine, so that the driver scripts do not have to hardcode a path.</span>
+<span class="sd">    Locates the LAMMPS and MPI executables installed on the machine, so the driver</span>
+<span class="sd">    scripts do not have to hardcode a path.</span>
 
-<span class="sd">    Discovery is deliberately more than a ``shutil.which`` call.  A LAMMPS binary</span>
-<span class="sd">    that exists and starts is not necessarily one this pipeline can use:</span>
+<span class="sd">    More than a ``shutil.which`` call, because a binary that starts is not</span>
+<span class="sd">    necessarily usable: a build without MANYBODY has no ``eam/alloy`` and one</span>
+<span class="sd">    without REPLICA has no ``neb``, and such a build is often first on ``PATH``.</span>
+<span class="sd">    Packaged MPI builds also ship broken library paths, and a serial build under</span>
+<span class="sd">    ``mpirun -np N`` silently runs N copies of the same job rather than failing.</span>
 
-<span class="sd">    * LAMMPS is built with a selectable set of packages.  A build without MANYBODY</span>
-<span class="sd">      has no ``eam/alloy`` pair style, and one without REPLICA has no ``neb``</span>
-<span class="sd">      command.  Such a stripped build is often the first ``lmp`` on ``PATH``.</span>
-<span class="sd">    * Distribution MPI builds are frequently installed with a broken library path</span>
-<span class="sd">      and fail before reaching ``main``.</span>
-<span class="sd">    * A serial build launched under ``mpirun -np N`` does not fail.  It silently</span>
-<span class="sd">      runs N independent copies of the same calculation.</span>
+<span class="sd">    So each candidate is probed with ``lmp -h`` for the styles it advertises, and</span>
+<span class="sd">    the MPI one additionally with a two-rank ``-partition 2x1`` run. First to pass</span>
+<span class="sd">    wins, letting a full build further down ``PATH`` beat a stripped one.</span>
 
-<span class="sd">    Every candidate is therefore probed with ``lmp -h``, which lists the styles the</span>
-<span class="sd">    build provides, and the MPI executable is additionally probed with a two-rank</span>
-<span class="sd">    ``-partition 2x1`` run, exactly what :meth:`src.runLAMMPS.run_LAMMPS.run_neb_calc`</span>
-<span class="sd">    performs.  The first candidate that passes wins, so a fully featured build</span>
-<span class="sd">    further down ``PATH`` beats a stripped one at the front of it.</span>
+<span class="sd">    Search order: the override variable (``GBK_LMP_SERIAL``, ``GBK_LMP_MPI``,</span>
+<span class="sd">    ``GBK_MPIRUN``), then ``lammps_location`` / ``mpi_location``, then ``PATH``,</span>
+<span class="sd">    then the standard install directories in ``_EXTRA_DIRS``.</span>
 
-<span class="sd">    Search order for each executable:</span>
-
-<span class="sd">    #. The override environment variable, if set: ``GBK_LMP_SERIAL``,</span>
-<span class="sd">       ``GBK_LMP_MPI`` or ``GBK_MPIRUN``, each naming a binary directly.</span>
-<span class="sd">    #. The directory passed as ``lammps_location`` / ``mpi_location``, if given.</span>
-<span class="sd">    #. ``PATH``.</span>
-<span class="sd">    #. The standard install directories listed in ``_EXTRA_DIRS`` below.</span>
-
-<span class="sd">    Run ``python -m src.executables`` to print what discovery selects on the</span>
-<span class="sd">    current machine.</span>
+<span class="sd">    Run ``python -m src.executables`` to see what is selected here.</span>
 <span class="sd">"""</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
@@ -286,12 +275,10 @@
 <span class="n">_ENV_MPI</span> <span class="o">=</span> <span class="s2">"GBK_LMP_MPI"</span>
 <span class="n">_ENV_MPIRUN</span> <span class="o">=</span> <span class="s2">"GBK_MPIRUN"</span>
 
-<span class="c1">#: Styles a LAMMPS build must advertise to run the minimization inputs.</span>
-<span class="c1">#: ``eam/alloy`` stands in for the MANYBODY package.</span>
+<span class="c1">#: Styles needed to run the minimization inputs; stands in for MANYBODY.</span>
 <span class="n">STYLES_MINIMIZATION</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"eam/alloy"</span><span class="p">,)</span>
 
-<span class="c1">#: Styles a LAMMPS build must advertise to run the NEB inputs. ``neb`` stands in</span>
-<span class="c1">#: for the REPLICA package, which MPI builds are often shipped without.</span>
+<span class="c1">#: Styles needed to run the NEB inputs; ``neb`` stands in for REPLICA.</span>
 <span class="n">STYLES_NEB</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"eam/alloy"</span><span class="p">,</span> <span class="s2">"neb"</span><span class="p">)</span>
 
 <span class="n">_probe_cache</span> <span class="o">=</span> <span class="p">{}</span>
@@ -308,8 +295,7 @@
 <span class="sd">            str or None: The path, if the variable is set.</span>
 
 <span class="sd">        Raises:</span>
-<span class="sd">            RuntimeError: If the variable is set but does not name an executable file,</span>
-<span class="sd">                which is worth catching here rather than as a shell error mid-run.</span>
+<span class="sd">            RuntimeError: If set but not naming an executable file.</span>
 <span class="sd">    """</span>
     <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">variable</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="p">:</span>
@@ -344,8 +330,7 @@
         <span class="n">on_path</span> <span class="o">=</span> <span class="n">shutil</span><span class="o">.</span><span class="n">which</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">on_path</span><span class="p">:</span>
             <span class="n">found</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">on_path</span><span class="p">))</span>
-    <span class="c1"># A hinted directory outranks PATH, but among equals the order above is by</span>
-    <span class="c1"># name specificity, which is what we want.</span>
+    <span class="c1"># A hinted directory outranks PATH; among equals, order is by name specificity.</span>
     <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="n">found</span><span class="p">))</span>
 
 
@@ -357,16 +342,14 @@
 <span class="sd">            path (str): Absolute path to a candidate LAMMPS executable.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            set of str or None: The whitespace-separated tokens of the help output,</span>
-<span class="sd">                which include every installed style and command name, or None if the</span>
-<span class="sd">                executable could not be run at all (missing library, wrong</span>
-<span class="sd">                architecture, not LAMMPS).</span>
+<span class="sd">            set of str or None: Tokens of the help output, which include every</span>
+<span class="sd">                installed style and command name, or None if the executable could</span>
+<span class="sd">                not be run at all.</span>
 <span class="sd">    """</span>
     <span class="k">if</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">_probe_cache</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">_probe_cache</span><span class="p">[</span><span class="n">path</span><span class="p">]</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="c1"># `-log none` matters: LAMMPS opens log.lammps in the working directory on</span>
-        <span class="c1"># startup, even for `-h`, and probing must not write into the user's cwd.</span>
+        <span class="c1"># `-log none`: LAMMPS opens log.lammps on startup even for `-h`.</span>
         <span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryDirectory</span><span class="p">()</span> <span class="k">as</span> <span class="n">tmp</span><span class="p">:</span>
             <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">path</span><span class="p">,</span> <span class="s2">"-h"</span><span class="p">,</span> <span class="s2">"-log"</span><span class="p">,</span> <span class="s2">"none"</span><span class="p">],</span> <span class="n">cwd</span><span class="o">=</span><span class="n">tmp</span><span class="p">,</span>
                                     <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
@@ -382,10 +365,9 @@
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">        Checks that `mpirun` and `lammps` together give a real multi-partition run.</span>
 
-<span class="sd">        Runs the same `-partition Nx1` invocation `run_neb_calc` uses, on an empty</span>
-<span class="sd">        input.  A serial build reports "Processor partitions do not match number of</span>
-<span class="sd">        allocated processors" and a build with a broken library path fails to start,</span>
-<span class="sd">        so both are rejected here rather than after the input files are written.</span>
+<span class="sd">        Uses the same `-partition Nx1` call as `run_neb_calc`, on an empty input, so</span>
+<span class="sd">        serial builds and broken library paths are rejected before any input files</span>
+<span class="sd">        are written.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            mpirun (str): Absolute path to mpirun/mpiexec.</span>
@@ -454,9 +436,8 @@
 <span class="sd">        Finds a LAMMPS executable able to run the minimization inputs.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            hint (str, optional): Directory to search before PATH. This is the</span>
-<span class="sd">                `lammps_location` the driver scripts pass; None means search only</span>
-<span class="sd">                PATH and the standard install directories.</span>
+<span class="sd">            hint (str, optional): Directory to search before PATH; None searches</span>
+<span class="sd">                only PATH and the standard install directories.</span>
 <span class="sd">            required_styles (tuple of str): Styles the build must advertise.</span>
 
 <span class="sd">        Returns:</span>
@@ -486,8 +467,7 @@
 <span class="sd">        Finds an MPI launcher.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            hint (str, optional): Directory to search before PATH, i.e. the</span>
-<span class="sd">                `mpi_location` the driver scripts pass.</span>
+<span class="sd">            hint (str, optional): Directory to search before PATH.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            str: Absolute path to mpirun or mpiexec.</span>
@@ -513,9 +493,8 @@
 <span class="sd">        Finds a LAMMPS executable that is MPI-enabled and has the needed styles.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            mpirun (str): Absolute path to the launcher the executable will run under;</span>
-<span class="sd">                the candidate is tested with this specific launcher, because an MPI</span>
-<span class="sd">                build only works under the MPI implementation it was compiled against.</span>
+<span class="sd">            mpirun (str): Launcher to test against, since an MPI build only works</span>
+<span class="sd">                under the implementation it was compiled against.</span>
 <span class="sd">            hint (str, optional): Directory to search before PATH.</span>
 <span class="sd">            required_styles (tuple of str): Styles the build must advertise.</span>
 

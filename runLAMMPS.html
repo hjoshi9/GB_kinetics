@@ -133,6 +133,7 @@
 <li class="toctree-l2"><a class="reference internal" href="min_shuffle.html">min_shuffle module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="min_shuffle.html#src.min_shuffle.min_shuffle"><code class="docutils literal notranslate"><span class="pre">min_shuffle</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="min_shuffle.html#src.min_shuffle.min_shuffle.__init__"><code class="docutils literal notranslate"><span class="pre">min_shuffle.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="min_shuffle.html#src.min_shuffle.min_shuffle.branch_folder"><code class="docutils literal notranslate"><span class="pre">min_shuffle.branch_folder()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="min_shuffle.html#src.min_shuffle.min_shuffle.format_input"><code class="docutils literal notranslate"><span class="pre">min_shuffle.format_input()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="min_shuffle.html#src.min_shuffle.min_shuffle.gb_info"><code class="docutils literal notranslate"><span class="pre">min_shuffle.gb_info()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="min_shuffle.html#src.min_shuffle.min_shuffle.load_data"><code class="docutils literal notranslate"><span class="pre">min_shuffle.load_data()</span></code></a></li>
@@ -325,8 +326,8 @@ for grain boundary disconnection energy calculations.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="src.runLAMMPS.run_LAMMPS.mpi_location">
 <span class="sig-name descname"><span class="pre">mpi_location</span></span><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.mpi_location" title="Link to this definition"></a></dt>
-<dd><p>Directory holding the MPI binaries, searched
-before PATH. None (the default) discovers the launcher automatically.</p>
+<dd><p>Directory holding mpirun, searched before
+PATH. None discovers it automatically.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or None</p>
@@ -460,12 +461,11 @@ searched before PATH. None discovers them automatically.</p>
 <li><p><strong>inclination</strong> (<em>float</em>) – Grain boundary inclination angle.</p></li>
 <li><p><strong>size_along_gb_period</strong> (<em>int</em>) – Size along grain boundary period.</p></li>
 <li><p><strong>potential</strong> (<em>str</em>) – Path to interatomic potential file.</p></li>
-<li><p><strong>mpi_location</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory holding mpirun. Searched before
-PATH; leave as None to let <code class="docutils literal notranslate"><span class="pre">src.executables</span></code> find it.</p></li>
-<li><p><strong>lammps_location</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory holding the LAMMPS binaries.
-Searched before PATH; leave as None to let <code class="docutils literal notranslate"><span class="pre">src.executables</span></code> find
-them.  Discovery rejects a build that lacks the styles this
-pipeline needs, so the first <code class="docutils literal notranslate"><span class="pre">lmp</span></code> on PATH is not blindly used.</p></li>
+<li><p><strong>mpi_location</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory holding mpirun, searched
+before PATH. None lets <code class="docutils literal notranslate"><span class="pre">src.executables</span></code> find it.</p></li>
+<li><p><strong>lammps_location</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory holding the LAMMPS
+binaries, searched before PATH. None lets <code class="docutils literal notranslate"><span class="pre">src.executables</span></code> find
+them, skipping builds that lack the styles this pipeline needs.</p></li>
 </ul>
 </dd>
 </dl>
@@ -478,9 +478,8 @@ pipeline needs, so the first <code class="docutils literal notranslate"><span cl
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><dl class="simple">
-<dt>Absolute path, discovered on first access and then cached.  The</dt><dd><p>candidate is verified to actually run in parallel under
-<code class="docutils literal notranslate"><span class="pre">self.mpirun</span></code>, so a serial build is not silently launched as N
-independent copies of the same calculation.</p>
+<dt>Absolute path, discovered on first access and then cached. The</dt><dd><p>candidate is verified to run in parallel under <code class="docutils literal notranslate"><span class="pre">self.mpirun</span></code>, so
+a serial build is not launched as N copies of the same job.</p>
 </dd>
 </dl>
 </p>
@@ -598,7 +597,7 @@ independent copies of the same calculation.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.runLAMMPS.run_LAMMPS.run_neb_calc">
-<span class="sig-name descname"><span class="pre">run_neb_calc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">burgers_vector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_steps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partitions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">40</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/runLAMMPS.html#run_LAMMPS.run_neb_calc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.run_neb_calc" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">run_neb_calc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">burgers_vector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_steps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partitions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">40</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/runLAMMPS.html#run_LAMMPS.run_neb_calc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.run_neb_calc" title="Link to this definition"></a></dt>
 <dd><p>Runs the NEB calculation using MPI-parallelized LAMMPS.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -608,6 +607,8 @@ independent copies of the same calculation.</p>
 <li><p><strong>number_of_steps</strong> (<em>int</em>) – Number of NEB steps.</p></li>
 <li><p><strong>partitions</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of parallel partitions (default: 40).</p></li>
 <li><p><strong>mode</strong> (<em>int</em><em>, </em><em>optional</em>) – Mode flag for NEB input script generation (default: 1).</p></li>
+<li><p><strong>folder</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory holding the chain to run. Defaults to
+<code class="docutils literal notranslate"><span class="pre">self.folder</span></code>; pass a branch subfolder for an alternative chain.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
@@ -635,7 +636,7 @@ independent copies of the same calculation.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.runLAMMPS.run_LAMMPS.write_lammps_neb_input_script">
-<span class="sig-name descname"><span class="pre">write_lammps_neb_input_script</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">burgers_vector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_steps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partitions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/runLAMMPS.html#run_LAMMPS.write_lammps_neb_input_script"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.write_lammps_neb_input_script" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">write_lammps_neb_input_script</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">burgers_vector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_steps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partitions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/runLAMMPS.html#run_LAMMPS.write_lammps_neb_input_script"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.write_lammps_neb_input_script" title="Link to this definition"></a></dt>
 <dd><p>Writes a LAMMPS input script for Nudged Elastic Band (NEB) calculations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -645,6 +646,9 @@ independent copies of the same calculation.</p>
 <li><p><strong>num_steps</strong> (<em>int</em>) – Number of NEB images (steps).</p></li>
 <li><p><strong>partitions</strong> (<em>int</em>) – Number of parallel partitions for NEB.</p></li>
 <li><p><strong>mode</strong> (<em>int</em>) – Mode flag controlling file naming and step count behavior.</p></li>
+<li><p><strong>folder</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory holding the chain of step files to
+run. Defaults to <code class="docutils literal notranslate"><span class="pre">self.folder</span></code>; pass a branch subfolder to run that
+alternative chain.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>

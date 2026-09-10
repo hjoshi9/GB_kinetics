@@ -131,6 +131,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../min_shuffle.html">min_shuffle module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle"><code class="docutils literal notranslate"><span class="pre">min_shuffle</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.__init__"><code class="docutils literal notranslate"><span class="pre">min_shuffle.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.branch_folder"><code class="docutils literal notranslate"><span class="pre">min_shuffle.branch_folder()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.format_input"><code class="docutils literal notranslate"><span class="pre">min_shuffle.format_input()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.gb_info"><code class="docutils literal notranslate"><span class="pre">min_shuffle.gb_info()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.load_data"><code class="docutils literal notranslate"><span class="pre">min_shuffle.load_data()</span></code></a></li>
@@ -228,7 +229,6 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits</span><span class="w"> </span><span class="kn">import</span> <span class="n">mplot3d</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">scipy.interpolate</span><span class="w"> </span><span class="kn">import</span> <span class="n">griddata</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.IO</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.executables</span><span class="w"> </span><span class="kn">import</span> <span class="n">find_lammps_serial</span><span class="p">,</span> <span class="n">find_lammps_mpi</span><span class="p">,</span> <span class="n">find_mpirun</span>
@@ -249,8 +249,8 @@
 <span class="sd">            inclination (float): Grain boundary inclination.</span>
 <span class="sd">            size_along_gb_period (int): Size along grain boundary periodicity.</span>
 <span class="sd">            potential (str): Path to interatomic potential file.</span>
-<span class="sd">            mpi_location (str or None): Directory holding the MPI binaries, searched</span>
-<span class="sd">                before PATH. None (the default) discovers the launcher automatically.</span>
+<span class="sd">            mpi_location (str or None): Directory holding mpirun, searched before</span>
+<span class="sd">                PATH. None discovers it automatically.</span>
 <span class="sd">            lammps_location (str or None): Directory holding the LAMMPS binaries,</span>
 <span class="sd">                searched before PATH. None discovers them automatically.</span>
 <span class="sd">            output_filename_gridsearch (str or None): Filename for grid search output.</span>
@@ -280,12 +280,11 @@
 <span class="sd">                inclination (float): Grain boundary inclination angle.</span>
 <span class="sd">                size_along_gb_period (int): Size along grain boundary period.</span>
 <span class="sd">                potential (str): Path to interatomic potential file.</span>
-<span class="sd">                mpi_location (str, optional): Directory holding mpirun. Searched before</span>
-<span class="sd">                    PATH; leave as None to let `src.executables` find it.</span>
-<span class="sd">                lammps_location (str, optional): Directory holding the LAMMPS binaries.</span>
-<span class="sd">                    Searched before PATH; leave as None to let `src.executables` find</span>
-<span class="sd">                    them.  Discovery rejects a build that lacks the styles this</span>
-<span class="sd">                    pipeline needs, so the first `lmp` on PATH is not blindly used.</span>
+<span class="sd">                mpi_location (str, optional): Directory holding mpirun, searched</span>
+<span class="sd">                    before PATH. None lets `src.executables` find it.</span>
+<span class="sd">                lammps_location (str, optional): Directory holding the LAMMPS</span>
+<span class="sd">                    binaries, searched before PATH. None lets `src.executables` find</span>
+<span class="sd">                    them, skipping builds that lack the styles this pipeline needs.</span>
 <span class="sd">         """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">folder</span> <span class="o">=</span> <span class="n">folder</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">element</span> <span class="o">=</span> <span class="n">element</span>
@@ -298,8 +297,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">potential</span> <span class="o">=</span> <span class="n">potential</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mpi_location</span> <span class="o">=</span> <span class="n">mpi_location</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lammps_location</span> <span class="o">=</span> <span class="n">lammps_location</span>
-        <span class="c1"># Resolved on first use rather than here: a run with run_neb = False never</span>
-        <span class="c1"># needs MPI, and probing for it would fail on a machine that has none.</span>
+        <span class="c1"># Resolved on first use: a run with run_neb = False never needs MPI.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_lammps_serial</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_lammps_mpi</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_mpirun</span> <span class="o">=</span> <span class="kc">None</span>
@@ -348,10 +346,9 @@
 <span class="sd">            Path to the MPI-enabled LAMMPS executable used for NEB and grid search.</span>
 
 <span class="sd">            Returns:</span>
-<span class="sd">                str: Absolute path, discovered on first access and then cached.  The</span>
-<span class="sd">                    candidate is verified to actually run in parallel under</span>
-<span class="sd">                    `self.mpirun`, so a serial build is not silently launched as N</span>
-<span class="sd">                    independent copies of the same calculation.</span>
+<span class="sd">                str: Absolute path, discovered on first access and then cached. The</span>
+<span class="sd">                    candidate is verified to run in parallel under `self.mpirun`, so</span>
+<span class="sd">                    a serial build is not launched as N copies of the same job.</span>
 <span class="sd">        """</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lammps_mpi</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_lammps_mpi</span> <span class="o">=</span> <span class="n">find_lammps_mpi</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mpirun</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lammps_location</span><span class="p">)</span>
@@ -604,7 +601,7 @@
 
 <div class="viewcode-block" id="run_LAMMPS.write_lammps_neb_input_script">
 <a class="viewcode-back" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.write_lammps_neb_input_script">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">write_lammps_neb_input_script</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">burgers_vector</span><span class="p">,</span> <span class="n">step_height</span><span class="p">,</span><span class="n">num_steps</span><span class="p">,</span> <span class="n">partitions</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">write_lammps_neb_input_script</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">burgers_vector</span><span class="p">,</span> <span class="n">step_height</span><span class="p">,</span><span class="n">num_steps</span><span class="p">,</span> <span class="n">partitions</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">folder</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">"""</span>
 <span class="sd">            Writes a LAMMPS input script for Nudged Elastic Band (NEB) calculations.</span>
 
@@ -614,11 +611,14 @@
 <span class="sd">                num_steps (int): Number of NEB images (steps).</span>
 <span class="sd">                partitions (int): Number of parallel partitions for NEB.</span>
 <span class="sd">                mode (int): Mode flag controlling file naming and step count behavior.</span>
+<span class="sd">                folder (str, optional): Directory holding the chain of step files to</span>
+<span class="sd">                    run. Defaults to `self.folder`; pass a branch subfolder to run that</span>
+<span class="sd">                    alternative chain.</span>
 
 <span class="sd">            Returns:</span>
 <span class="sd">                str: Path to the output folder for NEB calculation results.</span>
 <span class="sd">        """</span>
-        <span class="n">folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">folder</span>
+        <span class="n">folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">folder</span> <span class="k">if</span> <span class="n">folder</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">folder</span>
         <span class="n">elem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">element</span>
         <span class="n">lat_par</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lattice_parameter</span>
         <span class="n">sigma</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span>
@@ -700,7 +700,7 @@
 
 <div class="viewcode-block" id="run_LAMMPS.run_neb_calc">
 <a class="viewcode-back" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.run_neb_calc">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">run_neb_calc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">burgers_vector</span><span class="p">,</span> <span class="n">step_height</span><span class="p">,</span><span class="n">number_of_steps</span><span class="p">,</span> <span class="n">partitions</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run_neb_calc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">burgers_vector</span><span class="p">,</span> <span class="n">step_height</span><span class="p">,</span><span class="n">number_of_steps</span><span class="p">,</span> <span class="n">partitions</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">folder</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">"""</span>
 <span class="sd">            Runs the NEB calculation using MPI-parallelized LAMMPS.</span>
 
@@ -710,13 +710,15 @@
 <span class="sd">                number_of_steps (int): Number of NEB steps.</span>
 <span class="sd">                partitions (int, optional): Number of parallel partitions (default: 40).</span>
 <span class="sd">                mode (int, optional): Mode flag for NEB input script generation (default: 1).</span>
+<span class="sd">                folder (str, optional): Directory holding the chain to run. Defaults to</span>
+<span class="sd">                    `self.folder`; pass a branch subfolder for an alternative chain.</span>
 
 <span class="sd">            Raises:</span>
 <span class="sd">                RuntimeError: If the NEB LAMMPS run fails.</span>
 <span class="sd">        """</span>
-        <span class="n">folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">folder</span>
+        <span class="n">folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">folder</span> <span class="k">if</span> <span class="n">folder</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">folder</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">========================== Running neb calculations =============================="</span><span class="p">)</span>
-        <span class="n">neb_output_folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">write_lammps_neb_input_script</span><span class="p">(</span><span class="n">burgers_vector</span><span class="p">,</span> <span class="n">step_height</span><span class="p">,</span><span class="n">number_of_steps</span><span class="p">,</span> <span class="n">partitions</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
+        <span class="n">neb_output_folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">write_lammps_neb_input_script</span><span class="p">(</span><span class="n">burgers_vector</span><span class="p">,</span> <span class="n">step_height</span><span class="p">,</span><span class="n">number_of_steps</span><span class="p">,</span> <span class="n">partitions</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">folder</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">"The results from this calculation will be stored in "</span> <span class="o">+</span> <span class="n">neb_output_folder</span><span class="p">)</span>
         <span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mpirun</span> <span class="o">+</span> <span class="s2">" --oversubscribe --use-hwthread-cpus -np "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span>
             <span class="n">partitions</span><span class="p">)</span> <span class="o">+</span> <span class="s2">" "</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">lammps_mpi</span> <span class="o">+</span> <span class="s2">"  -partition "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">partitions</span><span class="p">)</span> <span class="o">+</span> <span class="s2">"x1 -in "</span> <span class="o">+</span> <span class="n">folder</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">lammps_input_filename</span>

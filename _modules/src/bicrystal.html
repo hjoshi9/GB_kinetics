@@ -131,6 +131,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../min_shuffle.html">min_shuffle module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle"><code class="docutils literal notranslate"><span class="pre">min_shuffle</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.__init__"><code class="docutils literal notranslate"><span class="pre">min_shuffle.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.branch_folder"><code class="docutils literal notranslate"><span class="pre">min_shuffle.branch_folder()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.format_input"><code class="docutils literal notranslate"><span class="pre">min_shuffle.format_input()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.gb_info"><code class="docutils literal notranslate"><span class="pre">min_shuffle.gb_info()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.load_data"><code class="docutils literal notranslate"><span class="pre">min_shuffle.load_data()</span></code></a></li>
@@ -238,19 +239,12 @@
 <span class="sd">    Represents a bicrystal</span>
 <span class="sd">    """</span>
 
-    <span class="c1"># Tie-breaker for atoms sitting exactly on a periodic box face.  It has to be</span>
-    <span class="c1"># far larger than the round-off of the rotated coordinates (~1e-13 A) and far</span>
-    <span class="c1"># smaller than any interplanar spacing, otherwise a whole plane of atoms drops</span>
-    <span class="c1"># in or out of the cell depending on the last bit of the rotation matrix.</span>
-    <span class="c1"># Every periodic face is half-open: [-L, +L).</span>
+    <span class="c1"># Box-face tie-breaker, well above rotation round-off (~1e-13 A) and well below</span>
+    <span class="c1"># any interplanar spacing. Periodic faces are half-open: [-L, +L).</span>
     <span class="n">_EPS_FACE</span> <span class="o">=</span> <span class="mf">1e-6</span>
-    <span class="c1"># Tie-breaker for the GB / cut plane, which passes exactly through a plane of</span>
-    <span class="c1"># atoms.  The coincident plane is assigned to grain A.</span>
+    <span class="c1"># GB plane tie-breaker; the coincident plane goes to grain A.</span>
     <span class="n">_EPS_GB</span> <span class="o">=</span> <span class="mf">1e-4</span>
-    <span class="c1"># Two lattice sites closer than this are the same site generated twice.  The</span>
-    <span class="c1"># shortest interatomic distance in any real lattice is ~1e3 times larger, so</span>
-    <span class="c1"># this only ever removes genuine duplicates - unlike a cutoff of the order of</span>
-    <span class="c1"># the lattice parameter, which silently deletes distinct atoms.</span>
+    <span class="c1"># Below this two sites are the same site generated twice.</span>
     <span class="n">_EPS_DUPLICATE</span> <span class="o">=</span> <span class="mf">1e-3</span>
 <div class="viewcode-block" id="bicrystal.__init__">
 <a class="viewcode-back" href="../../bicrystal.html#src.bicrystal.bicrystal.__init__">[docs]</a>
@@ -391,18 +385,12 @@
 <span class="w">        </span><span class="sd">"""</span>
 <span class="sd">            Generates the reference (undisplaced) dichromatic pattern once.</span>
 
-<span class="sd">            Both the flat GB and every disconnection image are selected out of these</span>
-<span class="sd">            two arrays, so an atom that survives into both configurations is literally</span>
-<span class="sd">            the same row of the same array.  That is what makes the atom IDs of image 0</span>
-<span class="sd">            and image k refer to the same physical atom, which the whole downstream</span>
-<span class="sd">            pipeline relies on: `min_shuffle.format_input` pairs the two configurations</span>
-<span class="sd">            by atom ID alone, and `min_shuffle.run` refuses to proceed unless the two</span>
-<span class="sd">            sets have the same size.</span>
+<span class="sd">            The flat GB and every disconnection image are masked out of these two</span>
+<span class="sd">            arrays, so a site shared by two images is the same row and keeps its atom</span>
+<span class="sd">            ID. `min_shuffle` pairs configurations by ID alone and needs that.</span>
 
-<span class="sd">            Only the lattice points that can land inside the box are enumerated.  The</span>
-<span class="sd">            required range is derived from the box corners rather than from a fixed</span>
-<span class="sd">            index bound, which for `size_along_period = 4` enumerated 8e6 points per</span>
-<span class="sd">            grain and discarded over 99% of them.</span>
+<span class="sd">            The integer range comes from the box corners, so only lattice points that</span>
+<span class="sd">            can land inside the box are enumerated.</span>
 
 <span class="sd">            Sets:</span>
 <span class="sd">                _refA (np.ndarray): (N,3) reference sites of grain 1, deduplicated and</span>
@@ -418,23 +406,16 @@
                         <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">non_periodic_direction_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">size_along_period</span> <span class="o">*</span> <span class="n">period</span> <span class="p">,</span> <span class="n">la</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span> <span class="o">*</span> <span class="n">lat_par</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">size_along_tilt_axis</span><span class="p">]])</span>
 
         <span class="n">eps_face</span> <span class="o">=</span> <span class="n">bicrystal</span><span class="o">.</span><span class="n">_EPS_FACE</span>
-        <span class="c1"># x is a free surface, so both ends are closed; y and z are periodic and are</span>
-        <span class="c1"># half-open, [-L, +L), so that the atom on the +L face is not a duplicate of</span>
-        <span class="c1"># the one on the -L face.</span>
-        <span class="c1">#</span>
-        <span class="c1"># The tie-breaker has to be applied to BOTH ends of a periodic direction.  A</span>
-        <span class="c1"># bare `&gt;= -L` splits the plane of atoms sitting at -L down the middle: the</span>
-        <span class="c1"># rotation leaves them at -L +/- 1e-13, so whichever way the last bit fell</span>
-        <span class="c1"># decides whether each atom is kept.  Shifting the whole window by -eps_face</span>
-        <span class="c1"># keeps all of the -L plane and drops all of the +L plane, deterministically.</span>
+        <span class="c1"># x is a free surface so both ends are closed; y and z are periodic and</span>
+        <span class="c1"># half-open. Shifting the whole window by -eps_face keeps all of the -L plane</span>
+        <span class="c1"># and drops all of the +L one, instead of splitting either on round-off.</span>
         <span class="n">lower</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">eps_face</span><span class="p">,</span> <span class="o">-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">eps_face</span><span class="p">,</span> <span class="o">-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">eps_face</span><span class="p">])</span>
         <span class="n">upper</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span> <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">eps_face</span><span class="p">,</span>  <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">eps_face</span><span class="p">,</span>  <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">eps_face</span><span class="p">])</span>
 
         <span class="n">refs</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">orientation</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grain1_orientation</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">grain2_orientation</span><span class="p">):</span>
             <span class="n">basis</span> <span class="o">=</span> <span class="n">lat_par</span> <span class="o">*</span> <span class="n">orientation</span>                 <span class="c1"># columns = lattice vectors</span>
-            <span class="c1"># n = basis^-1 r is linear, so each component of n attains its extremes at</span>
-            <span class="c1"># a corner of the box; the eight corners therefore bound the integer range.</span>
+            <span class="c1"># n = basis^-1 r is linear, so the eight corners bound the integer range.</span>
             <span class="n">corners</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">,</span> <span class="n">cz</span><span class="p">]</span> <span class="k">for</span> <span class="n">cx</span> <span class="ow">in</span> <span class="p">(</span><span class="n">lower</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">upper</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
                                              <span class="k">for</span> <span class="n">cy</span> <span class="ow">in</span> <span class="p">(</span><span class="n">lower</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">upper</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
                                              <span class="k">for</span> <span class="n">cz</span> <span class="ow">in</span> <span class="p">(</span><span class="n">lower</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">upper</span><span class="p">[</span><span class="mi">2</span><span class="p">])])</span>
@@ -485,8 +466,7 @@
         <span class="n">gA</span> <span class="o">=</span> <span class="n">refA</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_maskA_flat</span><span class="p">]</span>
         <span class="n">gB</span> <span class="o">=</span> <span class="n">refB</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_maskB_flat</span><span class="p">]</span>
 
-        <span class="c1"># IDs live on the reference arrays so that every image can look up the ID of</span>
-        <span class="c1"># a site without matching coordinates.</span>
+        <span class="c1"># IDs live on the reference arrays so images can look up a site's ID directly.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_idA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">refA</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_idB</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">refB</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_idA</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_maskA_flat</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">gA</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
@@ -501,28 +481,18 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">create_disconnection_containing_bicrystal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">nodes</span><span class="p">,</span><span class="n">burgers_vector</span><span class="p">,</span><span class="n">step_height</span><span class="p">,</span><span class="n">gb_position</span><span class="p">,</span>
                                                   <span class="n">image_number</span><span class="p">,</span><span class="n">nImages</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span><span class="n">number_of_dipoles</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">"""</span>
-<span class="sd">            Generates a GB image containing a disconnection dipole, selected out of the</span>
-<span class="sd">            same reference lattice as the flat GB so that the atom IDs stay consistent.</span>
+<span class="sd">            Generates a GB image containing a disconnection dipole, masked out of the</span>
+<span class="sd">            same reference lattice as the flat GB so atom IDs stay consistent.</span>
 
-<span class="sd">            The two grains are separated by a stepped cut plane</span>
+<span class="sd">            The grains are split by a stepped cut plane, `gb_position + step_height`</span>
+<span class="sd">            inside the disconnection loop and `gb_position` outside it, with grain 1</span>
+<span class="sd">            at `x &gt;= x_cut`. One formula covers both signs of `step_height`.</span>
 
-<span class="sd">                x_cut(y) = gb_position + step_height   inside the disconnection loop</span>
-<span class="sd">                x_cut(y) = gb_position                 outside it</span>
-
-<span class="sd">            with grain 1 at `x &gt;= x_cut` and grain 2 at `x &lt; x_cut`.  One formula covers</span>
-<span class="sd">            both signs of `step_height`: a positive step moves the boundary up into</span>
-<span class="sd">            grain 1, a negative one down into grain 2.</span>
-
-<span class="sd">            Atom IDs are handled by bookkeeping on the reference lattice rather than by</span>
-<span class="sd">            matching coordinates.  A site that is occupied by the same grain in both the</span>
-<span class="sd">            flat GB and this image simply keeps its ID.  The sites one grain vacates</span>
-<span class="sd">            inside the loop and the sites the other grain fills are equal in number (CSL</span>
-<span class="sd">            geometry), so the freed IDs are handed to the filled sites through a</span>
-<span class="sd">            canonical (z, y, x) ordering on both sides.  Which vacated site donates its</span>
-<span class="sd">            ID to which filled site is physically irrelevant - `min_shuffle` re-solves</span>
-<span class="sd">            the correspondence from scratch with optimal transport - so any bijection</span>
-<span class="sd">            will do; all the pipeline requires is that image 0 and image k carry the</span>
-<span class="sd">            same ID set.</span>
+<span class="sd">            A site held by the same grain in both the flat GB and this image keeps its</span>
+<span class="sd">            ID. Vacated and filled sites are equal in number by CSL geometry, so freed</span>
+<span class="sd">            IDs are handed over through a canonical (z, y, x) ordering. Which one goes</span>
+<span class="sd">            where does not matter -- `min_shuffle` re-solves the correspondence -- only</span>
+<span class="sd">            that image 0 and image k carry the same ID set.</span>
 
 <span class="sd">            Args:</span>
 <span class="sd">                nodes (np.ndarray): 2x2 array of disconnection node coordinates.</span>
@@ -570,11 +540,7 @@
         <span class="n">disconnection_start</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">disconnection_start</span><span class="p">,</span> <span class="o">-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
         <span class="n">disconnection_stop</span>  <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">disconnection_stop</span> <span class="p">,</span>  <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
 
-        <span class="c1"># --- Select both grains on the reference lattice ------------------------</span>
-        <span class="c1"># A single half-open window, [start, stop), for every use of "inside the</span>
-        <span class="c1"># loop".  The old code used a closed window when carrying atoms over from the</span>
-        <span class="c1"># flat GB and a half-open one shrunk by 0.1 A when regenerating the stepped</span>
-        <span class="c1"># region, and that inconsistency is what made the two atom counts diverge.</span>
+        <span class="c1"># One half-open window, [start, stop), for every use of "inside the loop".</span>
         <span class="k">def</span><span class="w"> </span><span class="nf">in_loop</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
             <span class="k">return</span> <span class="p">((</span><span class="n">p</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">disconnection_start</span> <span class="o">-</span> <span class="n">eps_face</span><span class="p">)</span> <span class="o">&amp;</span>
                     <span class="p">(</span><span class="n">p</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span>  <span class="n">disconnection_stop</span>  <span class="o">-</span> <span class="n">eps_face</span><span class="p">))</span>
@@ -585,7 +551,7 @@
         <span class="n">maskA_step</span> <span class="o">=</span> <span class="n">refA</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">x_cut</span><span class="p">(</span><span class="n">refA</span><span class="p">)</span> <span class="o">-</span> <span class="n">eps_gb</span>
         <span class="n">maskB_step</span> <span class="o">=</span> <span class="n">refB</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span>  <span class="n">x_cut</span><span class="p">(</span><span class="n">refB</span><span class="p">)</span> <span class="o">-</span> <span class="n">eps_gb</span>
 
-        <span class="c1"># --- Transfer the atom IDs of the sites that changed grain --------------</span>
+        <span class="c1"># Transfer the IDs of sites that changed grain.</span>
         <span class="n">lost_A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_maskA_flat</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">maskA_step</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">gain_A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="o">~</span><span class="bp">self</span><span class="o">.</span><span class="n">_maskA_flat</span> <span class="o">&amp;</span> <span class="n">maskA_step</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">lost_B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_maskB_flat</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">maskB_step</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
@@ -597,10 +563,9 @@
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">freed_ids</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">gained_pos</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">"Atomic construction failed for image </span><span class="si">%d</span><span class="s2">: </span><span class="si">%d</span><span class="s2"> sites were vacated but </span><span class="si">%d</span><span class="s2"> "</span>
-                <span class="s2">"were filled, so the atom IDs of the flat GB and this image cannot be "</span>
-                <span class="s2">"put in one-to-one correspondence.  The disconnection loop probably does "</span>
-                <span class="s2">"not span a whole number of CSL periods."</span>
+                <span class="s2">"Atomic construction failed for image </span><span class="si">%d</span><span class="s2">: </span><span class="si">%d</span><span class="s2"> sites vacated but </span><span class="si">%d</span><span class="s2"> "</span>
+                <span class="s2">"filled, so atom IDs cannot be put in one-to-one correspondence. The "</span>
+                <span class="s2">"disconnection loop probably does not span a whole number of CSL periods."</span>
                 <span class="o">%</span> <span class="p">(</span><span class="n">image_number</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">freed_ids</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">gained_pos</span><span class="p">)))</span>
 
         <span class="n">order_freed</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">lexsort</span><span class="p">((</span><span class="n">freed_pos</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">freed_pos</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">freed_pos</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]))</span>
@@ -616,7 +581,7 @@
         <span class="n">gA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">refA</span><span class="p">[</span><span class="n">maskA_step</span><span class="p">],</span> <span class="n">idA</span><span class="p">[</span><span class="n">maskA_step</span><span class="p">]])</span>
         <span class="n">gB</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">refB</span><span class="p">[</span><span class="n">maskB_step</span><span class="p">],</span> <span class="n">idB</span><span class="p">[</span><span class="n">maskB_step</span><span class="p">]])</span>
 
-        <span class="c1"># --- Apply the plastic (solid angle) displacement -----------------------</span>
+        <span class="c1"># Apply the plastic (solid angle) displacement.</span>
         <span class="k">for</span> <span class="n">grain</span> <span class="ow">in</span> <span class="p">(</span><span class="n">gA</span><span class="p">,</span> <span class="n">gB</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">grain</span><span class="p">)):</span>
                 <span class="n">point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">grain</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">grain</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
@@ -864,10 +829,7 @@
 <span class="sd">                np.ndarray: `atoms` with duplicates dropped, original order preserved.</span>
 
 <span class="sd">            Notes:</span>
-<span class="sd">                Uses a KD-tree rather than the O(N^2) pairwise loop this replaced.  That</span>
-<span class="sd">                loop also compared a 0.5 A per-component *box* rather than a distance,</span>
-<span class="sd">                which is large enough to delete genuinely distinct atoms in a lattice</span>
-<span class="sd">                with a small interplanar spacing.</span>
+<span class="sd">                Uses a KD-tree rather than an O(N^2) pairwise loop.</span>
 <span class="sd">        """</span>
         <span class="k">if</span> <span class="n">tol</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">tol</span> <span class="o">=</span> <span class="n">bicrystal</span><span class="o">.</span><span class="n">_EPS_DUPLICATE</span>

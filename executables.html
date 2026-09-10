@@ -134,6 +134,7 @@
 <li class="toctree-l2"><a class="reference internal" href="min_shuffle.html">min_shuffle module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="min_shuffle.html#src.min_shuffle.min_shuffle"><code class="docutils literal notranslate"><span class="pre">min_shuffle</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="min_shuffle.html#src.min_shuffle.min_shuffle.__init__"><code class="docutils literal notranslate"><span class="pre">min_shuffle.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="min_shuffle.html#src.min_shuffle.min_shuffle.branch_folder"><code class="docutils literal notranslate"><span class="pre">min_shuffle.branch_folder()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="min_shuffle.html#src.min_shuffle.min_shuffle.format_input"><code class="docutils literal notranslate"><span class="pre">min_shuffle.format_input()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="min_shuffle.html#src.min_shuffle.min_shuffle.gb_info"><code class="docutils literal notranslate"><span class="pre">min_shuffle.gb_info()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="min_shuffle.html#src.min_shuffle.min_shuffle.load_data"><code class="docutils literal notranslate"><span class="pre">min_shuffle.load_data()</span></code></a></li>
@@ -229,46 +230,30 @@
              
   <section id="module-src.executables">
 <span id="executables-module"></span><h1>executables module<a class="headerlink" href="#module-src.executables" title="Link to this heading"></a></h1>
-<p>Locates the LAMMPS and MPI executables that are actually installed on the
-machine, so that the driver scripts do not have to hardcode a path.</p>
-<p>Discovery is deliberately more than a <code class="docutils literal notranslate"><span class="pre">shutil.which</span></code> call.  A LAMMPS binary
-that exists and starts is not necessarily one this pipeline can use:</p>
-<ul class="simple">
-<li><p>LAMMPS is built with a selectable set of packages.  A build without MANYBODY
-has no <code class="docutils literal notranslate"><span class="pre">eam/alloy</span></code> pair style, and one without REPLICA has no <code class="docutils literal notranslate"><span class="pre">neb</span></code>
-command.  Such a stripped build is often the first <code class="docutils literal notranslate"><span class="pre">lmp</span></code> on <code class="docutils literal notranslate"><span class="pre">PATH</span></code>.</p></li>
-<li><p>Distribution MPI builds are frequently installed with a broken library path
-and fail before reaching <code class="docutils literal notranslate"><span class="pre">main</span></code>.</p></li>
-<li><p>A serial build launched under <code class="docutils literal notranslate"><span class="pre">mpirun</span> <span class="pre">-np</span> <span class="pre">N</span></code> does not fail.  It silently
-runs N independent copies of the same calculation.</p></li>
-</ul>
-<p>Every candidate is therefore probed with <code class="docutils literal notranslate"><span class="pre">lmp</span> <span class="pre">-h</span></code>, which lists the styles the
-build provides, and the MPI executable is additionally probed with a two-rank
-<code class="docutils literal notranslate"><span class="pre">-partition</span> <span class="pre">2x1</span></code> run, exactly what <a class="reference internal" href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.run_neb_calc" title="src.runLAMMPS.run_LAMMPS.run_neb_calc"><code class="xref py py-meth docutils literal notranslate"><span class="pre">src.runLAMMPS.run_LAMMPS.run_neb_calc()</span></code></a>
-performs.  The first candidate that passes wins, so a fully featured build
-further down <code class="docutils literal notranslate"><span class="pre">PATH</span></code> beats a stripped one at the front of it.</p>
-<p>Search order for each executable:</p>
-<ol class="arabic simple">
-<li><p>The override environment variable, if set: <code class="docutils literal notranslate"><span class="pre">GBK_LMP_SERIAL</span></code>,
-<code class="docutils literal notranslate"><span class="pre">GBK_LMP_MPI</span></code> or <code class="docutils literal notranslate"><span class="pre">GBK_MPIRUN</span></code>, each naming a binary directly.</p></li>
-<li><p>The directory passed as <code class="docutils literal notranslate"><span class="pre">lammps_location</span></code> / <code class="docutils literal notranslate"><span class="pre">mpi_location</span></code>, if given.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">PATH</span></code>.</p></li>
-<li><p>The standard install directories listed in <code class="docutils literal notranslate"><span class="pre">_EXTRA_DIRS</span></code> below.</p></li>
-</ol>
-<p>Run <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">src.executables</span></code> to print what discovery selects on the
-current machine.</p>
+<p>Locates the LAMMPS and MPI executables installed on the machine, so the driver
+scripts do not have to hardcode a path.</p>
+<p>More than a <code class="docutils literal notranslate"><span class="pre">shutil.which</span></code> call, because a binary that starts is not
+necessarily usable: a build without MANYBODY has no <code class="docutils literal notranslate"><span class="pre">eam/alloy</span></code> and one
+without REPLICA has no <code class="docutils literal notranslate"><span class="pre">neb</span></code>, and such a build is often first on <code class="docutils literal notranslate"><span class="pre">PATH</span></code>.
+Packaged MPI builds also ship broken library paths, and a serial build under
+<code class="docutils literal notranslate"><span class="pre">mpirun</span> <span class="pre">-np</span> <span class="pre">N</span></code> silently runs N copies of the same job rather than failing.</p>
+<p>So each candidate is probed with <code class="docutils literal notranslate"><span class="pre">lmp</span> <span class="pre">-h</span></code> for the styles it advertises, and
+the MPI one additionally with a two-rank <code class="docutils literal notranslate"><span class="pre">-partition</span> <span class="pre">2x1</span></code> run. First to pass
+wins, letting a full build further down <code class="docutils literal notranslate"><span class="pre">PATH</span></code> beat a stripped one.</p>
+<p>Search order: the override variable (<code class="docutils literal notranslate"><span class="pre">GBK_LMP_SERIAL</span></code>, <code class="docutils literal notranslate"><span class="pre">GBK_LMP_MPI</span></code>,
+<code class="docutils literal notranslate"><span class="pre">GBK_MPIRUN</span></code>), then <code class="docutils literal notranslate"><span class="pre">lammps_location</span></code> / <code class="docutils literal notranslate"><span class="pre">mpi_location</span></code>, then <code class="docutils literal notranslate"><span class="pre">PATH</span></code>,
+then the standard install directories in <code class="docutils literal notranslate"><span class="pre">_EXTRA_DIRS</span></code>.</p>
+<p>Run <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">src.executables</span></code> to see what is selected here.</p>
 <dl class="py data">
 <dt class="sig sig-object py" id="src.executables.STYLES_MINIMIZATION">
 <span class="sig-prename descclassname"><span class="pre">src.executables.</span></span><span class="sig-name descname"><span class="pre">STYLES_MINIMIZATION</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('eam/alloy',)</span></span><a class="headerlink" href="#src.executables.STYLES_MINIMIZATION" title="Link to this definition"></a></dt>
-<dd><p>Styles a LAMMPS build must advertise to run the minimization inputs.
-<code class="docutils literal notranslate"><span class="pre">eam/alloy</span></code> stands in for the MANYBODY package.</p>
+<dd><p>Styles needed to run the minimization inputs; stands in for MANYBODY.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="src.executables.STYLES_NEB">
 <span class="sig-prename descclassname"><span class="pre">src.executables.</span></span><span class="sig-name descname"><span class="pre">STYLES_NEB</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('eam/alloy',</span> <span class="pre">'neb')</span></span><a class="headerlink" href="#src.executables.STYLES_NEB" title="Link to this definition"></a></dt>
-<dd><p>Styles a LAMMPS build must advertise to run the NEB inputs. <code class="docutils literal notranslate"><span class="pre">neb</span></code> stands in
-for the REPLICA package, which MPI builds are often shipped without.</p>
+<dd><p>Styles needed to run the NEB inputs; <code class="docutils literal notranslate"><span class="pre">neb</span></code> stands in for REPLICA.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -278,9 +263,8 @@ for the REPLICA package, which MPI builds are often shipped without.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>mpirun</strong> (<em>str</em>) – Absolute path to the launcher the executable will run under;
-the candidate is tested with this specific launcher, because an MPI
-build only works under the MPI implementation it was compiled against.</p></li>
+<li><p><strong>mpirun</strong> (<em>str</em>) – Launcher to test against, since an MPI build only works
+under the implementation it was compiled against.</p></li>
 <li><p><strong>hint</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory to search before PATH.</p></li>
 <li><p><strong>required_styles</strong> (<em>tuple</em><em> of </em><em>str</em>) – Styles the build must advertise.</p></li>
 </ul>
@@ -304,9 +288,8 @@ build only works under the MPI implementation it was compiled against.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>hint</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory to search before PATH. This is the
-<code class="docutils literal notranslate"><span class="pre">lammps_location</span></code> the driver scripts pass; None means search only
-PATH and the standard install directories.</p></li>
+<li><p><strong>hint</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory to search before PATH; None searches
+only PATH and the standard install directories.</p></li>
 <li><p><strong>required_styles</strong> (<em>tuple</em><em> of </em><em>str</em>) – Styles the build must advertise.</p></li>
 </ul>
 </dd>
@@ -328,8 +311,7 @@ PATH and the standard install directories.</p></li>
 <dd><p>Finds an MPI launcher.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>hint</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory to search before PATH, i.e. the
-<code class="docutils literal notranslate"><span class="pre">mpi_location</span></code> the driver scripts pass.</p>
+<dd class="field-odd"><p><strong>hint</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory to search before PATH.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Absolute path to mpirun or mpiexec.</p>

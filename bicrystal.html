@@ -134,6 +134,7 @@
 <li class="toctree-l2"><a class="reference internal" href="min_shuffle.html">min_shuffle module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="min_shuffle.html#src.min_shuffle.min_shuffle"><code class="docutils literal notranslate"><span class="pre">min_shuffle</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="min_shuffle.html#src.min_shuffle.min_shuffle.__init__"><code class="docutils literal notranslate"><span class="pre">min_shuffle.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="min_shuffle.html#src.min_shuffle.min_shuffle.branch_folder"><code class="docutils literal notranslate"><span class="pre">min_shuffle.branch_folder()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="min_shuffle.html#src.min_shuffle.min_shuffle.format_input"><code class="docutils literal notranslate"><span class="pre">min_shuffle.format_input()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="min_shuffle.html#src.min_shuffle.min_shuffle.gb_info"><code class="docutils literal notranslate"><span class="pre">min_shuffle.gb_info()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="min_shuffle.html#src.min_shuffle.min_shuffle.load_data"><code class="docutils literal notranslate"><span class="pre">min_shuffle.load_data()</span></code></a></li>
@@ -414,26 +415,16 @@ to the GB plane, in angstroms. Defaults to 50.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.bicrystal.bicrystal.create_disconnection_containing_bicrystal">
 <span class="sig-name descname"><span class="pre">create_disconnection_containing_bicrystal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">burgers_vector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gb_position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nImages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_dipoles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/bicrystal.html#bicrystal.create_disconnection_containing_bicrystal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.bicrystal.bicrystal.create_disconnection_containing_bicrystal" title="Link to this definition"></a></dt>
-<dd><p>Generates a GB image containing a disconnection dipole, selected out of the
-same reference lattice as the flat GB so that the atom IDs stay consistent.</p>
-<p>The two grains are separated by a stepped cut plane</p>
-<blockquote>
-<div><p>x_cut(y) = gb_position + step_height   inside the disconnection loop
-x_cut(y) = gb_position                 outside it</p>
-</div></blockquote>
-<p>with grain 1 at <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&gt;=</span> <span class="pre">x_cut</span></code> and grain 2 at <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&lt;</span> <span class="pre">x_cut</span></code>.  One formula covers
-both signs of <code class="docutils literal notranslate"><span class="pre">step_height</span></code>: a positive step moves the boundary up into
-grain 1, a negative one down into grain 2.</p>
-<p>Atom IDs are handled by bookkeeping on the reference lattice rather than by
-matching coordinates.  A site that is occupied by the same grain in both the
-flat GB and this image simply keeps its ID.  The sites one grain vacates
-inside the loop and the sites the other grain fills are equal in number (CSL
-geometry), so the freed IDs are handed to the filled sites through a
-canonical (z, y, x) ordering on both sides.  Which vacated site donates its
-ID to which filled site is physically irrelevant - <code class="docutils literal notranslate"><span class="pre">min_shuffle</span></code> re-solves
-the correspondence from scratch with optimal transport - so any bijection
-will do; all the pipeline requires is that image 0 and image k carry the
-same ID set.</p>
+<dd><p>Generates a GB image containing a disconnection dipole, masked out of the
+same reference lattice as the flat GB so atom IDs stay consistent.</p>
+<p>The grains are split by a stepped cut plane, <code class="docutils literal notranslate"><span class="pre">gb_position</span> <span class="pre">+</span> <span class="pre">step_height</span></code>
+inside the disconnection loop and <code class="docutils literal notranslate"><span class="pre">gb_position</span></code> outside it, with grain 1
+at <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&gt;=</span> <span class="pre">x_cut</span></code>. One formula covers both signs of <code class="docutils literal notranslate"><span class="pre">step_height</span></code>.</p>
+<p>A site held by the same grain in both the flat GB and this image keeps its
+ID. Vacated and filled sites are equal in number by CSL geometry, so freed
+IDs are handed over through a canonical (z, y, x) ordering. Which one goes
+where does not matter – <code class="docutils literal notranslate"><span class="pre">min_shuffle</span></code> re-solves the correspondence – only
+that image 0 and image k carry the same ID set.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">

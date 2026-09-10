@@ -134,6 +134,7 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">min_shuffle module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#src.min_shuffle.min_shuffle"><code class="docutils literal notranslate"><span class="pre">min_shuffle</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#src.min_shuffle.min_shuffle.__init__"><code class="docutils literal notranslate"><span class="pre">min_shuffle.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.min_shuffle.min_shuffle.branch_folder"><code class="docutils literal notranslate"><span class="pre">min_shuffle.branch_folder()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#src.min_shuffle.min_shuffle.format_input"><code class="docutils literal notranslate"><span class="pre">min_shuffle.format_input()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#src.min_shuffle.min_shuffle.gb_info"><code class="docutils literal notranslate"><span class="pre">min_shuffle.gb_info()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#src.min_shuffle.min_shuffle.load_data"><code class="docutils literal notranslate"><span class="pre">min_shuffle.load_data()</span></code></a></li>
@@ -231,7 +232,7 @@
 <span id="min-shuffle-module"></span><h1>min_shuffle module<a class="headerlink" href="#module-src.min_shuffle" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="src.min_shuffle.min_shuffle">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.min_shuffle.</span></span><span class="sig-name descname"><span class="pre">min_shuffle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lattice_parameter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">misorientation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inclination</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reg_param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_expansion_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dimension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/min_shuffle.html#min_shuffle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.min_shuffle.min_shuffle" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.min_shuffle.</span></span><span class="sig-name descname"><span class="pre">min_shuffle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lattice_parameter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">misorientation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inclination</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reg_param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_expansion_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dimension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path_cutoff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">branch_coverage</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.9</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_branches</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">40</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/min_shuffle.html#min_shuffle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.min_shuffle.min_shuffle" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class to perform minimal atomic shuffling analysis between two grain boundary configurations
 using optimal transport (Sinkhorn algorithm).</p>
@@ -241,7 +242,7 @@ conditions, replicates the simulation box if necessary, and runs the Sinkhorn op
 to find minimal atomic displacement mappings.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.min_shuffle.min_shuffle.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lattice_parameter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">misorientation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inclination</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reg_param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_expansion_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dimension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/min_shuffle.html#min_shuffle.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.min_shuffle.min_shuffle.__init__" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lattice_parameter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">misorientation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inclination</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reg_param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_expansion_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dimension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path_cutoff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">branch_coverage</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.9</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_branches</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">40</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/min_shuffle.html#min_shuffle.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.min_shuffle.min_shuffle.__init__" title="Link to this definition"></a></dt>
 <dd><p>Initializes the min_shuffle object with simulation parameters and placeholders for atomic data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -253,8 +254,16 @@ to find minimal atomic displacement mappings.</p>
 <li><p><strong>period</strong> (<em>int</em>) – The period or repeat length of the grain boundary.</p></li>
 <li><p><strong>folder</strong> (<em>str</em>) – Directory path where output files and data will be stored.</p></li>
 <li><p><strong>elem</strong> (<em>str</em>) – Chemical element symbol of the material (e.g., ‘Al’, ‘Cu’).</p></li>
-<li><p><strong>reg_param</strong> (<em>float</em>) – Regularization parameter used in the Sinkhorn optimal transport algorithm.</p></li>
+<li><p><strong>reg_param</strong> (<em>float</em>) – Temperature of the shuffle. 0 solves the exact assignment
+problem (one path per atom); larger values admit more competing paths.
+Measured in units of the typical cost gap to an atom’s second choice,
+so it is dimensionless. Useful range is roughly 0.1 to 1.</p></li>
 <li><p><strong>max_iters</strong> (<em>int</em>) – Maximum number of iterations allowed in the Sinkhorn solver.</p></li>
+<li><p><strong>path_cutoff</strong> (<em>float</em>) – Paths weaker than this fraction of an atom’s best path
+are discarded.</p></li>
+<li><p><strong>branch_coverage</strong> (<em>float</em>) – Keep alternative configurations, heaviest first,
+until their weights sum to this. At reg_param = 0 there is only ever one.</p></li>
+<li><p><strong>max_branches</strong> (<em>int</em>) – Cap on the permutations peeled off the coupling.</p></li>
 <li><p><strong>box_expansion_factor</strong> (<em>float</em><em>, </em><em>optional</em>) – Factor to expand the simulation box dimensions, defaults to 0 (no expansion).</p></li>
 <li><p><strong>dimension</strong> (<em>int</em><em>, </em><em>optional</em>) – Dimensionality of the simulation system, defaults to 3 (3D).</p></li>
 </ul>
@@ -436,6 +445,38 @@ to find minimal atomic displacement mappings.</p>
 </dl>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.min_shuffle.min_shuffle.branches">
+<span class="sig-name descname"><span class="pre">branches</span></span><a class="headerlink" href="#src.min_shuffle.min_shuffle.branches" title="Link to this definition"></a></dt>
+<dd><p>(weight, Xs, Ys) per alternative configuration,
+heaviest first.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.min_shuffle.min_shuffle.branch_folder">
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">branch_folder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">branch</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/min_shuffle.html#min_shuffle.branch_folder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.min_shuffle.min_shuffle.branch_folder" title="Link to this definition"></a></dt>
+<dd><p>Directory holding one alternative chain.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>folder</strong> (<em>str</em>) – Base output folder for this disconnection mode.</p></li>
+<li><p><strong>branch</strong> (<em>int</em>) – Branch index, 0 being the heaviest.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Path ending in a separator.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">

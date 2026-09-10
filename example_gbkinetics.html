@@ -135,6 +135,7 @@
 <li class="toctree-l2"><a class="reference internal" href="min_shuffle.html">min_shuffle module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="min_shuffle.html#src.min_shuffle.min_shuffle"><code class="docutils literal notranslate"><span class="pre">min_shuffle</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="min_shuffle.html#src.min_shuffle.min_shuffle.__init__"><code class="docutils literal notranslate"><span class="pre">min_shuffle.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="min_shuffle.html#src.min_shuffle.min_shuffle.branch_folder"><code class="docutils literal notranslate"><span class="pre">min_shuffle.branch_folder()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="min_shuffle.html#src.min_shuffle.min_shuffle.format_input"><code class="docutils literal notranslate"><span class="pre">min_shuffle.format_input()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="min_shuffle.html#src.min_shuffle.min_shuffle.gb_info"><code class="docutils literal notranslate"><span class="pre">min_shuffle.gb_info()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="min_shuffle.html#src.min_shuffle.min_shuffle.load_data"><code class="docutils literal notranslate"><span class="pre">min_shuffle.load_data()</span></code></a></li>
@@ -325,22 +326,22 @@ box length along tilt axis = 4 x CSL length along tilt axis.</p>
 <span class="linenos"> 3</span><span class="n">neb_mode</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="linenos"> 4</span><span class="c1"># Variable which allows for switching off automatically triggering neb calculations (in case you only need disconnection images)</span>
 <span class="linenos"> 5</span><span class="n">run_neb</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="linenos"> 6</span>
-<span class="linenos"> 7</span><span class="c1"># Run</span>
-<span class="linenos"> 8</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
-<span class="linenos"> 9</span>    <span class="n">results_folder_path</span> <span class="o">=</span> <span class="n">runGBkinetics</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span>
-<span class="linenos">10</span>                                        <span class="n">misorientation</span><span class="p">,</span>
-<span class="linenos">11</span>                                        <span class="n">inclination</span><span class="p">,</span>
-<span class="linenos">12</span>                                        <span class="n">latticeParameter</span><span class="p">,</span>
-<span class="linenos">13</span>                                        <span class="n">lattice_vector</span><span class="p">,</span>
-<span class="linenos">14</span>                                        <span class="n">axis</span><span class="p">,</span>
-<span class="linenos">15</span>                                        <span class="n">size_along_gb_period</span><span class="p">,</span>
-<span class="linenos">16</span>                                        <span class="n">size__along_tilt_axis</span><span class="p">,</span>
-<span class="linenos">17</span>                                        <span class="n">element</span><span class="p">,</span>
-<span class="linenos">18</span>                                        <span class="n">regularizationParameter</span><span class="p">,</span>
-<span class="linenos">19</span>                                        <span class="n">maximumIterations</span><span class="p">,</span>
-<span class="linenos">20</span>                                        <span class="n">lammps_location</span><span class="p">,</span>
-<span class="linenos">21</span>                                        <span class="n">mpi_location</span><span class="p">,</span>
+<span class="linenos"> 6</span><span class="c1"># Which alternative shuffle chain to run NEB on. Every chain is written to its own</span>
+<span class="linenos"> 7</span><span class="c1"># branch&lt;N&gt; subfolder regardless; this only picks the one NEB is deployed to.</span>
+<span class="linenos"> 8</span><span class="c1"># 0 is the heaviest at every image, and the only chain when regularizationParameter = 0.</span>
+<span class="linenos"> 9</span><span class="n">neb_branch</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span><span class="c1"># Run</span>
+<span class="linenos">12</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+<span class="linenos">13</span>    <span class="n">results_folder_path</span> <span class="o">=</span> <span class="n">runGBkinetics</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span>
+<span class="linenos">14</span>                                        <span class="n">misorientation</span><span class="p">,</span>
+<span class="linenos">15</span>                                        <span class="n">inclination</span><span class="p">,</span>
+<span class="linenos">16</span>                                        <span class="n">latticeParameter</span><span class="p">,</span>
+<span class="linenos">17</span>                                        <span class="n">lattice_vector</span><span class="p">,</span>
+<span class="linenos">18</span>                                        <span class="n">axis</span><span class="p">,</span>
+<span class="linenos">19</span>                                        <span class="n">size_along_gb_period</span><span class="p">,</span>
+<span class="linenos">20</span>                                        <span class="n">size__along_tilt_axis</span><span class="p">,</span>
+<span class="linenos">21</span>                                        <span class="n">element</span><span class="p">,</span>
 </pre></div>
 </div>
 <ul class="simple">

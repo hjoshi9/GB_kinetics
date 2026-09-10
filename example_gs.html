@@ -8,14 +8,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Grid Search Example &mdash; GB Kinetics 2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="_static/documentation_options.js?v=60dbed4a"></script>
-      <script src="_static/doctools.js?v=9bcbadda"></script>
-      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -49,7 +49,6 @@
 <li class="toctree-l2"><a class="reference internal" href="usage.html#install-gb-kinetics">Install GB Kinetics</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="usage.html#windows">Windows</a></li>
 <li class="toctree-l3"><a class="reference internal" href="usage.html#mac-linux">Mac/Linux</a></li>
-<li class="toctree-l3"><a class="reference internal" href="usage.html#conda">Conda</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="usage.html#workflow">Workflow</a></li>
@@ -79,7 +78,6 @@
 <li class="toctree-l3"><a class="reference internal" href="example_gbkinetics.html#references">References</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="example_gbkinetics.html#summary-of-important-functions-classes-used-in-the-workflow">Summary of important functions/classes used in the workflow</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">Source</a><ul>
@@ -122,6 +120,15 @@
 <li class="toctree-l4"><a class="reference internal" href="bicrystallography.html#bicrystallography.bicrystallography.gb_props"><code class="docutils literal notranslate"><span class="pre">bicrystallography.gb_props()</span></code></a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="executables.html">executables module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="executables.html#src.executables.STYLES_MINIMIZATION"><code class="docutils literal notranslate"><span class="pre">STYLES_MINIMIZATION</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="executables.html#src.executables.STYLES_NEB"><code class="docutils literal notranslate"><span class="pre">STYLES_NEB</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="executables.html#src.executables.find_lammps_mpi"><code class="docutils literal notranslate"><span class="pre">find_lammps_mpi()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="executables.html#src.executables.find_lammps_serial"><code class="docutils literal notranslate"><span class="pre">find_lammps_serial()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="executables.html#src.executables.find_mpirun"><code class="docutils literal notranslate"><span class="pre">find_mpirun()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="executables.html#src.executables.report"><code class="docutils literal notranslate"><span class="pre">report()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="min_shuffle.html">min_shuffle module</a><ul>
@@ -176,6 +183,9 @@
 <li class="toctree-l4"><a class="reference internal" href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.step_height"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.step_height</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.neb_output_folder"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.neb_output_folder</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.__init__"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.lammps_mpi"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.lammps_mpi</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.lammps_serial"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.lammps_serial</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.mpirun"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.mpirun</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.post_process_gridsearch_data"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.post_process_gridsearch_data()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.post_process_neb_output"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.post_process_neb_output()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.run_grid_search"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.run_grid_search()</span></code></a></li>
@@ -228,7 +238,7 @@
 </ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="c1">#---------- Input parameters for GB in question ---------------#</span>
 <span class="linenos"> 2</span><span class="c1"># Element</span>
-<span class="linenos"> 3</span><span class="n">element</span> <span class="o">=</span> <span class="s2">&quot;Cu&quot;</span>
+<span class="linenos"> 3</span><span class="n">element</span> <span class="o">=</span> <span class="s2">"Cu"</span>
 <span class="linenos"> 4</span><span class="c1"># Sigma value of Gb under consideration</span>
 <span class="linenos"> 5</span><span class="n">sigma</span> <span class="o">=</span> <span class="mi">17</span>
 <span class="linenos"> 6</span><span class="c1"># Misorientation of the Gb</span>
@@ -255,10 +265,10 @@
 </ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="c1"># ------------- Input and output folders (do not change) -------------------- #</span>
 <span class="linenos">2</span><span class="c1"># Location of bicrystallographic data obtained using oILAB</span>
-<span class="linenos">3</span><span class="n">oilab_output_file</span> <span class="o">=</span> <span class="s2">&quot;data/fcc0-10.txt&quot;</span>
+<span class="linenos">3</span><span class="n">oilab_output_file</span> <span class="o">=</span> <span class="s2">"data/fcc0-10.txt"</span>
 <span class="linenos">4</span><span class="c1"># Location of directory where output is to be stored, the program creates subdirectories</span>
 <span class="linenos">5</span><span class="c1"># for each element, sigma value , misorientation and disconnection mode within it</span>
-<span class="linenos">6</span><span class="n">output_folder</span> <span class="o">=</span> <span class="s2">&quot;output/&quot;</span>
+<span class="linenos">6</span><span class="n">output_folder</span> <span class="o">=</span> <span class="s2">"output/"</span>
 <span class="linenos">7</span>
 </pre></div>
 </div>
@@ -266,59 +276,59 @@
 <li><p>Specify locations of external programs needed for running this code. This includes location of lammps installation, mpi installation. Also indicate the full path to the lammps potential file you want to use.</p></li>
 </ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="c1"># ---------- Location of programs needed to run this (change these) ----------------------#</span>
-<span class="linenos">2</span><span class="c1"># Location of directory where lmp_serial and lmp_mpi are stored</span>
-<span class="linenos">3</span><span class="n">lammps_location</span> <span class="o">=</span> <span class="s2">&quot;/opt/homebrew/bin&quot;</span>
-<span class="linenos">4</span><span class="c1"># Location of directory where mpirun is stored</span>
-<span class="linenos">5</span><span class="n">mpi_location</span> <span class="o">=</span> <span class="s2">&quot;/opt/homebrew/bin&quot;</span>
-<span class="linenos">6</span><span class="c1"># Full path to the potential to be used</span>
-<span class="linenos">7</span><span class="n">lammps_potential</span> <span class="o">=</span> <span class="s2">&quot;/opt/homebrew/Cellar/lammps/20240829-update1/share/lammps/potentials/Cu_mishin1.eam.alloy&quot;</span>
-<span class="linenos">8</span>
+<span class="linenos">2</span><span class="c1"># Location of the directory holding the LAMMPS binaries, and of the one holding mpirun.</span>
+<span class="linenos">3</span><span class="c1"># Leave both as None to have them discovered automatically: PATH and the usual install</span>
+<span class="linenos">4</span><span class="c1"># directories are searched, and any build lacking the styles this pipeline needs</span>
+<span class="linenos">5</span><span class="c1"># (eam/alloy for minimization, neb for NEB) is skipped rather than used and left to fail</span>
+<span class="linenos">6</span><span class="c1"># mid-run.  Set them to a directory to search it first, or export GBK_LMP_SERIAL /</span>
+<span class="linenos">7</span><span class="c1"># GBK_LMP_MPI / GBK_MPIRUN to name the exact binaries.</span>
+<span class="linenos">8</span><span class="c1"># Run `python -m src.executables` to see what discovery picks on this machine.</span>
 </pre></div>
 </div>
 <ul class="simple">
 <li><p>Specify the parameters that control the scope of gridsearch and number of cores to be used. <code class="docutils literal notranslate"><span class="pre">num_cores</span></code> is the number of cores to be used when calling lammps. <code class="docutils literal notranslate"><span class="pre">step_increments</span></code> determines the resolution of the grid used in this grid search. <code class="docutils literal notranslate"><span class="pre">limit</span></code> is the highest extend upto which the code explores.</p></li>
 </ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="c1"># Number of cores to be used for grid search simulation</span>
-<span class="linenos"> 2</span><span class="n">num_cores</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span><span class="o">-</span><span class="mi">2</span>
-<span class="linenos"> 3</span><span class="c1"># Increments in displacements to be used for grid search</span>
-<span class="linenos"> 4</span><span class="c1"># Defines how fine you want the grid to be for the grid search</span>
-<span class="linenos"> 5</span><span class="n">step_increments</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="linenos"> 6</span><span class="c1"># Highest displacement to be used for grid search</span>
-<span class="linenos"> 7</span><span class="c1"># Defines how large of a space you want to explore in terms of Angstroms</span>
-<span class="linenos"> 8</span><span class="n">limit</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="linenos"> 9</span><span class="c1"># Setting that decides if you want dump files to be created along with the text output</span>
-<span class="linenos">10</span><span class="c1"># 1 --&gt; Create dump files that show GB configs</span>
-<span class="linenos">11</span><span class="c1"># 0 --&gt; Does not create dump files, only the text file that contains displacements and GB energy</span>
-<span class="linenos">12</span><span class="n">output_setting</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="linenos">13</span><span class="c1"># Setting that allows for user to choose which disconnection mode is to be used</span>
-<span class="linenos">14</span><span class="c1"># Keep this to False as grid search is done for flat GB anyway</span>
-<span class="linenos">15</span><span class="n">choose_disconnection</span> <span class="o">=</span> <span class="kc">False</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="n">lammps_location</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="linenos"> 2</span><span class="c1"># Location of directory where mpirun is stored</span>
+<span class="linenos"> 3</span><span class="n">mpi_location</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="linenos"> 4</span><span class="c1"># Full path to the potential to be used</span>
+<span class="linenos"> 5</span><span class="n">lammps_potential</span> <span class="o">=</span> <span class="s2">"/opt/homebrew/Cellar/lammps/20240829-update1/share/lammps/potentials/Cu_mishin1.eam.alloy"</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="c1"># Number of cores to be used for grid search simulation</span>
+<span class="linenos"> 8</span><span class="n">num_cores</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span><span class="o">-</span><span class="mi">2</span>
+<span class="linenos"> 9</span><span class="c1"># Increments in displacements to be used for grid search</span>
+<span class="linenos">10</span><span class="c1"># Defines how fine you want the grid to be for the grid search</span>
+<span class="linenos">11</span><span class="n">step_increments</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="linenos">12</span><span class="c1"># Highest displacement to be used for grid search</span>
+<span class="linenos">13</span><span class="c1"># Defines how large of a space you want to explore in terms of Angstroms</span>
+<span class="linenos">14</span><span class="n">limit</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="linenos">15</span><span class="c1"># Setting that decides if you want dump files to be created along with the text output</span>
 </pre></div>
 </div>
 <ul class="simple">
 <li><p>Finally call the function that calls the required functions.</p></li>
 </ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="c1"># Run</span>
-<span class="linenos"> 2</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-<span class="linenos"> 3</span>    <span class="n">results_folder_path</span> <span class="o">=</span> <span class="n">runGridSearch</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span>
-<span class="linenos"> 4</span>                                        <span class="n">misorientation</span><span class="p">,</span>
-<span class="linenos"> 5</span>                                        <span class="n">inclination</span><span class="p">,</span>
-<span class="linenos"> 6</span>                                        <span class="n">lattice_parameter</span><span class="p">,</span>
-<span class="linenos"> 7</span>                                        <span class="n">lattice_vector</span><span class="p">,</span>
-<span class="linenos"> 8</span>                                        <span class="n">axis</span><span class="p">,</span>
-<span class="linenos"> 9</span>                                        <span class="n">size_y</span><span class="p">,</span>
-<span class="linenos">10</span>                                        <span class="n">size_z</span><span class="p">,</span>
-<span class="linenos">11</span>                                        <span class="n">element</span><span class="p">,</span>
-<span class="linenos">12</span>                                        <span class="n">lammps_location</span><span class="p">,</span>
-<span class="linenos">13</span>                                        <span class="n">mpi_location</span><span class="p">,</span>
-<span class="linenos">14</span>                                        <span class="n">output_folder</span><span class="p">,</span>
-<span class="linenos">15</span>                                        <span class="n">lammps_potential</span><span class="p">,</span>
-<span class="linenos">16</span>                                        <span class="n">oilab_output_file</span><span class="p">,</span>
-<span class="linenos">17</span>                                        <span class="n">choose_disconnection</span><span class="p">,</span>
-<span class="linenos">18</span>                                        <span class="n">num_cores</span><span class="p">,</span>
-<span class="linenos">19</span>                                        <span class="n">step_increments</span><span class="p">,</span>
-<span class="linenos">20</span>                                        <span class="n">limit</span><span class="p">,</span>
-<span class="linenos">21</span>                                        <span class="n">output_setting</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="c1"># 1 --&gt; Create dump files that show GB configs</span>
+<span class="linenos"> 2</span><span class="c1"># 0 --&gt; Does not create dump files, only the text file that contains displacements and GB energy</span>
+<span class="linenos"> 3</span><span class="n">output_setting</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="linenos"> 4</span><span class="c1"># Setting that allows for user to choose which disconnection mode is to be used</span>
+<span class="linenos"> 5</span><span class="c1"># Keep this to False as grid search is done for flat GB anyway</span>
+<span class="linenos"> 6</span><span class="n">choose_disconnection</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="linenos"> 7</span><span class="c1"># Run</span>
+<span class="linenos"> 8</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+<span class="linenos"> 9</span>    <span class="n">results_folder_path</span> <span class="o">=</span> <span class="n">runGridSearch</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span>
+<span class="linenos">10</span>                                        <span class="n">misorientation</span><span class="p">,</span>
+<span class="linenos">11</span>                                        <span class="n">inclination</span><span class="p">,</span>
+<span class="linenos">12</span>                                        <span class="n">lattice_parameter</span><span class="p">,</span>
+<span class="linenos">13</span>                                        <span class="n">lattice_vector</span><span class="p">,</span>
+<span class="linenos">14</span>                                        <span class="n">axis</span><span class="p">,</span>
+<span class="linenos">15</span>                                        <span class="n">size_y</span><span class="p">,</span>
+<span class="linenos">16</span>                                        <span class="n">size_z</span><span class="p">,</span>
+<span class="linenos">17</span>                                        <span class="n">element</span><span class="p">,</span>
+<span class="linenos">18</span>                                        <span class="n">lammps_location</span><span class="p">,</span>
+<span class="linenos">19</span>                                        <span class="n">mpi_location</span><span class="p">,</span>
+<span class="linenos">20</span>                                        <span class="n">output_folder</span><span class="p">,</span>
+<span class="linenos">21</span>                                        <span class="n">lammps_potential</span><span class="p">,</span>
 </pre></div>
 </div>
 <ul class="simple">

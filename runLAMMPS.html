@@ -8,14 +8,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>runLAMMPS module &mdash; GB Kinetics 2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="_static/documentation_options.js?v=60dbed4a"></script>
-      <script src="_static/doctools.js?v=9bcbadda"></script>
-      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -48,7 +48,6 @@
 <li class="toctree-l2"><a class="reference internal" href="usage.html#install-gb-kinetics">Install GB Kinetics</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="usage.html#windows">Windows</a></li>
 <li class="toctree-l3"><a class="reference internal" href="usage.html#mac-linux">Mac/Linux</a></li>
-<li class="toctree-l3"><a class="reference internal" href="usage.html#conda">Conda</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="usage.html#workflow">Workflow</a></li>
@@ -78,7 +77,6 @@
 <li class="toctree-l3"><a class="reference internal" href="example_gbkinetics.html#references">References</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="example_gbkinetics.html#summary-of-important-functions-classes-used-in-the-workflow">Summary of important functions/classes used in the workflow</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">Source</a><ul class="current">
@@ -121,6 +119,15 @@
 <li class="toctree-l4"><a class="reference internal" href="bicrystallography.html#bicrystallography.bicrystallography.gb_props"><code class="docutils literal notranslate"><span class="pre">bicrystallography.gb_props()</span></code></a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="executables.html">executables module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="executables.html#src.executables.STYLES_MINIMIZATION"><code class="docutils literal notranslate"><span class="pre">STYLES_MINIMIZATION</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="executables.html#src.executables.STYLES_NEB"><code class="docutils literal notranslate"><span class="pre">STYLES_NEB</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="executables.html#src.executables.find_lammps_mpi"><code class="docutils literal notranslate"><span class="pre">find_lammps_mpi()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="executables.html#src.executables.find_lammps_serial"><code class="docutils literal notranslate"><span class="pre">find_lammps_serial()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="executables.html#src.executables.find_mpirun"><code class="docutils literal notranslate"><span class="pre">find_mpirun()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="executables.html#src.executables.report"><code class="docutils literal notranslate"><span class="pre">report()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="min_shuffle.html">min_shuffle module</a><ul>
@@ -175,6 +182,9 @@
 <li class="toctree-l4"><a class="reference internal" href="#src.runLAMMPS.run_LAMMPS.step_height"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.step_height</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#src.runLAMMPS.run_LAMMPS.neb_output_folder"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.neb_output_folder</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#src.runLAMMPS.run_LAMMPS.__init__"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.runLAMMPS.run_LAMMPS.lammps_mpi"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.lammps_mpi</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.runLAMMPS.run_LAMMPS.lammps_serial"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.lammps_serial</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.runLAMMPS.run_LAMMPS.mpirun"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.mpirun</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#src.runLAMMPS.run_LAMMPS.post_process_gridsearch_data"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.post_process_gridsearch_data()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#src.runLAMMPS.run_LAMMPS.post_process_neb_output"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.post_process_neb_output()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#src.runLAMMPS.run_LAMMPS.run_grid_search"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.run_grid_search()</span></code></a></li>
@@ -220,7 +230,7 @@
 <span id="runlammps-module"></span><h1>runLAMMPS module<a class="headerlink" href="#module-src.runLAMMPS" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="src.runLAMMPS.run_LAMMPS">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.runLAMMPS.</span></span><span class="sig-name descname"><span class="pre">run_LAMMPS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">element</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lattice_parameter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">misorientation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inclination</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size_along_gb_period</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">potential</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mpi_location</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lammps_location</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/runLAMMPS.html#run_LAMMPS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.runLAMMPS.</span></span><span class="sig-name descname"><span class="pre">run_LAMMPS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">element</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lattice_parameter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">misorientation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inclination</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size_along_gb_period</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">potential</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mpi_location</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lammps_location</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/runLAMMPS.html#run_LAMMPS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>A class to set up, run, and post-process LAMMPS simulations
 for grain boundary disconnection energy calculations.</p>
@@ -315,10 +325,11 @@ for grain boundary disconnection energy calculations.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="src.runLAMMPS.run_LAMMPS.mpi_location">
 <span class="sig-name descname"><span class="pre">mpi_location</span></span><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.mpi_location" title="Link to this definition"></a></dt>
-<dd><p>Path to MPI binaries.</p>
+<dd><p>Directory holding the MPI binaries, searched
+before PATH. None (the default) discovers the launcher automatically.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
+<dd class="field-odd"><p>str or None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -326,10 +337,11 @@ for grain boundary disconnection energy calculations.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="src.runLAMMPS.run_LAMMPS.lammps_location">
 <span class="sig-name descname"><span class="pre">lammps_location</span></span><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.lammps_location" title="Link to this definition"></a></dt>
-<dd><p>Path to LAMMPS binaries.</p>
+<dd><p>Directory holding the LAMMPS binaries,
+searched before PATH. None discovers them automatically.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
+<dd class="field-odd"><p>str or None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -435,7 +447,7 @@ for grain boundary disconnection energy calculations.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.runLAMMPS.run_LAMMPS.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">element</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lattice_parameter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">misorientation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inclination</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size_along_gb_period</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">potential</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mpi_location</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lammps_location</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/runLAMMPS.html#run_LAMMPS.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.__init__" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">element</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lattice_parameter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">misorientation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inclination</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size_along_gb_period</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">potential</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mpi_location</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lammps_location</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/runLAMMPS.html#run_LAMMPS.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.__init__" title="Link to this definition"></a></dt>
 <dd><p>Initializes the run_LAMMPS instance with simulation parameters.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -448,9 +460,61 @@ for grain boundary disconnection energy calculations.</p>
 <li><p><strong>inclination</strong> (<em>float</em>) – Grain boundary inclination angle.</p></li>
 <li><p><strong>size_along_gb_period</strong> (<em>int</em>) – Size along grain boundary period.</p></li>
 <li><p><strong>potential</strong> (<em>str</em>) – Path to interatomic potential file.</p></li>
-<li><p><strong>mpi_location</strong> (<em>str</em>) – Path to MPI binaries.</p></li>
-<li><p><strong>lammps_location</strong> (<em>str</em>) – Path to LAMMPS binaries.</p></li>
+<li><p><strong>mpi_location</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory holding mpirun. Searched before
+PATH; leave as None to let <code class="docutils literal notranslate"><span class="pre">src.executables</span></code> find it.</p></li>
+<li><p><strong>lammps_location</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory holding the LAMMPS binaries.
+Searched before PATH; leave as None to let <code class="docutils literal notranslate"><span class="pre">src.executables</span></code> find
+them.  Discovery rejects a build that lacks the styles this
+pipeline needs, so the first <code class="docutils literal notranslate"><span class="pre">lmp</span></code> on PATH is not blindly used.</p></li>
 </ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.runLAMMPS.run_LAMMPS.lammps_mpi">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">lammps_mpi</span></span><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.lammps_mpi" title="Link to this definition"></a></dt>
+<dd><p>Path to the MPI-enabled LAMMPS executable used for NEB and grid search.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>Absolute path, discovered on first access and then cached.  The</dt><dd><p>candidate is verified to actually run in parallel under
+<code class="docutils literal notranslate"><span class="pre">self.mpirun</span></code>, so a serial build is not silently launched as N
+independent copies of the same calculation.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.runLAMMPS.run_LAMMPS.lammps_serial">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">lammps_serial</span></span><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.lammps_serial" title="Link to this definition"></a></dt>
+<dd><p>Path to the LAMMPS executable used for the serial minimization runs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Absolute path, discovered on first access and then cached.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.runLAMMPS.run_LAMMPS.mpirun">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">mpirun</span></span><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.mpirun" title="Link to this definition"></a></dt>
+<dd><p>Path to the MPI launcher used for the parallel runs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Absolute path, discovered on first access and then cached.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
@@ -509,7 +573,7 @@ for grain boundary disconnection energy calculations.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.runLAMMPS.run_LAMMPS.run_minimization">
-<span class="sig-name descname"><span class="pre">run_minimization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disp_along_gb_period</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disp_along_tilt_axis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimization_along_gb_directions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_cores</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/runLAMMPS.html#run_LAMMPS.run_minimization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.run_minimization" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">run_minimization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disp_along_gb_period</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disp_along_tilt_axis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimization_along_gb_directions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/runLAMMPS.html#run_LAMMPS.run_minimization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.runLAMMPS.run_LAMMPS.run_minimization" title="Link to this definition"></a></dt>
 <dd><p>Runs a minimization calculation using LAMMPS.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>

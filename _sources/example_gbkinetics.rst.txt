@@ -140,25 +140,3 @@ References
 shear-coupled grain boundary migration, Physical Review B 93 (2016) 024109.
 
 
-Summary of important functions/classes used in the workflow
-------------------------------------------------------------
-
-#. Bicrystals created in :ref:`stgb-construction` and :ref:`discon-construction` are objects of :py:class:`src.bicrystal.bicrystal` class.
-
-   - The function :py:meth:`src.bicrystal.bicrystal.create_flat_gb_bicrystal` uses the methodology described in :ref:`stgb-construction` to create a bicrystal with as cut flat gb.
-   - The function :py:meth:`src.bicrystal.bicrystal.create_disconnection_containing_bicrystal` uses the methodology described in :ref:`discon-construction` to create a bicrystal with a disconnection step.
-   - The function :py:meth:`src.bicrsytal.bicrsytal.ordered_write` writes the bicrystal configurations generated into ``LAMMPS data files``.
-
-#. Grid search required in :ref:`stgb-construction` which in turn utilizes utilizes :py:meth:`src.GBKineticsRunController.runGridSearch`.
-
-#. GB bicrystallographic data is read from oILAB output in :doc:`data` using :py:meth:`src.bicrystallography.bicrystallography.gb_props`
-
-#. All calls to ``LAMMPS`` are handled by object of class :py:class:`src.runLAMMPS.run_LAMMPS`.
-
-   - The function :py:meth:`src.runLAMMPS.run_LAMMPS.run_minimization` calls LAMMPS to minimize the bicrystal.
-   - The function :py:meth:`src.runLAMMPS.run_LAMMPS.run_grid_search` calls LAMMPS to run :math:`\gamma` -surface method on a GB.
-   - The function :py:meth:`src.runLAMMPS.run_LAMMPS.run_neb_calc` calls LAMMPS to run a nudged elastic band calculation on the atomic configurations constructed in :ref:`discon-construction`.
-
-#. Calculation of min-shuffle based atomic trajectories is done using an object of class :py:class:`src.min_shuffle.min_shuffle`.
-
-

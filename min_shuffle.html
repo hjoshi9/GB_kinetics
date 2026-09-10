@@ -8,19 +8,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>min_shuffle module &mdash; GB Kinetics 2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="_static/documentation_options.js?v=60dbed4a"></script>
-      <script src="_static/doctools.js?v=9bcbadda"></script>
-      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="plastic_slip module" href="plastic_slip.html" />
-    <link rel="prev" title="bicrystallography module" href="bicrystallography.html" /> 
+    <link rel="prev" title="executables module" href="executables.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -49,7 +49,6 @@
 <li class="toctree-l2"><a class="reference internal" href="usage.html#install-gb-kinetics">Install GB Kinetics</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="usage.html#windows">Windows</a></li>
 <li class="toctree-l3"><a class="reference internal" href="usage.html#mac-linux">Mac/Linux</a></li>
-<li class="toctree-l3"><a class="reference internal" href="usage.html#conda">Conda</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="usage.html#workflow">Workflow</a></li>
@@ -79,7 +78,6 @@
 <li class="toctree-l3"><a class="reference internal" href="example_gbkinetics.html#references">References</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="example_gbkinetics.html#summary-of-important-functions-classes-used-in-the-workflow">Summary of important functions/classes used in the workflow</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">Source</a><ul class="current">
@@ -122,6 +120,15 @@
 <li class="toctree-l4"><a class="reference internal" href="bicrystallography.html#bicrystallography.bicrystallography.gb_props"><code class="docutils literal notranslate"><span class="pre">bicrystallography.gb_props()</span></code></a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="executables.html">executables module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="executables.html#src.executables.STYLES_MINIMIZATION"><code class="docutils literal notranslate"><span class="pre">STYLES_MINIMIZATION</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="executables.html#src.executables.STYLES_NEB"><code class="docutils literal notranslate"><span class="pre">STYLES_NEB</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="executables.html#src.executables.find_lammps_mpi"><code class="docutils literal notranslate"><span class="pre">find_lammps_mpi()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="executables.html#src.executables.find_lammps_serial"><code class="docutils literal notranslate"><span class="pre">find_lammps_serial()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="executables.html#src.executables.find_mpirun"><code class="docutils literal notranslate"><span class="pre">find_mpirun()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="executables.html#src.executables.report"><code class="docutils literal notranslate"><span class="pre">report()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">min_shuffle module</a><ul>
@@ -176,6 +183,9 @@
 <li class="toctree-l4"><a class="reference internal" href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.step_height"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.step_height</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.neb_output_folder"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.neb_output_folder</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.__init__"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.lammps_mpi"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.lammps_mpi</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.lammps_serial"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.lammps_serial</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.mpirun"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.mpirun</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.post_process_gridsearch_data"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.post_process_gridsearch_data()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.post_process_neb_output"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.post_process_neb_output()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.run_grid_search"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.run_grid_search()</span></code></a></li>
@@ -221,7 +231,7 @@
 <span id="min-shuffle-module"></span><h1>min_shuffle module<a class="headerlink" href="#module-src.min_shuffle" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="src.min_shuffle.min_shuffle">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.min_shuffle.</span></span><span class="sig-name descname"><span class="pre">min_shuffle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lattice_parameter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">misorientation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inclination</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reg_param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_expansion_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dimension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/min_shuffle.html#min_shuffle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.min_shuffle.min_shuffle" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.min_shuffle.</span></span><span class="sig-name descname"><span class="pre">min_shuffle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lattice_parameter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">misorientation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inclination</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reg_param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_expansion_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dimension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/min_shuffle.html#min_shuffle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.min_shuffle.min_shuffle" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class to perform minimal atomic shuffling analysis between two grain boundary configurations
 using optimal transport (Sinkhorn algorithm).</p>
@@ -542,7 +552,7 @@ self.final_grain (np.ndarray): Final atomic data.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.min_shuffle.min_shuffle.plot_min_shuffle_2d">
-<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">plot_min_shuffle_2d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Xbasis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ybasis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Gamma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reg_param</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/min_shuffle.html#min_shuffle.plot_min_shuffle_2d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.min_shuffle.min_shuffle.plot_min_shuffle_2d" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">plot_min_shuffle_2d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Xbasis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ybasis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Gamma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reg_param</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/min_shuffle.html#min_shuffle.plot_min_shuffle_2d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.min_shuffle.min_shuffle.plot_min_shuffle_2d" title="Link to this definition"></a></dt>
 <dd><p>Generates and saves a 2D plot of optimal transport mapping between source and target atomic configurations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -564,7 +574,7 @@ self.final_grain (np.ndarray): Final atomic data.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.min_shuffle.min_shuffle.plot_min_shuffle_3d">
-<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">plot_min_shuffle_3d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Xs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ys</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reg_param</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/min_shuffle.html#min_shuffle.plot_min_shuffle_3d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.min_shuffle.min_shuffle.plot_min_shuffle_3d" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">plot_min_shuffle_3d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Xs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ys</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reg_param</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/min_shuffle.html#min_shuffle.plot_min_shuffle_3d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.min_shuffle.min_shuffle.plot_min_shuffle_3d" title="Link to this definition"></a></dt>
 <dd><p>Creates a 3D scatter plot comparing initial and final atomic configurations within a simulation box.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -652,7 +662,7 @@ self.final_atoms_transformed_region (np.ndarray): Final atomic positions after t
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="bicrystallography.html" class="btn btn-neutral float-left" title="bicrystallography module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="executables.html" class="btn btn-neutral float-left" title="executables module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="plastic_slip.html" class="btn btn-neutral float-right" title="plastic_slip module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

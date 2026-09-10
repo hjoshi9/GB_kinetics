@@ -7,14 +7,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Index &mdash; GB Kinetics 2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="_static/documentation_options.js?v=60dbed4a"></script>
-      <script src="_static/doctools.js?v=9bcbadda"></script>
-      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="#" />
     <link rel="search" title="Search" href="search.html" /> 
@@ -46,7 +46,6 @@
 <li class="toctree-l2"><a class="reference internal" href="usage.html#install-gb-kinetics">Install GB Kinetics</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="usage.html#windows">Windows</a></li>
 <li class="toctree-l3"><a class="reference internal" href="usage.html#mac-linux">Mac/Linux</a></li>
-<li class="toctree-l3"><a class="reference internal" href="usage.html#conda">Conda</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="usage.html#workflow">Workflow</a></li>
@@ -76,7 +75,6 @@
 <li class="toctree-l3"><a class="reference internal" href="example_gbkinetics.html#references">References</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="example_gbkinetics.html#summary-of-important-functions-classes-used-in-the-workflow">Summary of important functions/classes used in the workflow</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">Source</a><ul>
@@ -119,6 +117,15 @@
 <li class="toctree-l4"><a class="reference internal" href="bicrystallography.html#bicrystallography.bicrystallography.gb_props"><code class="docutils literal notranslate"><span class="pre">bicrystallography.gb_props()</span></code></a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="executables.html">executables module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="executables.html#src.executables.STYLES_MINIMIZATION"><code class="docutils literal notranslate"><span class="pre">STYLES_MINIMIZATION</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="executables.html#src.executables.STYLES_NEB"><code class="docutils literal notranslate"><span class="pre">STYLES_NEB</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="executables.html#src.executables.find_lammps_mpi"><code class="docutils literal notranslate"><span class="pre">find_lammps_mpi()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="executables.html#src.executables.find_lammps_serial"><code class="docutils literal notranslate"><span class="pre">find_lammps_serial()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="executables.html#src.executables.find_mpirun"><code class="docutils literal notranslate"><span class="pre">find_mpirun()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="executables.html#src.executables.report"><code class="docutils literal notranslate"><span class="pre">report()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="min_shuffle.html">min_shuffle module</a><ul>
@@ -173,6 +180,9 @@
 <li class="toctree-l4"><a class="reference internal" href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.step_height"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.step_height</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.neb_output_folder"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.neb_output_folder</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.__init__"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.lammps_mpi"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.lammps_mpi</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.lammps_serial"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.lammps_serial</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.mpirun"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.mpirun</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.post_process_gridsearch_data"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.post_process_gridsearch_data()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.post_process_neb_output"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.post_process_neb_output()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.run_grid_search"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.run_grid_search()</span></code></a></li>
@@ -350,9 +360,15 @@
 </li>
       <li><a href="min_shuffle.html#src.min_shuffle.min_shuffle.final_grain">final_grain (src.min_shuffle.min_shuffle attribute)</a>
 </li>
+      <li><a href="IO.html#IO.find_gb_location">find_gb_location() (in module IO)</a>
+</li>
+      <li><a href="executables.html#src.executables.find_lammps_mpi">find_lammps_mpi() (in module src.executables)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="IO.html#IO.find_gb_location">find_gb_location() (in module IO)</a>
+      <li><a href="executables.html#src.executables.find_lammps_serial">find_lammps_serial() (in module src.executables)</a>
+</li>
+      <li><a href="executables.html#src.executables.find_mpirun">find_mpirun() (in module src.executables)</a>
 </li>
       <li><a href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.folder">folder (src.runLAMMPS.run_LAMMPS attribute)</a>
 </li>
@@ -433,10 +449,14 @@
 </li>
       <li><a href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.lammps_location">lammps_location (src.runLAMMPS.run_LAMMPS attribute)</a>
 </li>
-      <li><a href="bicrystal.html#src.bicrystal.bicrystal.lat_par">lat_par (src.bicrystal.bicrystal attribute)</a>
+      <li><a href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.lammps_mpi">lammps_mpi (src.runLAMMPS.run_LAMMPS property)</a>
+</li>
+      <li><a href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.lammps_serial">lammps_serial (src.runLAMMPS.run_LAMMPS property)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="bicrystal.html#src.bicrystal.bicrystal.lat_par">lat_par (src.bicrystal.bicrystal attribute)</a>
+</li>
       <li><a href="bicrystal.html#src.bicrystal.bicrystal.lat_Vec">lat_Vec (src.bicrystal.bicrystal attribute)</a>
 </li>
       <li><a href="bicrystallography.html#bicrystallography.bicrystallography.lattice_parameter">lattice_parameter (bicrystallography.bicrystallography attribute)</a>
@@ -473,6 +493,8 @@
 </li>
         <li><a href="bicrystal.html#module-src.bicrystal">src.bicrystal</a>
 </li>
+        <li><a href="executables.html#module-src.executables">src.executables</a>
+</li>
         <li><a href="GBKineticsRunController.html#module-src.GBKineticsRunController">src.GBKineticsRunController</a>
 </li>
         <li><a href="min_shuffle.html#module-src.min_shuffle">src.min_shuffle</a>
@@ -484,20 +506,20 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.mpi_location">mpi_location (src.runLAMMPS.run_LAMMPS attribute)</a>
 </li>
+      <li><a href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.mpirun">mpirun (src.runLAMMPS.run_LAMMPS property)</a>
+</li>
   </ul></td>
 </tr></table>
 
 <h2 id="N">N</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="bicrystal.html#src.bicrystal.bicrystal.nCells">nCells (src.bicrystal.bicrystal attribute)</a>
-</li>
       <li><a href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.neb_images">neb_images (src.runLAMMPS.run_LAMMPS attribute)</a>
+</li>
+      <li><a href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.neb_output_folder">neb_output_folder (src.runLAMMPS.run_LAMMPS attribute)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.neb_output_folder">neb_output_folder (src.runLAMMPS.run_LAMMPS attribute)</a>
-</li>
       <li><a href="bicrystal.html#src.bicrystal.bicrystal.non_periodic_direction_size">non_periodic_direction_size (src.bicrystal.bicrystal attribute)</a>
 </li>
       <li><a href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.number_of_images_provided">number_of_images_provided (src.runLAMMPS.run_LAMMPS attribute)</a>
@@ -563,10 +585,12 @@
 </li>
       <li><a href="min_shuffle.html#src.min_shuffle.min_shuffle.replicate">replicate() (src.min_shuffle.min_shuffle method)</a>
 </li>
-      <li><a href="min_shuffle.html#src.min_shuffle.min_shuffle.run">run() (src.min_shuffle.min_shuffle method)</a>
+      <li><a href="executables.html#src.executables.report">report() (in module src.executables)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="min_shuffle.html#src.min_shuffle.min_shuffle.run">run() (src.min_shuffle.min_shuffle method)</a>
+</li>
       <li><a href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.run_grid_search">run_grid_search() (src.runLAMMPS.run_LAMMPS method)</a>
 </li>
       <li><a href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS">run_LAMMPS (class in src.runLAMMPS)</a>
@@ -604,6 +628,13 @@
         <li><a href="bicrystal.html#module-src.bicrystal">module</a>
 </li>
       </ul></li>
+      <li>
+    src.executables
+
+      <ul>
+        <li><a href="executables.html#module-src.executables">module</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li>
@@ -633,6 +664,10 @@
         <li><a href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.step_height">(src.runLAMMPS.run_LAMMPS attribute)</a>
 </li>
       </ul></li>
+      <li><a href="executables.html#src.executables.STYLES_MINIMIZATION">STYLES_MINIMIZATION (in module src.executables)</a>
+</li>
+      <li><a href="executables.html#src.executables.STYLES_NEB">STYLES_NEB (in module src.executables)</a>
+</li>
   </ul></td>
 </tr></table>
 

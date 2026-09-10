@@ -1,0 +1,614 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.executables &mdash; GB Kinetics 2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=60dbed4a"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            GB Kinetics
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../download.html">Download</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../usage.html#pre-installed-programs">Pre-installed programs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage.html#install-gb-kinetics">Install GB Kinetics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../usage.html#windows">Windows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage.html#mac-linux">Mac/Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage.html#workflow">Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage.html#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../theory.html">Theory</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../theory.html#construction-of-stgb-microstate">Construction of STGB microstate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../theory.html#enumeration-of-disconnection-modes">Enumeration of disconnection modes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../theory.html#construction-of-atomistic-gb-migration-images">Construction of atomistic GB migration images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../theory.html#mapping-the-atomic-shuffles">Mapping the atomic shuffles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../theory.html#evaluation-of-the-energy-barrier-and-trajectories">Evaluation of the energy barrier and trajectories</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../theory.html#references">References</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../data.html">Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../example_gs.html">Grid Search Example</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../example_gs.html#output">Output</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../example_gbkinetics.html">GB Kinetics Example</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../example_gbkinetics.html#user-input">User input</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../example_gbkinetics.html#command-line-output">Command line Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../example_gbkinetics.html#output">Output</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../example_gbkinetics.html#references">References</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Source</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../GBKineticsRunController.html">GBKineticsRunController module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../GBKineticsRunController.html#src.GBKineticsRunController.runGBkinetics"><code class="docutils literal notranslate"><span class="pre">runGBkinetics()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../GBKineticsRunController.html#src.GBKineticsRunController.runGridSearch"><code class="docutils literal notranslate"><span class="pre">runGridSearch()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../IO.html">IO module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../IO.html#IO.find_gb_location"><code class="docutils literal notranslate"><span class="pre">find_gb_location()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../IO.html#IO.read_LAMMPS_datafile"><code class="docutils literal notranslate"><span class="pre">read_LAMMPS_datafile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../IO.html#IO.read_LAMMPS_dumpfile"><code class="docutils literal notranslate"><span class="pre">read_LAMMPS_dumpfile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../IO.html#IO.read_gridsearch_results"><code class="docutils literal notranslate"><span class="pre">read_gridsearch_results()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../IO.html#IO.read_neb_output_data"><code class="docutils literal notranslate"><span class="pre">read_neb_output_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../IO.html#IO.write_LAMMPSoutput_tstep"><code class="docutils literal notranslate"><span class="pre">write_LAMMPSoutput_tstep()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../IO.html#IO.write_gridsearch_results"><code class="docutils literal notranslate"><span class="pre">write_gridsearch_results()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../IO.html#IO.write_lammps_datafile"><code class="docutils literal notranslate"><span class="pre">write_lammps_datafile()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../bicrystal.html">bicrystal module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal"><code class="docutils literal notranslate"><span class="pre">bicrystal</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.__init__"><code class="docutils literal notranslate"><span class="pre">bicrystal.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.create_disconnection_containing_bicrystal"><code class="docutils literal notranslate"><span class="pre">bicrystal.create_disconnection_containing_bicrystal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.create_fix_eco_orientationfile"><code class="docutils literal notranslate"><span class="pre">bicrystal.create_fix_eco_orientationfile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.create_flat_gb_bicrystal"><code class="docutils literal notranslate"><span class="pre">bicrystal.create_flat_gb_bicrystal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.ordered_write"><code class="docutils literal notranslate"><span class="pre">bicrystal.ordered_write()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.write"><code class="docutils literal notranslate"><span class="pre">bicrystal.write()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../bicrystallography.html">bicrystallography module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../bicrystallography.html#bicrystallography.bicrystallography"><code class="docutils literal notranslate"><span class="pre">bicrystallography</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystallography.html#bicrystallography.bicrystallography.sigma"><code class="docutils literal notranslate"><span class="pre">bicrystallography.sigma</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystallography.html#bicrystallography.bicrystallography.misorientation"><code class="docutils literal notranslate"><span class="pre">bicrystallography.misorientation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystallography.html#bicrystallography.bicrystallography.inclination"><code class="docutils literal notranslate"><span class="pre">bicrystallography.inclination</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystallography.html#bicrystallography.bicrystallography.axis"><code class="docutils literal notranslate"><span class="pre">bicrystallography.axis</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystallography.html#bicrystallography.bicrystallography.lattice_parameter"><code class="docutils literal notranslate"><span class="pre">bicrystallography.lattice_parameter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystallography.html#bicrystallography.bicrystallography.__init__"><code class="docutils literal notranslate"><span class="pre">bicrystallography.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystallography.html#bicrystallography.bicrystallography.gb_props"><code class="docutils literal notranslate"><span class="pre">bicrystallography.gb_props()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../executables.html">executables module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../executables.html#src.executables.STYLES_MINIMIZATION"><code class="docutils literal notranslate"><span class="pre">STYLES_MINIMIZATION</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../executables.html#src.executables.STYLES_NEB"><code class="docutils literal notranslate"><span class="pre">STYLES_NEB</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../executables.html#src.executables.find_lammps_mpi"><code class="docutils literal notranslate"><span class="pre">find_lammps_mpi()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../executables.html#src.executables.find_lammps_serial"><code class="docutils literal notranslate"><span class="pre">find_lammps_serial()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../executables.html#src.executables.find_mpirun"><code class="docutils literal notranslate"><span class="pre">find_mpirun()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../executables.html#src.executables.report"><code class="docutils literal notranslate"><span class="pre">report()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../min_shuffle.html">min_shuffle module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle"><code class="docutils literal notranslate"><span class="pre">min_shuffle</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.__init__"><code class="docutils literal notranslate"><span class="pre">min_shuffle.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.format_input"><code class="docutils literal notranslate"><span class="pre">min_shuffle.format_input()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.gb_info"><code class="docutils literal notranslate"><span class="pre">min_shuffle.gb_info()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.load_data"><code class="docutils literal notranslate"><span class="pre">min_shuffle.load_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.pbcdist"><code class="docutils literal notranslate"><span class="pre">min_shuffle.pbcdist()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.pbcwrap"><code class="docutils literal notranslate"><span class="pre">min_shuffle.pbcwrap()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.plot_min_shuffle_2d"><code class="docutils literal notranslate"><span class="pre">min_shuffle.plot_min_shuffle_2d()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.plot_min_shuffle_3d"><code class="docutils literal notranslate"><span class="pre">min_shuffle.plot_min_shuffle_3d()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.replicate"><code class="docutils literal notranslate"><span class="pre">min_shuffle.replicate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.run"><code class="docutils literal notranslate"><span class="pre">min_shuffle.run()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.write_images"><code class="docutils literal notranslate"><span class="pre">min_shuffle.write_images()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../plastic_slip.html">plastic_slip module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../plastic_slip.html#plastic_slip.dislocation_dipole"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../plastic_slip.html#plastic_slip.dislocation_dipole.dislocation_points"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.dislocation_points</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../plastic_slip.html#plastic_slip.dislocation_dipole.period"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.period</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../plastic_slip.html#plastic_slip.dislocation_dipole.burgers_vector"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.burgers_vector</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../plastic_slip.html#plastic_slip.dislocation_dipole.dislocation_vector"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.dislocation_vector</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../plastic_slip.html#plastic_slip.dislocation_dipole.dislocation_distance"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.dislocation_distance</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../plastic_slip.html#plastic_slip.dislocation_dipole.__init__"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../plastic_slip.html#plastic_slip.dislocation_dipole.plastic_displacement"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.plastic_displacement()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../runLAMMPS.html">runLAMMPS module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.folder"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.folder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.element"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.element</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.lattice_parameter"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.lattice_parameter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.sigma"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.sigma</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.misorientation"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.misorientation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.inclination"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.inclination</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.size_along_gb_period"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.size_along_gb_period</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.potential"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.potential</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.mpi_location"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.mpi_location</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.lammps_location"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.lammps_location</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.output_filename_gridsearch"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.output_filename_gridsearch</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.gridsearch_output_setting"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.gridsearch_output_setting</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.gridsearch_output_folder"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.gridsearch_output_folder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.lammps_input_filename"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.lammps_input_filename</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.neb_images"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.neb_images</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.number_of_images_provided"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.number_of_images_provided</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.burgers_vec"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.burgers_vec</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.step_height"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.step_height</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.neb_output_folder"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.neb_output_folder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.__init__"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.lammps_mpi"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.lammps_mpi</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.lammps_serial"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.lammps_serial</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.mpirun"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.mpirun</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.post_process_gridsearch_data"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.post_process_gridsearch_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.post_process_neb_output"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.post_process_neb_output()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.run_grid_search"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.run_grid_search()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.run_minimization"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.run_minimization()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.run_neb_calc"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.run_neb_calc()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.write_lammps_gridsearch_input"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.write_lammps_gridsearch_input()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.write_lammps_neb_input_script"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.write_lammps_neb_input_script()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.write_minimization_input"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.write_minimization_input()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">GB Kinetics</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">src.executables</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for src.executables</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""</span>
+<span class="sd">    Locates the LAMMPS and MPI executables that are actually installed on the</span>
+<span class="sd">    machine, so that the driver scripts do not have to hardcode a path.</span>
+
+<span class="sd">    Discovery is deliberately more than a ``shutil.which`` call.  A LAMMPS binary</span>
+<span class="sd">    that exists and starts is not necessarily one this pipeline can use:</span>
+
+<span class="sd">    * LAMMPS is built with a selectable set of packages.  A build without MANYBODY</span>
+<span class="sd">      has no ``eam/alloy`` pair style, and one without REPLICA has no ``neb``</span>
+<span class="sd">      command.  Such a stripped build is often the first ``lmp`` on ``PATH``.</span>
+<span class="sd">    * Distribution MPI builds are frequently installed with a broken library path</span>
+<span class="sd">      and fail before reaching ``main``.</span>
+<span class="sd">    * A serial build launched under ``mpirun -np N`` does not fail.  It silently</span>
+<span class="sd">      runs N independent copies of the same calculation.</span>
+
+<span class="sd">    Every candidate is therefore probed with ``lmp -h``, which lists the styles the</span>
+<span class="sd">    build provides, and the MPI executable is additionally probed with a two-rank</span>
+<span class="sd">    ``-partition 2x1`` run, exactly what :meth:`src.runLAMMPS.run_LAMMPS.run_neb_calc`</span>
+<span class="sd">    performs.  The first candidate that passes wins, so a fully featured build</span>
+<span class="sd">    further down ``PATH`` beats a stripped one at the front of it.</span>
+
+<span class="sd">    Search order for each executable:</span>
+
+<span class="sd">    #. The override environment variable, if set: ``GBK_LMP_SERIAL``,</span>
+<span class="sd">       ``GBK_LMP_MPI`` or ``GBK_MPIRUN``, each naming a binary directly.</span>
+<span class="sd">    #. The directory passed as ``lammps_location`` / ``mpi_location``, if given.</span>
+<span class="sd">    #. ``PATH``.</span>
+<span class="sd">    #. The standard install directories listed in ``_EXTRA_DIRS`` below.</span>
+
+<span class="sd">    Run ``python -m src.executables`` to print what discovery selects on the</span>
+<span class="sd">    current machine.</span>
+<span class="sd">"""</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
+
+<span class="c1"># Names used by source builds, Homebrew, Debian/Ubuntu, Fedora and conda-forge.</span>
+<span class="c1"># Generic names come last so that an explicitly flavoured binary is preferred.</span>
+<span class="n">_SERIAL_NAMES</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"lmp_serial"</span><span class="p">,</span> <span class="s2">"lmp_g++_serial"</span><span class="p">,</span> <span class="s2">"lmp_mac"</span><span class="p">,</span> <span class="s2">"lmp_ubuntu"</span><span class="p">,</span> <span class="s2">"lmp"</span><span class="p">,</span> <span class="s2">"lammps"</span><span class="p">)</span>
+<span class="n">_MPI_NAMES</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"lmp_mpi"</span><span class="p">,</span> <span class="s2">"lmp_openmpi"</span><span class="p">,</span> <span class="s2">"lmp_mpich"</span><span class="p">,</span> <span class="s2">"lmp_g++_openmpi"</span><span class="p">,</span> <span class="s2">"lmp_mac_mpi"</span><span class="p">,</span>
+              <span class="s2">"lmp"</span><span class="p">,</span> <span class="s2">"lammps"</span><span class="p">)</span>
+<span class="n">_MPIRUN_NAMES</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"mpirun"</span><span class="p">,</span> <span class="s2">"mpiexec"</span><span class="p">)</span>
+
+<span class="c1"># Searched after PATH, for the common case of an MPI or LAMMPS install that is</span>
+<span class="c1"># packaged outside the default PATH.</span>
+<span class="n">_EXTRA_DIRS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">"/opt/homebrew/bin"</span><span class="p">,</span>             <span class="c1"># Homebrew, Apple silicon</span>
+    <span class="s2">"/usr/local/bin"</span><span class="p">,</span>                <span class="c1"># Homebrew, Intel macOS; source installs</span>
+    <span class="s2">"/usr/bin"</span><span class="p">,</span>
+    <span class="s2">"/usr/lib64/openmpi/bin"</span><span class="p">,</span>        <span class="c1"># Fedora / RHEL MPI packages</span>
+    <span class="s2">"/usr/lib64/mpich/bin"</span><span class="p">,</span>
+    <span class="s2">"/usr/lib/x86_64-linux-gnu/openmpi/bin"</span><span class="p">,</span>   <span class="c1"># Debian / Ubuntu</span>
+    <span class="s2">"/usr/lib/x86_64-linux-gnu/mpich/bin"</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Full paths given here override discovery entirely.</span>
+<span class="n">_ENV_SERIAL</span> <span class="o">=</span> <span class="s2">"GBK_LMP_SERIAL"</span>
+<span class="n">_ENV_MPI</span> <span class="o">=</span> <span class="s2">"GBK_LMP_MPI"</span>
+<span class="n">_ENV_MPIRUN</span> <span class="o">=</span> <span class="s2">"GBK_MPIRUN"</span>
+
+<span class="c1">#: Styles a LAMMPS build must advertise to run the minimization inputs.</span>
+<span class="c1">#: ``eam/alloy`` stands in for the MANYBODY package.</span>
+<span class="n">STYLES_MINIMIZATION</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"eam/alloy"</span><span class="p">,)</span>
+
+<span class="c1">#: Styles a LAMMPS build must advertise to run the NEB inputs. ``neb`` stands in</span>
+<span class="c1">#: for the REPLICA package, which MPI builds are often shipped without.</span>
+<span class="n">STYLES_NEB</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"eam/alloy"</span><span class="p">,</span> <span class="s2">"neb"</span><span class="p">)</span>
+
+<span class="n">_probe_cache</span> <span class="o">=</span> <span class="p">{}</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_from_env</span><span class="p">(</span><span class="n">variable</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">        Returns the executable named by an override environment variable.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            variable (str): Name of the environment variable to read.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str or None: The path, if the variable is set.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            RuntimeError: If the variable is set but does not name an executable file,</span>
+<span class="sd">                which is worth catching here rather than as a shell error mid-run.</span>
+<span class="sd">    """</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">variable</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">access</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">X_OK</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">"</span><span class="si">%s</span><span class="s2"> is set to '</span><span class="si">%s</span><span class="s2">', which is not an executable file."</span>
+                           <span class="o">%</span> <span class="p">(</span><span class="n">variable</span><span class="p">,</span> <span class="n">path</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">path</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_candidates</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">hint</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">extra_dirs</span><span class="o">=</span><span class="n">_EXTRA_DIRS</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">        Builds the ordered list of executables to probe.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            names (tuple of str): Executable names to look for, most specific first.</span>
+<span class="sd">            hint (str, optional): Directory the user supplied. Searched before PATH.</span>
+<span class="sd">            extra_dirs (tuple of str): Directories searched after PATH.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list of str: Absolute paths that exist and are executable, in priority</span>
+<span class="sd">                order, without duplicates.</span>
+<span class="sd">    """</span>
+    <span class="n">dirs</span> <span class="o">=</span> <span class="p">([</span><span class="n">hint</span><span class="p">]</span> <span class="k">if</span> <span class="n">hint</span> <span class="k">else</span> <span class="p">[])</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">extra_dirs</span><span class="p">)</span>
+    <span class="n">found</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">directory</span> <span class="ow">in</span> <span class="n">dirs</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">directory</span><span class="p">),</span> <span class="n">name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">access</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">X_OK</span><span class="p">):</span>
+                <span class="n">found</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+        <span class="n">on_path</span> <span class="o">=</span> <span class="n">shutil</span><span class="o">.</span><span class="n">which</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">on_path</span><span class="p">:</span>
+            <span class="n">found</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">on_path</span><span class="p">))</span>
+    <span class="c1"># A hinted directory outranks PATH, but among equals the order above is by</span>
+    <span class="c1"># name specificity, which is what we want.</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="n">found</span><span class="p">))</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_lammps_styles</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">        Runs `path -h` and returns the styles the build advertises.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            path (str): Absolute path to a candidate LAMMPS executable.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            set of str or None: The whitespace-separated tokens of the help output,</span>
+<span class="sd">                which include every installed style and command name, or None if the</span>
+<span class="sd">                executable could not be run at all (missing library, wrong</span>
+<span class="sd">                architecture, not LAMMPS).</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">_probe_cache</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_probe_cache</span><span class="p">[</span><span class="n">path</span><span class="p">]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># `-log none` matters: LAMMPS opens log.lammps in the working directory on</span>
+        <span class="c1"># startup, even for `-h`, and probing must not write into the user's cwd.</span>
+        <span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryDirectory</span><span class="p">()</span> <span class="k">as</span> <span class="n">tmp</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">path</span><span class="p">,</span> <span class="s2">"-h"</span><span class="p">,</span> <span class="s2">"-log"</span><span class="p">,</span> <span class="s2">"none"</span><span class="p">],</span> <span class="n">cwd</span><span class="o">=</span><span class="n">tmp</span><span class="p">,</span>
+                                    <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+                                    <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+        <span class="n">styles</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">errors</span><span class="o">=</span><span class="s2">"replace"</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">())</span> <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">returncode</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">OSError</span><span class="p">,</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">SubprocessError</span><span class="p">):</span>
+        <span class="n">styles</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_probe_cache</span><span class="p">[</span><span class="n">path</span><span class="p">]</span> <span class="o">=</span> <span class="n">styles</span>
+    <span class="k">return</span> <span class="n">styles</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_runs_in_parallel</span><span class="p">(</span><span class="n">mpirun</span><span class="p">,</span> <span class="n">lammps</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">        Checks that `mpirun` and `lammps` together give a real multi-partition run.</span>
+
+<span class="sd">        Runs the same `-partition Nx1` invocation `run_neb_calc` uses, on an empty</span>
+<span class="sd">        input.  A serial build reports "Processor partitions do not match number of</span>
+<span class="sd">        allocated processors" and a build with a broken library path fails to start,</span>
+<span class="sd">        so both are rejected here rather than after the input files are written.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            mpirun (str): Absolute path to mpirun/mpiexec.</span>
+<span class="sd">            lammps (str): Absolute path to a candidate LAMMPS executable.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if a two-rank, two-partition run succeeded.</span>
+<span class="sd">    """</span>
+    <span class="n">key</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"parallel"</span><span class="p">,</span> <span class="n">mpirun</span><span class="p">,</span> <span class="n">lammps</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">_probe_cache</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_probe_cache</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+    <span class="n">ok</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryDirectory</span><span class="p">()</span> <span class="k">as</span> <span class="n">tmp</span><span class="p">:</span>
+        <span class="n">empty</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span> <span class="s2">"in.probe"</span><span class="p">)</span>
+        <span class="nb">open</span><span class="p">(</span><span class="n">empty</span><span class="p">,</span> <span class="s2">"w"</span><span class="p">)</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">base</span> <span class="o">=</span> <span class="p">[</span><span class="n">lammps</span><span class="p">,</span> <span class="s2">"-partition"</span><span class="p">,</span> <span class="s2">"2x1"</span><span class="p">,</span> <span class="s2">"-in"</span><span class="p">,</span> <span class="n">empty</span><span class="p">,</span> <span class="s2">"-log"</span><span class="p">,</span> <span class="s2">"none"</span><span class="p">,</span> <span class="s2">"-screen"</span><span class="p">,</span> <span class="s2">"none"</span><span class="p">]</span>
+        <span class="c1"># --oversubscribe is Open MPI only; MPICH rejects it, so fall back.</span>
+        <span class="k">for</span> <span class="n">launcher</span> <span class="ow">in</span> <span class="p">([</span><span class="n">mpirun</span><span class="p">,</span> <span class="s2">"--oversubscribe"</span><span class="p">,</span> <span class="s2">"-np"</span><span class="p">,</span> <span class="s2">"2"</span><span class="p">],</span> <span class="p">[</span><span class="n">mpirun</span><span class="p">,</span> <span class="s2">"-np"</span><span class="p">,</span> <span class="s2">"2"</span><span class="p">]):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">launcher</span> <span class="o">+</span> <span class="n">base</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">tmp</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+                                        <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">120</span><span class="p">)</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">OSError</span><span class="p">,</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">SubprocessError</span><span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">returncode</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">ok</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">break</span>
+    <span class="n">_probe_cache</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">ok</span>
+    <span class="k">return</span> <span class="n">ok</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_describe</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">hint</span><span class="p">,</span> <span class="n">required_styles</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">        Builds the error message shown when nothing usable was found.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            names (tuple of str): Executable names that were searched for.</span>
+<span class="sd">            hint (str or None): Directory the user supplied, if any.</span>
+<span class="sd">            required_styles (tuple of str): Styles the build had to provide.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: A message naming what was looked for and what was rejected.</span>
+<span class="sd">    """</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"  looked for: "</span> <span class="o">+</span> <span class="s2">", "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">names</span><span class="p">)]</span>
+    <span class="k">if</span> <span class="n">hint</span><span class="p">:</span>
+        <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"  in the directory you gave: "</span> <span class="o">+</span> <span class="n">hint</span><span class="p">)</span>
+    <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"  then on PATH, then in: "</span> <span class="o">+</span> <span class="s2">", "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">_EXTRA_DIRS</span><span class="p">))</span>
+    <span class="n">wrong_styles</span><span class="p">,</span> <span class="n">would_not_start</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="p">(</span><span class="n">_candidates</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">hint</span><span class="p">)</span> <span class="k">if</span> <span class="n">required_styles</span> <span class="k">else</span> <span class="p">[]):</span>
+        <span class="n">styles</span> <span class="o">=</span> <span class="n">_lammps_styles</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">styles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">would_not_start</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">s</span> <span class="ow">in</span> <span class="n">styles</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">required_styles</span><span class="p">):</span>
+            <span class="n">missing</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">required_styles</span> <span class="k">if</span> <span class="n">s</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">styles</span><span class="p">]</span>
+            <span class="n">wrong_styles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"</span><span class="si">%s</span><span class="s2"> (no </span><span class="si">%s</span><span class="s2">)"</span> <span class="o">%</span> <span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">", "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">missing</span><span class="p">)))</span>
+    <span class="k">if</span> <span class="n">wrong_styles</span><span class="p">:</span>
+        <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"  binaries missing a required style: "</span> <span class="o">+</span> <span class="s2">", "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">wrong_styles</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">would_not_start</span><span class="p">:</span>
+        <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"  binaries that would not start at all: "</span> <span class="o">+</span> <span class="s2">", "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">would_not_start</span><span class="p">))</span>
+    <span class="k">return</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="find_lammps_serial">
+<a class="viewcode-back" href="../../executables.html#src.executables.find_lammps_serial">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">find_lammps_serial</span><span class="p">(</span><span class="n">hint</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">required_styles</span><span class="o">=</span><span class="n">STYLES_MINIMIZATION</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">        Finds a LAMMPS executable able to run the minimization inputs.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            hint (str, optional): Directory to search before PATH. This is the</span>
+<span class="sd">                `lammps_location` the driver scripts pass; None means search only</span>
+<span class="sd">                PATH and the standard install directories.</span>
+<span class="sd">            required_styles (tuple of str): Styles the build must advertise.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: Absolute path to the executable.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            RuntimeError: If no candidate both runs and provides `required_styles`.</span>
+<span class="sd">    """</span>
+    <span class="n">override</span> <span class="o">=</span> <span class="n">_from_env</span><span class="p">(</span><span class="n">_ENV_SERIAL</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">override</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">override</span>
+    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">_candidates</span><span class="p">(</span><span class="n">_SERIAL_NAMES</span><span class="p">,</span> <span class="n">hint</span><span class="p">):</span>
+        <span class="n">styles</span> <span class="o">=</span> <span class="n">_lammps_styles</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">styles</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="n">s</span> <span class="ow">in</span> <span class="n">styles</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">required_styles</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">path</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+        <span class="s2">"No usable LAMMPS executable found.  It must provide: </span><span class="si">%s</span><span class="se">\n</span><span class="si">%s</span><span class="se">\n</span><span class="s2">"</span>
+        <span class="s2">"  Set </span><span class="si">%s</span><span class="s2"> to the full path of the binary to use, or pass lammps_location."</span>
+        <span class="o">%</span> <span class="p">(</span><span class="s2">", "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">required_styles</span><span class="p">),</span> <span class="n">_describe</span><span class="p">(</span><span class="n">_SERIAL_NAMES</span><span class="p">,</span> <span class="n">hint</span><span class="p">,</span> <span class="n">required_styles</span><span class="p">),</span> <span class="n">_ENV_SERIAL</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="find_mpirun">
+<a class="viewcode-back" href="../../executables.html#src.executables.find_mpirun">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">find_mpirun</span><span class="p">(</span><span class="n">hint</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">        Finds an MPI launcher.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            hint (str, optional): Directory to search before PATH, i.e. the</span>
+<span class="sd">                `mpi_location` the driver scripts pass.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: Absolute path to mpirun or mpiexec.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            RuntimeError: If neither is found.</span>
+<span class="sd">    """</span>
+    <span class="n">override</span> <span class="o">=</span> <span class="n">_from_env</span><span class="p">(</span><span class="n">_ENV_MPIRUN</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">override</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">override</span>
+    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">_candidates</span><span class="p">(</span><span class="n">_MPIRUN_NAMES</span><span class="p">,</span> <span class="n">hint</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">path</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+        <span class="s2">"No MPI launcher found.</span><span class="se">\n</span><span class="si">%s</span><span class="se">\n</span><span class="s2">  Set </span><span class="si">%s</span><span class="s2"> to the full path of mpirun, or pass mpi_location."</span>
+        <span class="o">%</span> <span class="p">(</span><span class="n">_describe</span><span class="p">(</span><span class="n">_MPIRUN_NAMES</span><span class="p">,</span> <span class="n">hint</span><span class="p">,</span> <span class="p">()),</span> <span class="n">_ENV_MPIRUN</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="find_lammps_mpi">
+<a class="viewcode-back" href="../../executables.html#src.executables.find_lammps_mpi">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">find_lammps_mpi</span><span class="p">(</span><span class="n">mpirun</span><span class="p">,</span> <span class="n">hint</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">required_styles</span><span class="o">=</span><span class="n">STYLES_NEB</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">        Finds a LAMMPS executable that is MPI-enabled and has the needed styles.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            mpirun (str): Absolute path to the launcher the executable will run under;</span>
+<span class="sd">                the candidate is tested with this specific launcher, because an MPI</span>
+<span class="sd">                build only works under the MPI implementation it was compiled against.</span>
+<span class="sd">            hint (str, optional): Directory to search before PATH.</span>
+<span class="sd">            required_styles (tuple of str): Styles the build must advertise.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: Absolute path to the executable.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            RuntimeError: If no candidate passes both the style and the parallel check.</span>
+<span class="sd">    """</span>
+    <span class="n">override</span> <span class="o">=</span> <span class="n">_from_env</span><span class="p">(</span><span class="n">_ENV_MPI</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">override</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">override</span>
+    <span class="n">lacked_parallel</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">_candidates</span><span class="p">(</span><span class="n">_MPI_NAMES</span><span class="p">,</span> <span class="n">hint</span><span class="p">):</span>
+        <span class="n">styles</span> <span class="o">=</span> <span class="n">_lammps_styles</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">styles</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">s</span> <span class="ow">in</span> <span class="n">styles</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">required_styles</span><span class="p">):</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="n">_runs_in_parallel</span><span class="p">(</span><span class="n">mpirun</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">path</span>
+        <span class="n">lacked_parallel</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"No usable MPI-enabled LAMMPS executable found.  It must provide: </span><span class="si">%s</span><span class="s2">"</span>
+               <span class="o">%</span> <span class="s2">", "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">required_styles</span><span class="p">),</span>
+               <span class="n">_describe</span><span class="p">(</span><span class="n">_MPI_NAMES</span><span class="p">,</span> <span class="n">hint</span><span class="p">,</span> <span class="n">required_styles</span><span class="p">)]</span>
+    <span class="k">if</span> <span class="n">lacked_parallel</span><span class="p">:</span>
+        <span class="n">message</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"  binaries with the right styles that are not MPI builds (or whose "</span>
+                       <span class="s2">"MPI does not match </span><span class="si">%s</span><span class="s2">): </span><span class="si">%s</span><span class="s2">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">mpirun</span><span class="p">,</span> <span class="s2">", "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lacked_parallel</span><span class="p">)))</span>
+    <span class="n">message</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"  Set </span><span class="si">%s</span><span class="s2"> to the full path of the binary to use, or pass lammps_location."</span>
+                   <span class="o">%</span> <span class="n">_ENV_MPI</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">message</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="report">
+<a class="viewcode-back" href="../../executables.html#src.executables.report">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">report</span><span class="p">(</span><span class="n">hint_lammps</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">hint_mpi</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">        Prints what discovery finds, for checking a machine before a long run.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            hint_lammps (str, optional): Directory hint for the LAMMPS executables.</span>
+<span class="sd">            hint_mpi (str, optional): Directory hint for the MPI launcher.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Keys `serial`, `mpirun` and `mpi`, each an absolute path or the</span>
+<span class="sd">                error message explaining why nothing was found.</span>
+<span class="sd">    """</span>
+    <span class="n">found</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">finder</span> <span class="ow">in</span> <span class="p">((</span><span class="s2">"serial"</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">find_lammps_serial</span><span class="p">(</span><span class="n">hint_lammps</span><span class="p">)),</span>
+                        <span class="p">(</span><span class="s2">"mpirun"</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">find_mpirun</span><span class="p">(</span><span class="n">hint_mpi</span><span class="p">))):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">found</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">finder</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">RuntimeError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="n">found</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">found</span><span class="p">[</span><span class="s2">"mpi"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">find_lammps_mpi</span><span class="p">(</span><span class="n">found</span><span class="p">[</span><span class="s2">"mpirun"</span><span class="p">],</span> <span class="n">hint_lammps</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">found</span><span class="p">[</span><span class="s2">"mpirun"</span><span class="p">]))</span> <span class="k">else</span> <span class="s2">"no MPI launcher"</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">RuntimeError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+        <span class="n">found</span><span class="p">[</span><span class="s2">"mpi"</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"serial"</span><span class="p">,</span> <span class="s2">"mpi"</span><span class="p">,</span> <span class="s2">"mpirun"</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="si">%-8s</span><span class="s2"> : </span><span class="si">%s</span><span class="s2">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">found</span><span class="p">[</span><span class="n">key</span><span class="p">]))</span>
+    <span class="k">return</span> <span class="n">found</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="n">report</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Himanshu Joshi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

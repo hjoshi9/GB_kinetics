@@ -10,16 +10,14 @@ This general workflow followed by the code can be summarized as:
 
 We now detail what each of the steps given in the flowchart signify and add important details on how it is implemented.
 
-.. _stgb-construction:
-
 Construction of STGB microstate
------------------------------------
+-------------------------------
 
-Each bicrystal containing the required symmetric tilt grain boundary is constructed by:
+Each STGB is constructed by:
 
 #. Creating an interpenetrating lattice by combining two lattices, one rotated by :math:`\theta/2` andthe other by :math:`-\theta/2`, where :math:`\theta` is the misorientation angle.
 
-#. Selecting a gb location (with a parameter ``gb_position`` used in :py:meth:`src.GBKineticsRunController.runGBkinetics`) and deleting atoms of grain 1 from one side of the gb position and from grain 2 on the other side.
+#. Selecting a gb location (with a parameter ``gb_position`` used in ``GBKineticsRunController.py``) and deleting atoms of grain 1 from one side of the gb position and from grain 2 on the other side.
 
 This results in creation of a bicrystal as shown below:
 
@@ -27,12 +25,12 @@ This results in creation of a bicrystal as shown below:
    :width: 300px
    :align: center
 
-   :math:`\Sigma` 17 [001](410) symmetric tilt grain boundary as-cut configuration
+   STGB
 
 The bicrystal thus created is not typically in the ground state. To arrive at the ground state,
 we use the γ-surface
 method, wherein the two grains are displaced relative to each other in the GB plane and
-energy is minimized (carried out by running :py:mod:`gridSearch`).
+energy is minimized (carried out using ``gridSearch.py``).
 This results in creation of bicrystal with GB in its ground state, as shown below:
 
 .. figure:: /_static/sigma17_size1_min0000.png
@@ -43,10 +41,8 @@ This results in creation of bicrystal with GB in its ground state, as shown belo
 
 The relative displacement that results in the lowest post-minimized energy is recorded, as it serves as input to the latter part of the workflow.
 
-.. _discon-enumeration:
-
 Enumeration of disconnection modes
---------------------------------------
+----------------------------------
 We use Smith normal norm (SNF) bicrystallography to enumerate the disconnection modes (b, h) of the
 STGB, where b and h denote the disconnection’s Burgers vector and step height, respectively.
 SNF bicrystallography is a powerful framework based on integer matrix algebra to automate
@@ -54,10 +50,9 @@ the generation of rational GBs, and enumerate disconnection modes in GBs.
 For further details on SNF bicrystallography, we refer the reader to Admal et al.[1]
 (https://doi.org/10.1016/j.actamat.2022.118340).
 
-.. _discon-construction:
 
 Construction of atomistic GB migration images
--------------------------------------------------
+----------------------------------------------
 We assume that GB migrates due to nucleation and migration of disconnections along the GB.
 A pictorial representation of such a migration is shown below:
 
@@ -115,10 +110,9 @@ shown in the figures below:
    Final (minimized) atomic configurations generated,
    showing GB migration based on disconnection nucleation and glide.
 
-.. _mapping:
 
 Mapping the atomic shuffles
-------------------------------
+---------------------------
 We now compute the shuffle maps for the atoms that have transformed from one grain to another
 during disconnection nucleation and glide. Such maps serve as intermediate images for NEB calculation
 in the next step. Shuffle maps are calculated using the optimal transport method developed by Chesser et al. [2,3].
@@ -133,10 +127,9 @@ for mappings with larger net displacements such as those observed at high temper
    Atomic configurations used as input for min-shuffle algorithm and final
    trajectories generated.
 
-.. _neb:
 
 Evaluation of the energy barrier and trajectories
-----------------------------------------------------
+-------------------------------------------------
 We employ climbing image NEB method [4] to calculate the minimum energy paths (MEPs), i.e. plots of energy
 versus the reaction coordinate (width or the normalized width of the disconnection dipole), of
 disconnection modes in the absence of external loads. The NEB is implemented using the LAMMPS *neb* module with nudging forces

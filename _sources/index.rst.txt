@@ -19,7 +19,7 @@ by nucleation and glide of disconnections. Some key features are:
 
 For citing the GB Kinetics project, consider the reference
 
-Himanshu Joshi, Ian Chesser, Brandon Runnels, and Nikhil Chandra Admal.
+Joshi, Himanshu, Ian Chesser, Brandon Runnels, and Nikhil Chandra Admal.
 "Energetics of the nucleation and glide of disconnection modes in symmetric tilt grain boundaries."
 arXiv preprint arXiv:2504.16854 (2025).doi : https://doi.org/10.48550/arXiv.2504.16854
 

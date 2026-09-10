@@ -28,14 +28,6 @@ Mac/Linux
    $ python3 -m venv GB_kinetics_env
    $ source GB_kinetics_env\Scripts\activate
 
-Conda
-^^^^^
-
-.. code-block:: console
-
-   $ conda create --name GB_kinetics_env
-   $ conda activate GB_kinetics_env
-
 | Necessary packages for python code are listed in requirements.txt and can be installed by 
 
 .. code-block:: console

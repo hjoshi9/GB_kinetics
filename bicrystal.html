@@ -8,14 +8,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>bicrystal module &mdash; GB Kinetics 2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="_static/documentation_options.js?v=60dbed4a"></script>
-      <script src="_static/doctools.js?v=9bcbadda"></script>
-      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -49,7 +49,6 @@
 <li class="toctree-l2"><a class="reference internal" href="usage.html#install-gb-kinetics">Install GB Kinetics</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="usage.html#windows">Windows</a></li>
 <li class="toctree-l3"><a class="reference internal" href="usage.html#mac-linux">Mac/Linux</a></li>
-<li class="toctree-l3"><a class="reference internal" href="usage.html#conda">Conda</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="usage.html#workflow">Workflow</a></li>
@@ -79,7 +78,6 @@
 <li class="toctree-l3"><a class="reference internal" href="example_gbkinetics.html#references">References</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="example_gbkinetics.html#summary-of-important-functions-classes-used-in-the-workflow">Summary of important functions/classes used in the workflow</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">Source</a><ul class="current">
@@ -122,6 +120,15 @@
 <li class="toctree-l4"><a class="reference internal" href="bicrystallography.html#bicrystallography.bicrystallography.gb_props"><code class="docutils literal notranslate"><span class="pre">bicrystallography.gb_props()</span></code></a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="executables.html">executables module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="executables.html#src.executables.STYLES_MINIMIZATION"><code class="docutils literal notranslate"><span class="pre">STYLES_MINIMIZATION</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="executables.html#src.executables.STYLES_NEB"><code class="docutils literal notranslate"><span class="pre">STYLES_NEB</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="executables.html#src.executables.find_lammps_mpi"><code class="docutils literal notranslate"><span class="pre">find_lammps_mpi()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="executables.html#src.executables.find_lammps_serial"><code class="docutils literal notranslate"><span class="pre">find_lammps_serial()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="executables.html#src.executables.find_mpirun"><code class="docutils literal notranslate"><span class="pre">find_mpirun()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="executables.html#src.executables.report"><code class="docutils literal notranslate"><span class="pre">report()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="min_shuffle.html">min_shuffle module</a><ul>
@@ -176,6 +183,9 @@
 <li class="toctree-l4"><a class="reference internal" href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.step_height"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.step_height</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.neb_output_folder"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.neb_output_folder</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.__init__"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.lammps_mpi"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.lammps_mpi</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.lammps_serial"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.lammps_serial</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.mpirun"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.mpirun</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.post_process_gridsearch_data"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.post_process_gridsearch_data()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.post_process_neb_output"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.post_process_neb_output()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.run_grid_search"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.run_grid_search()</span></code></a></li>
@@ -221,7 +231,7 @@
 <span id="bicrystal-module"></span><h1>bicrystal module<a class="headerlink" href="#module-src.bicrystal" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="src.bicrystal.bicrystal">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.bicrystal.</span></span><span class="sig-name descname"><span class="pre">bicrystal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gb_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lat_par</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lat_Vec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size_along_period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size_along_tilt_axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">non_periodic_direction_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/bicrystal.html#bicrystal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.bicrystal.bicrystal" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.bicrystal.</span></span><span class="sig-name descname"><span class="pre">bicrystal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gb_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lat_par</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lat_Vec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size_along_period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size_along_tilt_axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">non_periodic_direction_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/bicrystal.html#bicrystal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.bicrystal.bicrystal" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Represents a bicrystal</p>
 <dl class="py method">
@@ -323,19 +333,6 @@ to the GB plane, in angstroms. Defaults to 50.</p></li>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="src.bicrystal.bicrystal.nCells">
-<span class="sig-name descname"><span class="pre">nCells</span></span><a class="headerlink" href="#src.bicrystal.bicrystal.nCells" title="Link to this definition"></a></dt>
-<dd><p>Number of unit cells in the bicrystal. Computed as
-<cite>size_factor * size_along_period</cite>, where <cite>size_factor</cite> is
-40 if <cite>size_along_period == 1</cite>, else 25.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
 <dt class="sig sig-object py" id="src.bicrystal.bicrystal.grain1_orientation">
 <span class="sig-name descname"><span class="pre">grain1_orientation</span></span><a class="headerlink" href="#src.bicrystal.bicrystal.grain1_orientation" title="Link to this definition"></a></dt>
 <dd><p>Orientation matrix or parameters for grain 1 (initialized as None).</p>
@@ -417,50 +414,48 @@ to the GB plane, in angstroms. Defaults to 50.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.bicrystal.bicrystal.create_disconnection_containing_bicrystal">
 <span class="sig-name descname"><span class="pre">create_disconnection_containing_bicrystal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">burgers_vector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gb_position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nImages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_dipoles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/bicrystal.html#bicrystal.create_disconnection_containing_bicrystal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.bicrystal.bicrystal.create_disconnection_containing_bicrystal" title="Link to this definition"></a></dt>
-<dd><p>Generates a grain boundary (GB) image with a disconnection dipole and possible steps
-based on the bicrystallographic configuration.</p>
-<dl class="simple">
-<dt>This method:</dt><dd><ul class="simple">
-<li><p>Determines regions affected by the dislocation dipole.</p></li>
-<li><p>Applies displacement fields to atoms based on
-the dipole configuration and Burgers vector.</p></li>
-<li><p>Combines atoms from transformed and non-transformed regions to form a new GB image.</p></li>
-</ul>
-</dd>
-</dl>
+<dd><p>Generates a GB image containing a disconnection dipole, selected out of the
+same reference lattice as the flat GB so that the atom IDs stay consistent.</p>
+<p>The two grains are separated by a stepped cut plane</p>
+<blockquote>
+<div><p>x_cut(y) = gb_position + step_height   inside the disconnection loop
+x_cut(y) = gb_position                 outside it</p>
+</div></blockquote>
+<p>with grain 1 at <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&gt;=</span> <span class="pre">x_cut</span></code> and grain 2 at <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&lt;</span> <span class="pre">x_cut</span></code>.  One formula covers
+both signs of <code class="docutils literal notranslate"><span class="pre">step_height</span></code>: a positive step moves the boundary up into
+grain 1, a negative one down into grain 2.</p>
+<p>Atom IDs are handled by bookkeeping on the reference lattice rather than by
+matching coordinates.  A site that is occupied by the same grain in both the
+flat GB and this image simply keeps its ID.  The sites one grain vacates
+inside the loop and the sites the other grain fills are equal in number (CSL
+geometry), so the freed IDs are handed to the filled sites through a
+canonical (z, y, x) ordering on both sides.  Which vacated site donates its
+ID to which filled site is physically irrelevant - <code class="docutils literal notranslate"><span class="pre">min_shuffle</span></code> re-solves
+the correspondence from scratch with optimal transport - so any bijection
+will do; all the pipeline requires is that image 0 and image k carry the
+same ID set.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>image_number</strong> (<em>int</em>) – Identifier for the GB image being generated, used to determine
-whether dipole transitions are included.</p></li>
-<li><p><strong>gb_position</strong> (<em>float</em>) – X-coordinate of the GB plane, defining the boundary between grains.</p></li>
-<li><p><strong>nodes</strong> (<em>np.ndarray</em>) – 2x2 array of disconnection node coordinates in the GB plane.</p></li>
-<li><p><strong>step_height</strong> (<em>float</em>) – Height of the step at the GB (positive or negative), used to
-determine which grain is displaced.</p></li>
-<li><p><strong>burgers_vector</strong> (<em>np.ndarray</em>) – Displacement vector representing the dislocation.</p></li>
+<li><p><strong>nodes</strong> (<em>np.ndarray</em>) – 2x2 array of disconnection node coordinates.</p></li>
+<li><p><strong>burgers_vector</strong> (<em>float</em>) – Magnitude of the Burgers vector (glide, along y).</p></li>
+<li><p><strong>step_height</strong> (<em>float</em>) – Height of the step at the GB (either sign).</p></li>
+<li><p><strong>gb_position</strong> (<em>float</em>) – X-coordinate of the flat GB plane.</p></li>
+<li><p><strong>image_number</strong> (<em>int</em>) – Identifier for the GB image being generated.</p></li>
+<li><p><strong>nImages</strong> (<em>int</em>) – Number of periodic images used for the solid angle.</p></li>
 <li><p><strong>number_of_dipoles</strong> (<em>int</em>) – Number of dipoles introduced in the bicrystal.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="simple">
-<dt>Sets:</dt><dd><p>grain1 (np.ndarray): Atom positions for grain 1, including plastic displacement and unique IDs.
-grain2 (np.ndarray): Atom positions for grain 2, similarly displaced and labeled.</p>
+<dt>Sets:</dt><dd><p>grain1 (np.ndarray): Grain 1 atoms, displaced, with IDs in column 3.
+grain2 (np.ndarray): Grain 2 atoms, displaced, with IDs in column 3.</p>
 </dd>
 </dl>
 <dl class="field-list simple">
 <dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ValueError</strong> – If the flat GB structure has not been created via <cite>create_flat_gb_bicrystal</cite>.</p>
-</dd>
-</dl>
-<p class="rubric">Notes</p>
-<ul class="simple">
-<li><p>Atoms in the transformed region are displaced based on the disconnection geometry.</p></li>
-<li><p>Overlapping atoms are checked using Euclidean distance and matched to maintain continuity.</p></li>
-<li><p>Diagnostics are written to file if mismatch occurs between atom counts in transformed regions.</p></li>
-</ul>
-<dl class="simple">
-<dt>Diagnostic Output:</dt><dd><p>If atom mismatches are detected in the transformed region, a diagnostic file is written to:
-<cite>/Users/hj-home/Desktop/Research/GB_kinetics_oop/output/grain_diagnostics.txt</cite></p>
+<dd class="field-odd"><p><strong>ValueError</strong> – If the flat GB has not been built, or if the number of
+    vacated and filled sites differ (which would break the ID contract).</p>
 </dd>
 </dl>
 </dd></dl>
@@ -468,7 +463,7 @@ grain2 (np.ndarray): Atom positions for grain 2, similarly displaced and labeled
 <dl class="py method">
 <dt class="sig sig-object py" id="src.bicrystal.bicrystal.create_fix_eco_orientationfile">
 <span class="sig-name descname"><span class="pre">create_fix_eco_orientationfile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/bicrystal.html#bicrystal.create_fix_eco_orientationfile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.bicrystal.bicrystal.create_fix_eco_orientationfile" title="Link to this definition"></a></dt>
-<dd><p>Writes the grain orientations to a <cite>.ori</cite> file compatible with the fix_eco
+<dd><p>Writes the grain orientations to a <code class="docutils literal notranslate"><span class="pre">.ori</span></code> file compatible with the fix_eco
 command in LAMMPS, saving it to the specified folder.</p>
 <p>The file contains the lattice orientations of both grains, scaled by the
 lattice parameter, and is named based on the grain boundary properties.</p>
@@ -479,12 +474,12 @@ The folder path should end with a slash (‘/’).</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>ValueError</strong> – If the bicrystal has not been fully set up (i.e., orientations
-    are None). You must run <cite>_setup_bicrystal</cite> before calling this method.</p>
+    are None). You must run <code class="docutils literal notranslate"><span class="pre">_setup_bicrystal</span></code> before calling this method.</p>
 </dd>
 </dl>
 <dl class="simple">
-<dt>Outputs:</dt><dd><p>Creates a file named <cite>Sigma{sigma}_mis{mis}_inc{inc}.ori</cite> in the given folder,
-where <cite>sigma</cite>, <cite>mis</cite> (misorientation), and <cite>inc</cite> (inclination) are from <cite>gb_data</cite>.
+<dt>Outputs:</dt><dd><p>Creates a file named <code class="docutils literal notranslate"><span class="pre">Sigma{sigma}_mis{mis}_inc{inc}.ori</span></code> in the given folder,
+where <code class="docutils literal notranslate"><span class="pre">sigma</span></code>, <code class="docutils literal notranslate"><span class="pre">mis</span></code> (misorientation), and <code class="docutils literal notranslate"><span class="pre">inc</span></code> (inclination) are from <code class="docutils literal notranslate"><span class="pre">gb_data</span></code>.
 The file contains the orientation matrices for the two grains, row-wise.</p>
 </dd>
 <dt>Prints:</dt><dd><p>Confirmation message indicating the successful creation of the orientation file.</p>
@@ -495,29 +490,25 @@ The file contains the orientation matrices for the two grains, row-wise.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.bicrystal.bicrystal.create_flat_gb_bicrystal">
 <span class="sig-name descname"><span class="pre">create_flat_gb_bicrystal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gb_position</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/bicrystal.html#bicrystal.create_flat_gb_bicrystal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.bicrystal.bicrystal.create_flat_gb_bicrystal" title="Link to this definition"></a></dt>
-<dd><p>Generates the initial flat grain boundary (GB) structure by constructing a dichromatic pattern
-from the two grain orientations and selecting atoms to form a bicrystal.</p>
-<dl class="simple">
-<dt>This function:</dt><dd><ul class="simple">
-<li><p>Constructs a 3D dichromatic pattern for both grains using lattice translations.</p></li>
-<li><p>Selects atoms for each grain based on their position relative to the GB plane.</p></li>
-</ul>
-</dd>
-</dl>
+<dd><p>Generates the initial flat grain boundary (GB) structure by selecting each
+grain out of the shared reference lattice.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>gb_position</strong> (<em>float</em>) – The X-coordinate (along GB normal) at which the GB plane is located.</p>
 </dd>
 </dl>
 <dl class="simple">
-<dt>Sets:</dt><dd><p>grain1_flatgb (np.ndarray): Filtered atomic positions for grain 1, including unique atom IDs.
-grain2_flatgb (np.ndarray): Filtered atomic positions for grain 2, including unique atom IDs.
-box (np.ndarray): Dimensions of the simulation box used for filtering and placement.</p>
+<dt>Sets:</dt><dd><p>grain1_flatgb (np.ndarray): Atomic positions of grain 1 with atom IDs in column 3.
+grain2_flatgb (np.ndarray): Atomic positions of grain 2 with atom IDs in column 3.
+box (np.ndarray): Dimensions of the simulation box.</p>
 </dd>
 </dl>
 <p class="rubric">Notes</p>
 <ul class="simple">
-<li><p>The structure is built from <cite>-nCells</cite> to <cite>+nCells</cite> in lattice units in all three dimensions.</p></li>
+<li><p>The coincident CSL plane at <code class="docutils literal notranslate"><span class="pre">gb_position</span></code> belongs to grain A, so it is
+not duplicated into grain B.</p></li>
+<li><p>Atom IDs run 1..N over grain 1 and then grain 2, matching the order
+<code class="docutils literal notranslate"><span class="pre">ordered_write</span></code> writes them in.</p></li>
 </ul>
 </dd></dl>
 
@@ -584,7 +575,7 @@ self.box (default is 2).</p></li>
 </dl>
 <dl class="simple">
 <dt>Outputs:</dt><dd><p>Creates a LAMMPS data file named as:
-<cite>data.{elem}s{sigma}inc{inc}_{suffix}</cite>, containing atomic coordinates
+<code class="docutils literal notranslate"><span class="pre">data.{elem}s{sigma}inc{inc}_{suffix}</span></code>, containing atomic coordinates
 and simulation box details.</p>
 </dd>
 <dt>Prints:</dt><dd><p>Confirmation message after successful file write.</p>

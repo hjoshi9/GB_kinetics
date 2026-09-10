@@ -7,14 +7,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>src.min_shuffle &mdash; GB Kinetics 2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="../../_static/documentation_options.js?v=60dbed4a"></script>
-      <script src="../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -46,7 +46,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../usage.html#install-gb-kinetics">Install GB Kinetics</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../usage.html#windows">Windows</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage.html#mac-linux">Mac/Linux</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../usage.html#conda">Conda</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../usage.html#workflow">Workflow</a></li>
@@ -76,7 +75,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../../example_gbkinetics.html#references">References</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../example_gbkinetics.html#summary-of-important-functions-classes-used-in-the-workflow">Summary of important functions/classes used in the workflow</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../modules.html">Source</a><ul>
@@ -119,6 +117,15 @@
 <li class="toctree-l4"><a class="reference internal" href="../../bicrystallography.html#bicrystallography.bicrystallography.gb_props"><code class="docutils literal notranslate"><span class="pre">bicrystallography.gb_props()</span></code></a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../executables.html">executables module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../executables.html#src.executables.STYLES_MINIMIZATION"><code class="docutils literal notranslate"><span class="pre">STYLES_MINIMIZATION</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../executables.html#src.executables.STYLES_NEB"><code class="docutils literal notranslate"><span class="pre">STYLES_NEB</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../executables.html#src.executables.find_lammps_mpi"><code class="docutils literal notranslate"><span class="pre">find_lammps_mpi()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../executables.html#src.executables.find_lammps_serial"><code class="docutils literal notranslate"><span class="pre">find_lammps_serial()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../executables.html#src.executables.find_mpirun"><code class="docutils literal notranslate"><span class="pre">find_mpirun()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../executables.html#src.executables.report"><code class="docutils literal notranslate"><span class="pre">report()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../min_shuffle.html">min_shuffle module</a><ul>
@@ -173,6 +180,9 @@
 <li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.step_height"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.step_height</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.neb_output_folder"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.neb_output_folder</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.__init__"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.lammps_mpi"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.lammps_mpi</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.lammps_serial"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.lammps_serial</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.mpirun"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.mpirun</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.post_process_gridsearch_data"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.post_process_gridsearch_data()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.post_process_neb_output"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.post_process_neb_output()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.run_grid_search"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.run_grid_search()</span></code></a></li>
@@ -224,7 +234,7 @@
 <div class="viewcode-block" id="min_shuffle">
 <a class="viewcode-back" href="../../min_shuffle.html#src.min_shuffle.min_shuffle">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">min_shuffle</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">        Class to perform minimal atomic shuffling analysis between two grain boundary configurations</span>
 <span class="sd">        using optimal transport (Sinkhorn algorithm).</span>
 
@@ -232,13 +242,13 @@
 <span class="sd">        a region around a grain boundary and a disconnection, formats the data, applies periodic boundary</span>
 <span class="sd">        conditions, replicates the simulation box if necessary, and runs the Sinkhorn optimal transport</span>
 <span class="sd">        to find minimal atomic displacement mappings.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 <div class="viewcode-block" id="min_shuffle.__init__">
 <a class="viewcode-back" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">lattice_parameter</span><span class="p">,</span><span class="n">sigma</span><span class="p">,</span><span class="n">misorientation</span><span class="p">,</span><span class="n">inclination</span><span class="p">,</span>
                  <span class="n">period</span><span class="p">,</span><span class="n">folder</span><span class="p">,</span><span class="n">elem</span><span class="p">,</span><span class="n">reg_param</span><span class="p">,</span><span class="n">max_iters</span><span class="p">,</span>
                  <span class="n">box_expansion_factor</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">dimension</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Initializes the min_shuffle object with simulation parameters and placeholders for atomic data.</span>
 
 <span class="sd">        Args:</span>
@@ -248,7 +258,7 @@
 <span class="sd">            inclination (float): The inclination angle of the grain boundary (in degrees).</span>
 <span class="sd">            period (int): The period or repeat length of the grain boundary.</span>
 <span class="sd">            folder (str): Directory path where output files and data will be stored.</span>
-<span class="sd">            elem (str): Chemical element symbol of the material (e.g., &#39;Al&#39;, &#39;Cu&#39;).</span>
+<span class="sd">            elem (str): Chemical element symbol of the material (e.g., 'Al', 'Cu').</span>
 <span class="sd">            reg_param (float): Regularization parameter used in the Sinkhorn optimal transport algorithm.</span>
 <span class="sd">            max_iters (int): Maximum number of iterations allowed in the Sinkhorn solver.</span>
 <span class="sd">            box_expansion_factor (float, optional): Factor to expand the simulation box dimensions, defaults to 0 (no expansion).</span>
@@ -271,7 +281,7 @@
 <span class="sd">            box_minshuf (np.ndarray or None): Simulation box dimensions for minimal shuffle domain.</span>
 <span class="sd">            initial_atoms_transformed_region (np.ndarray or None): Initial atom coordinates of the transformed region.</span>
 <span class="sd">            final_atoms_transformed_region (np.ndarray or None): Final atom coordinates of the transformed region.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lattice_parameter</span> <span class="o">=</span> <span class="n">lattice_parameter</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span> <span class="o">=</span> <span class="n">sigma</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">misorientation</span> <span class="o">=</span> <span class="n">misorientation</span>
@@ -309,7 +319,7 @@
 <a class="viewcode-back" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.gb_info">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">gb_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">filepath</span><span class="p">,</span><span class="n">st_height</span><span class="p">,</span><span class="n">disloc1</span><span class="p">,</span><span class="n">disloc2</span><span class="p">,</span>
                 <span class="n">min_shuffle_domain_expansion_factor</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span><span class="n">disconnection_extension</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">            Computes grain boundary location, step height, and dislocation region based on input parameters.</span>
 
 <span class="sd">            Args:</span>
@@ -325,7 +335,7 @@
 <span class="sd">                self.step_height (float): Adjusted step height of the shuffle domain.</span>
 <span class="sd">                self.dislocation_start (float): Start coordinate of the dislocation region.</span>
 <span class="sd">                self.dislocation_end (float): End coordinate of the dislocation region.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">lat_par</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lattice_parameter</span>
         <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">period</span>
         <span class="n">average_gb_loc</span><span class="p">,</span> <span class="n">gb_hi</span><span class="p">,</span> <span class="n">gb_lo</span> <span class="o">=</span> <span class="n">find_gb_location</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
@@ -345,7 +355,7 @@
 <div class="viewcode-block" id="min_shuffle.load_data">
 <a class="viewcode-back" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.load_data">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">load_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file_mode</span><span class="p">,</span><span class="n">file_flat</span><span class="p">,</span><span class="n">file_disconnection</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">            Loads atomic positions from initial and final LAMMPS data files.</span>
 
 <span class="sd">            Args:</span>
@@ -361,12 +371,11 @@
 <span class="sd">                self.box (np.ndarray): Simulation box.</span>
 <span class="sd">                self.initial_grain (np.ndarray): Initial atomic data.</span>
 <span class="sd">                self.final_grain (np.ndarray): Final atomic data.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=============================== Generating atomic trajectories =====================================&quot;</span><span class="p">)</span>
+<span class="sd">        """</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"=============================== Generating atomic trajectories ====================================="</span><span class="p">)</span>
         <span class="n">data_init</span> <span class="o">=</span> <span class="n">read_LAMMPS_datafile</span><span class="p">(</span><span class="n">file_flat</span><span class="p">,</span> <span class="n">file_mode</span><span class="p">)</span>
         <span class="n">data_final</span> <span class="o">=</span> <span class="n">read_LAMMPS_datafile</span><span class="p">(</span><span class="n">file_disconnection</span><span class="p">,</span> <span class="n">file_mode</span><span class="p">)</span>
         <span class="n">atoms</span> <span class="o">=</span> <span class="n">data_init</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span>
-        <span class="n">atoms</span> <span class="o">=</span> <span class="n">atoms</span><span class="p">[</span><span class="n">atoms</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">argsort</span><span class="p">()]</span>
         <span class="n">box</span> <span class="o">=</span> <span class="n">data_init</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
         <span class="n">Ai</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">Bi</span> <span class="o">=</span> <span class="p">[]</span>
@@ -384,7 +393,6 @@
         <span class="n">initial</span> <span class="o">=</span> <span class="n">atoms</span>
 
         <span class="n">atoms</span> <span class="o">=</span> <span class="n">data_final</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span>
-        <span class="n">atoms</span> <span class="o">=</span> <span class="n">atoms</span><span class="p">[</span><span class="n">atoms</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">argsort</span><span class="p">()]</span>
         <span class="n">Af</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">Bf</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">neb_final</span> <span class="o">=</span> <span class="p">[]</span>
@@ -411,7 +419,7 @@
 <div class="viewcode-block" id="min_shuffle.format_input">
 <a class="viewcode-back" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.format_input">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">format_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">folder</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">            Formats the input by selecting atoms in the minimal shuffle domain and writes data files.</span>
 
 <span class="sd">            Args:</span>
@@ -424,11 +432,11 @@
 <span class="sd">                self.atoms_minshuf (np.ndarray): Formatted atoms array for minimal shuffling.</span>
 <span class="sd">                self.types_minshuf (int): Number of atom types.</span>
 <span class="sd">                self.box_minshuf (np.ndarray): Simulation box for the minimal shuffle domain.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_height</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;GB details not defined. Run gb_info()&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"GB details not defined. Run gb_info()"</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">grainA_posttransform</span> <span class="ow">is</span>  <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Data not loaded. Run load_data()&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Data not loaded. Run load_data()"</span><span class="p">)</span>
         <span class="n">Ai</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grainA_pretransform</span>
         <span class="n">Bi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grainB_pretransform</span>
         <span class="n">Af</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grainA_posttransform</span>
@@ -473,14 +481,17 @@
                     <span class="k">break</span>
         <span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data_B</span><span class="p">)</span>
         <span class="c1"># Write to data file</span>
-        <span class="n">suffix</span> <span class="o">=</span> <span class="s2">&quot;min_shuffle&quot;</span>
-        <span class="n">file</span> <span class="o">=</span> <span class="s2">&quot;data.&quot;</span> <span class="o">+</span> <span class="n">elem</span> <span class="o">+</span> <span class="s2">&quot;s&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;inc&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">inc</span><span class="p">)</span>
+        <span class="n">suffix</span> <span class="o">=</span> <span class="s2">"min_shuffle"</span>
+        <span class="n">file</span> <span class="o">=</span> <span class="s2">"data."</span> <span class="o">+</span> <span class="n">elem</span> <span class="o">+</span> <span class="s2">"s"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span> <span class="o">+</span> <span class="s2">"inc"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">inc</span><span class="p">)</span>
         <span class="n">outfile</span> <span class="o">=</span> <span class="n">write_lammps_datafile</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">suffix</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">box</span><span class="p">)</span>
         <span class="c1"># Prepare output</span>
         <span class="n">atoms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="n">types</span> <span class="o">=</span> <span class="mi">2</span>
         <span class="n">eps2</span> <span class="o">=</span> <span class="mf">0.1</span>
-        <span class="n">box</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">box</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">box</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span>
+        <span class="n">xlo</span> <span class="o">=</span> <span class="n">gb_loc</span> <span class="o">-</span> <span class="n">h</span> <span class="o">+</span> <span class="n">eps2</span>
+        <span class="n">xhi</span> <span class="o">=</span> <span class="n">gb_loc</span> <span class="o">+</span> <span class="n">h</span> <span class="o">+</span> <span class="n">eps2</span>
+        <span class="n">scale</span> <span class="o">=</span> <span class="mf">1.05</span>
+        <span class="n">box</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">scale</span> <span class="o">*</span> <span class="n">xlo</span><span class="p">,</span> <span class="n">scale</span> <span class="o">*</span> <span class="n">xhi</span><span class="p">],</span>
                         <span class="p">[</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span>
                         <span class="p">[</span><span class="n">box</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mf">1e-2</span><span class="p">,</span> <span class="n">box</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">atoms_minshuf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">B</span><span class="p">),</span><span class="mi">5</span><span class="p">))</span>
@@ -499,7 +510,7 @@
 <div class="viewcode-block" id="min_shuffle.replicate">
 <a class="viewcode-back" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.replicate">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">replicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">rep_scheme</span><span class="p">,</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">box</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">            Replicates atomic configurations according to the specified replication scheme.</span>
 
 <span class="sd">            Args:</span>
@@ -513,7 +524,7 @@
 <span class="sd">                    X_rep (np.ndarray): Replicated initial coordinates.</span>
 <span class="sd">                    Y_rep (np.ndarray): Replicated final coordinates.</span>
 <span class="sd">                    rep_box (np.ndarray): Updated simulation box after replication.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">dim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimension</span>
         <span class="c1"># Define outputs</span>
         <span class="n">rep_box</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">*</span> <span class="n">box</span>
@@ -575,7 +586,7 @@
 <div class="viewcode-block" id="min_shuffle.pbcdist">
 <a class="viewcode-back" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.pbcdist">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">pbcdist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">dp</span><span class="p">,</span><span class="n">Lx</span><span class="p">,</span><span class="n">Ly</span><span class="p">,</span><span class="n">Lz</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">            Applies periodic boundary conditions to displacement vectors.</span>
 
 <span class="sd">            Args:</span>
@@ -586,7 +597,7 @@
 
 <span class="sd">            Returns:</span>
 <span class="sd">                np.ndarray: Adjusted displacement vectors considering periodic boundaries.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">dim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimension</span>
         <span class="n">d</span> <span class="o">=</span> <span class="n">dp</span>
         <span class="n">n</span> <span class="o">=</span> <span class="n">dim</span>
@@ -604,7 +615,7 @@
 <div class="viewcode-block" id="min_shuffle.pbcwrap">
 <a class="viewcode-back" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.pbcwrap">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">pbcwrap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">box</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">            Wraps coordinates into the primary simulation box applying periodic boundary conditions.</span>
 
 <span class="sd">            Args:</span>
@@ -613,7 +624,7 @@
 
 <span class="sd">            Returns:</span>
 <span class="sd">                np.ndarray: Coordinates wrapped within the simulation box.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">dim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimension</span>
         <span class="n">dpbc</span> <span class="o">=</span> <span class="n">d</span>
 
@@ -649,7 +660,7 @@
 <div class="viewcode-block" id="min_shuffle.run">
 <a class="viewcode-back" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.run">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">            Runs the Sinkhorn optimal transport algorithm to compute minimal shuffling displacement vectors</span>
 <span class="sd">            between initial and final atomic configurations in the minimal shuffle domain.</span>
 
@@ -659,7 +670,7 @@
 <span class="sd">            Sets:</span>
 <span class="sd">                self.initial_atoms_transformed_region (np.ndarray): Initial atomic positions after transformation.</span>
 <span class="sd">                self.final_atoms_transformed_region (np.ndarray): Final atomic positions after transformation.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="c1"># Import input parameters</span>
         <span class="n">reg_param</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reg_param</span>
         <span class="n">iter_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_iters</span>
@@ -669,7 +680,7 @@
         <span class="c1">#r0 = lattice_parameter / np.sqrt(2)  # nearest neighbor distance in perfect FCC crystal</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">types_minshuf</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Input formatting not done yet. Run format_input()&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Input formatting not done yet. Run format_input()"</span><span class="p">)</span>
         <span class="n">atoms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">atoms_minshuf</span>
         <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">types_minshuf</span>
         <span class="n">box</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">box_minshuf</span>
@@ -700,12 +711,11 @@
                 <span class="n">Ybasis</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">2</span><span class="p">:])</span>
         <span class="n">Xbasis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Xbasis</span><span class="p">)</span>
         <span class="n">Ybasis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Ybasis</span><span class="p">)</span>
-
         <span class="c1"># print(Xbasis.shape)</span>
         <span class="k">if</span> <span class="n">Xbasis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">Ybasis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Xbasis and Ybasis must have same non-zero length&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Xbasis and Ybasis must have same non-zero length"</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">Xbasis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">Ybasis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The number of atoms do not match for the two grains. One-to-one mapping not possible&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"The number of atoms do not match for the two grains. One-to-one mapping not possible"</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">N</span> <span class="o">=</span> <span class="n">Xbasis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -723,7 +733,7 @@
 
         <span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">dim</span><span class="p">)</span>  <span class="c1"># Recomputed, set to [0,0,0] if unknown and results will match TDP</span>
 
-        <span class="c1"># Sinkhorn&#39;s algorithm</span>
+        <span class="c1"># Sinkhorn's algorithm</span>
         <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">/</span> <span class="n">N</span>
         <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">/</span> <span class="n">N</span>
         <span class="n">Gamma</span> <span class="o">=</span> <span class="n">ot</span><span class="o">.</span><span class="n">bregman</span><span class="o">.</span><span class="n">sinkhorn_log</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">dist_mat</span><span class="p">,</span> <span class="n">reg_param</span><span class="p">,</span> <span class="n">iter_max</span><span class="p">)</span>
@@ -828,30 +838,29 @@
 
 
 
-
 <div class="viewcode-block" id="min_shuffle.write_images">
 <a class="viewcode-back" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.write_images">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">write_images</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">folder</span><span class="p">,</span> <span class="n">image_num</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">            Writes LAMMPS data files for atomic configurations at specified image numbers.</span>
 
 <span class="sd">            Args:</span>
 <span class="sd">                folder (str): Directory to save output files.</span>
 <span class="sd">                image_num (int): Image index (e.g., 0 for initial flat GB, 1 for final transformed state).</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">def</span><span class="w"> </span><span class="nf">write_header</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">natoms</span><span class="p">,</span><span class="n">box</span><span class="p">):</span>
             <span class="n">eps</span> <span class="o">=</span> <span class="mf">0.1</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;#LAMMPS data file</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> atoms</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">natoms</span><span class="p">))</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;2 atom types</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%0.10f</span><span class="s2"> </span><span class="si">%0.10f</span><span class="s2"> xlo xhi</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">box</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">eps</span><span class="p">,</span> <span class="n">box</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">eps</span><span class="p">))</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%0.10f</span><span class="s2"> </span><span class="si">%0.10f</span><span class="s2"> ylo yhi</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%0.10f</span><span class="s2"> </span><span class="si">%0.10f</span><span class="s2"> zlo zhi</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">box</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">box</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;0.0 0.0 0.0 xy xz yz</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Atoms # atomic</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">"#LAMMPS data file</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">"</span><span class="si">%d</span><span class="s2"> atoms</span><span class="se">\n</span><span class="s2">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">natoms</span><span class="p">))</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">"2 atom types</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">"</span><span class="si">%0.10f</span><span class="s2"> </span><span class="si">%0.10f</span><span class="s2"> xlo xhi</span><span class="se">\n</span><span class="s2">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">box</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">eps</span><span class="p">,</span> <span class="n">box</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">eps</span><span class="p">))</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">"</span><span class="si">%0.10f</span><span class="s2"> </span><span class="si">%0.10f</span><span class="s2"> ylo yhi</span><span class="se">\n</span><span class="s2">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">"</span><span class="si">%0.10f</span><span class="s2"> </span><span class="si">%0.10f</span><span class="s2"> zlo zhi</span><span class="se">\n</span><span class="s2">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">box</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">box</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">"0.0 0.0 0.0 xy xz yz</span><span class="se">\n\n</span><span class="s2">"</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">"Atoms # atomic</span><span class="se">\n\n</span><span class="s2">"</span><span class="p">)</span>
         <span class="k">def</span><span class="w"> </span><span class="nf">write_atoms</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">atoms</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">atoms</span><span class="p">)):</span>
-                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> </span><span class="si">%d</span><span class="s2"> </span><span class="si">%f</span><span class="s2"> </span><span class="si">%f</span><span class="s2"> </span><span class="si">%f</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">4</span><span class="p">]))</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">"</span><span class="si">%d</span><span class="s2"> </span><span class="si">%d</span><span class="s2"> </span><span class="si">%f</span><span class="s2"> </span><span class="si">%f</span><span class="s2"> </span><span class="si">%f</span><span class="se">\n</span><span class="s2">"</span> <span class="o">%</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">4</span><span class="p">]))</span>
 
         <span class="n">box</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">box</span>
         <span class="n">sigma</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span>
@@ -860,11 +869,11 @@
         <span class="c1"># Write image 0 (flat gb)</span>
         <span class="k">if</span> <span class="n">image_num</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">initial</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_grain</span>
-            <span class="n">file</span> <span class="o">=</span> <span class="s2">&quot;data.&quot;</span> <span class="o">+</span> <span class="n">elem</span> <span class="o">+</span> <span class="s2">&quot;s&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;inc&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">inc</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;__step0&quot;</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">folder</span> <span class="o">+</span> <span class="n">file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f0</span><span class="p">:</span>
+            <span class="n">file</span> <span class="o">=</span> <span class="s2">"data."</span> <span class="o">+</span> <span class="n">elem</span> <span class="o">+</span> <span class="s2">"s"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span> <span class="o">+</span> <span class="s2">"inc"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">inc</span><span class="p">)</span> <span class="o">+</span> <span class="s2">"__step0"</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">folder</span> <span class="o">+</span> <span class="n">file</span><span class="p">,</span> <span class="s2">"w"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f0</span><span class="p">:</span>
                 <span class="n">write_header</span><span class="p">(</span><span class="n">f0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">initial</span><span class="p">),</span><span class="n">box</span><span class="p">)</span>
                 <span class="n">write_atoms</span><span class="p">(</span><span class="n">f0</span><span class="p">,</span><span class="n">initial</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Done writing bicrystal </span><span class="si">{</span><span class="n">folder</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Done writing bicrystal </span><span class="si">{</span><span class="n">folder</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
         <span class="n">final</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">final_grain</span>
         <span class="n">Ys</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">final_atoms_transformed_region</span>
@@ -895,15 +904,15 @@
 
 
         <span class="c1"># Write data</span>
-        <span class="n">file</span> <span class="o">=</span> <span class="s2">&quot;data.&quot;</span> <span class="o">+</span> <span class="n">elem</span> <span class="o">+</span> <span class="s2">&quot;s&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;inc&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">inc</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;__step&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">image_num</span><span class="p">)</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">folder</span> <span class="o">+</span> <span class="n">file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">file</span> <span class="o">=</span> <span class="s2">"data."</span> <span class="o">+</span> <span class="n">elem</span> <span class="o">+</span> <span class="s2">"s"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span> <span class="o">+</span> <span class="s2">"inc"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">inc</span><span class="p">)</span> <span class="o">+</span> <span class="s2">"__step"</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">image_num</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">folder</span> <span class="o">+</span> <span class="n">file</span><span class="p">,</span> <span class="s2">"w"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">write_header</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">final_atoms</span><span class="p">),</span><span class="n">box</span><span class="p">)</span>
             <span class="n">write_atoms</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">final_atoms</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Done writing bicrystal </span><span class="si">{</span><span class="n">folder</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Done writing bicrystal </span><span class="si">{</span><span class="n">folder</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span></div>
 
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_write_neb_input_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">folder</span><span class="p">,</span> <span class="n">image_num</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">            Writes a LAMMPS NEB (Nudged Elastic Band) input data file for a specific image number.</span>
 
 <span class="sd">            Args:</span>
@@ -913,25 +922,25 @@
 <span class="sd">            Side Effects:</span>
 <span class="sd">                Reads LAMMPS data from an input file and writes a processed output file</span>
 <span class="sd">                in the specified folder. Prints confirmation upon completion.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">sigma</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span>
-        <span class="n">file</span> <span class="o">=</span> <span class="s2">&quot;data.Cus&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;inc0.0__step&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">image_num</span><span class="p">)</span>
-        <span class="n">outfile</span> <span class="o">=</span> <span class="s2">&quot;data.Cus&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;inc0.0_out_step&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">image_num</span><span class="p">)</span>
+        <span class="n">file</span> <span class="o">=</span> <span class="s2">"data.Cus"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span> <span class="o">+</span> <span class="s2">"inc0.0__step"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">image_num</span><span class="p">)</span>
+        <span class="n">outfile</span> <span class="o">=</span> <span class="s2">"data.Cus"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span> <span class="o">+</span> <span class="s2">"inc0.0_out_step"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">image_num</span><span class="p">)</span>
         <span class="n">in_file</span> <span class="o">=</span> <span class="n">folder</span> <span class="o">+</span> <span class="n">file</span>
         <span class="n">out_file</span> <span class="o">=</span> <span class="n">folder</span> <span class="o">+</span> <span class="n">outfile</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">read_LAMMPS_datafile</span><span class="p">(</span><span class="n">in_file</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">natoms</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">atoms</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span>
-        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">out_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">natoms</span><span class="p">))</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">out_file</span><span class="p">,</span> <span class="s2">"w"</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">"</span><span class="si">%d</span><span class="se">\n</span><span class="s2">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">natoms</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">atoms</span><span class="p">)):</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> </span><span class="si">%f</span><span class="s2"> </span><span class="si">%f</span><span class="s2"> </span><span class="si">%f</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">4</span><span class="p">]))</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">"</span><span class="si">%d</span><span class="s2"> </span><span class="si">%f</span><span class="s2"> </span><span class="si">%f</span><span class="s2"> </span><span class="si">%f</span><span class="se">\n</span><span class="s2">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">4</span><span class="p">]))</span>
         <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Done writing bicrystal &quot;</span> <span class="o">+</span> <span class="n">out_file</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"Done writing bicrystal "</span> <span class="o">+</span> <span class="n">out_file</span><span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_threshold</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">cutoff</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">            Applies a threshold to a matrix, setting elements less than the cutoff to zero.</span>
 
 <span class="sd">            Args:</span>
@@ -940,7 +949,7 @@
 
 <span class="sd">            Returns:</span>
 <span class="sd">                np.ndarray: Matrix with values below cutoff set to zero.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">G</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
         <span class="n">row_ind</span><span class="p">,</span> <span class="n">col_ind</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">g</span> <span class="o">&lt;</span> <span class="n">cutoff</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">row_ind</span><span class="p">)):</span>
@@ -951,7 +960,7 @@
 <a class="viewcode-back" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.plot_min_shuffle_3d">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">plot_min_shuffle_3d</span><span class="p">(</span><span class="n">Xs</span><span class="p">,</span> <span class="n">Ys</span><span class="p">,</span> <span class="n">box</span><span class="p">,</span><span class="n">sigma</span><span class="p">,</span><span class="n">reg_param</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">            Creates a 3D scatter plot comparing initial and final atomic configurations within a simulation box.</span>
 
 <span class="sd">            Args:</span>
@@ -963,7 +972,7 @@
 
 <span class="sd">            Returns:</span>
 <span class="sd">                int: Returns 1 upon completion (placeholder return value).</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="c1"># Plot simulation box</span>
         <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
         <span class="n">xlo</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
@@ -972,27 +981,27 @@
         <span class="n">xhi</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
         <span class="n">yhi</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
         <span class="n">zhi</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xlo</span><span class="p">,</span> <span class="n">xhi</span><span class="p">],</span> <span class="p">[</span><span class="n">yhi</span><span class="p">,</span> <span class="n">yhi</span><span class="p">],</span> <span class="p">[</span><span class="n">zhi</span><span class="p">,</span> <span class="n">zhi</span><span class="p">],</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xlo</span><span class="p">,</span> <span class="n">xhi</span><span class="p">],</span> <span class="p">[</span><span class="n">ylo</span><span class="p">,</span> <span class="n">ylo</span><span class="p">],</span> <span class="p">[</span><span class="n">zhi</span><span class="p">,</span> <span class="n">zhi</span><span class="p">],</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xlo</span><span class="p">,</span> <span class="n">xhi</span><span class="p">],</span> <span class="p">[</span><span class="n">yhi</span><span class="p">,</span> <span class="n">yhi</span><span class="p">],</span> <span class="p">[</span><span class="n">zlo</span><span class="p">,</span> <span class="n">zlo</span><span class="p">],</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xlo</span><span class="p">,</span> <span class="n">xhi</span><span class="p">],</span> <span class="p">[</span><span class="n">ylo</span><span class="p">,</span> <span class="n">ylo</span><span class="p">],</span> <span class="p">[</span><span class="n">zlo</span><span class="p">,</span> <span class="n">zlo</span><span class="p">],</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xlo</span><span class="p">,</span> <span class="n">xlo</span><span class="p">],</span> <span class="p">[</span><span class="n">ylo</span><span class="p">,</span> <span class="n">yhi</span><span class="p">],</span> <span class="p">[</span><span class="n">zhi</span><span class="p">,</span> <span class="n">zhi</span><span class="p">],</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xlo</span><span class="p">,</span> <span class="n">xlo</span><span class="p">],</span> <span class="p">[</span><span class="n">ylo</span><span class="p">,</span> <span class="n">yhi</span><span class="p">],</span> <span class="p">[</span><span class="n">zlo</span><span class="p">,</span> <span class="n">zlo</span><span class="p">],</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xhi</span><span class="p">,</span> <span class="n">xhi</span><span class="p">],</span> <span class="p">[</span><span class="n">ylo</span><span class="p">,</span> <span class="n">yhi</span><span class="p">],</span> <span class="p">[</span><span class="n">zlo</span><span class="p">,</span> <span class="n">zlo</span><span class="p">],</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xhi</span><span class="p">,</span> <span class="n">xhi</span><span class="p">],</span> <span class="p">[</span><span class="n">ylo</span><span class="p">,</span> <span class="n">yhi</span><span class="p">],</span> <span class="p">[</span><span class="n">zhi</span><span class="p">,</span> <span class="n">zhi</span><span class="p">],</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xlo</span><span class="p">,</span> <span class="n">xlo</span><span class="p">],</span> <span class="p">[</span><span class="n">ylo</span><span class="p">,</span> <span class="n">ylo</span><span class="p">],</span> <span class="p">[</span><span class="n">zlo</span><span class="p">,</span> <span class="n">zhi</span><span class="p">],</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xlo</span><span class="p">,</span> <span class="n">xlo</span><span class="p">],</span> <span class="p">[</span><span class="n">yhi</span><span class="p">,</span> <span class="n">yhi</span><span class="p">],</span> <span class="p">[</span><span class="n">zlo</span><span class="p">,</span> <span class="n">zhi</span><span class="p">],</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xhi</span><span class="p">,</span> <span class="n">xhi</span><span class="p">],</span> <span class="p">[</span><span class="n">ylo</span><span class="p">,</span> <span class="n">ylo</span><span class="p">],</span> <span class="p">[</span><span class="n">zlo</span><span class="p">,</span> <span class="n">zhi</span><span class="p">],</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xhi</span><span class="p">,</span> <span class="n">xhi</span><span class="p">],</span> <span class="p">[</span><span class="n">yhi</span><span class="p">,</span> <span class="n">yhi</span><span class="p">],</span> <span class="p">[</span><span class="n">zlo</span><span class="p">,</span> <span class="n">zhi</span><span class="p">],</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xlo</span><span class="p">,</span> <span class="n">xhi</span><span class="p">],</span> <span class="p">[</span><span class="n">yhi</span><span class="p">,</span> <span class="n">yhi</span><span class="p">],</span> <span class="p">[</span><span class="n">zhi</span><span class="p">,</span> <span class="n">zhi</span><span class="p">],</span> <span class="s1">'k'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xlo</span><span class="p">,</span> <span class="n">xhi</span><span class="p">],</span> <span class="p">[</span><span class="n">ylo</span><span class="p">,</span> <span class="n">ylo</span><span class="p">],</span> <span class="p">[</span><span class="n">zhi</span><span class="p">,</span> <span class="n">zhi</span><span class="p">],</span> <span class="s1">'k'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xlo</span><span class="p">,</span> <span class="n">xhi</span><span class="p">],</span> <span class="p">[</span><span class="n">yhi</span><span class="p">,</span> <span class="n">yhi</span><span class="p">],</span> <span class="p">[</span><span class="n">zlo</span><span class="p">,</span> <span class="n">zlo</span><span class="p">],</span> <span class="s1">'k'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xlo</span><span class="p">,</span> <span class="n">xhi</span><span class="p">],</span> <span class="p">[</span><span class="n">ylo</span><span class="p">,</span> <span class="n">ylo</span><span class="p">],</span> <span class="p">[</span><span class="n">zlo</span><span class="p">,</span> <span class="n">zlo</span><span class="p">],</span> <span class="s1">'k'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xlo</span><span class="p">,</span> <span class="n">xlo</span><span class="p">],</span> <span class="p">[</span><span class="n">ylo</span><span class="p">,</span> <span class="n">yhi</span><span class="p">],</span> <span class="p">[</span><span class="n">zhi</span><span class="p">,</span> <span class="n">zhi</span><span class="p">],</span> <span class="s1">'k'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xlo</span><span class="p">,</span> <span class="n">xlo</span><span class="p">],</span> <span class="p">[</span><span class="n">ylo</span><span class="p">,</span> <span class="n">yhi</span><span class="p">],</span> <span class="p">[</span><span class="n">zlo</span><span class="p">,</span> <span class="n">zlo</span><span class="p">],</span> <span class="s1">'k'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xhi</span><span class="p">,</span> <span class="n">xhi</span><span class="p">],</span> <span class="p">[</span><span class="n">ylo</span><span class="p">,</span> <span class="n">yhi</span><span class="p">],</span> <span class="p">[</span><span class="n">zlo</span><span class="p">,</span> <span class="n">zlo</span><span class="p">],</span> <span class="s1">'k'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xhi</span><span class="p">,</span> <span class="n">xhi</span><span class="p">],</span> <span class="p">[</span><span class="n">ylo</span><span class="p">,</span> <span class="n">yhi</span><span class="p">],</span> <span class="p">[</span><span class="n">zhi</span><span class="p">,</span> <span class="n">zhi</span><span class="p">],</span> <span class="s1">'k'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xlo</span><span class="p">,</span> <span class="n">xlo</span><span class="p">],</span> <span class="p">[</span><span class="n">ylo</span><span class="p">,</span> <span class="n">ylo</span><span class="p">],</span> <span class="p">[</span><span class="n">zlo</span><span class="p">,</span> <span class="n">zhi</span><span class="p">],</span> <span class="s1">'k'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xlo</span><span class="p">,</span> <span class="n">xlo</span><span class="p">],</span> <span class="p">[</span><span class="n">yhi</span><span class="p">,</span> <span class="n">yhi</span><span class="p">],</span> <span class="p">[</span><span class="n">zlo</span><span class="p">,</span> <span class="n">zhi</span><span class="p">],</span> <span class="s1">'k'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xhi</span><span class="p">,</span> <span class="n">xhi</span><span class="p">],</span> <span class="p">[</span><span class="n">ylo</span><span class="p">,</span> <span class="n">ylo</span><span class="p">],</span> <span class="p">[</span><span class="n">zlo</span><span class="p">,</span> <span class="n">zhi</span><span class="p">],</span> <span class="s1">'k'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xhi</span><span class="p">,</span> <span class="n">xhi</span><span class="p">],</span> <span class="p">[</span><span class="n">yhi</span><span class="p">,</span> <span class="n">yhi</span><span class="p">],</span> <span class="p">[</span><span class="n">zlo</span><span class="p">,</span> <span class="n">zhi</span><span class="p">],</span> <span class="s1">'k'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
         <span class="c1"># Plot particles</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">Xs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">Xs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">Xs</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Initial&quot;</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">Ys</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">Ys</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">Ys</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Final&quot;</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Y&quot;</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s2">&quot;Z&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">Xs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">Xs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">Xs</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">'red'</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Initial"</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">Ys</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">Ys</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">Ys</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">'blue'</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Final"</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"X"</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"Y"</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s2">"Z"</span><span class="p">)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;sigma&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;inc0.0_optimalBeta_min_shuffle_eps&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">reg_param</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.png&quot;</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s2">"sigma"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span> <span class="o">+</span> <span class="s2">"inc0.0_optimalBeta_min_shuffle_eps"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">reg_param</span><span class="p">)</span> <span class="o">+</span> <span class="s2">".png"</span>
         <span class="k">return</span> <span class="mi">1</span></div>
 
 
@@ -1000,7 +1009,7 @@
 <a class="viewcode-back" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.plot_min_shuffle_2d">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">plot_min_shuffle_2d</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span><span class="n">Xbasis</span><span class="p">,</span><span class="n">Ybasis</span><span class="p">,</span><span class="n">Gamma</span><span class="p">,</span><span class="n">sigma</span><span class="p">,</span><span class="n">reg_param</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">            Generates and saves a 2D plot of optimal transport mapping between source and target atomic configurations.</span>
 
 <span class="sd">            Args:</span>
@@ -1013,13 +1022,13 @@
 
 <span class="sd">            Side Effects:</span>
 <span class="sd">                Saves the generated plot as a PNG file in the specified folder.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
         <span class="n">ot</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">plot2D_samples_mat</span><span class="p">(</span><span class="n">Xbasis</span><span class="p">,</span> <span class="n">Ybasis</span><span class="p">,</span> <span class="n">Gamma</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="p">[</span><span class="mf">.5</span><span class="p">,</span> <span class="mf">.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">Xbasis</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">Xbasis</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Source samples&#39;</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">Ybasis</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">Ybasis</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Target samples&#39;</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Sigma&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;min shuffle optimal beta eps=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">reg_param</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">Xbasis</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">Xbasis</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">'b'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Source samples'</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">Ybasis</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">Ybasis</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">'r'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Target samples'</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">'best'</span><span class="p">)</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s2">"Sigma"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span> <span class="o">+</span> <span class="s2">"min shuffle optimal beta eps="</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">reg_param</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">folder</span><span class="o">+</span><span class="n">name</span><span class="p">)</span></div>
 </div>
 

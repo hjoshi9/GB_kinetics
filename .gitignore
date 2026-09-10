@@ -4,8 +4,7 @@ __pycache__/
 output/
 *.log
 
-# Sphinx documentation build output. Regenerate with `cd docs && make html`;
-# `make clean` removes docs/build entirely.
+# Sphinx build output; regenerate with `cd docs && make html`.
 docs/build/
 _build/
 build/
@@ -13,6 +12,6 @@ build/
 docs/source/_autosummary/
 docs/source/generated/
 
-# Large oILAB axis dumps (~142 MB total) - regenerate with oILAB, do not commit
+# Large oILAB axis dumps (~142 MB); regenerate with oILAB.
 data/fcc_axis*.txt
 data/bcc_axis*.txt

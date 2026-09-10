@@ -65,6 +65,10 @@ partitions = 4
 neb_mode = 1
 # Variable which allows for switching off automatically triggering neb calculations (in case you only need disconnection images)
 run_neb = False
+# Which alternative shuffle chain to run NEB on. Every chain is written to its own
+# branch<N> subfolder regardless; this only picks the one NEB is deployed to.
+# 0 is the heaviest at every image, and the only chain when regularizationParameter = 0.
+neb_branch = 0
 
 # Run
 if __name__ == "__main__":
@@ -89,4 +93,5 @@ if __name__ == "__main__":
                                         chooseDisconnection,
                                         run_neb,
                                         neb_mode,
-                                        partitions)
+                                        partitions,
+                                        neb_branch)

@@ -2,7 +2,6 @@ import os
 import subprocess
 import numpy as np
 import matplotlib.pyplot as plt
-from mpl_toolkits import mplot3d
 from scipy.interpolate import griddata
 from src.IO import *
 from src.executables import find_lammps_serial, find_lammps_mpi, find_mpirun
@@ -21,8 +20,8 @@ class run_LAMMPS:
             inclination (float): Grain boundary inclination.
             size_along_gb_period (int): Size along grain boundary periodicity.
             potential (str): Path to interatomic potential file.
-            mpi_location (str or None): Directory holding the MPI binaries, searched
-                before PATH. None (the default) discovers the launcher automatically.
+            mpi_location (str or None): Directory holding mpirun, searched before
+                PATH. None discovers it automatically.
             lammps_location (str or None): Directory holding the LAMMPS binaries,
                 searched before PATH. None discovers them automatically.
             output_filename_gridsearch (str or None): Filename for grid search output.
@@ -50,12 +49,11 @@ class run_LAMMPS:
                 inclination (float): Grain boundary inclination angle.
                 size_along_gb_period (int): Size along grain boundary period.
                 potential (str): Path to interatomic potential file.
-                mpi_location (str, optional): Directory holding mpirun. Searched before
-                    PATH; leave as None to let `src.executables` find it.
-                lammps_location (str, optional): Directory holding the LAMMPS binaries.
-                    Searched before PATH; leave as None to let `src.executables` find
-                    them.  Discovery rejects a build that lacks the styles this
-                    pipeline needs, so the first `lmp` on PATH is not blindly used.
+                mpi_location (str, optional): Directory holding mpirun, searched
+                    before PATH. None lets `src.executables` find it.
+                lammps_location (str, optional): Directory holding the LAMMPS
+                    binaries, searched before PATH. None lets `src.executables` find
+                    them, skipping builds that lack the styles this pipeline needs.
          """
         self.folder = folder
         self.element = element
@@ -68,8 +66,7 @@ class run_LAMMPS:
         self.potential = potential
         self.mpi_location = mpi_location
         self.lammps_location = lammps_location
-        # Resolved on first use rather than here: a run with run_neb = False never
-        # needs MPI, and probing for it would fail on a machine that has none.
+        # Resolved on first use: a run with run_neb = False never needs MPI.
         self._lammps_serial = None
         self._lammps_mpi = None
         self._mpirun = None
@@ -117,10 +114,9 @@ class run_LAMMPS:
             Path to the MPI-enabled LAMMPS executable used for NEB and grid search.
 
             Returns:
-                str: Absolute path, discovered on first access and then cached.  The
-                    candidate is verified to actually run in parallel under
-                    `self.mpirun`, so a serial build is not silently launched as N
-                    independent copies of the same calculation.
+                str: Absolute path, discovered on first access and then cached. The
+                    candidate is verified to run in parallel under `self.mpirun`, so
+                    a serial build is not launched as N copies of the same job.
         """
         if self._lammps_mpi is None:
             self._lammps_mpi = find_lammps_mpi(self.mpirun, self.lammps_location)
@@ -365,7 +361,7 @@ jump SELF loopy
         with open(file, "w") as f:
             f.write(script)
 
-    def write_lammps_neb_input_script(self, burgers_vector, step_height,num_steps, partitions, mode=1):
+    def write_lammps_neb_input_script(self, burgers_vector, step_height,num_steps, partitions, mode=1, folder=None):
         """
             Writes a LAMMPS input script for Nudged Elastic Band (NEB) calculations.
 
@@ -375,11 +371,14 @@ jump SELF loopy
                 num_steps (int): Number of NEB images (steps).
                 partitions (int): Number of parallel partitions for NEB.
                 mode (int): Mode flag controlling file naming and step count behavior.
+                folder (str, optional): Directory holding the chain of step files to
+                    run. Defaults to `self.folder`; pass a branch subfolder to run that
+                    alternative chain.
 
             Returns:
                 str: Path to the output folder for NEB calculation results.
         """
-        folder = self.folder
+        folder = self.folder if folder is None else folder
         elem = self.element
         lat_par = self.lattice_parameter
         sigma = self.sigma
@@ -458,7 +457,7 @@ jump SELF loopy
             f.write(script)
         return output_folder
 
-    def run_neb_calc(self, burgers_vector, step_height,number_of_steps, partitions=40, mode=1):
+    def run_neb_calc(self, burgers_vector, step_height,number_of_steps, partitions=40, mode=1, folder=None):
         """
             Runs the NEB calculation using MPI-parallelized LAMMPS.
 
@@ -468,13 +467,15 @@ jump SELF loopy
                 number_of_steps (int): Number of NEB steps.
                 partitions (int, optional): Number of parallel partitions (default: 40).
                 mode (int, optional): Mode flag for NEB input script generation (default: 1).
+                folder (str, optional): Directory holding the chain to run. Defaults to
+                    `self.folder`; pass a branch subfolder for an alternative chain.
 
             Raises:
                 RuntimeError: If the NEB LAMMPS run fails.
         """
-        folder = self.folder
+        folder = self.folder if folder is None else folder
         print("\n========================== Running neb calculations ==============================")
-        neb_output_folder = self.write_lammps_neb_input_script(burgers_vector, step_height,number_of_steps, partitions, mode)
+        neb_output_folder = self.write_lammps_neb_input_script(burgers_vector, step_height,number_of_steps, partitions, mode, folder)
         print("The results from this calculation will be stored in " + neb_output_folder)
         command = self.mpirun + " --oversubscribe --use-hwthread-cpus -np " + str(
             partitions) + " " + self.lammps_mpi + "  -partition " + str(partitions) + "x1 -in " + folder+self.lammps_input_filename

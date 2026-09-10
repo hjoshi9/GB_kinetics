@@ -1,34 +1,22 @@
 """
-    Locates the LAMMPS and MPI executables that are actually installed on the
-    machine, so that the driver scripts do not have to hardcode a path.
+    Locates the LAMMPS and MPI executables installed on the machine, so the driver
+    scripts do not have to hardcode a path.
 
-    Discovery is deliberately more than a ``shutil.which`` call.  A LAMMPS binary
-    that exists and starts is not necessarily one this pipeline can use:
+    More than a ``shutil.which`` call, because a binary that starts is not
+    necessarily usable: a build without MANYBODY has no ``eam/alloy`` and one
+    without REPLICA has no ``neb``, and such a build is often first on ``PATH``.
+    Packaged MPI builds also ship broken library paths, and a serial build under
+    ``mpirun -np N`` silently runs N copies of the same job rather than failing.
 
-    * LAMMPS is built with a selectable set of packages.  A build without MANYBODY
-      has no ``eam/alloy`` pair style, and one without REPLICA has no ``neb``
-      command.  Such a stripped build is often the first ``lmp`` on ``PATH``.
-    * Distribution MPI builds are frequently installed with a broken library path
-      and fail before reaching ``main``.
-    * A serial build launched under ``mpirun -np N`` does not fail.  It silently
-      runs N independent copies of the same calculation.
+    So each candidate is probed with ``lmp -h`` for the styles it advertises, and
+    the MPI one additionally with a two-rank ``-partition 2x1`` run. First to pass
+    wins, letting a full build further down ``PATH`` beat a stripped one.
 
-    Every candidate is therefore probed with ``lmp -h``, which lists the styles the
-    build provides, and the MPI executable is additionally probed with a two-rank
-    ``-partition 2x1`` run, exactly what :meth:`src.runLAMMPS.run_LAMMPS.run_neb_calc`
-    performs.  The first candidate that passes wins, so a fully featured build
-    further down ``PATH`` beats a stripped one at the front of it.
+    Search order: the override variable (``GBK_LMP_SERIAL``, ``GBK_LMP_MPI``,
+    ``GBK_MPIRUN``), then ``lammps_location`` / ``mpi_location``, then ``PATH``,
+    then the standard install directories in ``_EXTRA_DIRS``.
 
-    Search order for each executable:
-
-    #. The override environment variable, if set: ``GBK_LMP_SERIAL``,
-       ``GBK_LMP_MPI`` or ``GBK_MPIRUN``, each naming a binary directly.
-    #. The directory passed as ``lammps_location`` / ``mpi_location``, if given.
-    #. ``PATH``.
-    #. The standard install directories listed in ``_EXTRA_DIRS`` below.
-
-    Run ``python -m src.executables`` to print what discovery selects on the
-    current machine.
+    Run ``python -m src.executables`` to see what is selected here.
 """
 
 import os
@@ -60,12 +48,10 @@ _ENV_SERIAL = "GBK_LMP_SERIAL"
 _ENV_MPI = "GBK_LMP_MPI"
 _ENV_MPIRUN = "GBK_MPIRUN"
 
-#: Styles a LAMMPS build must advertise to run the minimization inputs.
-#: ``eam/alloy`` stands in for the MANYBODY package.
+#: Styles needed to run the minimization inputs; stands in for MANYBODY.
 STYLES_MINIMIZATION = ("eam/alloy",)
 
-#: Styles a LAMMPS build must advertise to run the NEB inputs. ``neb`` stands in
-#: for the REPLICA package, which MPI builds are often shipped without.
+#: Styles needed to run the NEB inputs; ``neb`` stands in for REPLICA.
 STYLES_NEB = ("eam/alloy", "neb")
 
 _probe_cache = {}
@@ -82,8 +68,7 @@ def _from_env(variable):
             str or None: The path, if the variable is set.
 
         Raises:
-            RuntimeError: If the variable is set but does not name an executable file,
-                which is worth catching here rather than as a shell error mid-run.
+            RuntimeError: If set but not naming an executable file.
     """
     path = os.environ.get(variable)
     if not path:
@@ -118,8 +103,7 @@ def _candidates(names, hint=None, extra_dirs=_EXTRA_DIRS):
         on_path = shutil.which(name)
         if on_path:
             found.append(os.path.realpath(on_path))
-    # A hinted directory outranks PATH, but among equals the order above is by
-    # name specificity, which is what we want.
+    # A hinted directory outranks PATH; among equals, order is by name specificity.
     return list(dict.fromkeys(found))
 
 
@@ -131,16 +115,14 @@ def _lammps_styles(path):
             path (str): Absolute path to a candidate LAMMPS executable.
 
         Returns:
-            set of str or None: The whitespace-separated tokens of the help output,
-                which include every installed style and command name, or None if the
-                executable could not be run at all (missing library, wrong
-                architecture, not LAMMPS).
+            set of str or None: Tokens of the help output, which include every
+                installed style and command name, or None if the executable could
+                not be run at all.
     """
     if path in _probe_cache:
         return _probe_cache[path]
     try:
-        # `-log none` matters: LAMMPS opens log.lammps in the working directory on
-        # startup, even for `-h`, and probing must not write into the user's cwd.
+        # `-log none`: LAMMPS opens log.lammps on startup even for `-h`.
         with tempfile.TemporaryDirectory() as tmp:
             result = subprocess.run([path, "-h", "-log", "none"], cwd=tmp,
                                     stdout=subprocess.PIPE, stderr=subprocess.PIPE,
@@ -156,10 +138,9 @@ def _runs_in_parallel(mpirun, lammps):
     """
         Checks that `mpirun` and `lammps` together give a real multi-partition run.
 
-        Runs the same `-partition Nx1` invocation `run_neb_calc` uses, on an empty
-        input.  A serial build reports "Processor partitions do not match number of
-        allocated processors" and a build with a broken library path fails to start,
-        so both are rejected here rather than after the input files are written.
+        Uses the same `-partition Nx1` call as `run_neb_calc`, on an empty input, so
+        serial builds and broken library paths are rejected before any input files
+        are written.
 
         Args:
             mpirun (str): Absolute path to mpirun/mpiexec.
@@ -226,9 +207,8 @@ def find_lammps_serial(hint=None, required_styles=STYLES_MINIMIZATION):
         Finds a LAMMPS executable able to run the minimization inputs.
 
         Args:
-            hint (str, optional): Directory to search before PATH. This is the
-                `lammps_location` the driver scripts pass; None means search only
-                PATH and the standard install directories.
+            hint (str, optional): Directory to search before PATH; None searches
+                only PATH and the standard install directories.
             required_styles (tuple of str): Styles the build must advertise.
 
         Returns:
@@ -255,8 +235,7 @@ def find_mpirun(hint=None):
         Finds an MPI launcher.
 
         Args:
-            hint (str, optional): Directory to search before PATH, i.e. the
-                `mpi_location` the driver scripts pass.
+            hint (str, optional): Directory to search before PATH.
 
         Returns:
             str: Absolute path to mpirun or mpiexec.
@@ -279,9 +258,8 @@ def find_lammps_mpi(mpirun, hint=None, required_styles=STYLES_NEB):
         Finds a LAMMPS executable that is MPI-enabled and has the needed styles.
 
         Args:
-            mpirun (str): Absolute path to the launcher the executable will run under;
-                the candidate is tested with this specific launcher, because an MPI
-                build only works under the MPI implementation it was compiled against.
+            mpirun (str): Launcher to test against, since an MPI build only works
+                under the implementation it was compiled against.
             hint (str, optional): Directory to search before PATH.
             required_styles (tuple of str): Styles the build must advertise.
 

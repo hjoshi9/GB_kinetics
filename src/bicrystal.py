@@ -10,19 +10,12 @@ class bicrystal:
     Represents a bicrystal
     """
 
-    # Tie-breaker for atoms sitting exactly on a periodic box face.  It has to be
-    # far larger than the round-off of the rotated coordinates (~1e-13 A) and far
-    # smaller than any interplanar spacing, otherwise a whole plane of atoms drops
-    # in or out of the cell depending on the last bit of the rotation matrix.
-    # Every periodic face is half-open: [-L, +L).
+    # Box-face tie-breaker, well above rotation round-off (~1e-13 A) and well below
+    # any interplanar spacing. Periodic faces are half-open: [-L, +L).
     _EPS_FACE = 1e-6
-    # Tie-breaker for the GB / cut plane, which passes exactly through a plane of
-    # atoms.  The coincident plane is assigned to grain A.
+    # GB plane tie-breaker; the coincident plane goes to grain A.
     _EPS_GB = 1e-4
-    # Two lattice sites closer than this are the same site generated twice.  The
-    # shortest interatomic distance in any real lattice is ~1e3 times larger, so
-    # this only ever removes genuine duplicates - unlike a cutoff of the order of
-    # the lattice parameter, which silently deletes distinct atoms.
+    # Below this two sites are the same site generated twice.
     _EPS_DUPLICATE = 1e-3
     def __init__(self,gb_data,axis,lat_par,lat_Vec,
                  size_along_period=1,size_along_tilt_axis=1,
@@ -160,18 +153,12 @@ class bicrystal:
         """
             Generates the reference (undisplaced) dichromatic pattern once.
 
-            Both the flat GB and every disconnection image are selected out of these
-            two arrays, so an atom that survives into both configurations is literally
-            the same row of the same array.  That is what makes the atom IDs of image 0
-            and image k refer to the same physical atom, which the whole downstream
-            pipeline relies on: `min_shuffle.format_input` pairs the two configurations
-            by atom ID alone, and `min_shuffle.run` refuses to proceed unless the two
-            sets have the same size.
+            The flat GB and every disconnection image are masked out of these two
+            arrays, so a site shared by two images is the same row and keeps its atom
+            ID. `min_shuffle` pairs configurations by ID alone and needs that.
 
-            Only the lattice points that can land inside the box are enumerated.  The
-            required range is derived from the box corners rather than from a fixed
-            index bound, which for `size_along_period = 4` enumerated 8e6 points per
-            grain and discarded over 99% of them.
+            The integer range comes from the box corners, so only lattice points that
+            can land inside the box are enumerated.
 
             Sets:
                 _refA (np.ndarray): (N,3) reference sites of grain 1, deduplicated and
@@ -187,23 +174,16 @@ class bicrystal:
                         [self.non_periodic_direction_size, self.size_along_period * period , la.norm(axis) * lat_par * self.size_along_tilt_axis]])
 
         eps_face = bicrystal._EPS_FACE
-        # x is a free surface, so both ends are closed; y and z are periodic and are
-        # half-open, [-L, +L), so that the atom on the +L face is not a duplicate of
-        # the one on the -L face.
-        #
-        # The tie-breaker has to be applied to BOTH ends of a periodic direction.  A
-        # bare `>= -L` splits the plane of atoms sitting at -L down the middle: the
-        # rotation leaves them at -L +/- 1e-13, so whichever way the last bit fell
-        # decides whether each atom is kept.  Shifting the whole window by -eps_face
-        # keeps all of the -L plane and drops all of the +L plane, deterministically.
+        # x is a free surface so both ends are closed; y and z are periodic and
+        # half-open. Shifting the whole window by -eps_face keeps all of the -L plane
+        # and drops all of the +L one, instead of splitting either on round-off.
         lower = np.array([-box[1, 0] - eps_face, -box[1, 1] - eps_face, -box[1, 2] - eps_face])
         upper = np.array([ box[1, 0] + eps_face,  box[1, 1] - eps_face,  box[1, 2] - eps_face])
 
         refs = []
         for orientation in (self.grain1_orientation, self.grain2_orientation):
             basis = lat_par * orientation                 # columns = lattice vectors
-            # n = basis^-1 r is linear, so each component of n attains its extremes at
-            # a corner of the box; the eight corners therefore bound the integer range.
+            # n = basis^-1 r is linear, so the eight corners bound the integer range.
             corners = np.array([[cx, cy, cz] for cx in (lower[0], upper[0])
                                              for cy in (lower[1], upper[1])
                                              for cz in (lower[2], upper[2])])
@@ -252,8 +232,7 @@ class bicrystal:
         gA = refA[self._maskA_flat]
         gB = refB[self._maskB_flat]
 
-        # IDs live on the reference arrays so that every image can look up the ID of
-        # a site without matching coordinates.
+        # IDs live on the reference arrays so images can look up a site's ID directly.
         self._idA = np.zeros(len(refA))
         self._idB = np.zeros(len(refB))
         self._idA[self._maskA_flat] = np.arange(1, len(gA) + 1)
@@ -265,28 +244,18 @@ class bicrystal:
     def create_disconnection_containing_bicrystal(self,nodes,burgers_vector,step_height,gb_position,
                                                   image_number,nImages = 2,number_of_dipoles=3):
         """
-            Generates a GB image containing a disconnection dipole, selected out of the
-            same reference lattice as the flat GB so that the atom IDs stay consistent.
+            Generates a GB image containing a disconnection dipole, masked out of the
+            same reference lattice as the flat GB so atom IDs stay consistent.
 
-            The two grains are separated by a stepped cut plane
+            The grains are split by a stepped cut plane, `gb_position + step_height`
+            inside the disconnection loop and `gb_position` outside it, with grain 1
+            at `x >= x_cut`. One formula covers both signs of `step_height`.
 
-                x_cut(y) = gb_position + step_height   inside the disconnection loop
-                x_cut(y) = gb_position                 outside it
-
-            with grain 1 at `x >= x_cut` and grain 2 at `x < x_cut`.  One formula covers
-            both signs of `step_height`: a positive step moves the boundary up into
-            grain 1, a negative one down into grain 2.
-
-            Atom IDs are handled by bookkeeping on the reference lattice rather than by
-            matching coordinates.  A site that is occupied by the same grain in both the
-            flat GB and this image simply keeps its ID.  The sites one grain vacates
-            inside the loop and the sites the other grain fills are equal in number (CSL
-            geometry), so the freed IDs are handed to the filled sites through a
-            canonical (z, y, x) ordering on both sides.  Which vacated site donates its
-            ID to which filled site is physically irrelevant - `min_shuffle` re-solves
-            the correspondence from scratch with optimal transport - so any bijection
-            will do; all the pipeline requires is that image 0 and image k carry the
-            same ID set.
+            A site held by the same grain in both the flat GB and this image keeps its
+            ID. Vacated and filled sites are equal in number by CSL geometry, so freed
+            IDs are handed over through a canonical (z, y, x) ordering. Which one goes
+            where does not matter -- `min_shuffle` re-solves the correspondence -- only
+            that image 0 and image k carry the same ID set.
 
             Args:
                 nodes (np.ndarray): 2x2 array of disconnection node coordinates.
@@ -334,11 +303,7 @@ class bicrystal:
         disconnection_start = max(disconnection_start, -box[1, 1])
         disconnection_stop  = min(disconnection_stop ,  box[1, 1])
 
-        # --- Select both grains on the reference lattice ------------------------
-        # A single half-open window, [start, stop), for every use of "inside the
-        # loop".  The old code used a closed window when carrying atoms over from the
-        # flat GB and a half-open one shrunk by 0.1 A when regenerating the stepped
-        # region, and that inconsistency is what made the two atom counts diverge.
+        # One half-open window, [start, stop), for every use of "inside the loop".
         def in_loop(p):
             return ((p[:, 1] >= disconnection_start - eps_face) &
                     (p[:, 1] <  disconnection_stop  - eps_face))
@@ -349,7 +314,7 @@ class bicrystal:
         maskA_step = refA[:, 0] >= x_cut(refA) - eps_gb
         maskB_step = refB[:, 0] <  x_cut(refB) - eps_gb
 
-        # --- Transfer the atom IDs of the sites that changed grain --------------
+        # Transfer the IDs of sites that changed grain.
         lost_A = np.where(self._maskA_flat & ~maskA_step)[0]
         gain_A = np.where(~self._maskA_flat & maskA_step)[0]
         lost_B = np.where(self._maskB_flat & ~maskB_step)[0]
@@ -361,10 +326,9 @@ class bicrystal:
 
         if len(freed_ids) != len(gained_pos):
             raise ValueError(
-                "Atomic construction failed for image %d: %d sites were vacated but %d "
-                "were filled, so the atom IDs of the flat GB and this image cannot be "
-                "put in one-to-one correspondence.  The disconnection loop probably does "
-                "not span a whole number of CSL periods."
+                "Atomic construction failed for image %d: %d sites vacated but %d "
+                "filled, so atom IDs cannot be put in one-to-one correspondence. The "
+                "disconnection loop probably does not span a whole number of CSL periods."
                 % (image_number, len(freed_ids), len(gained_pos)))
 
         order_freed  = np.lexsort((freed_pos[:, 0], freed_pos[:, 1], freed_pos[:, 2]))
@@ -380,7 +344,7 @@ class bicrystal:
         gA = np.column_stack([refA[maskA_step], idA[maskA_step]])
         gB = np.column_stack([refB[maskB_step], idB[maskB_step]])
 
-        # --- Apply the plastic (solid angle) displacement -----------------------
+        # Apply the plastic (solid angle) displacement.
         for grain in (gA, gB):
             for i in range(len(grain)):
                 point = np.array([grain[i, 1], grain[i, 0]])
@@ -618,10 +582,7 @@ class bicrystal:
                 np.ndarray: `atoms` with duplicates dropped, original order preserved.
 
             Notes:
-                Uses a KD-tree rather than the O(N^2) pairwise loop this replaced.  That
-                loop also compared a 0.5 A per-component *box* rather than a distance,
-                which is large enough to delete genuinely distinct atoms in a lattice
-                with a small interplanar spacing.
+                Uses a KD-tree rather than an O(N^2) pairwise loop.
         """
         if tol is None:
             tol = bicrystal._EPS_DUPLICATE

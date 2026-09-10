@@ -1,7 +1,9 @@
+import os
 import numpy as np
 import numpy.linalg as la
 import ot
 import ot.plot
+from scipy.optimize import linear_sum_assignment
 import matplotlib.pyplot as plt
 from src.IO import *
 
@@ -17,7 +19,8 @@ class min_shuffle:
     """
     def __init__(self,lattice_parameter,sigma,misorientation,inclination,
                  period,folder,elem,reg_param,max_iters,
-                 box_expansion_factor=0,dimension=3):
+                 box_expansion_factor=0,dimension=3,path_cutoff=0.05,
+                 branch_coverage=0.9,max_branches=40):
         """
         Initializes the min_shuffle object with simulation parameters and placeholders for atomic data.
 
@@ -29,8 +32,16 @@ class min_shuffle:
             period (int): The period or repeat length of the grain boundary.
             folder (str): Directory path where output files and data will be stored.
             elem (str): Chemical element symbol of the material (e.g., 'Al', 'Cu').
-            reg_param (float): Regularization parameter used in the Sinkhorn optimal transport algorithm.
+            reg_param (float): Temperature of the shuffle. 0 solves the exact assignment
+                problem (one path per atom); larger values admit more competing paths.
+                Measured in units of the typical cost gap to an atom's second choice,
+                so it is dimensionless. Useful range is roughly 0.1 to 1.
             max_iters (int): Maximum number of iterations allowed in the Sinkhorn solver.
+            path_cutoff (float): Paths weaker than this fraction of an atom's best path
+                are discarded.
+            branch_coverage (float): Keep alternative configurations, heaviest first,
+                until their weights sum to this. At reg_param = 0 there is only ever one.
+            max_branches (int): Cap on the permutations peeled off the coupling.
             box_expansion_factor (float, optional): Factor to expand the simulation box dimensions, defaults to 0 (no expansion).
             dimension (int, optional): Dimensionality of the simulation system, defaults to 3 (3D).
 
@@ -51,6 +62,8 @@ class min_shuffle:
             box_minshuf (np.ndarray or None): Simulation box dimensions for minimal shuffle domain.
             initial_atoms_transformed_region (np.ndarray or None): Initial atom coordinates of the transformed region.
             final_atoms_transformed_region (np.ndarray or None): Final atom coordinates of the transformed region.
+            branches (list or None): (weight, Xs, Ys) per alternative configuration,
+                heaviest first.
         """
         self.lattice_parameter = lattice_parameter
         self.sigma = sigma
@@ -61,6 +74,9 @@ class min_shuffle:
         self.element = elem
         self.reg_param = reg_param
         self.max_iters = max_iters
+        self.path_cutoff = path_cutoff
+        self.branch_coverage = branch_coverage
+        self.max_branches = max_branches
         self.box_expansion_factor = box_expansion_factor
         self.dimension = dimension
 
@@ -83,6 +99,7 @@ class min_shuffle:
 
         self.initial_atoms_transformed_region = None
         self.final_atoms_transformed_region = None
+        self.branches = None
 
     def gb_info(self,filepath,st_height,disloc1,disloc2,
                 min_shuffle_domain_expansion_factor=1.5,disconnection_extension=5):
@@ -482,109 +499,192 @@ class min_shuffle:
 
         p = np.zeros(dim)  # Recomputed, set to [0,0,0] if unknown and results will match TDP
 
-        # Sinkhorn's algorithm
         a = np.ones(N) / N
         b = np.ones(N) / N
-        Gamma = ot.bregman.sinkhorn_log(a, b, dist_mat, reg_param, iter_max)
 
-        # Recover the displacement vectors from OT matrix(gamma)
-        cutoff = 1 / (N * 2)
-        gamma_mod = min_shuffle._threshold(Gamma, cutoff)
-        I, J = np.where(gamma_mod != 0)
-        # I,J = np.where(Gamma!=0)
-        maxNp = np.max(gamma_mod)
-        disp_vecs = np.zeros((len(I), 11))
-        for i in range(len(I)):
-            K = gamma_mod[I[i], J[i]]  # path prob
-            Xcoords = np.zeros((1, dim))
-            Ycoords = np.zeros((1, dim))
-            Xcoords[0, :] = np.array([Xbasis[I[i], 0], Xbasis[I[i], 1], Xbasis[I[i], 2]])
-            Ycoords[0, :] = np.array([Ybasis[J[i], 0], Ybasis[J[i], 1], Ybasis[J[i], 2]])
-            index = indicies[I[i]]
+        # reg_param is a temperature, so it only means something against a cost scale.
+        # Use the typical gap to an atom's second choice: reg = 1 then means an
+        # alternative one gap dearer is weighted exp(-1). Useful range is ~0.1 to 1.
+        two_best = np.partition(dist_mat, 1, axis=1)[:, :2]
+        cost_scale = np.median(two_best[:, 1] - two_best[:, 0])
+        if cost_scale <= 0:
+            cost_scale = np.median(dist_mat)
+        dist_norm = dist_mat / cost_scale
 
-            # Vector connecting X and Y
-            disp_vec_new = Ycoords - Xcoords
-            if pbcon == True:
-                disp_pbc = self.pbcdist(disp_vec_new, Lx, Ly, Lz)
-            newYcoords = Xcoords + disp_pbc
+        if reg_param <= 0:
+            # T = 0. Both marginals are uniform with the same N, so the exact optimum
+            # is a permutation; solve the assignment problem instead of approaching it.
+            row, col = linear_sum_assignment(dist_norm)
+            Gamma = np.zeros_like(dist_norm)
+            Gamma[row, col] = 1.0 / N
+        else:
+            Gamma = ot.bregman.sinkhorn_log(a, b, dist_norm, reg_param, numItermax=iter_max)
 
-            disp_vecs[i, :] = np.array([disp_pbc[0, 0], disp_pbc[0, 1], disp_pbc[0, 2], K, Xcoords[0, 0],
-                                        Xcoords[0, 1], Xcoords[0, 2], newYcoords[0, 0], newYcoords[0, 1],
-                                        newYcoords[0, 2], index])
+        # Keep paths that matter relative to each atom's best one. A fixed cutoff is
+        # calibrated to T = 0 and deletes every path once the mass spreads out.
+        rowmax = Gamma.max(axis=1, keepdims=True)
+        gamma_mod = np.where(Gamma >= self.path_cutoff * rowmax, Gamma, 0.0)
+        gamma_mod /= gamma_mod.sum(axis=1, keepdims=True) * N   # row sums to 1/N
 
-        # Data in different frames
-        ndisps = disp_vecs.shape[0]
-        Kvec = disp_vecs[:, 3]
-        Kvecrenorm = la.norm(Kvec)
+        def build_config(gamma):
+            """Turns one coupling into (Xs, Ys) atom lists. A permutation in gives
+            a single path per atom; the full coupling gives every kept path."""
+            I, J = np.where(gamma != 0)
+            disp_vecs = np.zeros((len(I), 11))
+            for i in range(len(I)):
+                K = gamma[I[i], J[i]]  # path prob
+                Xcoords = np.zeros((1, dim))
+                Ycoords = np.zeros((1, dim))
+                Xcoords[0, :] = np.array([Xbasis[I[i], 0], Xbasis[I[i], 1], Xbasis[I[i], 2]])
+                Ycoords[0, :] = np.array([Ybasis[J[i], 0], Ybasis[J[i], 1], Ybasis[J[i], 2]])
+                index = indicies[I[i]]
 
-        Xcoords = disp_vecs[:, 4:7]
-        Ycoords = disp_vecs[:, 7:10]
-        dTDP = disp_vecs[:, 0:3]
-        XTDP = Xcoords
-        YTDP = Ycoords
-        dCDP = dTDP - p
-        XCDP = Xcoords
-        YCDP = Ycoords - p
-        prob = np.zeros((len(Kvec), 3))
-        idx = disp_vecs[:, 10]
-        for i in range(len(Kvec)):
-            prob[i, :] = Kvec[i] * dTDP[i, :]
-        Dvec = np.sum(prob, 0)  # probabilistic expression for total net displacement/atom
-        dSDP = dTDP - Dvec
-        XSDP = Xcoords
-        YSDP = Ycoords - Dvec
-
-        Mvecest = Dvec - p
-        microvecs = np.array([p[0], p[1], p[2],
-                              Mvecest[0], Mvecest[1], Mvecest[2],
-                              Dvec[0], Dvec[1], Dvec[2]])
-        Xp = XTDP
-        Yp = YTDP
-
-        Xs = np.zeros((ndisps, 5))
-        Ys = np.zeros((ndisps, 5))  # copies of coordinates to overwrite with sheared coordinates
-        k = 0
-        prob_cutoff = 1e-8
-        for i in range(ndisps):
-            path_prob = Kvec[i]
-            if path_prob > prob_cutoff:
-                a = np.zeros((1, 3))
-                b = np.zeros((1, 3))
-                a[0, :] = Xp[i, :]
-                b[0, :] = Yp[i, :]
+                # Vector connecting X and Y
+                disp_vec_new = Ycoords - Xcoords
                 if pbcon == True:
-                    dp_new = self.pbcdist(b - a, Lx, Ly, Lz)
-                b_new = a + dp_new
-                Xs[k, :3] = a
-                Xs[k, 3] = idx[i]
-                Xs[k,4] = k
-                Ys[k, :3] = b_new
-                Ys[k, 3] = idx[i]
-                Ys[k,4] = k
-                flag = 0
-                # Check for PBCs along y and z
-                if b_new[0, 1] > yhi:
-                    b_new[0, 1] -= Ly
-                    flag = 1
-                if b_new[0, 2] > zhi:
-                    b_new[0, 2] -= Lz
-                    flag = 1
-                if b_new[0, 1] < ylo:
-                    b_new[0, 1] += Ly
-                    flag = 1
-                if b_new[0, 2] <= zlo + 0.1:
-                    b_new[0, 2] += Lz
-                    flag = 1
-                # if b_new
-                Ys[k, :3] = b_new
-                # print(b_new)
-                k += 1
+                    disp_pbc = self.pbcdist(disp_vec_new, Lx, Ly, Lz)
+                newYcoords = Xcoords + disp_pbc
 
-                x, y, z = [a[0, 0], b_new[0, 0]], [a[0, 1], b_new[0, 1]], [a[0, 2], b_new[0, 2]]
+                disp_vecs[i, :] = np.array([disp_pbc[0, 0], disp_pbc[0, 1], disp_pbc[0, 2], K, Xcoords[0, 0],
+                                            Xcoords[0, 1], Xcoords[0, 2], newYcoords[0, 0], newYcoords[0, 1],
+                                            newYcoords[0, 2], index])
 
-        self.initial_atoms_transformed_region = Xs
-        self.final_atoms_transformed_region = Ys
+            # Data in different frames
+            ndisps = disp_vecs.shape[0]
+            Kvec = disp_vecs[:, 3]
 
+            Xcoords = disp_vecs[:, 4:7]
+            Ycoords = disp_vecs[:, 7:10]
+            dTDP = disp_vecs[:, 0:3]
+            XTDP = Xcoords
+            YTDP = Ycoords
+            prob = np.zeros((len(Kvec), 3))
+            idx = disp_vecs[:, 10]
+            for i in range(len(Kvec)):
+                prob[i, :] = Kvec[i] * dTDP[i, :]
+            Dvec = np.sum(prob, 0)  # probabilistic expression for total net displacement/atom
+
+            Xp = XTDP
+            Yp = YTDP
+
+            # Columns: x, y, z, atom id, row index, path weight
+            Xs = np.zeros((ndisps, 6))
+            Ys = np.zeros((ndisps, 6))
+            k = 0
+            prob_cutoff = 1e-8
+            for i in range(ndisps):
+                path_prob = Kvec[i]
+                if path_prob > prob_cutoff:
+                    a = np.zeros((1, 3))
+                    b = np.zeros((1, 3))
+                    a[0, :] = Xp[i, :]
+                    b[0, :] = Yp[i, :]
+                    if pbcon == True:
+                        dp_new = self.pbcdist(b - a, Lx, Ly, Lz)
+                    b_new = a + dp_new
+                    Xs[k, :3] = a
+                    Xs[k, 3] = idx[i]
+                    Xs[k, 4] = k
+                    Xs[k, 5] = path_prob
+                    Ys[k, :3] = b_new
+                    Ys[k, 3] = idx[i]
+                    Ys[k, 4] = k
+                    Ys[k, 5] = path_prob
+                    flag = 0
+                    # Check for PBCs along y and z
+                    if b_new[0, 1] > yhi:
+                        b_new[0, 1] -= Ly
+                        flag = 1
+                    if b_new[0, 2] > zhi:
+                        b_new[0, 2] -= Lz
+                        flag = 1
+                    if b_new[0, 1] < ylo:
+                        b_new[0, 1] += Ly
+                        flag = 1
+                    if b_new[0, 2] <= zlo + 0.1:
+                        b_new[0, 2] += Lz
+                        flag = 1
+                    # if b_new
+                    Ys[k, :3] = b_new
+                    # print(b_new)
+                    k += 1
+
+                    x, y, z = [a[0, 0], b_new[0, 0]], [a[0, 1], b_new[0, 1]], [a[0, 2], b_new[0, 2]]
+
+            return Xs, Ys
+
+        # Each branch is a permutation, so it is a configuration that actually
+        # exists. Sampling each atom from its row of Gamma is not: two atoms would
+        # pick the same site.
+        self.branches = []
+        for weight, perm in self._branches(gamma_mod):
+            gperm = np.zeros_like(gamma_mod)
+            gperm[np.arange(N), perm] = 1.0 / N
+            Xs_b, Ys_b = build_config(gperm)
+            self.branches.append((weight, Xs_b, Ys_b))
+
+        self.initial_atoms_transformed_region = self.branches[0][1]
+        self.final_atoms_transformed_region = self.branches[0][2]
+
+    @staticmethod
+    def branch_folder(folder, branch):
+        """
+            Directory holding one alternative chain.
+
+            Args:
+                folder (str): Base output folder for this disconnection mode.
+                branch (int): Branch index, 0 being the heaviest.
+
+            Returns:
+                str: Path ending in a separator.
+        """
+        return os.path.join(folder, "branch" + str(branch)) + os.sep
+
+    def _branches(self, gamma):
+        """
+            Decomposes a coupling into the permutations it is a mixture of.
+
+            Gamma is projected back onto the doubly stochastic set first, because the
+            relative path cutoff renormalises rows only and leaves the columns short,
+            which strands mass the decomposition cannot reach.
+
+            Args:
+                gamma (np.ndarray): (N,N) coupling with rows summing to 1/N.
+
+            Returns:
+                list of (float, np.ndarray): Branch weight and the permutation it
+                    applies, heaviest first, truncated once the cumulative weight
+                    reaches `branch_coverage`.
+        """
+        N = gamma.shape[0]
+        P = gamma.copy()
+        for _ in range(2000):                       # Sinkhorn projection
+            P /= P.sum(axis=1, keepdims=True) * N
+            P /= P.sum(axis=0, keepdims=True) * N
+
+        # Birkhoff-von Neumann: peel off the heaviest permutation the support still
+        # admits, subtract it, repeat.
+        R = P * N
+        terms = []
+        for _ in range(self.max_branches):
+            if R.sum() < 1e-9:
+                break
+            cost = np.where(R > 1e-9, -np.log(np.maximum(R, 1e-300)), 1e9)
+            row, col = linear_sum_assignment(cost)
+            if cost[row, col].max() >= 1e9:         # no perfect matching left
+                break
+            theta = R[row, col].min()
+            terms.append((theta, col.copy()))
+            R[row, col] -= theta
+
+        terms.sort(key=lambda t: -t[0])
+        kept, total = [], 0.0
+        for theta, perm in terms:
+            kept.append((theta, perm))
+            total += theta
+            if total >= self.branch_coverage:
+                break
+        return kept
 
     def write_images(self,folder, image_num):
         """
@@ -612,49 +712,61 @@ class min_shuffle:
         sigma = self.sigma
         inc = self.inclination
         elem = self.element
-        # Write image 0 (flat gb)
-        if image_num == 1:
-            initial = self.initial_grain
-            file = "data." + elem + "s" + str(sigma) + "inc" + str(inc) + "__step0"
-            with open(folder + file, "w") as f0:
-                write_header(f0,len(initial),box)
-                write_atoms(f0,initial)
-            print(f"Done writing bicrystal {folder}/{file}")
-
         final = self.final_grain
-        Ys = self.final_atoms_transformed_region
         initial = self.initial_grain
-        Xs = self.initial_atoms_transformed_region
         if self.step_height >= 0:
             grain_num = 2
         else:
             grain_num = 1
 
-        # Build lookup dictionaries for quick ID-based matching
-        Xs_dict = {int(x[3]): x for x in Xs}
         final = final[final[:, 0].argsort()]
         final_dict = {int(f[0]): f for f in final}
-        #print(Xs_dict,Ys)
-        # Populate a matrix with correct atom indices and positions
-        final_atoms = []
-        for i in range(len(initial)):
-            atom_id = int(initial[i,0])
-            if atom_id in Xs_dict:
-                j = int(Xs_dict[atom_id][4])
-                final_atoms.append(np.array([atom_id, grain_num, Ys[j, 0], Ys[j, 1], Ys[j, 2]]))
-            elif atom_id in final_dict:
-                index = int(final_dict[atom_id][0])-1
-                final_atoms.append(final[index,:])
 
-        final_atoms = np.array(final_atoms)
+        written = []
+        for branch, (weight, Xs, Ys) in enumerate(self.branches):
+            # Keyed by atom ID. A branch is a permutation so there is one row per
+            # atom, but keep the heaviest defensively.
+            Xs_dict = {}
+            for x in Xs:
+                atom_id = int(x[3])
+                if atom_id not in Xs_dict or x[5] > Xs_dict[atom_id][5]:
+                    Xs_dict[atom_id] = x
 
+            final_atoms = []
+            for i in range(len(initial)):
+                atom_id = int(initial[i,0])
+                if atom_id in Xs_dict:
+                    j = int(Xs_dict[atom_id][4])
+                    final_atoms.append(np.array([atom_id, grain_num, Ys[j, 0], Ys[j, 1], Ys[j, 2]]))
+                elif atom_id in final_dict:
+                    index = int(final_dict[atom_id][0])-1
+                    final_atoms.append(final[index,:])
+            final_atoms = np.array(final_atoms)
 
-        # Write data
-        file = "data." + elem + "s" + str(sigma) + "inc" + str(inc) + "__step"+str(image_num)
-        with open(folder + file, "w") as f:
-            write_header(f,len(final_atoms),box)
-            write_atoms(f,final_atoms)
-        print(f"Done writing bicrystal {folder}/{file}")
+            # One folder per branch, each holding a complete chain under the usual
+            # names, so the NEB machinery can be pointed at whichever the user wants.
+            out = self.branch_folder(folder, branch)
+            os.makedirs(out, exist_ok=True)
+            stem = "data." + elem + "s" + str(sigma) + "inc" + str(inc) + "__step"
+            # The flat GB starts every chain, so each branch folder needs its own copy.
+            if image_num == 1:
+                with open(out + stem + "0", "w") as f0:
+                    write_header(f0,len(initial),box)
+                    write_atoms(f0,initial)
+            file = stem + str(image_num)
+            with open(out + file, "w") as f:
+                write_header(f,len(final_atoms),box)
+                write_atoms(f,final_atoms)
+            # Per image: branch j is the j-th heaviest at this step, and its weight
+            # is not the same at every step.
+            with open(out + "weight_step" + str(image_num) + ".txt", "w") as f:
+                f.write("%.6f\n" % weight)
+            written.append((branch, weight))
+
+        self.branch_weights = [w for _, w in written]
+        print("Done writing step %d into %d branch folder(s): %s"
+              % (image_num, len(written),
+                 ", ".join("branch%d w=%.3f" % (bi, w) for bi, w in written)))
 
     def _write_neb_input_file(self,folder, image_num):
         """
@@ -669,37 +781,19 @@ class min_shuffle:
                 in the specified folder. Prints confirmation upon completion.
         """
         sigma = self.sigma
-        file = "data.Cus" + str(sigma) + "inc0.0__step" + str(image_num)
-        outfile = "data.Cus" + str(sigma) + "inc0.0_out_step" + str(image_num)
-        in_file = folder + file
-        out_file = folder + outfile
-        data = read_LAMMPS_datafile(in_file, 1)
-        natoms = data[0][0]
-        atoms = data[0][3]
-        f = open(out_file, "w")
-        f.write("%d\n" % (natoms))
-        for i in range(len(atoms)):
-            f.write("%d %f %f %f\n" % (atoms[i, 0], atoms[i, 2], atoms[i, 3], atoms[i, 4]))
-        f.close()
-        print("Done writing bicrystal " + out_file)
-
-    @staticmethod
-    def _threshold(g, cutoff):
-        """
-            Applies a threshold to a matrix, setting elements less than the cutoff to zero.
-
-            Args:
-                g (np.ndarray): Input matrix of values.
-                cutoff (float): Threshold cutoff value.
-
-            Returns:
-                np.ndarray: Matrix with values below cutoff set to zero.
-        """
-        G = abs(g)
-        row_ind, col_ind = np.where(g < cutoff)
-        for i in range(len(row_ind)):
-            G[row_ind[i], col_ind[i]] = 0
-        return G
+        nbranch = len(self.branches) if self.branches else 1
+        for branch in range(nbranch):
+            out = self.branch_folder(folder, branch)
+            in_file = out + "data.Cus" + str(sigma) + "inc0.0__step" + str(image_num)
+            out_file = out + "data.Cus" + str(sigma) + "inc0.0_out_step" + str(image_num)
+            data = read_LAMMPS_datafile(in_file, 1)
+            natoms = data[0][0]
+            atoms = data[0][3]
+            with open(out_file, "w") as f:
+                f.write("%d\n" % (natoms))
+                for i in range(len(atoms)):
+                    f.write("%d %f %f %f\n" % (atoms[i, 0], atoms[i, 2], atoms[i, 3], atoms[i, 4]))
+        print("Done writing NEB coordinates for step %d (%d branch(es))" % (image_num, nbranch))
 
     @staticmethod
     def plot_min_shuffle_3d(Xs, Ys, box,sigma,reg_param):
@@ -717,7 +811,7 @@ class min_shuffle:
                 int: Returns 1 upon completion (placeholder return value).
         """
         # Plot simulation box
-        fig, ax = plt.subplots()
+        fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
         xlo = box[0, 0]
         ylo = box[1, 0]
         zlo = box[2, 0]

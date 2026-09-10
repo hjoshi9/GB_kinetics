@@ -1,6 +1,7 @@
 # It is not intended to be run directly.
 import numpy as np
 import os
+import shutil
 from src.bicrystal import bicrystal
 from src.IO import *
 from src.runLAMMPS import run_LAMMPS
@@ -13,7 +14,8 @@ def runGBkinetics(sig, mis, inc, lat_par, lat_Vec, axis, size_y, size_z, elem,
                   folder, potential,dispy, dispz,
                   oilab_output_file,choose_disconnection=True,run_neb = False,
                                         neb_mode = 1,
-                                        partitions = 40):
+                                        partitions = 40,
+                                        neb_branch = 0):
     """
         Run a grain boundary kinetics simulation using input parameters and LAMMPS.
 
@@ -42,6 +44,9 @@ def runGBkinetics(sig, mis, inc, lat_par, lat_Vec, axis, size_y, size_z, elem,
             run_neb (bool): Whether to run NEB calculations.
             neb_mode (int): NEB mode.
             partitions (int): Number of intermediate images used for NEB calculations.
+            neb_branch (int): Which alternative chain to run NEB on. 0 is the heaviest
+                at every image, which is the only chain when reg_parameter is 0. Every
+                chain is written regardless; this only selects the one NEB runs.
 
         Returns:
             str: Path to the folder containing the simulation results.
@@ -87,6 +92,7 @@ def runGBkinetics(sig, mis, inc, lat_par, lat_Vec, axis, size_y, size_z, elem,
     min_shuffle_operator = min_shuffle(lat_par,sigma,mis,inc,p,out_folder,elem,reg_parameter,max_iters)
 
     # Create bicrsytals with GB motion mediated with disconnection mediated migration
+    branch_counts = {}
     for image_num in range(total_images):
         # Define dislocation locations forming the disconnection
         perturb = 0.1
@@ -129,10 +135,21 @@ def runGBkinetics(sig, mis, inc, lat_par, lat_Vec, axis, size_y, size_z, elem,
                 min_shuffle_operator.run()
                 min_shuffle_operator.write_images(out_folder,image_num)
                 min_shuffle_operator._write_neb_input_file(out_folder, image_num)
+                branch_counts[image_num] = len(min_shuffle_operator.branches)
 
-    # Run neb calculations
+    # Every branch folder gets a whole chain, so NEB can be pointed at any of them.
+    n_branches = _complete_branch_chains(out_folder, branch_counts, total_images)
+    print("\n%d alternative chain(s) written under %s" % (n_branches, out_folder))
+    for branch in range(n_branches):
+        print("   " + min_shuffle.branch_folder(out_folder, branch))
+
+    # Run neb calculations on the chain the user asked for
     if run_neb:
-        run_lmp.run_neb_calc(np.round(bur, 2), np.round(step_height, 2), total_images-1,partitions)
+        if neb_branch >= n_branches:
+            raise ValueError("neb_branch = %d but only %d chain(s) were produced."
+                             % (neb_branch, n_branches))
+        run_lmp.run_neb_calc(np.round(bur, 2), np.round(step_height, 2), total_images-1,
+                             partitions, folder=min_shuffle.branch_folder(out_folder, neb_branch))
         out_folder = folder + elem + "/Sigma" + str(int(sigma)) + "/Misorientation" + str(np.round(mis))  + "/post_processed_neb_results/"
         os.makedirs(out_folder,exist_ok=True)
         plot_decision = True
@@ -220,3 +237,34 @@ def runGridSearch(sig, mis, inc, lat_par, lat_Vec, axis, size_y, size_z, elem, l
     run_lmp.post_process_gridsearch_data(plot_decision)
     return out
 
+
+def _complete_branch_chains(out_folder, branch_counts, total_images):
+    """
+        Fills the gaps so every branch folder holds a whole chain.
+
+        An image with fewer alternatives than the richest one leaves holes, and NEB
+        needs a configuration at every step. The holes are filled from branch0, the
+        heaviest at that image.
+
+        Args:
+            out_folder (str): Base output folder for this disconnection mode.
+            branch_counts (dict): Number of branches produced for each image number.
+            total_images (int): Number of images in the chain.
+
+        Returns:
+            int: Number of complete chains available.
+    """
+    n_branches = max(branch_counts.values()) if branch_counts else 1
+    for branch in range(n_branches):
+        dst_dir = min_shuffle.branch_folder(out_folder, branch)
+        os.makedirs(dst_dir, exist_ok=True)
+        for image_num in range(total_images):
+            if branch < branch_counts.get(image_num, 0):
+                continue
+            src_dir = min_shuffle.branch_folder(out_folder, 0)
+            for name in os.listdir(src_dir):
+                if name.endswith("step" + str(image_num)):
+                    src, dst = src_dir + name, dst_dir + name
+                    if not os.path.exists(dst):
+                        shutil.copyfile(src, dst)
+    return n_branches

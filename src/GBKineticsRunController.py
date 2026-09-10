@@ -29,8 +29,10 @@ def runGBkinetics(sig, mis, inc, lat_par, lat_Vec, axis, size_y, size_z, elem,
             element (str): Chemical element symbol (e.g., "Cu").
             reg (float): Regularization parameter for the min-shuffle algorithm.
             iterMax (int): Maximum number of iterations for the min-shuffle algorithm.
-            lammps_location (str): Path to the directory containing LAMMPS binaries.
-            mpi_location (str): Path to the directory containing the MPI executable.
+            lammps_location (str or None): Directory containing the LAMMPS binaries,
+                searched before PATH. None lets `src.executables` find them.
+            mpi_location (str or None): Directory containing the MPI executable,
+                searched before PATH. None lets `src.executables` find it.
             output_folder (str): Root folder where output data will be stored.
             lammps_potential (str): Full path to the LAMMPS potential file.
             disp_along_gb (float): Displacement along the grain boundary direction.
@@ -161,8 +163,10 @@ def runGridSearch(sig, mis, inc, lat_par, lat_Vec, axis, size_y, size_z, elem, l
             size_y (int): System size along the grain boundary period (in 2×CSL units).
             size_z (int): System size along the tilt axis (in 2×CSL units).
             elem (str): Chemical symbol of the element (e.g., "Cu").
-            lammps_location (str): Path to the directory containing LAMMPS binaries.
-            mpi_location (str): Path to the directory containing the MPI executable.
+            lammps_location (str or None): Directory containing the LAMMPS binaries,
+                searched before PATH. None lets `src.executables` find them.
+            mpi_location (str or None): Directory containing the MPI executable,
+                searched before PATH. None lets `src.executables` find it.
             folder (str): Root folder to store all output data.
             potential (str): Full path to the LAMMPS potential file.
             oilab_output_file (str): Path to the bicrystallographic data file from oILAB.

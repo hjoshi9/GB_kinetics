@@ -33,10 +33,16 @@ oilab_output_file = "data/fcc0-10.txt"
 output_folder = "output/"
 
 # ---------- Location of programs needed to run this (change these) ----------------------#
-# Location of directory where lmp_serial and lmp_mpi are stored
-lammps_location = "/opt/homebrew/bin"
+# Location of the directory holding the LAMMPS binaries, and of the one holding mpirun.
+# Leave both as None to have them discovered automatically: PATH and the usual install
+# directories are searched, and any build lacking the styles this pipeline needs
+# (eam/alloy for minimization, neb for NEB) is skipped rather than used and left to fail
+# mid-run.  Set them to a directory to search it first, or export GBK_LMP_SERIAL /
+# GBK_LMP_MPI / GBK_MPIRUN to name the exact binaries.
+# Run `python -m src.executables` to see what discovery picks on this machine.
+lammps_location = None
 # Location of directory where mpirun is stored
-mpi_location = "/opt/homebrew/bin"
+mpi_location = None
 # Full path to the potential to be used
 lammps_potential = "/opt/homebrew/Cellar/lammps/20240829-update1/share/lammps/potentials/Cu_mishin1.eam.alloy"
 

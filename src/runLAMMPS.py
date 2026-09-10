@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits import mplot3d
 from scipy.interpolate import griddata
 from src.IO import *
+from src.executables import find_lammps_serial, find_lammps_mpi, find_mpirun
 
 class run_LAMMPS:
     """
@@ -20,8 +21,10 @@ class run_LAMMPS:
             inclination (float): Grain boundary inclination.
             size_along_gb_period (int): Size along grain boundary periodicity.
             potential (str): Path to interatomic potential file.
-            mpi_location (str): Path to MPI binaries.
-            lammps_location (str): Path to LAMMPS binaries.
+            mpi_location (str or None): Directory holding the MPI binaries, searched
+                before PATH. None (the default) discovers the launcher automatically.
+            lammps_location (str or None): Directory holding the LAMMPS binaries,
+                searched before PATH. None discovers them automatically.
             output_filename_gridsearch (str or None): Filename for grid search output.
             gridsearch_output_setting (int or None): Grid search output setting flag.
             gridsearch_output_folder (str or None): Folder for grid search outputs.
@@ -34,7 +37,7 @@ class run_LAMMPS:
     """
     def __init__(self, folder, element, lattice_parameter, sigma, misorientation,
                  inclination, size_along_gb_period,
-                  potential, mpi_location, lammps_location):
+                  potential, mpi_location=None, lammps_location=None):
         """
             Initializes the run_LAMMPS instance with simulation parameters.
 
@@ -47,8 +50,12 @@ class run_LAMMPS:
                 inclination (float): Grain boundary inclination angle.
                 size_along_gb_period (int): Size along grain boundary period.
                 potential (str): Path to interatomic potential file.
-                mpi_location (str): Path to MPI binaries.
-                lammps_location (str): Path to LAMMPS binaries.
+                mpi_location (str, optional): Directory holding mpirun. Searched before
+                    PATH; leave as None to let `src.executables` find it.
+                lammps_location (str, optional): Directory holding the LAMMPS binaries.
+                    Searched before PATH; leave as None to let `src.executables` find
+                    them.  Discovery rejects a build that lacks the styles this
+                    pipeline needs, so the first `lmp` on PATH is not blindly used.
          """
         self.folder = folder
         self.element = element
@@ -61,6 +68,11 @@ class run_LAMMPS:
         self.potential = potential
         self.mpi_location = mpi_location
         self.lammps_location = lammps_location
+        # Resolved on first use rather than here: a run with run_neb = False never
+        # needs MPI, and probing for it would fail on a machine that has none.
+        self._lammps_serial = None
+        self._lammps_mpi = None
+        self._mpirun = None
 
         self.output_filename_gridsearch = None
         self.gridsearch_output_setting = None
@@ -72,6 +84,48 @@ class run_LAMMPS:
         self.burgers_vec = None
         self.step_height = None
         self.neb_output_folder = None
+
+    @property
+    def lammps_serial(self):
+        """
+            Path to the LAMMPS executable used for the serial minimization runs.
+
+            Returns:
+                str: Absolute path, discovered on first access and then cached.
+        """
+        if self._lammps_serial is None:
+            self._lammps_serial = find_lammps_serial(self.lammps_location)
+            print("Using LAMMPS (serial) : " + self._lammps_serial)
+        return self._lammps_serial
+
+    @property
+    def mpirun(self):
+        """
+            Path to the MPI launcher used for the parallel runs.
+
+            Returns:
+                str: Absolute path, discovered on first access and then cached.
+        """
+        if self._mpirun is None:
+            self._mpirun = find_mpirun(self.mpi_location)
+            print("Using MPI launcher    : " + self._mpirun)
+        return self._mpirun
+
+    @property
+    def lammps_mpi(self):
+        """
+            Path to the MPI-enabled LAMMPS executable used for NEB and grid search.
+
+            Returns:
+                str: Absolute path, discovered on first access and then cached.  The
+                    candidate is verified to actually run in parallel under
+                    `self.mpirun`, so a serial build is not silently launched as N
+                    independent copies of the same calculation.
+        """
+        if self._lammps_mpi is None:
+            self._lammps_mpi = find_lammps_mpi(self.mpirun, self.lammps_location)
+            print("Using LAMMPS (MPI)    : " + self._lammps_mpi)
+        return self._lammps_mpi
 
     def write_minimization_input(self, file_name, dispy, dispz,minimization_along_gb_directions=False):
         """
@@ -418,14 +472,12 @@ jump SELF loopy
             Raises:
                 RuntimeError: If the NEB LAMMPS run fails.
         """
-        mpi_location = self.mpi_location
-        lammps_location = self.lammps_location
         folder = self.folder
         print("\n========================== Running neb calculations ==============================")
         neb_output_folder = self.write_lammps_neb_input_script(burgers_vector, step_height,number_of_steps, partitions, mode)
         print("The results from this calculation will be stored in " + neb_output_folder)
-        command = mpi_location + "/mpirun --oversubscribe --use-hwthread-cpus -np " + str(
-            partitions) + " " + lammps_location + "/lmp_mpi  -partition " + str(partitions) + "x1 -in " + folder+self.lammps_input_filename
+        command = self.mpirun + " --oversubscribe --use-hwthread-cpus -np " + str(
+            partitions) + " " + self.lammps_mpi + "  -partition " + str(partitions) + "x1 -in " + folder+self.lammps_input_filename
         #subprocess.run([command], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)
         result = subprocess.run([command], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         if result.returncode != 0:
@@ -453,12 +505,11 @@ jump SELF loopy
             Raises:
                 RuntimeError: If the minimization LAMMPS run fails.
         """
-        lammps_location = self.lammps_location
         dispy = disp_along_gb_period
         dispz = disp_along_tilt_axis
         print("========================== Minimizing using LAMMPS ==========================")
         self.write_minimization_input(file_name, dispy, dispz,minimization_along_gb_directions)
-        command = lammps_location + "/lmp_serial -in " + self.lammps_input_filename
+        command = self.lammps_serial + " -in " + self.lammps_input_filename
         #subprocess.run([command], shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         result = subprocess.run([command], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         if result.returncode != 0:
@@ -486,10 +537,8 @@ jump SELF loopy
                 RuntimeError: If the grid search LAMMPS run fails.
         """
         print("\n=================================== Running grid search  ========================================")
-        mpi_location = self.mpi_location
-        lammps_location = self.lammps_location
         self.write_lammps_gridsearch_input(infile, outfolder,step_increments,limit, output_setting)
-        command = mpi_location + "/mpirun -np " + str(number_of_cores)+ " " + lammps_location + "/lmp_mpi -in " + self.lammps_input_filename
+        command = self.mpirun + " -np " + str(number_of_cores)+ " " + self.lammps_mpi + " -in " + self.lammps_input_filename
         #subprocess.run([command], shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         result = subprocess.run([command], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         if result.returncode != 0:

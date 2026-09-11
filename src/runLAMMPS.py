@@ -123,7 +123,8 @@ class run_LAMMPS:
             print("Using LAMMPS (MPI)    : " + self._lammps_mpi)
         return self._lammps_mpi
 
-    def write_minimization_input(self, file_name, dispy, dispz,minimization_along_gb_directions=False):
+    def write_minimization_input(self, file_name, dispy, dispz,minimization_along_gb_directions=False,
+                                 preconditioned=False):
         """
             Writes a LAMMPS input script for energy minimization with optional box relaxation.
 
@@ -133,6 +134,10 @@ class run_LAMMPS:
                 dispz (float): Displacement along tilt axis.
                 minimization_along_gb_directions (bool): If True, performs additional minimization
                     steps with box relaxation along y and z directions.
+                preconditioned (bool): The structure already carries the rigid grain
+                    displacement, because it was replicated from a relaxed cell that
+                    had it applied. Applying it again would shift the grains twice, so
+                    it is left out.
         """
         sigma = self.sigma
         mis   = self.misorientation
@@ -150,6 +155,11 @@ class run_LAMMPS:
         min_output_movie = file_name + "_minmov"
         self.output_filename = min_outputfile
         images = 2 * size + 1
+        if preconditioned:
+            displace_line = ("# Grains are already displaced: this structure was replicated from a\n"
+                             "# relaxed cell that had the shift applied, so it is not applied again.")
+        else:
+            displace_line = "displace_atoms upper move 0 ${dispy} ${dispz} units box"
         if minimization_along_gb_directions:
             extra_minimization_script = f"""
 #-------- Minimize with box relaxation in y direction -------------
@@ -212,10 +222,14 @@ compute energy all pe/atom
 compute eng all reduce sum c_energy
 
 #---------- Displace top part for lowest energy structure ----------
-delete_atoms overlap 1 upper upper
-delete_atoms overlap 1 lower lower
-delete_atoms overlap 0.1 upper lower
-displace_atoms upper move 0 ${{dispy}} ${{dispz}} units box
+# compress no is essential: delete_atoms renumbers surviving atoms by default, and
+# min_shuffle pairs the flat and stepped configurations by atom ID alone. Letting
+# LAMMPS recompress IDs makes atom N a different site in the two files, which reads
+# back as atoms having crossed the whole crystal during minimization.
+delete_atoms overlap 1 upper upper compress no
+delete_atoms overlap 1 lower lower compress no
+delete_atoms overlap 0.1 upper lower compress no
+{displace_line}
 
 # Apply fix to tether centroid of the system to the center
 
@@ -336,9 +350,9 @@ variable peGB equal c_pe
 variable peBULK equal c_pebulk
 variable atomsGB equal count(GB)
 variable atomsBULK equal count(BULK)
-delete_atoms overlap 1 upper upper
-delete_atoms overlap 1 lower lower
-delete_atoms overlap 0.1 upper lower
+delete_atoms overlap 1 upper upper compress no
+delete_atoms overlap 1 lower lower compress no
+delete_atoms overlap 0.1 upper lower compress no
 displace_atoms upper move 0 ${{dispy}} ${{dispz}} units box
 thermo 500
 thermo_style custom step temp pe lx ly lz press pxx pyy pzz c_eatoms
@@ -490,7 +504,8 @@ jump SELF loopy
         self.number_of_images_provided = number_of_steps
         self.neb_output_folder = neb_output_folder
 
-    def run_minimization(self,file_name,disp_along_gb_period,disp_along_tilt_axis,minimization_along_gb_directions=False):
+    def run_minimization(self,file_name,disp_along_gb_period,disp_along_tilt_axis,minimization_along_gb_directions=False,
+                         preconditioned=False):
         """
             Runs a minimization calculation using LAMMPS.
 
@@ -499,6 +514,8 @@ jump SELF loopy
                 disp_along_gb_period (float): Displacement along grain boundary period.
                 disp_along_tilt_axis (float): Displacement along tilt axis.
                 minimization_along_gb_directions (bool, optional): Whether to perform box relaxations (default: False).
+                preconditioned (bool, optional): Skip the rigid grain displacement
+                    because the structure already carries it (default: False).
 
             Returns:
                 str: Filename of the minimized structure output.
@@ -509,7 +526,8 @@ jump SELF loopy
         dispy = disp_along_gb_period
         dispz = disp_along_tilt_axis
         print("========================== Minimizing using LAMMPS ==========================")
-        self.write_minimization_input(file_name, dispy, dispz,minimization_along_gb_directions)
+        self.write_minimization_input(file_name, dispy, dispz,minimization_along_gb_directions,
+                                      preconditioned)
         command = self.lammps_serial + " -in " + self.lammps_input_filename
         #subprocess.run([command], shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         result = subprocess.run([command], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)

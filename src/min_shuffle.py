@@ -1,4 +1,5 @@
 import os
+import warnings
 import numpy as np
 import numpy.linalg as la
 import ot
@@ -6,6 +7,7 @@ import ot.plot
 from scipy.optimize import linear_sum_assignment
 import matplotlib.pyplot as plt
 from src.IO import *
+from src.shuffle_pattern import shuffle_pattern
 
 class min_shuffle:
     """
@@ -20,7 +22,8 @@ class min_shuffle:
     def __init__(self,lattice_parameter,sigma,misorientation,inclination,
                  period,folder,elem,reg_param,max_iters,
                  box_expansion_factor=0,dimension=3,path_cutoff=0.05,
-                 branch_coverage=0.9,max_branches=40):
+                 branch_coverage=0.9,max_branches=40,
+                 sinkhorn_tolerance=1e-6,reg_escalation=2.0,max_reg_attempts=6):
         """
         Initializes the min_shuffle object with simulation parameters and placeholders for atomic data.
 
@@ -42,6 +45,15 @@ class min_shuffle:
             branch_coverage (float): Keep alternative configurations, heaviest first,
                 until their weights sum to this. At reg_param = 0 there is only ever one.
             max_branches (int): Cap on the permutations peeled off the coupling.
+            sinkhorn_tolerance (float): Sinkhorn stops once the marginal it produces
+                is this close to uniform. POT's own default of 1e-9 is below the
+                floor float64 reaches on these problems, so leaving it unset means
+                every solve runs the full `max_iters` however well it has converged.
+            reg_escalation (float): Factor `reg_param` is multiplied by after a solve
+                that failed to reach `sinkhorn_tolerance` within `max_iters`. A colder
+                shuffle converges more slowly, so warming it is the way out.
+            max_reg_attempts (int): How many times to escalate before giving up and
+                using the last coupling anyway.
             box_expansion_factor (float, optional): Factor to expand the simulation box dimensions, defaults to 0 (no expansion).
             dimension (int, optional): Dimensionality of the simulation system, defaults to 3 (3D).
 
@@ -64,6 +76,13 @@ class min_shuffle:
             final_atoms_transformed_region (np.ndarray or None): Final atom coordinates of the transformed region.
             branches (list or None): (weight, Xs, Ys) per alternative configuration,
                 heaviest first.
+            reg_used (float or None): Regularization the last solve actually used,
+                which is `reg_param` escalated by however many attempts it took.
+            sinkhorn_converged (bool or None): Whether that solve reached
+                `sinkhorn_tolerance`.
+            loop_start (float or None): y of the leading disconnection node, the edge
+                of the region the GB has already swept.
+            loop_end (float or None): y of the trailing node.
         """
         self.lattice_parameter = lattice_parameter
         self.sigma = sigma
@@ -77,6 +96,9 @@ class min_shuffle:
         self.path_cutoff = path_cutoff
         self.branch_coverage = branch_coverage
         self.max_branches = max_branches
+        self.sinkhorn_tolerance = sinkhorn_tolerance
+        self.reg_escalation = reg_escalation
+        self.max_reg_attempts = max_reg_attempts
         self.box_expansion_factor = box_expansion_factor
         self.dimension = dimension
 
@@ -92,6 +114,11 @@ class min_shuffle:
         self.step_height = None
         self.dislocation_start = None
         self.dislocation_end = None
+        self.loop_start = None
+        self.loop_end = None
+
+        self.reg_used = None
+        self.sinkhorn_converged = None
 
         self.atoms_minshuf = None
         self.types_minshuf = None
@@ -119,6 +146,10 @@ class min_shuffle:
                 self.step_height (float): Adjusted step height of the shuffle domain.
                 self.dislocation_start (float): Start coordinate of the dislocation region.
                 self.dislocation_end (float): End coordinate of the dislocation region.
+                self.loop_start (float): Leading node, unextended. The disconnection
+                    loop is what has already transformed, which is what
+                    `map_from_reference` stamps the elementary shuffle onto.
+                self.loop_end (float): Trailing node, unextended.
         """
         lat_par = self.lattice_parameter
         p = self.period
@@ -133,16 +164,23 @@ class min_shuffle:
         self.step_height = st_height*(1+ min_shuffle_domain_expansion_factor)
         self.dislocation_start = d_start
         self.dislocation_end = d_stop
+        self.loop_start = disloc1[0]
+        self.loop_end = disloc2[0]
 
 
-    def load_data(self,file_mode,file_flat,file_disconnection):
+    def load_data(self,file_mode,file_flat,file_disconnection,final_file_mode=None):
         """
             Loads atomic positions from initial and final LAMMPS data files.
 
             Args:
-                file_mode (str): Mode for reading the LAMMPS data files.
+                file_mode (int): Mode for reading the flat configuration, and the
+                    disconnection one too unless `final_file_mode` overrides it.
                 file_flat (str): Path to the initial (flat) atomic configuration file.
                 file_disconnection (str): Path to the final atomic configuration file.
+                final_file_mode (int, optional): Mode for the disconnection file when
+                    it differs. A run that minimizes only the endpoints has a
+                    minimized flat GB, written by LAMMPS in eight columns, alongside
+                    an intermediate image still in the five this code writes.
 
             Sets:
                 self.grainA_pretransform (np.ndarray): Atoms in grain A before transformation.
@@ -154,8 +192,10 @@ class min_shuffle:
                 self.final_grain (np.ndarray): Final atomic data.
         """
         print("=============================== Generating atomic trajectories =====================================")
+        if final_file_mode is None:
+            final_file_mode = file_mode
         data_init = read_LAMMPS_datafile(file_flat, file_mode)
-        data_final = read_LAMMPS_datafile(file_disconnection, file_mode)
+        data_final = read_LAMMPS_datafile(file_disconnection, final_file_mode)
         atoms = data_init[0][3]
         box = data_init[0][2]
         Ai = []
@@ -203,8 +243,14 @@ class min_shuffle:
             Args:
                 folder (str): Directory to write formatted data files.
 
+            Atoms are paired between the two configurations by atom ID. Any that the
+            final configuration has lost -- LAMMPS culls overlapping atoms, and not
+            always the same ones in both structures -- are dropped from the domain,
+            and how many is reported.
+
             Raises:
-                ValueError: If grain boundary info or atomic data is missing.
+                ValueError: If grain boundary info or atomic data is missing, or if
+                    the domain comes out empty.
 
             Sets:
                 self.atoms_minshuf (np.ndarray): Formatted atoms array for minimal shuffling.
@@ -229,35 +275,42 @@ class min_shuffle:
         inc = self.inclination
 
         data_A = []
-        data_B = []
         eps = 1e-1
-        count = 1
         if h >= 0:
             initial = np.concatenate((Ai, Bi), axis=0)
             for i in range(initial.shape[0]):
                 if initial[i, 0] < gb_loc + h - eps and initial[i, 0] > gb_loc - eps and initial[i, 1] >= disc_start and initial[i, 1] <= disc_end:
-                    count += 1
                     data_A.append([initial[i, 0], initial[i, 1], initial[i, 2], initial[i, 3]])
         else:
             for i in range(Bi.shape[0]):
                 if Bi[i, 0] > gb_loc + h - eps and Bi[i, 0] < gb_loc - eps and Bi[i, 1] >= disc_start and Bi[i, 1] <= disc_end:
-                    count += 1
                     data_A.append([Bi[i, 0], Bi[i, 1], Bi[i, 2], Bi[i, 3]])
-        A = np.array(data_A)
-        for i in range(Af.shape[0]):
-            for j in range(len(data_A)):
-                if abs(Af[i, 3] - A[j, 3]) < 0.5:
-                    count += 1
-                    data_B.append([Af[i, 0], Af[i, 1], Af[i, 2], Af[i, 3]])
-                    break
 
-        for i in range(Bf.shape[0]):
-            for j in range(len(data_A)):
-                if abs(Bf[i, 3] - A[j, 3]) < 0.5:
-                    count += 1
-                    data_B.append([Bf[i, 0], Bf[i, 1], Bf[i, 2], Bf[i, 3]])
-                    break
+        # Pair each domain atom with where it ended up, by atom ID.
+        #
+        # An ID can be missing from the final configuration: LAMMPS culls overlapping
+        # atoms at the boundary, and it does not always cull the same ones in the flat
+        # and the stepped structure. Such an atom has no partner to shuffle to, so it
+        # is dropped from the domain rather than left to unbalance the two grains --
+        # `run` needs a one-to-one mapping and would otherwise refuse outright.
+        final_by_id = {}
+        for row in np.concatenate((Af, Bf), axis=0):
+            final_by_id[int(round(row[3]))] = row
+        paired_A, data_B = [], []
+        for row in data_A:
+            final_row = final_by_id.get(int(round(row[3])))
+            if final_row is not None:
+                paired_A.append(row)
+                data_B.append([final_row[0], final_row[1], final_row[2], final_row[3]])
+        unpaired = len(data_A) - len(paired_A)
+        if unpaired:
+            print("   %d of %d domain atom(s) have no counterpart in the final "
+                  "configuration and were dropped from the shuffle."
+                  % (unpaired, len(data_A)))
+        A = np.array(paired_A)
         B = np.array(data_B)
+        if len(A) == 0:
+            raise ValueError("The minimal shuffle domain is empty. Check gb_info().")
         # Write to data file
         suffix = "min_shuffle"
         file = "data." + elem + "s" + str(sigma) + "inc" + str(inc)
@@ -372,15 +425,15 @@ class min_shuffle:
         """
         dim = self.dimension
         d = dp
-        n = dim
         L = np.array([Lx, Ly, Lz])
-        for i in range(n):
+        for i in range(dim):
             Li = L[i]
-            for j in range(dp.shape[0]):
-                if dp[j, i] < -0.5 * Li:
-                    d[j, i] += Li
-                elif dp[j, i] >= 0.5 * Li:
-                    d[j, i] -= Li
+            # Both masks come off the unshifted column, and they are disjoint, so
+            # this is the same single shift per element the equivalent loop applies.
+            below = dp[:, i] < -0.5 * Li
+            above = dp[:, i] >= 0.5 * Li
+            d[below, i] += Li
+            d[above, i] -= Li
         return d
 
     def pbcwrap(self,d,box):
@@ -425,10 +478,266 @@ class min_shuffle:
                 dpbc[j, i] = xj
         return dpbc
 
+    def _shuffle_domain(self):
+        """
+            Splits the minimal shuffle domain into the two grains and measures its box.
+
+            Every route to a shuffle -- solving transport here, or stamping down a
+            reference pattern -- starts from the same pair of atom lists and the same
+            box lengths, so they are built in one place.
+
+            Raises:
+                ValueError: If input formatting is not done, or the two grains hold
+                    different numbers of atoms so no one-to-one mapping exists.
+
+            Returns:
+                dict: With keys `Xbasis` and `Ybasis` ((N,3) initial and final
+                    positions), `indices` (atom IDs of `Xbasis`), `N`, `box`, `L`
+                    (box lengths) and `lo` / `hi` (box faces).
+        """
+        if self.types_minshuf is None:
+            raise ValueError("Input formatting not done yet. Run format_input()")
+        atoms = self.atoms_minshuf
+        types = self.types_minshuf
+        box = self.box_minshuf + self.box_expansion_factor * np.array([[0, 0], [-5, 5], [0, 0]])
+
+        N = atoms.shape[0]
+        xlo, ylo, zlo = box[:, 0]
+        xhi, yhi, zhi = box[:, 1]
+        Lx, Ly, Lz = xhi - xlo, yhi - ylo, zhi - zlo
+
+        # Find the particles of each of the grains: X is grain 1 Y is grain 2
+        Xbasis = []  # type 1
+        Ybasis = []  # type 2
+        indicies = []
+        for i in range(N):
+            if atoms[i, 1] == 1:
+                Xbasis.append(atoms[i, 2:])
+                indicies.append(atoms[i, 0])
+            elif atoms[i, 1] == 2:
+                Ybasis.append(atoms[i, 2:])
+        Xbasis = np.array(Xbasis)
+        Ybasis = np.array(Ybasis)
+        if Xbasis.shape[0] == 0 or Ybasis.shape[0] == 0:
+            raise ValueError("Xbasis and Ybasis must have same non-zero length")
+        if Xbasis.shape[0] != Ybasis.shape[0]:
+            raise ValueError("The number of atoms do not match for the two grains. One-to-one mapping not possible")
+
+        return {"Xbasis": Xbasis, "Ybasis": Ybasis, "indices": indicies,
+                "N": Xbasis.shape[0], "box": box, "types": types,
+                "L": (Lx, Ly, Lz), "lo": (xlo, ylo, zlo), "hi": (xhi, yhi, zhi)}
+
+    def _cost_matrix(self, ctx, targets=None):
+        """
+            Squared minimum-image distance from every source atom to every final site.
+
+            Args:
+                ctx (dict): Output of `_shuffle_domain`.
+                targets (np.ndarray, optional): (N,3) positions to measure from,
+                    defaulting to the initial positions. `map_from_reference` passes
+                    where the reference pattern says each atom should end up, which
+                    turns the assignment into a cheap correction of that guess rather
+                    than a search from scratch.
+
+            Returns:
+                np.ndarray: (N,N) squared distances.
+        """
+        Ybasis = ctx["Ybasis"]
+        source = ctx["Xbasis"] if targets is None else targets
+        Lx, Ly, Lz = ctx["L"]
+        N = ctx["N"]
+        dist_mat = np.zeros((N, N))
+        for i in range(N):
+            dvec_pbc = self.pbcdist(Ybasis - source[i, :], Lx, Ly, Lz)
+            dist_mat[i, :] = la.norm(dvec_pbc, axis=1)
+        return dist_mat ** 2
+
+    def _solve_sinkhorn(self, dist_norm):
+        """
+            Sinkhorn with the regularization raised until it converges.
+
+            A shuffle that is too cold converges arbitrarily slowly, and a solve that
+            never reaches `sinkhorn_tolerance` spends all of `max_iters` -- hours, at
+            a few hundred atoms -- to return a coupling no better than the one it had
+            early on. Rather than pay that, warm the shuffle by `reg_escalation` and
+            try again, up to `max_reg_attempts` times.
+
+            Args:
+                dist_norm (np.ndarray): (N,N) cost matrix in units of the typical gap
+                    to an atom's second choice.
+
+            Sets:
+                self.reg_used (float): The regularization that was used in the end.
+                self.sinkhorn_converged (bool): Whether it converged there.
+
+            Returns:
+                np.ndarray: The coupling.
+        """
+        N = dist_norm.shape[0]
+        a = np.ones(N) / N
+        b = np.ones(N) / N
+        reg = self.reg_param
+        Gamma = None
+        converged = False
+        for attempt in range(max(1, self.max_reg_attempts)):
+            with warnings.catch_warnings():
+                # POT warns on non-convergence; escalating reg is this code's answer
+                # to that, so the warning would only be noise.
+                warnings.simplefilter("ignore")
+                Gamma, log = ot.bregman.sinkhorn_log(a, b, dist_norm, reg,
+                                                     numItermax=self.max_iters,
+                                                     stopThr=self.sinkhorn_tolerance,
+                                                     log=True, warn=False)
+            err = float(log["err"][-1]) if len(log["err"]) else np.inf
+            converged = bool(np.all(np.isfinite(Gamma))) and err < self.sinkhorn_tolerance
+            print("   Sinkhorn: reg = %-8.4g iterations = %-8d marginal error = %.2e  %s"
+                  % (reg, log["niter"] + 1, err, "converged" if converged else "NOT converged"))
+            if converged:
+                break
+            if attempt < self.max_reg_attempts - 1:
+                reg *= self.reg_escalation
+        self.reg_used = reg
+        self.sinkhorn_converged = converged
+        if not converged:
+            print("WARNING: Sinkhorn still had not converged at reg = %.4g after %d "
+                  "attempts. Using the last coupling; raise reg_escalation, "
+                  "max_reg_attempts or maximumIterations if the shuffle looks wrong."
+                  % (reg, self.max_reg_attempts))
+        return Gamma
+
+    def _build_config(self, ctx, gamma):
+        """
+            Turns one coupling into (Xs, Ys) atom lists.
+
+            A permutation in gives a single path per atom; the full coupling gives
+            every kept path.
+
+            Args:
+                ctx (dict): Output of `_shuffle_domain`.
+                gamma (np.ndarray): (N,N) coupling.
+
+            Returns:
+                tuple: (Xs, Ys), each (npaths,6) with columns x, y, z, atom id, row
+                    index and path weight.
+        """
+        dim = self.dimension
+        pbcon = True
+        Xbasis, Ybasis, indicies = ctx["Xbasis"], ctx["Ybasis"], ctx["indices"]
+        Lx, Ly, Lz = ctx["L"]
+        xlo, ylo, zlo = ctx["lo"]
+        xhi, yhi, zhi = ctx["hi"]
+
+        I, J = np.where(gamma != 0)
+        disp_vecs = np.zeros((len(I), 11))
+        for i in range(len(I)):
+            K = gamma[I[i], J[i]]  # path prob
+            Xcoords = np.zeros((1, dim))
+            Ycoords = np.zeros((1, dim))
+            Xcoords[0, :] = np.array([Xbasis[I[i], 0], Xbasis[I[i], 1], Xbasis[I[i], 2]])
+            Ycoords[0, :] = np.array([Ybasis[J[i], 0], Ybasis[J[i], 1], Ybasis[J[i], 2]])
+            index = indicies[I[i]]
+
+            # Vector connecting X and Y
+            disp_vec_new = Ycoords - Xcoords
+            if pbcon == True:
+                disp_pbc = self.pbcdist(disp_vec_new, Lx, Ly, Lz)
+            newYcoords = Xcoords + disp_pbc
+
+            disp_vecs[i, :] = np.array([disp_pbc[0, 0], disp_pbc[0, 1], disp_pbc[0, 2], K, Xcoords[0, 0],
+                                        Xcoords[0, 1], Xcoords[0, 2], newYcoords[0, 0], newYcoords[0, 1],
+                                        newYcoords[0, 2], index])
+
+        # Data in different frames
+        ndisps = disp_vecs.shape[0]
+        Kvec = disp_vecs[:, 3]
+
+        Xcoords = disp_vecs[:, 4:7]
+        Ycoords = disp_vecs[:, 7:10]
+        dTDP = disp_vecs[:, 0:3]
+        XTDP = Xcoords
+        YTDP = Ycoords
+        prob = np.zeros((len(Kvec), 3))
+        idx = disp_vecs[:, 10]
+        for i in range(len(Kvec)):
+            prob[i, :] = Kvec[i] * dTDP[i, :]
+        Dvec = np.sum(prob, 0)  # probabilistic expression for total net displacement/atom
+
+        Xp = XTDP
+        Yp = YTDP
+
+        # Columns: x, y, z, atom id, row index, path weight
+        Xs = np.zeros((ndisps, 6))
+        Ys = np.zeros((ndisps, 6))
+        k = 0
+        prob_cutoff = 1e-8
+        for i in range(ndisps):
+            path_prob = Kvec[i]
+            if path_prob > prob_cutoff:
+                a = np.zeros((1, 3))
+                b = np.zeros((1, 3))
+                a[0, :] = Xp[i, :]
+                b[0, :] = Yp[i, :]
+                if pbcon == True:
+                    dp_new = self.pbcdist(b - a, Lx, Ly, Lz)
+                b_new = a + dp_new
+                Xs[k, :3] = a
+                Xs[k, 3] = idx[i]
+                Xs[k, 4] = k
+                Xs[k, 5] = path_prob
+                Ys[k, :3] = b_new
+                Ys[k, 3] = idx[i]
+                Ys[k, 4] = k
+                Ys[k, 5] = path_prob
+                flag = 0
+                # Check for PBCs along y and z
+                if b_new[0, 1] > yhi:
+                    b_new[0, 1] -= Ly
+                    flag = 1
+                if b_new[0, 2] > zhi:
+                    b_new[0, 2] -= Lz
+                    flag = 1
+                if b_new[0, 1] < ylo:
+                    b_new[0, 1] += Ly
+                    flag = 1
+                if b_new[0, 2] <= zlo + 0.1:
+                    b_new[0, 2] += Lz
+                    flag = 1
+                # if b_new
+                Ys[k, :3] = b_new
+                # print(b_new)
+                k += 1
+
+                x, y, z = [a[0, 0], b_new[0, 0]], [a[0, 1], b_new[0, 1]], [a[0, 2], b_new[0, 2]]
+
+        return Xs, Ys
+
+    def _permutation_branch(self, ctx, perm, weight):
+        """
+            Wraps one permutation up the way `self.branches` holds them.
+
+            Args:
+                ctx (dict): Output of `_shuffle_domain`.
+                perm (np.ndarray): (N,) final-site index for each source atom.
+                weight (float): Weight to record for this branch.
+
+            Returns:
+                tuple: (weight, Xs, Ys).
+        """
+        N = ctx["N"]
+        gperm = np.zeros((N, N))
+        gperm[np.arange(N), perm] = 1.0 / N
+        Xs, Ys = self._build_config(ctx, gperm)
+        return (weight, Xs, Ys)
+
     def run(self):
         """
             Runs the Sinkhorn optimal transport algorithm to compute minimal shuffling displacement vectors
             between initial and final atomic configurations in the minimal shuffle domain.
+
+            Cost grows as the square of the atom count and the solver's iteration
+            count is unbounded by the system size, so this is the expensive step.
+            `map_from_reference` is the cheap alternative once a reference system has
+            been solved.
 
             Raises:
                 ValueError: If input formatting is not done or atoms mismatch.
@@ -436,71 +745,14 @@ class min_shuffle:
             Sets:
                 self.initial_atoms_transformed_region (np.ndarray): Initial atomic positions after transformation.
                 self.final_atoms_transformed_region (np.ndarray): Final atomic positions after transformation.
+                self.branches (list): (weight, Xs, Ys) per alternative configuration.
         """
-        # Import input parameters
         reg_param = self.reg_param
-        iter_max = self.max_iters
-        box_expansion_factor = self.box_expansion_factor
-        dim = self.dimension
-        #lattice_parameter = self.lattice_parameter  # angstroms
-        #r0 = lattice_parameter / np.sqrt(2)  # nearest neighbor distance in perfect FCC crystal
-
-        if self.types_minshuf is None:
-            raise ValueError("Input formatting not done yet. Run format_input()")
-        atoms = self.atoms_minshuf
-        types = self.types_minshuf
-        box = self.box_minshuf
-
-        # Find box size and atom positions for each of the types of particles
-        N = atoms.shape[0]
-        box += box_expansion_factor * np.array([[0, 0], [-5, 5], [0, 0]])
-        xlo = box[0, 0]
-        ylo = box[1, 0]
-        zlo = box[2, 0]
-        xhi = box[0, 1]
-        yhi = box[1, 1]
-        zhi = box[2, 1]
-        Lx = xhi - xlo
-        Ly = yhi - ylo
-        Lz = zhi - zlo
-
-        type_list = [x + 1 for x in range(types)]
-        # Find the particles of each of the grains: X is grain 1 Y is grain 2
-        Xbasis = []  # type 1
-        Ybasis = []  # type 2
-        indicies = []
-        for i in range(N):
-            if atoms[i, 1] == 1:
-                Xbasis.append(atoms[i,2:])
-                indicies.append(atoms[i, 0])
-            elif atoms[i, 1] == 2:
-                Ybasis.append(atoms[i,2:])
-        Xbasis = np.array(Xbasis)
-        Ybasis = np.array(Ybasis)
-        # print(Xbasis.shape)
-        if Xbasis.shape[0] == 0 or Ybasis.shape[0] == 0:
-            raise ValueError("Xbasis and Ybasis must have same non-zero length")
-        if Xbasis.shape[0] != Ybasis.shape[0]:
-            raise ValueError("The number of atoms do not match for the two grains. One-to-one mapping not possible")
-        else:
-            N = Xbasis.shape[0]
+        ctx = self._shuffle_domain()
+        N = ctx["N"]
 
         # Find displacement vectors with pbcs
-        pbcon = True
-        dist_mat = np.zeros((N, N))
-        for i in range(N):
-            dvec = Ybasis - Xbasis[i, :]
-            dvec_pbc = self.pbcdist(dvec, Lx, Ly, Lz)
-            for j in range(N):
-                dist_mat[i, j] = la.norm(dvec_pbc[j, :])
-
-        if pbcon == True:
-            dist_mat = dist_mat ** 2
-
-        p = np.zeros(dim)  # Recomputed, set to [0,0,0] if unknown and results will match TDP
-
-        a = np.ones(N) / N
-        b = np.ones(N) / N
+        dist_mat = self._cost_matrix(ctx)
 
         # reg_param is a temperature, so it only means something against a cost scale.
         # Use the typical gap to an atom's second choice: reg = 1 then means an
@@ -517,8 +769,10 @@ class min_shuffle:
             row, col = linear_sum_assignment(dist_norm)
             Gamma = np.zeros_like(dist_norm)
             Gamma[row, col] = 1.0 / N
+            self.reg_used = 0.0
+            self.sinkhorn_converged = True
         else:
-            Gamma = ot.bregman.sinkhorn_log(a, b, dist_norm, reg_param, numItermax=iter_max)
+            Gamma = self._solve_sinkhorn(dist_norm)
 
         # Keep paths that matter relative to each atom's best one. A fixed cutoff is
         # calibrated to T = 0 and deletes every path once the mass spreads out.
@@ -526,105 +780,112 @@ class min_shuffle:
         gamma_mod = np.where(Gamma >= self.path_cutoff * rowmax, Gamma, 0.0)
         gamma_mod /= gamma_mod.sum(axis=1, keepdims=True) * N   # row sums to 1/N
 
-        def build_config(gamma):
-            """Turns one coupling into (Xs, Ys) atom lists. A permutation in gives
-            a single path per atom; the full coupling gives every kept path."""
-            I, J = np.where(gamma != 0)
-            disp_vecs = np.zeros((len(I), 11))
-            for i in range(len(I)):
-                K = gamma[I[i], J[i]]  # path prob
-                Xcoords = np.zeros((1, dim))
-                Ycoords = np.zeros((1, dim))
-                Xcoords[0, :] = np.array([Xbasis[I[i], 0], Xbasis[I[i], 1], Xbasis[I[i], 2]])
-                Ycoords[0, :] = np.array([Ybasis[J[i], 0], Ybasis[J[i], 1], Ybasis[J[i], 2]])
-                index = indicies[I[i]]
-
-                # Vector connecting X and Y
-                disp_vec_new = Ycoords - Xcoords
-                if pbcon == True:
-                    disp_pbc = self.pbcdist(disp_vec_new, Lx, Ly, Lz)
-                newYcoords = Xcoords + disp_pbc
-
-                disp_vecs[i, :] = np.array([disp_pbc[0, 0], disp_pbc[0, 1], disp_pbc[0, 2], K, Xcoords[0, 0],
-                                            Xcoords[0, 1], Xcoords[0, 2], newYcoords[0, 0], newYcoords[0, 1],
-                                            newYcoords[0, 2], index])
-
-            # Data in different frames
-            ndisps = disp_vecs.shape[0]
-            Kvec = disp_vecs[:, 3]
-
-            Xcoords = disp_vecs[:, 4:7]
-            Ycoords = disp_vecs[:, 7:10]
-            dTDP = disp_vecs[:, 0:3]
-            XTDP = Xcoords
-            YTDP = Ycoords
-            prob = np.zeros((len(Kvec), 3))
-            idx = disp_vecs[:, 10]
-            for i in range(len(Kvec)):
-                prob[i, :] = Kvec[i] * dTDP[i, :]
-            Dvec = np.sum(prob, 0)  # probabilistic expression for total net displacement/atom
-
-            Xp = XTDP
-            Yp = YTDP
-
-            # Columns: x, y, z, atom id, row index, path weight
-            Xs = np.zeros((ndisps, 6))
-            Ys = np.zeros((ndisps, 6))
-            k = 0
-            prob_cutoff = 1e-8
-            for i in range(ndisps):
-                path_prob = Kvec[i]
-                if path_prob > prob_cutoff:
-                    a = np.zeros((1, 3))
-                    b = np.zeros((1, 3))
-                    a[0, :] = Xp[i, :]
-                    b[0, :] = Yp[i, :]
-                    if pbcon == True:
-                        dp_new = self.pbcdist(b - a, Lx, Ly, Lz)
-                    b_new = a + dp_new
-                    Xs[k, :3] = a
-                    Xs[k, 3] = idx[i]
-                    Xs[k, 4] = k
-                    Xs[k, 5] = path_prob
-                    Ys[k, :3] = b_new
-                    Ys[k, 3] = idx[i]
-                    Ys[k, 4] = k
-                    Ys[k, 5] = path_prob
-                    flag = 0
-                    # Check for PBCs along y and z
-                    if b_new[0, 1] > yhi:
-                        b_new[0, 1] -= Ly
-                        flag = 1
-                    if b_new[0, 2] > zhi:
-                        b_new[0, 2] -= Lz
-                        flag = 1
-                    if b_new[0, 1] < ylo:
-                        b_new[0, 1] += Ly
-                        flag = 1
-                    if b_new[0, 2] <= zlo + 0.1:
-                        b_new[0, 2] += Lz
-                        flag = 1
-                    # if b_new
-                    Ys[k, :3] = b_new
-                    # print(b_new)
-                    k += 1
-
-                    x, y, z = [a[0, 0], b_new[0, 0]], [a[0, 1], b_new[0, 1]], [a[0, 2], b_new[0, 2]]
-
-            return Xs, Ys
-
         # Each branch is a permutation, so it is a configuration that actually
         # exists. Sampling each atom from its row of Gamma is not: two atoms would
         # pick the same site.
-        self.branches = []
-        for weight, perm in self._branches(gamma_mod):
-            gperm = np.zeros_like(gamma_mod)
-            gperm[np.arange(N), perm] = 1.0 / N
-            Xs_b, Ys_b = build_config(gperm)
-            self.branches.append((weight, Xs_b, Ys_b))
+        self.branches = [self._permutation_branch(ctx, perm, weight)
+                         for weight, perm in self._branches(gamma_mod)]
 
         self.initial_atoms_transformed_region = self.branches[0][1]
         self.final_atoms_transformed_region = self.branches[0][2]
+
+    def map_from_reference(self, patterns, require_periodic=True):
+        """
+            Builds the shuffle by stamping down a reference pattern instead of solving
+            transport for this system.
+
+            What a disconnection leaves behind inside its loop is one CSL cell's worth
+            of shuffle, repeated. `patterns` holds that cell, solved once on the
+            smallest system there is; here each atom inside the loop is handed the
+            displacement its position in the cell calls for, and atoms outside the
+            loop -- which the GB has not reached -- are left where they are.
+
+            Those displacements are a guess, not an answer: they are read off an
+            unrelaxed periodic ideal, while this system's atoms have relaxed, and the
+            two disconnection cores are not periodic at all. So the guess is only used
+            to aim an exact assignment, which costs O(N^3) once rather than the
+            unbounded number of O(N^2) Sinkhorn sweeps a full solve needs, and which
+            is guaranteed to return a permutation whatever the guess was worth.
+
+            Args:
+                patterns (list of shuffle_pattern): One per branch of the reference
+                    solve. Branch j here is branch j of the reference stamped onto
+                    every cell, so a chain keeps one mechanism throughout.
+                require_periodic (bool): Refuse a reference whose copies of the cell
+                    disagree, rather than pick one of them arbitrarily.
+
+            Raises:
+                ValueError: If `patterns` is empty, or a pattern fails its check and
+                    `require_periodic` is set.
+
+            Sets:
+                self.branches (list): (weight, Xs, Ys) per alternative configuration.
+                self.initial_atoms_transformed_region (np.ndarray)
+                self.final_atoms_transformed_region (np.ndarray)
+        """
+        if not patterns:
+            raise ValueError("No reference patterns supplied. Run the reference "
+                             "system through min_shuffle.run() and take "
+                             "reference_patterns() from it.")
+        ctx = self._shuffle_domain()
+        N = ctx["N"]
+        inside = self._inside_loop(ctx["Xbasis"][:, 1])
+
+        self.branches = []
+        for pattern in patterns:
+            pattern.check(raise_on_failure=require_periodic)
+            disp, distances = pattern.lookup(ctx["Xbasis"], self.gb_location)
+            match_distance = float(distances.max()) if len(distances) else 0.0
+            # Outside the loop the GB has not passed, so nothing shuffles there.
+            targets = ctx["Xbasis"] + np.where(inside[:, None], disp, 0.0)
+            row, col = linear_sum_assignment(self._cost_matrix(ctx, targets))
+            self.branches.append(self._permutation_branch(ctx, col, pattern.weight))
+            print("   Branch %d: %d atoms (%d inside the loop), keyed to the reference "
+                  "to within %.2f A" % (pattern.branch, N, int(inside.sum()), match_distance))
+
+        self.reg_used = patterns[0].reg_used
+        self.sinkhorn_converged = True
+        self.initial_atoms_transformed_region = self.branches[0][1]
+        self.final_atoms_transformed_region = self.branches[0][2]
+
+    def _inside_loop(self, y):
+        """
+            Which atoms sit inside the disconnection loop.
+
+            Args:
+                y (np.ndarray): (N,) coordinates along the GB period direction.
+
+            Returns:
+                np.ndarray: (N,) boolean mask. All True when no loop was recorded,
+                    which is the fully transformed boundary a reference system is.
+        """
+        if self.loop_start is None or self.loop_end is None:
+            return np.ones(len(y), dtype=bool)
+        return (y >= self.loop_start) & (y < self.loop_end)
+
+    def reference_patterns(self, tilt_repeat):
+        """
+            The elementary shuffle this solve found, ready to stamp onto larger systems.
+
+            Only meaningful for a system whose boundary is transformed all the way
+            across, since that is the state whose shuffle is one CSL cell repeated.
+
+            Args:
+                tilt_repeat (float): CSL repeat along the tilt axis, in angstroms.
+
+            Raises:
+                ValueError: If no solution has been computed.
+
+            Returns:
+                list of shuffle_pattern: One per branch, heaviest first.
+        """
+        if not self.branches:
+            raise ValueError("Nothing solved yet. Run run() first.")
+        box = self._shuffle_domain()["box"]
+        return [shuffle_pattern.from_solution(Xs, Ys, self.gb_location, self.period,
+                                              tilt_repeat, box, weight=weight, branch=i,
+                                              reg_used=self.reg_used)
+                for i, (weight, Xs, Ys) in enumerate(self.branches)]
 
     @staticmethod
     def branch_folder(folder, branch):
@@ -739,8 +1000,10 @@ class min_shuffle:
                     j = int(Xs_dict[atom_id][4])
                     final_atoms.append(np.array([atom_id, grain_num, Ys[j, 0], Ys[j, 1], Ys[j, 2]]))
                 elif atom_id in final_dict:
-                    index = int(final_dict[atom_id][0])-1
-                    final_atoms.append(final[index,:])
+                    # Take the row the id maps to. Using the id as a row index instead
+                    # assumes ids run 1..N with no gaps, which stops being true as soon
+                    # as LAMMPS culls an overlapping atom.
+                    final_atoms.append(final_dict[atom_id])
             final_atoms = np.array(final_atoms)
 
             # One folder per branch, each holding a complete chain under the usual

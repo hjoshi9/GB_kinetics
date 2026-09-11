@@ -1,5 +1,6 @@
 # It is not intended to be run directly.
 import numpy as np
+import numpy.linalg as la
 import os
 import shutil
 from src.bicrystal import bicrystal
@@ -7,6 +8,7 @@ from src.IO import *
 from src.runLAMMPS import run_LAMMPS
 from src.min_shuffle import min_shuffle
 from src.bicrystallography import bicrystallography
+from src.replicated_bicrystal import replicated_bicrystal
 
 
 def runGBkinetics(sig, mis, inc, lat_par, lat_Vec, axis, size_y, size_z, elem,
@@ -15,7 +17,10 @@ def runGBkinetics(sig, mis, inc, lat_par, lat_Vec, axis, size_y, size_z, elem,
                   oilab_output_file,choose_disconnection=True,run_neb = False,
                                         neb_mode = 1,
                                         partitions = 40,
-                                        neb_branch = 0):
+                                        neb_branch = 0,
+                                        map_shuffle_from_reference = False,
+                                        replicate_from_reference = False,
+                                        minimize_endpoints_only = False):
     """
         Run a grain boundary kinetics simulation using input parameters and LAMMPS.
 
@@ -47,6 +52,22 @@ def runGBkinetics(sig, mis, inc, lat_par, lat_Vec, axis, size_y, size_z, elem,
             neb_branch (int): Which alternative chain to run NEB on. 0 is the heaviest
                 at every image, which is the only chain when reg_parameter is 0. Every
                 chain is written regardless; this only selects the one NEB runs.
+            map_shuffle_from_reference (bool): Solve the shuffle once, on the smallest
+                system there is, and stamp it onto every image of this one instead of
+                solving optimal transport per image. See `solve_reference_shuffle`.
+            minimize_endpoints_only (bool): Minimize only the flat GB and the fully
+                stepped boundary, and leave the intermediate images as they were
+                built. NEB relaxes the path between the endpoints anyway, so the
+                intermediate minimizations mostly buy a better starting guess. Pairs
+                with `replicate_from_reference`, which builds those intermediates out
+                of an already relaxed cell; without it they are ideal lattice sites
+                under an analytic slip field, which is a far rougher starting path.
+            replicate_from_reference (bool): Build each image by tiling the relaxed
+                reference cell and laying the elementary shuffle and the dipole's
+                plastic field over it, rather than masking it out of the reference
+                lattice. The structure handed to LAMMPS is then already relaxed
+                everywhere except at the two cores. Implies
+                `map_shuffle_from_reference`, since it needs the same reference.
 
         Returns:
             str: Path to the folder containing the simulation results.
@@ -91,6 +112,23 @@ def runGBkinetics(sig, mis, inc, lat_par, lat_Vec, axis, size_y, size_z, elem,
     # Define minshuffle operator
     min_shuffle_operator = min_shuffle(lat_par,sigma,mis,inc,p,out_folder,elem,reg_parameter,max_iters)
 
+    # Solve the elementary shuffle once, on the smallest system, if it is to be
+    # stamped onto this one rather than re-derived at every image.
+    reference_patterns = None
+    replicator = None
+    if replicate_from_reference:
+        map_shuffle_from_reference = True
+    if map_shuffle_from_reference:
+        reference_patterns, reference_atoms, reference_box = solve_reference_shuffle(
+            gb_data, axis, lat_par, lat_Vec, elem, reg_parameter, max_iters,
+            lammps_location, mpi_location, out_folder, potential, dispy, dispz,
+            bur, step_height, gb_position, non_periodic_direction_size)
+        if replicate_from_reference:
+            replicator = replicated_bicrystal(reference_atoms, reference_box, p,
+                                              size_along_period, size_along_tilt_axis)
+            print("Replicated the reference cell to %d atoms (%d x %d cells)"
+                  % (len(replicator.atoms), size_along_period, size_along_tilt_axis))
+
     # Create bicrsytals with GB motion mediated with disconnection mediated migration
     branch_counts = {}
     for image_num in range(total_images):
@@ -106,33 +144,67 @@ def runGBkinetics(sig, mis, inc, lat_par, lat_Vec, axis, size_y, size_z, elem,
         disloc1 = nodes[0]
         disloc2 = nodes[1]
         # Create and minimize bicrystals
+        is_endpoint = image_num == 0 or image_num == total_images - 1
+        minimize_this = min_decision and (is_endpoint or not minimize_endpoints_only)
         if image_num == 0:
             if create_bicrystal_decision:
-                Bicrystal.create_flat_gb_bicrystal(gb_position)
-                file_name_init = Bicrystal.ordered_write(out_folder, elem, image_num, gb_position)
+                if replicator is not None:
+                    file_name_init = replicator.write(replicator.build_flat(gb_position),
+                                                      out_folder, elem, sigma, inc,
+                                                      size_along_period, image_num)
+                else:
+                    Bicrystal.create_flat_gb_bicrystal(gb_position)
+                    file_name_init = Bicrystal.ordered_write(out_folder, elem, image_num, gb_position)
             if min_decision:
-                min_outputfile_init = run_lmp.run_minimization(file_name_init, dispy, dispz)
+                min_outputfile_init = run_lmp.run_minimization(file_name_init, dispy, dispz,
+                                                               preconditioned=replicator is not None)
         else:
             if create_bicrystal_decision:
-                Bicrystal.create_disconnection_containing_bicrystal(nodes,bur,step_height,gb_position,image_num)
-                file_name_image = Bicrystal.ordered_write(out_folder, elem, image_num, gb_position, step_height,disloc1[0],disloc2[0])
-            if min_decision:
-                min_outputfile_image = run_lmp.run_minimization(file_name_image, dispy, dispz)
+                if replicator is not None:
+                    dipoles = bicrystal.dipole_decomposition(
+                        nodes, gb_position, p,
+                        is_final_image=image_num >= 2 * size_along_period)
+                    image_atoms, shuffled, matched = replicator.build_image(
+                        dipoles, disloc1[0], disloc2[0], reference_patterns[0],
+                        gb_position, step_height, bur, p)
+                    print("   Replicated image %d: %d atom(s) took the elementary "
+                          "shuffle, keyed to within %.2f A" % (image_num, shuffled, matched))
+                    file_name_image = replicator.write(image_atoms, out_folder, elem, sigma,
+                                                       inc, size_along_period, image_num)
+                else:
+                    Bicrystal.create_disconnection_containing_bicrystal(nodes,bur,step_height,gb_position,image_num)
+                    file_name_image = Bicrystal.ordered_write(out_folder, elem, image_num, gb_position, step_height,disloc1[0],disloc2[0])
+            if minimize_this:
+                min_outputfile_image = run_lmp.run_minimization(file_name_image, dispy, dispz,
+                                                                preconditioned=replicator is not None)
+            elif min_decision:
+                print("   Image %d left unminimized: only the endpoints are relaxed, and "
+                      "NEB relaxes the path between them." % image_num)
 
             if min_shuffle_decision:
                 # Apply min shuffle
+                # The two files need not be in the same format: minimizing only the
+                # endpoints leaves a LAMMPS-written flat GB beside an image still in
+                # the format this code wrote it in.
                 if min_decision:
                     file_mode = 2
                     file_flat = out_folder + min_outputfile_init
-                    file_disconnection = out_folder + min_outputfile_image
                 else:
                     file_mode = 1
                     file_flat = out_folder + file_name_init
+                if minimize_this:
+                    image_mode = 2
+                    file_disconnection = out_folder + min_outputfile_image
+                else:
+                    image_mode = 1
                     file_disconnection = out_folder + file_name_image
-                min_shuffle_operator.load_data(file_mode,file_flat,file_disconnection)
+                min_shuffle_operator.load_data(file_mode,file_flat,file_disconnection,image_mode)
                 min_shuffle_operator.gb_info(file_flat+"mov", step_height, disloc1, disloc2)
                 min_shuffle_operator.format_input(out_folder)
-                min_shuffle_operator.run()
+                if reference_patterns is not None:
+                    min_shuffle_operator.map_from_reference(reference_patterns)
+                else:
+                    min_shuffle_operator.run()
                 min_shuffle_operator.write_images(out_folder,image_num)
                 min_shuffle_operator._write_neb_input_file(out_folder, image_num)
                 branch_counts[image_num] = len(min_shuffle_operator.branches)
@@ -159,6 +231,113 @@ def runGBkinetics(sig, mis, inc, lat_par, lat_Vec, axis, size_y, size_z, elem,
         Bicrystal.create_fix_eco_orientationfile(out_folder)
 
     return out_folder
+
+
+def solve_reference_shuffle(gb_data, axis, lat_par, lat_Vec, elem, reg_parameter, max_iters,
+                            lammps_location, mpi_location, folder, potential, dispy, dispz,
+                            burgers_vector, step_height, gb_position,
+                            non_periodic_direction_size=100):
+    """
+        Solves the elementary shuffle once, on the smallest system there is.
+
+        The expensive part of this pipeline is optimal transport, whose cost grows as
+        the square of the number of atoms in the shuffle domain and whose iteration
+        count is not bounded by the system size at all. That domain widens with every
+        image, because the disconnection loop does, so image k costs roughly k^2 times
+        image 1 and a run over a system four CSL periods long spends two hundred times
+        what the first image cost.
+
+        None of that re-derives anything new. Behind a disconnection the boundary has
+        simply moved: one slab of grain A has become grain B, the same way everywhere
+        inside the loop. That transformation fits in a single CSL cell. So it is
+        solved here once, on a bicrystal one CSL period long and one repeat thick,
+        with its boundary stepped all the way across -- the state that is nothing but
+        the elementary shuffle, with no disconnection cores in it -- and
+        `min_shuffle.map_from_reference` stamps the result onto every image of the
+        real system.
+
+        Args:
+            gb_data (np.ndarray): Bicrystallographic GB data.
+            axis (list[int]): Tilt axis vector.
+            lat_par (float): Lattice parameter.
+            lat_Vec (np.ndarray): Lattice vectors of the crystal.
+            elem (str): Chemical element symbol.
+            reg_parameter (float): Regularization for the shuffle. Raised automatically
+                if Sinkhorn will not converge at it; the value it settled at is carried
+                on each returned pattern.
+            max_iters (int): Sinkhorn iteration cap per attempt.
+            lammps_location (str or None): Directory holding the LAMMPS binaries.
+            mpi_location (str or None): Directory holding mpirun.
+            folder (str): Output folder for this disconnection mode. The reference
+                system is built in a `reference/` subfolder of it.
+            potential (str): Full path to the LAMMPS potential.
+            dispy (float): Displacement along the GB period.
+            dispz (float): Displacement along the tilt axis.
+            burgers_vector (float): Burgers vector of the disconnection mode.
+            step_height (float): Step height of the disconnection mode.
+            gb_position (float): x of the flat GB plane.
+            non_periodic_direction_size (float): Box size normal to the GB.
+
+        Raises:
+            ValueError: If the reference solve does not produce one CSL cell repeated,
+                which means it is not a pattern that can be stamped down.
+
+        Returns:
+            tuple: (patterns, flat_atoms, flat_box) -- one `shuffle_pattern` per branch
+                of the reference solve, heaviest first, each one self-consistent
+                shuffle mechanism; and the relaxed flat boundary of the reference
+                system, which `replicated_bicrystal` tiles to build a larger one.
+    """
+    print("\n================= Solving the elementary shuffle on the reference system =============")
+    sigma = int(gb_data[0])
+    mis = np.round(gb_data[1])
+    inc = gb_data[2]
+    p = gb_data[3] * lat_par
+    # One CSL period along the GB and one repeat along the tilt axis: the smallest
+    # system the bicrystal builder supports, and all the elementary shuffle needs.
+    reference_size_y = 1
+    reference_size_z = 1
+    out_folder = os.path.join(folder, "reference") + os.sep
+    os.makedirs(out_folder, exist_ok=True)
+
+    reference_bicrystal = bicrystal(gb_data, axis, lat_par, lat_Vec, reference_size_y,
+                                    reference_size_z, non_periodic_direction_size)
+    reference_bicrystal._setup_bicrystal()
+    run_lmp = run_LAMMPS(out_folder, elem, lat_par, sigma, mis, inc, reference_size_y,
+                         potential, mpi_location, lammps_location)
+
+    # Flat boundary.
+    reference_bicrystal.create_flat_gb_bicrystal(gb_position)
+    file_flat = reference_bicrystal.ordered_write(out_folder, elem, 0, gb_position)
+    min_flat = run_lmp.run_minimization(file_flat, dispy, dispz)
+
+    # The same boundary stepped all the way across. The loop is put beyond both box
+    # faces so that no part of the boundary is left untransformed and the state holds
+    # no disconnection cores -- only the shuffle itself.
+    last_image = 2 * reference_size_y
+    nodes = np.array([[-last_image * p / 2 - p / 2, step_height + gb_position],
+                      [ last_image * p / 2 + p / 2, step_height + gb_position]])
+    reference_bicrystal.create_disconnection_containing_bicrystal(
+        nodes, burgers_vector, step_height, gb_position, last_image)
+    file_stepped = reference_bicrystal.ordered_write(out_folder, elem, last_image, gb_position,
+                                                     step_height, nodes[0, 0], nodes[1, 0])
+    min_stepped = run_lmp.run_minimization(file_stepped, dispy, dispz)
+
+    reference_operator = min_shuffle(lat_par, sigma, mis, inc, p, out_folder, elem,
+                                     reg_parameter, max_iters)
+    reference_operator.load_data(2, out_folder + min_flat, out_folder + min_stepped)
+    reference_operator.gb_info(out_folder + min_flat + "mov", step_height, nodes[0], nodes[1])
+    reference_operator.format_input(out_folder)
+    reference_operator.run()
+
+    tilt_repeat = la.norm(axis) * lat_par
+    patterns = reference_operator.reference_patterns(tilt_repeat)
+    for pattern in patterns:
+        pattern.check(raise_on_failure=True)
+    print("Elementary shuffle solved at reg = %.4g: %d site(s) per CSL cell, %d branch(es)"
+          % (reference_operator.reg_used, len(patterns[0].keys), len(patterns)))
+    flat = read_LAMMPS_datafile(out_folder + min_flat, 2)[0]
+    return patterns, flat[3], flat[2]
 
 
 def runGridSearch(sig, mis, inc, lat_par, lat_Vec, axis, size_y, size_z, elem, lammps_location,

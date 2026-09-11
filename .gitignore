@@ -3,6 +3,7 @@
 __pycache__/
 output/
 *.log
+log.lammps
 
 # Sphinx build output; regenerate with `cd docs && make html`.
 docs/build/

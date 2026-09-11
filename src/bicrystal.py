@@ -290,15 +290,10 @@ class bicrystal:
         # Decompose dislocation dipole in case of a stepped boundary
         disconnection_start = nodes[0, 0]
         disconnection_stop  = nodes[1, 0]
-        if image_number < 2 * self.size_along_period:
-            nodes_modified = [nodes]
-            if number_of_dipoles > 1:
-                transition_node_start = np.array([[nodes[0, 0], gb_position], [nodes[0, 0], nodes[0, 1]]])
-                transition_node_stop = np.array([[nodes[1, 0], nodes[1, 1]], [nodes[1, 0], gb_position]])
-                nodes_modified.append(transition_node_start)
-                nodes_modified.append(transition_node_stop)
-        else:
-            nodes_modified = [nodes + np.array([[-period / 4, 0], [period / 4, 0]])]
+        nodes_modified = bicrystal.dipole_decomposition(
+            nodes, gb_position, period,
+            is_final_image=image_number >= 2 * self.size_along_period,
+            number_of_dipoles=number_of_dipoles)
 
         disconnection_start = max(disconnection_start, -box[1, 1])
         disconnection_stop  = min(disconnection_stop ,  box[1, 1])
@@ -353,6 +348,39 @@ class bicrystal:
 
         self.grain1 = gA
         self.grain2 = gB
+
+    @staticmethod
+    def dipole_decomposition(nodes, gb_position, period, is_final_image,
+                             number_of_dipoles=3):
+        """
+            The dislocation dipoles whose solid angle gives an image its plastic field.
+
+            A stepped boundary is not one dipole: the two ends of the loop rise from
+            the flat GB to the stepped plane, so each contributes a short dipole of
+            its own. The last image is the whole boundary stepped over, and is widened
+            by a quarter period each way instead.
+
+            Split out so that a system built by replication raises the same field as
+            one built from the reference lattice.
+
+            Args:
+                nodes (np.ndarray): 2x2 array of disconnection node coordinates.
+                gb_position (float): x of the flat GB plane.
+                period (float): CSL period along the GB.
+                is_final_image (bool): Whether this is the fully stepped boundary.
+                number_of_dipoles (int): 1 keeps only the glide dipole; more add the
+                    two risers.
+
+            Returns:
+                list of np.ndarray: The dipoles, each a 2x2 of node coordinates.
+        """
+        if is_final_image:
+            return [nodes + np.array([[-period / 4, 0], [period / 4, 0]])]
+        dipoles = [nodes]
+        if number_of_dipoles > 1:
+            dipoles.append(np.array([[nodes[0, 0], gb_position], [nodes[0, 0], nodes[0, 1]]]))
+            dipoles.append(np.array([[nodes[1, 0], nodes[1, 1]], [nodes[1, 0], gb_position]]))
+        return dipoles
 
     def create_fix_eco_orientationfile(self,folder):
         """

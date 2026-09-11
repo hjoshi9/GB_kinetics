@@ -84,6 +84,7 @@
 <li class="toctree-l2"><a class="reference internal" href="GBKineticsRunController.html">GBKineticsRunController module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="GBKineticsRunController.html#src.GBKineticsRunController.runGBkinetics"><code class="docutils literal notranslate"><span class="pre">runGBkinetics()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="GBKineticsRunController.html#src.GBKineticsRunController.runGridSearch"><code class="docutils literal notranslate"><span class="pre">runGridSearch()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="GBKineticsRunController.html#src.GBKineticsRunController.solve_reference_shuffle"><code class="docutils literal notranslate"><span class="pre">solve_reference_shuffle()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="IO.html">IO module</a><ul>
@@ -103,6 +104,7 @@
 <li class="toctree-l4"><a class="reference internal" href="bicrystal.html#src.bicrystal.bicrystal.create_disconnection_containing_bicrystal"><code class="docutils literal notranslate"><span class="pre">bicrystal.create_disconnection_containing_bicrystal()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="bicrystal.html#src.bicrystal.bicrystal.create_fix_eco_orientationfile"><code class="docutils literal notranslate"><span class="pre">bicrystal.create_fix_eco_orientationfile()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="bicrystal.html#src.bicrystal.bicrystal.create_flat_gb_bicrystal"><code class="docutils literal notranslate"><span class="pre">bicrystal.create_flat_gb_bicrystal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="bicrystal.html#src.bicrystal.bicrystal.dipole_decomposition"><code class="docutils literal notranslate"><span class="pre">bicrystal.dipole_decomposition()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="bicrystal.html#src.bicrystal.bicrystal.ordered_write"><code class="docutils literal notranslate"><span class="pre">bicrystal.ordered_write()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="bicrystal.html#src.bicrystal.bicrystal.write"><code class="docutils literal notranslate"><span class="pre">bicrystal.write()</span></code></a></li>
 </ul>
@@ -138,10 +140,12 @@
 <li class="toctree-l4"><a class="reference internal" href="#src.min_shuffle.min_shuffle.format_input"><code class="docutils literal notranslate"><span class="pre">min_shuffle.format_input()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#src.min_shuffle.min_shuffle.gb_info"><code class="docutils literal notranslate"><span class="pre">min_shuffle.gb_info()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#src.min_shuffle.min_shuffle.load_data"><code class="docutils literal notranslate"><span class="pre">min_shuffle.load_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.min_shuffle.min_shuffle.map_from_reference"><code class="docutils literal notranslate"><span class="pre">min_shuffle.map_from_reference()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#src.min_shuffle.min_shuffle.pbcdist"><code class="docutils literal notranslate"><span class="pre">min_shuffle.pbcdist()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#src.min_shuffle.min_shuffle.pbcwrap"><code class="docutils literal notranslate"><span class="pre">min_shuffle.pbcwrap()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#src.min_shuffle.min_shuffle.plot_min_shuffle_2d"><code class="docutils literal notranslate"><span class="pre">min_shuffle.plot_min_shuffle_2d()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#src.min_shuffle.min_shuffle.plot_min_shuffle_3d"><code class="docutils literal notranslate"><span class="pre">min_shuffle.plot_min_shuffle_3d()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.min_shuffle.min_shuffle.reference_patterns"><code class="docutils literal notranslate"><span class="pre">min_shuffle.reference_patterns()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#src.min_shuffle.min_shuffle.replicate"><code class="docutils literal notranslate"><span class="pre">min_shuffle.replicate()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#src.min_shuffle.min_shuffle.run"><code class="docutils literal notranslate"><span class="pre">min_shuffle.run()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#src.min_shuffle.min_shuffle.write_images"><code class="docutils literal notranslate"><span class="pre">min_shuffle.write_images()</span></code></a></li>
@@ -199,6 +203,28 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="shuffle_pattern.html">shuffle_pattern module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.keys"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.keys</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.displacements"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.displacements</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.period"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.period</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.tilt_repeat"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.tilt_repeat</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.weight"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.weight</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.branch"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.branch</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.spread"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.spread</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.consensus"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.consensus</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.split_sites"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.split_sites</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.reg_used"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.reg_used</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.gb_location"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.gb_location</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.__init__"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.check"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.check()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.from_solution"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.from_solution()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.lookup"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.lookup()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.reduce"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.reduce()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -232,7 +258,7 @@
 <span id="min-shuffle-module"></span><h1>min_shuffle module<a class="headerlink" href="#module-src.min_shuffle" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="src.min_shuffle.min_shuffle">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.min_shuffle.</span></span><span class="sig-name descname"><span class="pre">min_shuffle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lattice_parameter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">misorientation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inclination</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reg_param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_expansion_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dimension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path_cutoff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">branch_coverage</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.9</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_branches</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">40</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/min_shuffle.html#min_shuffle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.min_shuffle.min_shuffle" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.min_shuffle.</span></span><span class="sig-name descname"><span class="pre">min_shuffle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lattice_parameter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">misorientation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inclination</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reg_param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_expansion_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dimension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path_cutoff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">branch_coverage</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.9</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_branches</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">40</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sinkhorn_tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reg_escalation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_reg_attempts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/min_shuffle.html#min_shuffle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.min_shuffle.min_shuffle" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class to perform minimal atomic shuffling analysis between two grain boundary configurations
 using optimal transport (Sinkhorn algorithm).</p>
@@ -242,7 +268,7 @@ conditions, replicates the simulation box if necessary, and runs the Sinkhorn op
 to find minimal atomic displacement mappings.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.min_shuffle.min_shuffle.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lattice_parameter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">misorientation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inclination</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reg_param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_expansion_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dimension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path_cutoff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">branch_coverage</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.9</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_branches</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">40</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/min_shuffle.html#min_shuffle.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.min_shuffle.min_shuffle.__init__" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lattice_parameter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">misorientation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inclination</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reg_param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_expansion_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dimension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path_cutoff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">branch_coverage</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.9</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_branches</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">40</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sinkhorn_tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reg_escalation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_reg_attempts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/min_shuffle.html#min_shuffle.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.min_shuffle.min_shuffle.__init__" title="Link to this definition"></a></dt>
 <dd><p>Initializes the min_shuffle object with simulation parameters and placeholders for atomic data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -264,6 +290,15 @@ are discarded.</p></li>
 <li><p><strong>branch_coverage</strong> (<em>float</em>) – Keep alternative configurations, heaviest first,
 until their weights sum to this. At reg_param = 0 there is only ever one.</p></li>
 <li><p><strong>max_branches</strong> (<em>int</em>) – Cap on the permutations peeled off the coupling.</p></li>
+<li><p><strong>sinkhorn_tolerance</strong> (<em>float</em>) – Sinkhorn stops once the marginal it produces
+is this close to uniform. POT’s own default of 1e-9 is below the
+floor float64 reaches on these problems, so leaving it unset means
+every solve runs the full <code class="docutils literal notranslate"><span class="pre">max_iters</span></code> however well it has converged.</p></li>
+<li><p><strong>reg_escalation</strong> (<em>float</em>) – Factor <code class="docutils literal notranslate"><span class="pre">reg_param</span></code> is multiplied by after a solve
+that failed to reach <code class="docutils literal notranslate"><span class="pre">sinkhorn_tolerance</span></code> within <code class="docutils literal notranslate"><span class="pre">max_iters</span></code>. A colder
+shuffle converges more slowly, so warming it is the way out.</p></li>
+<li><p><strong>max_reg_attempts</strong> (<em>int</em>) – How many times to escalate before giving up and
+using the last coupling anyway.</p></li>
 <li><p><strong>box_expansion_factor</strong> (<em>float</em><em>, </em><em>optional</em>) – Factor to expand the simulation box dimensions, defaults to 0 (no expansion).</p></li>
 <li><p><strong>dimension</strong> (<em>int</em><em>, </em><em>optional</em>) – Dimensionality of the simulation system, defaults to 3 (3D).</p></li>
 </ul>
@@ -457,6 +492,53 @@ heaviest first.</p>
 </dl>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.min_shuffle.min_shuffle.reg_used">
+<span class="sig-name descname"><span class="pre">reg_used</span></span><a class="headerlink" href="#src.min_shuffle.min_shuffle.reg_used" title="Link to this definition"></a></dt>
+<dd><p>Regularization the last solve actually used,
+which is <code class="docutils literal notranslate"><span class="pre">reg_param</span></code> escalated by however many attempts it took.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.min_shuffle.min_shuffle.sinkhorn_converged">
+<span class="sig-name descname"><span class="pre">sinkhorn_converged</span></span><a class="headerlink" href="#src.min_shuffle.min_shuffle.sinkhorn_converged" title="Link to this definition"></a></dt>
+<dd><p>Whether that solve reached
+<code class="docutils literal notranslate"><span class="pre">sinkhorn_tolerance</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.min_shuffle.min_shuffle.loop_start">
+<span class="sig-name descname"><span class="pre">loop_start</span></span><a class="headerlink" href="#src.min_shuffle.min_shuffle.loop_start" title="Link to this definition"></a></dt>
+<dd><p>y of the leading disconnection node, the edge
+of the region the GB has already swept.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.min_shuffle.min_shuffle.loop_end">
+<span class="sig-name descname"><span class="pre">loop_end</span></span><a class="headerlink" href="#src.min_shuffle.min_shuffle.loop_end" title="Link to this definition"></a></dt>
+<dd><p>y of the trailing node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float or None</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py method">
@@ -487,8 +569,15 @@ heaviest first.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>folder</strong> (<em>str</em>) – Directory to write formatted data files.</p>
 </dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>ValueError</strong> – If grain boundary info or atomic data is missing.</p>
+</dl>
+<p>Atoms are paired between the two configurations by atom ID. Any that the
+final configuration has lost – LAMMPS culls overlapping atoms, and not
+always the same ones in both structures – are dropped from the domain,
+and how many is reported.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If grain boundary info or atomic data is missing, or if
+    the domain comes out empty.</p>
 </dd>
 </dl>
 <dl class="simple">
@@ -515,25 +604,36 @@ self.box_minshuf (np.ndarray): Simulation box for the minimal shuffle domain.</p
 </ul>
 </dd>
 </dl>
-<dl class="simple">
+<dl>
 <dt>Sets:</dt><dd><p>self.gb_location (float): Calculated grain boundary location.
 self.step_height (float): Adjusted step height of the shuffle domain.
 self.dislocation_start (float): Start coordinate of the dislocation region.
-self.dislocation_end (float): End coordinate of the dislocation region.</p>
+self.dislocation_end (float): End coordinate of the dislocation region.
+self.loop_start (float): Leading node, unextended. The disconnection</p>
+<blockquote>
+<div><p>loop is what has already transformed, which is what
+<code class="docutils literal notranslate"><span class="pre">map_from_reference</span></code> stamps the elementary shuffle onto.</p>
+</div></blockquote>
+<p>self.loop_end (float): Trailing node, unextended.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.min_shuffle.min_shuffle.load_data">
-<span class="sig-name descname"><span class="pre">load_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_mode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_flat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_disconnection</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/min_shuffle.html#min_shuffle.load_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.min_shuffle.min_shuffle.load_data" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">load_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_mode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_flat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_disconnection</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">final_file_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/min_shuffle.html#min_shuffle.load_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.min_shuffle.min_shuffle.load_data" title="Link to this definition"></a></dt>
 <dd><p>Loads atomic positions from initial and final LAMMPS data files.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>file_mode</strong> (<em>str</em>) – Mode for reading the LAMMPS data files.</p></li>
+<li><p><strong>file_mode</strong> (<em>int</em>) – Mode for reading the flat configuration, and the
+disconnection one too unless <code class="docutils literal notranslate"><span class="pre">final_file_mode</span></code> overrides it.</p></li>
 <li><p><strong>file_flat</strong> (<em>str</em>) – Path to the initial (flat) atomic configuration file.</p></li>
 <li><p><strong>file_disconnection</strong> (<em>str</em>) – Path to the final atomic configuration file.</p></li>
+<li><p><strong>final_file_mode</strong> (<em>int</em><em>, </em><em>optional</em>) – Mode for the disconnection file when
+it differs. A run that minimizes only the endpoints has a
+minimized flat GB, written by LAMMPS in eight columns, alongside
+an intermediate image still in the five this code writes.</p></li>
 </ul>
 </dd>
 </dl>
@@ -545,6 +645,45 @@ self.grainB_posttransform (np.ndarray): Atoms in grain B after transformation.
 self.box (np.ndarray): Simulation box.
 self.initial_grain (np.ndarray): Initial atomic data.
 self.final_grain (np.ndarray): Final atomic data.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.min_shuffle.min_shuffle.map_from_reference">
+<span class="sig-name descname"><span class="pre">map_from_reference</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">patterns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">require_periodic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/min_shuffle.html#min_shuffle.map_from_reference"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.min_shuffle.min_shuffle.map_from_reference" title="Link to this definition"></a></dt>
+<dd><p>Builds the shuffle by stamping down a reference pattern instead of solving
+transport for this system.</p>
+<p>What a disconnection leaves behind inside its loop is one CSL cell’s worth
+of shuffle, repeated. <code class="docutils literal notranslate"><span class="pre">patterns</span></code> holds that cell, solved once on the
+smallest system there is; here each atom inside the loop is handed the
+displacement its position in the cell calls for, and atoms outside the
+loop – which the GB has not reached – are left where they are.</p>
+<p>Those displacements are a guess, not an answer: they are read off an
+unrelaxed periodic ideal, while this system’s atoms have relaxed, and the
+two disconnection cores are not periodic at all. So the guess is only used
+to aim an exact assignment, which costs O(N^3) once rather than the
+unbounded number of O(N^2) Sinkhorn sweeps a full solve needs, and which
+is guaranteed to return a permutation whatever the guess was worth.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>patterns</strong> (<em>list</em><em> of </em><a class="reference internal" href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern" title="src.shuffle_pattern.shuffle_pattern"><em>shuffle_pattern</em></a>) – One per branch of the reference
+solve. Branch j here is branch j of the reference stamped onto
+every cell, so a chain keeps one mechanism throughout.</p></li>
+<li><p><strong>require_periodic</strong> (<em>bool</em>) – Refuse a reference whose copies of the cell
+disagree, rather than pick one of them arbitrarily.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If <code class="docutils literal notranslate"><span class="pre">patterns</span></code> is empty, or a pattern fails its check and
+    <code class="docutils literal notranslate"><span class="pre">require_periodic</span></code> is set.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Sets:</dt><dd><p>self.branches (list): (weight, Xs, Ys) per alternative configuration.
+self.initial_atoms_transformed_region (np.ndarray)
+self.final_atoms_transformed_region (np.ndarray)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -637,6 +776,28 @@ self.final_grain (np.ndarray): Final atomic data.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="src.min_shuffle.min_shuffle.reference_patterns">
+<span class="sig-name descname"><span class="pre">reference_patterns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tilt_repeat</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/min_shuffle.html#min_shuffle.reference_patterns"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.min_shuffle.min_shuffle.reference_patterns" title="Link to this definition"></a></dt>
+<dd><p>The elementary shuffle this solve found, ready to stamp onto larger systems.</p>
+<p>Only meaningful for a system whose boundary is transformed all the way
+across, since that is the state whose shuffle is one CSL cell repeated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tilt_repeat</strong> (<em>float</em>) – CSL repeat along the tilt axis, in angstroms.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If no solution has been computed.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>One per branch, heaviest first.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of <a class="reference internal" href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern" title="src.shuffle_pattern.shuffle_pattern">shuffle_pattern</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="src.min_shuffle.min_shuffle.replicate">
 <span class="sig-name descname"><span class="pre">replicate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rep_scheme</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/min_shuffle.html#min_shuffle.replicate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.min_shuffle.min_shuffle.replicate" title="Link to this definition"></a></dt>
 <dd><p>Replicates atomic configurations according to the specified replication scheme.</p>
@@ -669,6 +830,10 @@ rep_box (np.ndarray): Updated simulation box after replication.</p>
 <span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/min_shuffle.html#min_shuffle.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.min_shuffle.min_shuffle.run" title="Link to this definition"></a></dt>
 <dd><p>Runs the Sinkhorn optimal transport algorithm to compute minimal shuffling displacement vectors
 between initial and final atomic configurations in the minimal shuffle domain.</p>
+<p>Cost grows as the square of the atom count and the solver’s iteration
+count is unbounded by the system size, so this is the expensive step.
+<code class="docutils literal notranslate"><span class="pre">map_from_reference</span></code> is the cheap alternative once a reference system has
+been solved.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Raises<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>ValueError</strong> – If input formatting is not done or atoms mismatch.</p>
@@ -676,7 +841,8 @@ between initial and final atomic configurations in the minimal shuffle domain.</
 </dl>
 <dl class="simple">
 <dt>Sets:</dt><dd><p>self.initial_atoms_transformed_region (np.ndarray): Initial atomic positions after transformation.
-self.final_atoms_transformed_region (np.ndarray): Final atomic positions after transformation.</p>
+self.final_atoms_transformed_region (np.ndarray): Final atomic positions after transformation.
+self.branches (list): (weight, Xs, Ys) per alternative configuration.</p>
 </dd>
 </dl>
 </dd></dl>

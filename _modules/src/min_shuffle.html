@@ -81,6 +81,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../GBKineticsRunController.html">GBKineticsRunController module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../GBKineticsRunController.html#src.GBKineticsRunController.runGBkinetics"><code class="docutils literal notranslate"><span class="pre">runGBkinetics()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../GBKineticsRunController.html#src.GBKineticsRunController.runGridSearch"><code class="docutils literal notranslate"><span class="pre">runGridSearch()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../GBKineticsRunController.html#src.GBKineticsRunController.solve_reference_shuffle"><code class="docutils literal notranslate"><span class="pre">solve_reference_shuffle()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../IO.html">IO module</a><ul>
@@ -100,6 +101,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.create_disconnection_containing_bicrystal"><code class="docutils literal notranslate"><span class="pre">bicrystal.create_disconnection_containing_bicrystal()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.create_fix_eco_orientationfile"><code class="docutils literal notranslate"><span class="pre">bicrystal.create_fix_eco_orientationfile()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.create_flat_gb_bicrystal"><code class="docutils literal notranslate"><span class="pre">bicrystal.create_flat_gb_bicrystal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.dipole_decomposition"><code class="docutils literal notranslate"><span class="pre">bicrystal.dipole_decomposition()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.ordered_write"><code class="docutils literal notranslate"><span class="pre">bicrystal.ordered_write()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.write"><code class="docutils literal notranslate"><span class="pre">bicrystal.write()</span></code></a></li>
 </ul>
@@ -135,10 +137,12 @@
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.format_input"><code class="docutils literal notranslate"><span class="pre">min_shuffle.format_input()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.gb_info"><code class="docutils literal notranslate"><span class="pre">min_shuffle.gb_info()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.load_data"><code class="docutils literal notranslate"><span class="pre">min_shuffle.load_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.map_from_reference"><code class="docutils literal notranslate"><span class="pre">min_shuffle.map_from_reference()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.pbcdist"><code class="docutils literal notranslate"><span class="pre">min_shuffle.pbcdist()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.pbcwrap"><code class="docutils literal notranslate"><span class="pre">min_shuffle.pbcwrap()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.plot_min_shuffle_2d"><code class="docutils literal notranslate"><span class="pre">min_shuffle.plot_min_shuffle_2d()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.plot_min_shuffle_3d"><code class="docutils literal notranslate"><span class="pre">min_shuffle.plot_min_shuffle_3d()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.reference_patterns"><code class="docutils literal notranslate"><span class="pre">min_shuffle.reference_patterns()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.replicate"><code class="docutils literal notranslate"><span class="pre">min_shuffle.replicate()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.run"><code class="docutils literal notranslate"><span class="pre">min_shuffle.run()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.write_images"><code class="docutils literal notranslate"><span class="pre">min_shuffle.write_images()</span></code></a></li>
@@ -196,6 +200,28 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../../shuffle_pattern.html">shuffle_pattern module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.keys"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.keys</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.displacements"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.displacements</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.period"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.period</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.tilt_repeat"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.tilt_repeat</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.weight"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.weight</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.branch"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.branch</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.spread"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.spread</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.consensus"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.consensus</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.split_sites"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.split_sites</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.reg_used"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.reg_used</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.gb_location"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.gb_location</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.__init__"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.check"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.check()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.from_solution"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.from_solution()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.lookup"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.lookup()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.reduce"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.reduce()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -226,6 +252,7 @@
              
   <h1>Source code for src.min_shuffle</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy.linalg</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">la</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">ot</span>
@@ -233,6 +260,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">scipy.optimize</span><span class="w"> </span><span class="kn">import</span> <span class="n">linear_sum_assignment</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.IO</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.shuffle_pattern</span><span class="w"> </span><span class="kn">import</span> <span class="n">shuffle_pattern</span>
 
 <div class="viewcode-block" id="min_shuffle">
 <a class="viewcode-back" href="../../min_shuffle.html#src.min_shuffle.min_shuffle">[docs]</a>
@@ -251,7 +279,8 @@
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">lattice_parameter</span><span class="p">,</span><span class="n">sigma</span><span class="p">,</span><span class="n">misorientation</span><span class="p">,</span><span class="n">inclination</span><span class="p">,</span>
                  <span class="n">period</span><span class="p">,</span><span class="n">folder</span><span class="p">,</span><span class="n">elem</span><span class="p">,</span><span class="n">reg_param</span><span class="p">,</span><span class="n">max_iters</span><span class="p">,</span>
                  <span class="n">box_expansion_factor</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">dimension</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">path_cutoff</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
-                 <span class="n">branch_coverage</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span><span class="n">max_branches</span><span class="o">=</span><span class="mi">40</span><span class="p">):</span>
+                 <span class="n">branch_coverage</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span><span class="n">max_branches</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span>
+                 <span class="n">sinkhorn_tolerance</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span><span class="n">reg_escalation</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span><span class="n">max_reg_attempts</span><span class="o">=</span><span class="mi">6</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Initializes the min_shuffle object with simulation parameters and placeholders for atomic data.</span>
 
@@ -273,6 +302,15 @@
 <span class="sd">            branch_coverage (float): Keep alternative configurations, heaviest first,</span>
 <span class="sd">                until their weights sum to this. At reg_param = 0 there is only ever one.</span>
 <span class="sd">            max_branches (int): Cap on the permutations peeled off the coupling.</span>
+<span class="sd">            sinkhorn_tolerance (float): Sinkhorn stops once the marginal it produces</span>
+<span class="sd">                is this close to uniform. POT's own default of 1e-9 is below the</span>
+<span class="sd">                floor float64 reaches on these problems, so leaving it unset means</span>
+<span class="sd">                every solve runs the full `max_iters` however well it has converged.</span>
+<span class="sd">            reg_escalation (float): Factor `reg_param` is multiplied by after a solve</span>
+<span class="sd">                that failed to reach `sinkhorn_tolerance` within `max_iters`. A colder</span>
+<span class="sd">                shuffle converges more slowly, so warming it is the way out.</span>
+<span class="sd">            max_reg_attempts (int): How many times to escalate before giving up and</span>
+<span class="sd">                using the last coupling anyway.</span>
 <span class="sd">            box_expansion_factor (float, optional): Factor to expand the simulation box dimensions, defaults to 0 (no expansion).</span>
 <span class="sd">            dimension (int, optional): Dimensionality of the simulation system, defaults to 3 (3D).</span>
 
@@ -295,6 +333,13 @@
 <span class="sd">            final_atoms_transformed_region (np.ndarray or None): Final atom coordinates of the transformed region.</span>
 <span class="sd">            branches (list or None): (weight, Xs, Ys) per alternative configuration,</span>
 <span class="sd">                heaviest first.</span>
+<span class="sd">            reg_used (float or None): Regularization the last solve actually used,</span>
+<span class="sd">                which is `reg_param` escalated by however many attempts it took.</span>
+<span class="sd">            sinkhorn_converged (bool or None): Whether that solve reached</span>
+<span class="sd">                `sinkhorn_tolerance`.</span>
+<span class="sd">            loop_start (float or None): y of the leading disconnection node, the edge</span>
+<span class="sd">                of the region the GB has already swept.</span>
+<span class="sd">            loop_end (float or None): y of the trailing node.</span>
 <span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lattice_parameter</span> <span class="o">=</span> <span class="n">lattice_parameter</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span> <span class="o">=</span> <span class="n">sigma</span>
@@ -308,6 +353,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">path_cutoff</span> <span class="o">=</span> <span class="n">path_cutoff</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">branch_coverage</span> <span class="o">=</span> <span class="n">branch_coverage</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_branches</span> <span class="o">=</span> <span class="n">max_branches</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sinkhorn_tolerance</span> <span class="o">=</span> <span class="n">sinkhorn_tolerance</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reg_escalation</span> <span class="o">=</span> <span class="n">reg_escalation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_reg_attempts</span> <span class="o">=</span> <span class="n">max_reg_attempts</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">box_expansion_factor</span> <span class="o">=</span> <span class="n">box_expansion_factor</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dimension</span> <span class="o">=</span> <span class="n">dimension</span>
 
@@ -323,6 +371,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">step_height</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dislocation_start</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dislocation_end</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loop_start</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loop_end</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">reg_used</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sinkhorn_converged</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">atoms_minshuf</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">types_minshuf</span> <span class="o">=</span> <span class="kc">None</span>
@@ -353,6 +406,10 @@
 <span class="sd">                self.step_height (float): Adjusted step height of the shuffle domain.</span>
 <span class="sd">                self.dislocation_start (float): Start coordinate of the dislocation region.</span>
 <span class="sd">                self.dislocation_end (float): End coordinate of the dislocation region.</span>
+<span class="sd">                self.loop_start (float): Leading node, unextended. The disconnection</span>
+<span class="sd">                    loop is what has already transformed, which is what</span>
+<span class="sd">                    `map_from_reference` stamps the elementary shuffle onto.</span>
+<span class="sd">                self.loop_end (float): Trailing node, unextended.</span>
 <span class="sd">        """</span>
         <span class="n">lat_par</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lattice_parameter</span>
         <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">period</span>
@@ -366,20 +423,27 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">gb_location</span> <span class="o">=</span> <span class="n">gb_location</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">step_height</span> <span class="o">=</span> <span class="n">st_height</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span> <span class="n">min_shuffle_domain_expansion_factor</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dislocation_start</span> <span class="o">=</span> <span class="n">d_start</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dislocation_end</span> <span class="o">=</span> <span class="n">d_stop</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dislocation_end</span> <span class="o">=</span> <span class="n">d_stop</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loop_start</span> <span class="o">=</span> <span class="n">disloc1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loop_end</span> <span class="o">=</span> <span class="n">disloc2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
 
 
 
 <div class="viewcode-block" id="min_shuffle.load_data">
 <a class="viewcode-back" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.load_data">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">load_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file_mode</span><span class="p">,</span><span class="n">file_flat</span><span class="p">,</span><span class="n">file_disconnection</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file_mode</span><span class="p">,</span><span class="n">file_flat</span><span class="p">,</span><span class="n">file_disconnection</span><span class="p">,</span><span class="n">final_file_mode</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">"""</span>
 <span class="sd">            Loads atomic positions from initial and final LAMMPS data files.</span>
 
 <span class="sd">            Args:</span>
-<span class="sd">                file_mode (str): Mode for reading the LAMMPS data files.</span>
+<span class="sd">                file_mode (int): Mode for reading the flat configuration, and the</span>
+<span class="sd">                    disconnection one too unless `final_file_mode` overrides it.</span>
 <span class="sd">                file_flat (str): Path to the initial (flat) atomic configuration file.</span>
 <span class="sd">                file_disconnection (str): Path to the final atomic configuration file.</span>
+<span class="sd">                final_file_mode (int, optional): Mode for the disconnection file when</span>
+<span class="sd">                    it differs. A run that minimizes only the endpoints has a</span>
+<span class="sd">                    minimized flat GB, written by LAMMPS in eight columns, alongside</span>
+<span class="sd">                    an intermediate image still in the five this code writes.</span>
 
 <span class="sd">            Sets:</span>
 <span class="sd">                self.grainA_pretransform (np.ndarray): Atoms in grain A before transformation.</span>
@@ -391,8 +455,10 @@
 <span class="sd">                self.final_grain (np.ndarray): Final atomic data.</span>
 <span class="sd">        """</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">"=============================== Generating atomic trajectories ====================================="</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">final_file_mode</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">final_file_mode</span> <span class="o">=</span> <span class="n">file_mode</span>
         <span class="n">data_init</span> <span class="o">=</span> <span class="n">read_LAMMPS_datafile</span><span class="p">(</span><span class="n">file_flat</span><span class="p">,</span> <span class="n">file_mode</span><span class="p">)</span>
-        <span class="n">data_final</span> <span class="o">=</span> <span class="n">read_LAMMPS_datafile</span><span class="p">(</span><span class="n">file_disconnection</span><span class="p">,</span> <span class="n">file_mode</span><span class="p">)</span>
+        <span class="n">data_final</span> <span class="o">=</span> <span class="n">read_LAMMPS_datafile</span><span class="p">(</span><span class="n">file_disconnection</span><span class="p">,</span> <span class="n">final_file_mode</span><span class="p">)</span>
         <span class="n">atoms</span> <span class="o">=</span> <span class="n">data_init</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span>
         <span class="n">box</span> <span class="o">=</span> <span class="n">data_init</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
         <span class="n">Ai</span> <span class="o">=</span> <span class="p">[]</span>
@@ -443,8 +509,14 @@
 <span class="sd">            Args:</span>
 <span class="sd">                folder (str): Directory to write formatted data files.</span>
 
+<span class="sd">            Atoms are paired between the two configurations by atom ID. Any that the</span>
+<span class="sd">            final configuration has lost -- LAMMPS culls overlapping atoms, and not</span>
+<span class="sd">            always the same ones in both structures -- are dropped from the domain,</span>
+<span class="sd">            and how many is reported.</span>
+
 <span class="sd">            Raises:</span>
-<span class="sd">                ValueError: If grain boundary info or atomic data is missing.</span>
+<span class="sd">                ValueError: If grain boundary info or atomic data is missing, or if</span>
+<span class="sd">                    the domain comes out empty.</span>
 
 <span class="sd">            Sets:</span>
 <span class="sd">                self.atoms_minshuf (np.ndarray): Formatted atoms array for minimal shuffling.</span>
@@ -469,35 +541,42 @@
         <span class="n">inc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inclination</span>
 
         <span class="n">data_A</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">data_B</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">eps</span> <span class="o">=</span> <span class="mf">1e-1</span>
-        <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="k">if</span> <span class="n">h</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">initial</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">Ai</span><span class="p">,</span> <span class="n">Bi</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">initial</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
                 <span class="k">if</span> <span class="n">initial</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">gb_loc</span> <span class="o">+</span> <span class="n">h</span> <span class="o">-</span> <span class="n">eps</span> <span class="ow">and</span> <span class="n">initial</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">gb_loc</span> <span class="o">-</span> <span class="n">eps</span> <span class="ow">and</span> <span class="n">initial</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">disc_start</span> <span class="ow">and</span> <span class="n">initial</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">disc_end</span><span class="p">:</span>
-                    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
                     <span class="n">data_A</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">initial</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">initial</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">initial</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">initial</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">3</span><span class="p">]])</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Bi</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
                 <span class="k">if</span> <span class="n">Bi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">gb_loc</span> <span class="o">+</span> <span class="n">h</span> <span class="o">-</span> <span class="n">eps</span> <span class="ow">and</span> <span class="n">Bi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">gb_loc</span> <span class="o">-</span> <span class="n">eps</span> <span class="ow">and</span> <span class="n">Bi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">disc_start</span> <span class="ow">and</span> <span class="n">Bi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">disc_end</span><span class="p">:</span>
-                    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
                     <span class="n">data_A</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">Bi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">Bi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">Bi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">Bi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">3</span><span class="p">]])</span>
-        <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data_A</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Af</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
-            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data_A</span><span class="p">)):</span>
-                <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">Af</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
-                    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
-                    <span class="n">data_B</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">Af</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">Af</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">Af</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">Af</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">3</span><span class="p">]])</span>
-                    <span class="k">break</span>
 
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Bf</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
-            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data_A</span><span class="p">)):</span>
-                <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">Bf</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
-                    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
-                    <span class="n">data_B</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">Bf</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">Bf</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">Bf</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">Bf</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">3</span><span class="p">]])</span>
-                    <span class="k">break</span>
+        <span class="c1"># Pair each domain atom with where it ended up, by atom ID.</span>
+        <span class="c1">#</span>
+        <span class="c1"># An ID can be missing from the final configuration: LAMMPS culls overlapping</span>
+        <span class="c1"># atoms at the boundary, and it does not always cull the same ones in the flat</span>
+        <span class="c1"># and the stepped structure. Such an atom has no partner to shuffle to, so it</span>
+        <span class="c1"># is dropped from the domain rather than left to unbalance the two grains --</span>
+        <span class="c1"># `run` needs a one-to-one mapping and would otherwise refuse outright.</span>
+        <span class="n">final_by_id</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">Af</span><span class="p">,</span> <span class="n">Bf</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+            <span class="n">final_by_id</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">3</span><span class="p">]))]</span> <span class="o">=</span> <span class="n">row</span>
+        <span class="n">paired_A</span><span class="p">,</span> <span class="n">data_B</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">data_A</span><span class="p">:</span>
+            <span class="n">final_row</span> <span class="o">=</span> <span class="n">final_by_id</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">3</span><span class="p">])))</span>
+            <span class="k">if</span> <span class="n">final_row</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">paired_A</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+                <span class="n">data_B</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">final_row</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">final_row</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">final_row</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">final_row</span><span class="p">[</span><span class="mi">3</span><span class="p">]])</span>
+        <span class="n">unpaired</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_A</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">paired_A</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">unpaired</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"   </span><span class="si">%d</span><span class="s2"> of </span><span class="si">%d</span><span class="s2"> domain atom(s) have no counterpart in the final "</span>
+                  <span class="s2">"configuration and were dropped from the shuffle."</span>
+                  <span class="o">%</span> <span class="p">(</span><span class="n">unpaired</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_A</span><span class="p">)))</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">paired_A</span><span class="p">)</span>
         <span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data_B</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"The minimal shuffle domain is empty. Check gb_info()."</span><span class="p">)</span>
         <span class="c1"># Write to data file</span>
         <span class="n">suffix</span> <span class="o">=</span> <span class="s2">"min_shuffle"</span>
         <span class="n">file</span> <span class="o">=</span> <span class="s2">"data."</span> <span class="o">+</span> <span class="n">elem</span> <span class="o">+</span> <span class="s2">"s"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span> <span class="o">+</span> <span class="s2">"inc"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">inc</span><span class="p">)</span>
@@ -618,15 +697,15 @@
 <span class="sd">        """</span>
         <span class="n">dim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimension</span>
         <span class="n">d</span> <span class="o">=</span> <span class="n">dp</span>
-        <span class="n">n</span> <span class="o">=</span> <span class="n">dim</span>
         <span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">Lx</span><span class="p">,</span> <span class="n">Ly</span><span class="p">,</span> <span class="n">Lz</span><span class="p">])</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dim</span><span class="p">):</span>
             <span class="n">Li</span> <span class="o">=</span> <span class="n">L</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dp</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
-                <span class="k">if</span> <span class="n">dp</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">Li</span><span class="p">:</span>
-                    <span class="n">d</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">Li</span>
-                <span class="k">elif</span> <span class="n">dp</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">Li</span><span class="p">:</span>
-                    <span class="n">d</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">-=</span> <span class="n">Li</span>
+            <span class="c1"># Both masks come off the unshifted column, and they are disjoint, so</span>
+            <span class="c1"># this is the same single shift per element the equivalent loop applies.</span>
+            <span class="n">below</span> <span class="o">=</span> <span class="n">dp</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">Li</span>
+            <span class="n">above</span> <span class="o">=</span> <span class="n">dp</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">Li</span>
+            <span class="n">d</span><span class="p">[</span><span class="n">below</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">Li</span>
+            <span class="n">d</span><span class="p">[</span><span class="n">above</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">-=</span> <span class="n">Li</span>
         <span class="k">return</span> <span class="n">d</span></div>
 
 
@@ -675,6 +754,257 @@
         <span class="k">return</span> <span class="n">dpbc</span></div>
 
 
+    <span class="k">def</span><span class="w"> </span><span class="nf">_shuffle_domain</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">            Splits the minimal shuffle domain into the two grains and measures its box.</span>
+
+<span class="sd">            Every route to a shuffle -- solving transport here, or stamping down a</span>
+<span class="sd">            reference pattern -- starts from the same pair of atom lists and the same</span>
+<span class="sd">            box lengths, so they are built in one place.</span>
+
+<span class="sd">            Raises:</span>
+<span class="sd">                ValueError: If input formatting is not done, or the two grains hold</span>
+<span class="sd">                    different numbers of atoms so no one-to-one mapping exists.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                dict: With keys `Xbasis` and `Ybasis` ((N,3) initial and final</span>
+<span class="sd">                    positions), `indices` (atom IDs of `Xbasis`), `N`, `box`, `L`</span>
+<span class="sd">                    (box lengths) and `lo` / `hi` (box faces).</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">types_minshuf</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Input formatting not done yet. Run format_input()"</span><span class="p">)</span>
+        <span class="n">atoms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">atoms_minshuf</span>
+        <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">types_minshuf</span>
+        <span class="n">box</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">box_minshuf</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">box_expansion_factor</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+
+        <span class="n">N</span> <span class="o">=</span> <span class="n">atoms</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">xlo</span><span class="p">,</span> <span class="n">ylo</span><span class="p">,</span> <span class="n">zlo</span> <span class="o">=</span> <span class="n">box</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">xhi</span><span class="p">,</span> <span class="n">yhi</span><span class="p">,</span> <span class="n">zhi</span> <span class="o">=</span> <span class="n">box</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">Lx</span><span class="p">,</span> <span class="n">Ly</span><span class="p">,</span> <span class="n">Lz</span> <span class="o">=</span> <span class="n">xhi</span> <span class="o">-</span> <span class="n">xlo</span><span class="p">,</span> <span class="n">yhi</span> <span class="o">-</span> <span class="n">ylo</span><span class="p">,</span> <span class="n">zhi</span> <span class="o">-</span> <span class="n">zlo</span>
+
+        <span class="c1"># Find the particles of each of the grains: X is grain 1 Y is grain 2</span>
+        <span class="n">Xbasis</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># type 1</span>
+        <span class="n">Ybasis</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># type 2</span>
+        <span class="n">indicies</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">Xbasis</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">:])</span>
+                <span class="n">indicies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+            <span class="k">elif</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">Ybasis</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">:])</span>
+        <span class="n">Xbasis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Xbasis</span><span class="p">)</span>
+        <span class="n">Ybasis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Ybasis</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">Xbasis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">Ybasis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Xbasis and Ybasis must have same non-zero length"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">Xbasis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">Ybasis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"The number of atoms do not match for the two grains. One-to-one mapping not possible"</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">{</span><span class="s2">"Xbasis"</span><span class="p">:</span> <span class="n">Xbasis</span><span class="p">,</span> <span class="s2">"Ybasis"</span><span class="p">:</span> <span class="n">Ybasis</span><span class="p">,</span> <span class="s2">"indices"</span><span class="p">:</span> <span class="n">indicies</span><span class="p">,</span>
+                <span class="s2">"N"</span><span class="p">:</span> <span class="n">Xbasis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">"box"</span><span class="p">:</span> <span class="n">box</span><span class="p">,</span> <span class="s2">"types"</span><span class="p">:</span> <span class="n">types</span><span class="p">,</span>
+                <span class="s2">"L"</span><span class="p">:</span> <span class="p">(</span><span class="n">Lx</span><span class="p">,</span> <span class="n">Ly</span><span class="p">,</span> <span class="n">Lz</span><span class="p">),</span> <span class="s2">"lo"</span><span class="p">:</span> <span class="p">(</span><span class="n">xlo</span><span class="p">,</span> <span class="n">ylo</span><span class="p">,</span> <span class="n">zlo</span><span class="p">),</span> <span class="s2">"hi"</span><span class="p">:</span> <span class="p">(</span><span class="n">xhi</span><span class="p">,</span> <span class="n">yhi</span><span class="p">,</span> <span class="n">zhi</span><span class="p">)}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_cost_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctx</span><span class="p">,</span> <span class="n">targets</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">            Squared minimum-image distance from every source atom to every final site.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                ctx (dict): Output of `_shuffle_domain`.</span>
+<span class="sd">                targets (np.ndarray, optional): (N,3) positions to measure from,</span>
+<span class="sd">                    defaulting to the initial positions. `map_from_reference` passes</span>
+<span class="sd">                    where the reference pattern says each atom should end up, which</span>
+<span class="sd">                    turns the assignment into a cheap correction of that guess rather</span>
+<span class="sd">                    than a search from scratch.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                np.ndarray: (N,N) squared distances.</span>
+<span class="sd">        """</span>
+        <span class="n">Ybasis</span> <span class="o">=</span> <span class="n">ctx</span><span class="p">[</span><span class="s2">"Ybasis"</span><span class="p">]</span>
+        <span class="n">source</span> <span class="o">=</span> <span class="n">ctx</span><span class="p">[</span><span class="s2">"Xbasis"</span><span class="p">]</span> <span class="k">if</span> <span class="n">targets</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">targets</span>
+        <span class="n">Lx</span><span class="p">,</span> <span class="n">Ly</span><span class="p">,</span> <span class="n">Lz</span> <span class="o">=</span> <span class="n">ctx</span><span class="p">[</span><span class="s2">"L"</span><span class="p">]</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="n">ctx</span><span class="p">[</span><span class="s2">"N"</span><span class="p">]</span>
+        <span class="n">dist_mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+            <span class="n">dvec_pbc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pbcdist</span><span class="p">(</span><span class="n">Ybasis</span> <span class="o">-</span> <span class="n">source</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:],</span> <span class="n">Lx</span><span class="p">,</span> <span class="n">Ly</span><span class="p">,</span> <span class="n">Lz</span><span class="p">)</span>
+            <span class="n">dist_mat</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">la</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">dvec_pbc</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dist_mat</span> <span class="o">**</span> <span class="mi">2</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_solve_sinkhorn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dist_norm</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">            Sinkhorn with the regularization raised until it converges.</span>
+
+<span class="sd">            A shuffle that is too cold converges arbitrarily slowly, and a solve that</span>
+<span class="sd">            never reaches `sinkhorn_tolerance` spends all of `max_iters` -- hours, at</span>
+<span class="sd">            a few hundred atoms -- to return a coupling no better than the one it had</span>
+<span class="sd">            early on. Rather than pay that, warm the shuffle by `reg_escalation` and</span>
+<span class="sd">            try again, up to `max_reg_attempts` times.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                dist_norm (np.ndarray): (N,N) cost matrix in units of the typical gap</span>
+<span class="sd">                    to an atom's second choice.</span>
+
+<span class="sd">            Sets:</span>
+<span class="sd">                self.reg_used (float): The regularization that was used in the end.</span>
+<span class="sd">                self.sinkhorn_converged (bool): Whether it converged there.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                np.ndarray: The coupling.</span>
+<span class="sd">        """</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="n">dist_norm</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">/</span> <span class="n">N</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">/</span> <span class="n">N</span>
+        <span class="n">reg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reg_param</span>
+        <span class="n">Gamma</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">converged</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">attempt</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_reg_attempts</span><span class="p">)):</span>
+            <span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>
+                <span class="c1"># POT warns on non-convergence; escalating reg is this code's answer</span>
+                <span class="c1"># to that, so the warning would only be noise.</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">"ignore"</span><span class="p">)</span>
+                <span class="n">Gamma</span><span class="p">,</span> <span class="n">log</span> <span class="o">=</span> <span class="n">ot</span><span class="o">.</span><span class="n">bregman</span><span class="o">.</span><span class="n">sinkhorn_log</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">dist_norm</span><span class="p">,</span> <span class="n">reg</span><span class="p">,</span>
+                                                     <span class="n">numItermax</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_iters</span><span class="p">,</span>
+                                                     <span class="n">stopThr</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sinkhorn_tolerance</span><span class="p">,</span>
+                                                     <span class="n">log</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">warn</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">err</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">log</span><span class="p">[</span><span class="s2">"err"</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">log</span><span class="p">[</span><span class="s2">"err"</span><span class="p">])</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+            <span class="n">converged</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">Gamma</span><span class="p">)))</span> <span class="ow">and</span> <span class="n">err</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">sinkhorn_tolerance</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"   Sinkhorn: reg = </span><span class="si">%-8.4g</span><span class="s2"> iterations = </span><span class="si">%-8d</span><span class="s2"> marginal error = </span><span class="si">%.2e</span><span class="s2">  </span><span class="si">%s</span><span class="s2">"</span>
+                  <span class="o">%</span> <span class="p">(</span><span class="n">reg</span><span class="p">,</span> <span class="n">log</span><span class="p">[</span><span class="s2">"niter"</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="s2">"converged"</span> <span class="k">if</span> <span class="n">converged</span> <span class="k">else</span> <span class="s2">"NOT converged"</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">converged</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="k">if</span> <span class="n">attempt</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_reg_attempts</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">reg</span> <span class="o">*=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reg_escalation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reg_used</span> <span class="o">=</span> <span class="n">reg</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sinkhorn_converged</span> <span class="o">=</span> <span class="n">converged</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">converged</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"WARNING: Sinkhorn still had not converged at reg = </span><span class="si">%.4g</span><span class="s2"> after </span><span class="si">%d</span><span class="s2"> "</span>
+                  <span class="s2">"attempts. Using the last coupling; raise reg_escalation, "</span>
+                  <span class="s2">"max_reg_attempts or maximumIterations if the shuffle looks wrong."</span>
+                  <span class="o">%</span> <span class="p">(</span><span class="n">reg</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_reg_attempts</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">Gamma</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_build_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctx</span><span class="p">,</span> <span class="n">gamma</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">            Turns one coupling into (Xs, Ys) atom lists.</span>
+
+<span class="sd">            A permutation in gives a single path per atom; the full coupling gives</span>
+<span class="sd">            every kept path.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                ctx (dict): Output of `_shuffle_domain`.</span>
+<span class="sd">                gamma (np.ndarray): (N,N) coupling.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                tuple: (Xs, Ys), each (npaths,6) with columns x, y, z, atom id, row</span>
+<span class="sd">                    index and path weight.</span>
+<span class="sd">        """</span>
+        <span class="n">dim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimension</span>
+        <span class="n">pbcon</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">Xbasis</span><span class="p">,</span> <span class="n">Ybasis</span><span class="p">,</span> <span class="n">indicies</span> <span class="o">=</span> <span class="n">ctx</span><span class="p">[</span><span class="s2">"Xbasis"</span><span class="p">],</span> <span class="n">ctx</span><span class="p">[</span><span class="s2">"Ybasis"</span><span class="p">],</span> <span class="n">ctx</span><span class="p">[</span><span class="s2">"indices"</span><span class="p">]</span>
+        <span class="n">Lx</span><span class="p">,</span> <span class="n">Ly</span><span class="p">,</span> <span class="n">Lz</span> <span class="o">=</span> <span class="n">ctx</span><span class="p">[</span><span class="s2">"L"</span><span class="p">]</span>
+        <span class="n">xlo</span><span class="p">,</span> <span class="n">ylo</span><span class="p">,</span> <span class="n">zlo</span> <span class="o">=</span> <span class="n">ctx</span><span class="p">[</span><span class="s2">"lo"</span><span class="p">]</span>
+        <span class="n">xhi</span><span class="p">,</span> <span class="n">yhi</span><span class="p">,</span> <span class="n">zhi</span> <span class="o">=</span> <span class="n">ctx</span><span class="p">[</span><span class="s2">"hi"</span><span class="p">]</span>
+
+        <span class="n">I</span><span class="p">,</span> <span class="n">J</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">gamma</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">disp_vecs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">I</span><span class="p">),</span> <span class="mi">11</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">I</span><span class="p">)):</span>
+            <span class="n">K</span> <span class="o">=</span> <span class="n">gamma</span><span class="p">[</span><span class="n">I</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">J</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>  <span class="c1"># path prob</span>
+            <span class="n">Xcoords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="n">dim</span><span class="p">))</span>
+            <span class="n">Ycoords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="n">dim</span><span class="p">))</span>
+            <span class="n">Xcoords</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">Xbasis</span><span class="p">[</span><span class="n">I</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">0</span><span class="p">],</span> <span class="n">Xbasis</span><span class="p">[</span><span class="n">I</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">1</span><span class="p">],</span> <span class="n">Xbasis</span><span class="p">[</span><span class="n">I</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">2</span><span class="p">]])</span>
+            <span class="n">Ycoords</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">Ybasis</span><span class="p">[</span><span class="n">J</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">0</span><span class="p">],</span> <span class="n">Ybasis</span><span class="p">[</span><span class="n">J</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">1</span><span class="p">],</span> <span class="n">Ybasis</span><span class="p">[</span><span class="n">J</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">2</span><span class="p">]])</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="n">indicies</span><span class="p">[</span><span class="n">I</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+
+            <span class="c1"># Vector connecting X and Y</span>
+            <span class="n">disp_vec_new</span> <span class="o">=</span> <span class="n">Ycoords</span> <span class="o">-</span> <span class="n">Xcoords</span>
+            <span class="k">if</span> <span class="n">pbcon</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">disp_pbc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pbcdist</span><span class="p">(</span><span class="n">disp_vec_new</span><span class="p">,</span> <span class="n">Lx</span><span class="p">,</span> <span class="n">Ly</span><span class="p">,</span> <span class="n">Lz</span><span class="p">)</span>
+            <span class="n">newYcoords</span> <span class="o">=</span> <span class="n">Xcoords</span> <span class="o">+</span> <span class="n">disp_pbc</span>
+
+            <span class="n">disp_vecs</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">disp_pbc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">disp_pbc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">disp_pbc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">K</span><span class="p">,</span> <span class="n">Xcoords</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                                        <span class="n">Xcoords</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">Xcoords</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">newYcoords</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">newYcoords</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                                        <span class="n">newYcoords</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">index</span><span class="p">])</span>
+
+        <span class="c1"># Data in different frames</span>
+        <span class="n">ndisps</span> <span class="o">=</span> <span class="n">disp_vecs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">Kvec</span> <span class="o">=</span> <span class="n">disp_vecs</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span>
+
+        <span class="n">Xcoords</span> <span class="o">=</span> <span class="n">disp_vecs</span><span class="p">[:,</span> <span class="mi">4</span><span class="p">:</span><span class="mi">7</span><span class="p">]</span>
+        <span class="n">Ycoords</span> <span class="o">=</span> <span class="n">disp_vecs</span><span class="p">[:,</span> <span class="mi">7</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span>
+        <span class="n">dTDP</span> <span class="o">=</span> <span class="n">disp_vecs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">XTDP</span> <span class="o">=</span> <span class="n">Xcoords</span>
+        <span class="n">YTDP</span> <span class="o">=</span> <span class="n">Ycoords</span>
+        <span class="n">prob</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">Kvec</span><span class="p">),</span> <span class="mi">3</span><span class="p">))</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">disp_vecs</span><span class="p">[:,</span> <span class="mi">10</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Kvec</span><span class="p">)):</span>
+            <span class="n">prob</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">Kvec</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">dTDP</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span>
+        <span class="n">Dvec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">prob</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># probabilistic expression for total net displacement/atom</span>
+
+        <span class="n">Xp</span> <span class="o">=</span> <span class="n">XTDP</span>
+        <span class="n">Yp</span> <span class="o">=</span> <span class="n">YTDP</span>
+
+        <span class="c1"># Columns: x, y, z, atom id, row index, path weight</span>
+        <span class="n">Xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">ndisps</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+        <span class="n">Ys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">ndisps</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">prob_cutoff</span> <span class="o">=</span> <span class="mf">1e-8</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ndisps</span><span class="p">):</span>
+            <span class="n">path_prob</span> <span class="o">=</span> <span class="n">Kvec</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">path_prob</span> <span class="o">&gt;</span> <span class="n">prob_cutoff</span><span class="p">:</span>
+                <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+                <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+                <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">Xp</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span>
+                <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">Yp</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span>
+                <span class="k">if</span> <span class="n">pbcon</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+                    <span class="n">dp_new</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pbcdist</span><span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="n">a</span><span class="p">,</span> <span class="n">Lx</span><span class="p">,</span> <span class="n">Ly</span><span class="p">,</span> <span class="n">Lz</span><span class="p">)</span>
+                <span class="n">b_new</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">dp_new</span>
+                <span class="n">Xs</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span>
+                <span class="n">Xs</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">idx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">Xs</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">k</span>
+                <span class="n">Xs</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="n">path_prob</span>
+                <span class="n">Ys</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">b_new</span>
+                <span class="n">Ys</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">idx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">Ys</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">k</span>
+                <span class="n">Ys</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="n">path_prob</span>
+                <span class="n">flag</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="c1"># Check for PBCs along y and z</span>
+                <span class="k">if</span> <span class="n">b_new</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">yhi</span><span class="p">:</span>
+                    <span class="n">b_new</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-=</span> <span class="n">Ly</span>
+                    <span class="n">flag</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">b_new</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">zhi</span><span class="p">:</span>
+                    <span class="n">b_new</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">-=</span> <span class="n">Lz</span>
+                    <span class="n">flag</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">b_new</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">ylo</span><span class="p">:</span>
+                    <span class="n">b_new</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">Ly</span>
+                    <span class="n">flag</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">b_new</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">zlo</span> <span class="o">+</span> <span class="mf">0.1</span><span class="p">:</span>
+                    <span class="n">b_new</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+=</span> <span class="n">Lz</span>
+                    <span class="n">flag</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="c1"># if b_new</span>
+                <span class="n">Ys</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">b_new</span>
+                <span class="c1"># print(b_new)</span>
+                <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">b_new</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">b_new</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span> <span class="p">[</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">b_new</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]</span>
+
+        <span class="k">return</span> <span class="n">Xs</span><span class="p">,</span> <span class="n">Ys</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_permutation_branch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctx</span><span class="p">,</span> <span class="n">perm</span><span class="p">,</span> <span class="n">weight</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">            Wraps one permutation up the way `self.branches` holds them.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                ctx (dict): Output of `_shuffle_domain`.</span>
+<span class="sd">                perm (np.ndarray): (N,) final-site index for each source atom.</span>
+<span class="sd">                weight (float): Weight to record for this branch.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                tuple: (weight, Xs, Ys).</span>
+<span class="sd">        """</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="n">ctx</span><span class="p">[</span><span class="s2">"N"</span><span class="p">]</span>
+        <span class="n">gperm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
+        <span class="n">gperm</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">),</span> <span class="n">perm</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">N</span>
+        <span class="n">Xs</span><span class="p">,</span> <span class="n">Ys</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_config</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">gperm</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">weight</span><span class="p">,</span> <span class="n">Xs</span><span class="p">,</span> <span class="n">Ys</span><span class="p">)</span>
+
 <div class="viewcode-block" id="min_shuffle.run">
 <a class="viewcode-back" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.run">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -682,77 +1012,25 @@
 <span class="sd">            Runs the Sinkhorn optimal transport algorithm to compute minimal shuffling displacement vectors</span>
 <span class="sd">            between initial and final atomic configurations in the minimal shuffle domain.</span>
 
+<span class="sd">            Cost grows as the square of the atom count and the solver's iteration</span>
+<span class="sd">            count is unbounded by the system size, so this is the expensive step.</span>
+<span class="sd">            `map_from_reference` is the cheap alternative once a reference system has</span>
+<span class="sd">            been solved.</span>
+
 <span class="sd">            Raises:</span>
 <span class="sd">                ValueError: If input formatting is not done or atoms mismatch.</span>
 
 <span class="sd">            Sets:</span>
 <span class="sd">                self.initial_atoms_transformed_region (np.ndarray): Initial atomic positions after transformation.</span>
 <span class="sd">                self.final_atoms_transformed_region (np.ndarray): Final atomic positions after transformation.</span>
+<span class="sd">                self.branches (list): (weight, Xs, Ys) per alternative configuration.</span>
 <span class="sd">        """</span>
-        <span class="c1"># Import input parameters</span>
         <span class="n">reg_param</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reg_param</span>
-        <span class="n">iter_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_iters</span>
-        <span class="n">box_expansion_factor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">box_expansion_factor</span>
-        <span class="n">dim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimension</span>
-        <span class="c1">#lattice_parameter = self.lattice_parameter  # angstroms</span>
-        <span class="c1">#r0 = lattice_parameter / np.sqrt(2)  # nearest neighbor distance in perfect FCC crystal</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">types_minshuf</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Input formatting not done yet. Run format_input()"</span><span class="p">)</span>
-        <span class="n">atoms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">atoms_minshuf</span>
-        <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">types_minshuf</span>
-        <span class="n">box</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">box_minshuf</span>
-
-        <span class="c1"># Find box size and atom positions for each of the types of particles</span>
-        <span class="n">N</span> <span class="o">=</span> <span class="n">atoms</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">box</span> <span class="o">+=</span> <span class="n">box_expansion_factor</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
-        <span class="n">xlo</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
-        <span class="n">ylo</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
-        <span class="n">zlo</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
-        <span class="n">xhi</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-        <span class="n">yhi</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-        <span class="n">zhi</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-        <span class="n">Lx</span> <span class="o">=</span> <span class="n">xhi</span> <span class="o">-</span> <span class="n">xlo</span>
-        <span class="n">Ly</span> <span class="o">=</span> <span class="n">yhi</span> <span class="o">-</span> <span class="n">ylo</span>
-        <span class="n">Lz</span> <span class="o">=</span> <span class="n">zhi</span> <span class="o">-</span> <span class="n">zlo</span>
-
-        <span class="n">type_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">types</span><span class="p">)]</span>
-        <span class="c1"># Find the particles of each of the grains: X is grain 1 Y is grain 2</span>
-        <span class="n">Xbasis</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># type 1</span>
-        <span class="n">Ybasis</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># type 2</span>
-        <span class="n">indicies</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">Xbasis</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">2</span><span class="p">:])</span>
-                <span class="n">indicies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-            <span class="k">elif</span> <span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-                <span class="n">Ybasis</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">atoms</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">2</span><span class="p">:])</span>
-        <span class="n">Xbasis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Xbasis</span><span class="p">)</span>
-        <span class="n">Ybasis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Ybasis</span><span class="p">)</span>
-        <span class="c1"># print(Xbasis.shape)</span>
-        <span class="k">if</span> <span class="n">Xbasis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">Ybasis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Xbasis and Ybasis must have same non-zero length"</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">Xbasis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">Ybasis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"The number of atoms do not match for the two grains. One-to-one mapping not possible"</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">N</span> <span class="o">=</span> <span class="n">Xbasis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">ctx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shuffle_domain</span><span class="p">()</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="n">ctx</span><span class="p">[</span><span class="s2">"N"</span><span class="p">]</span>
 
         <span class="c1"># Find displacement vectors with pbcs</span>
-        <span class="n">pbcon</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="n">dist_mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
-            <span class="n">dvec</span> <span class="o">=</span> <span class="n">Ybasis</span> <span class="o">-</span> <span class="n">Xbasis</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span>
-            <span class="n">dvec_pbc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pbcdist</span><span class="p">(</span><span class="n">dvec</span><span class="p">,</span> <span class="n">Lx</span><span class="p">,</span> <span class="n">Ly</span><span class="p">,</span> <span class="n">Lz</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
-                <span class="n">dist_mat</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">la</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">dvec_pbc</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="p">:])</span>
-
-        <span class="k">if</span> <span class="n">pbcon</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="n">dist_mat</span> <span class="o">=</span> <span class="n">dist_mat</span> <span class="o">**</span> <span class="mi">2</span>
-
-        <span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">dim</span><span class="p">)</span>  <span class="c1"># Recomputed, set to [0,0,0] if unknown and results will match TDP</span>
-
-        <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">/</span> <span class="n">N</span>
-        <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">/</span> <span class="n">N</span>
+        <span class="n">dist_mat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cost_matrix</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span>
 
         <span class="c1"># reg_param is a temperature, so it only means something against a cost scale.</span>
         <span class="c1"># Use the typical gap to an atom's second choice: reg = 1 then means an</span>
@@ -769,8 +1047,10 @@
             <span class="n">row</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="n">linear_sum_assignment</span><span class="p">(</span><span class="n">dist_norm</span><span class="p">)</span>
             <span class="n">Gamma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">dist_norm</span><span class="p">)</span>
             <span class="n">Gamma</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">N</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reg_used</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sinkhorn_converged</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">Gamma</span> <span class="o">=</span> <span class="n">ot</span><span class="o">.</span><span class="n">bregman</span><span class="o">.</span><span class="n">sinkhorn_log</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">dist_norm</span><span class="p">,</span> <span class="n">reg_param</span><span class="p">,</span> <span class="n">numItermax</span><span class="o">=</span><span class="n">iter_max</span><span class="p">)</span>
+            <span class="n">Gamma</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_solve_sinkhorn</span><span class="p">(</span><span class="n">dist_norm</span><span class="p">)</span>
 
         <span class="c1"># Keep paths that matter relative to each atom's best one. A fixed cutoff is</span>
         <span class="c1"># calibrated to T = 0 and deletes every path once the mass spreads out.</span>
@@ -778,105 +1058,118 @@
         <span class="n">gamma_mod</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">Gamma</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_cutoff</span> <span class="o">*</span> <span class="n">rowmax</span><span class="p">,</span> <span class="n">Gamma</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
         <span class="n">gamma_mod</span> <span class="o">/=</span> <span class="n">gamma_mod</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">*</span> <span class="n">N</span>   <span class="c1"># row sums to 1/N</span>
 
-        <span class="k">def</span><span class="w"> </span><span class="nf">build_config</span><span class="p">(</span><span class="n">gamma</span><span class="p">):</span>
-<span class="w">            </span><span class="sd">"""Turns one coupling into (Xs, Ys) atom lists. A permutation in gives</span>
-<span class="sd">            a single path per atom; the full coupling gives every kept path."""</span>
-            <span class="n">I</span><span class="p">,</span> <span class="n">J</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">gamma</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
-            <span class="n">disp_vecs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">I</span><span class="p">),</span> <span class="mi">11</span><span class="p">))</span>
-            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">I</span><span class="p">)):</span>
-                <span class="n">K</span> <span class="o">=</span> <span class="n">gamma</span><span class="p">[</span><span class="n">I</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">J</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>  <span class="c1"># path prob</span>
-                <span class="n">Xcoords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="n">dim</span><span class="p">))</span>
-                <span class="n">Ycoords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="n">dim</span><span class="p">))</span>
-                <span class="n">Xcoords</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">Xbasis</span><span class="p">[</span><span class="n">I</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">0</span><span class="p">],</span> <span class="n">Xbasis</span><span class="p">[</span><span class="n">I</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">1</span><span class="p">],</span> <span class="n">Xbasis</span><span class="p">[</span><span class="n">I</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">2</span><span class="p">]])</span>
-                <span class="n">Ycoords</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">Ybasis</span><span class="p">[</span><span class="n">J</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">0</span><span class="p">],</span> <span class="n">Ybasis</span><span class="p">[</span><span class="n">J</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">1</span><span class="p">],</span> <span class="n">Ybasis</span><span class="p">[</span><span class="n">J</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">2</span><span class="p">]])</span>
-                <span class="n">index</span> <span class="o">=</span> <span class="n">indicies</span><span class="p">[</span><span class="n">I</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
-
-                <span class="c1"># Vector connecting X and Y</span>
-                <span class="n">disp_vec_new</span> <span class="o">=</span> <span class="n">Ycoords</span> <span class="o">-</span> <span class="n">Xcoords</span>
-                <span class="k">if</span> <span class="n">pbcon</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
-                    <span class="n">disp_pbc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pbcdist</span><span class="p">(</span><span class="n">disp_vec_new</span><span class="p">,</span> <span class="n">Lx</span><span class="p">,</span> <span class="n">Ly</span><span class="p">,</span> <span class="n">Lz</span><span class="p">)</span>
-                <span class="n">newYcoords</span> <span class="o">=</span> <span class="n">Xcoords</span> <span class="o">+</span> <span class="n">disp_pbc</span>
-
-                <span class="n">disp_vecs</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">disp_pbc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">disp_pbc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">disp_pbc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">K</span><span class="p">,</span> <span class="n">Xcoords</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-                                            <span class="n">Xcoords</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">Xcoords</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">newYcoords</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">newYcoords</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
-                                            <span class="n">newYcoords</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">index</span><span class="p">])</span>
-
-            <span class="c1"># Data in different frames</span>
-            <span class="n">ndisps</span> <span class="o">=</span> <span class="n">disp_vecs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">Kvec</span> <span class="o">=</span> <span class="n">disp_vecs</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span>
-
-            <span class="n">Xcoords</span> <span class="o">=</span> <span class="n">disp_vecs</span><span class="p">[:,</span> <span class="mi">4</span><span class="p">:</span><span class="mi">7</span><span class="p">]</span>
-            <span class="n">Ycoords</span> <span class="o">=</span> <span class="n">disp_vecs</span><span class="p">[:,</span> <span class="mi">7</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span>
-            <span class="n">dTDP</span> <span class="o">=</span> <span class="n">disp_vecs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
-            <span class="n">XTDP</span> <span class="o">=</span> <span class="n">Xcoords</span>
-            <span class="n">YTDP</span> <span class="o">=</span> <span class="n">Ycoords</span>
-            <span class="n">prob</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">Kvec</span><span class="p">),</span> <span class="mi">3</span><span class="p">))</span>
-            <span class="n">idx</span> <span class="o">=</span> <span class="n">disp_vecs</span><span class="p">[:,</span> <span class="mi">10</span><span class="p">]</span>
-            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Kvec</span><span class="p">)):</span>
-                <span class="n">prob</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">Kvec</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">dTDP</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span>
-            <span class="n">Dvec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">prob</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># probabilistic expression for total net displacement/atom</span>
-
-            <span class="n">Xp</span> <span class="o">=</span> <span class="n">XTDP</span>
-            <span class="n">Yp</span> <span class="o">=</span> <span class="n">YTDP</span>
-
-            <span class="c1"># Columns: x, y, z, atom id, row index, path weight</span>
-            <span class="n">Xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">ndisps</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-            <span class="n">Ys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">ndisps</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-            <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span>
-            <span class="n">prob_cutoff</span> <span class="o">=</span> <span class="mf">1e-8</span>
-            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ndisps</span><span class="p">):</span>
-                <span class="n">path_prob</span> <span class="o">=</span> <span class="n">Kvec</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-                <span class="k">if</span> <span class="n">path_prob</span> <span class="o">&gt;</span> <span class="n">prob_cutoff</span><span class="p">:</span>
-                    <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
-                    <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
-                    <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">Xp</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span>
-                    <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">Yp</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span>
-                    <span class="k">if</span> <span class="n">pbcon</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
-                        <span class="n">dp_new</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pbcdist</span><span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="n">a</span><span class="p">,</span> <span class="n">Lx</span><span class="p">,</span> <span class="n">Ly</span><span class="p">,</span> <span class="n">Lz</span><span class="p">)</span>
-                    <span class="n">b_new</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">dp_new</span>
-                    <span class="n">Xs</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span>
-                    <span class="n">Xs</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">idx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-                    <span class="n">Xs</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">k</span>
-                    <span class="n">Xs</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="n">path_prob</span>
-                    <span class="n">Ys</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">b_new</span>
-                    <span class="n">Ys</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">idx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-                    <span class="n">Ys</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">k</span>
-                    <span class="n">Ys</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="n">path_prob</span>
-                    <span class="n">flag</span> <span class="o">=</span> <span class="mi">0</span>
-                    <span class="c1"># Check for PBCs along y and z</span>
-                    <span class="k">if</span> <span class="n">b_new</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">yhi</span><span class="p">:</span>
-                        <span class="n">b_new</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-=</span> <span class="n">Ly</span>
-                        <span class="n">flag</span> <span class="o">=</span> <span class="mi">1</span>
-                    <span class="k">if</span> <span class="n">b_new</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">zhi</span><span class="p">:</span>
-                        <span class="n">b_new</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">-=</span> <span class="n">Lz</span>
-                        <span class="n">flag</span> <span class="o">=</span> <span class="mi">1</span>
-                    <span class="k">if</span> <span class="n">b_new</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">ylo</span><span class="p">:</span>
-                        <span class="n">b_new</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">Ly</span>
-                        <span class="n">flag</span> <span class="o">=</span> <span class="mi">1</span>
-                    <span class="k">if</span> <span class="n">b_new</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">zlo</span> <span class="o">+</span> <span class="mf">0.1</span><span class="p">:</span>
-                        <span class="n">b_new</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+=</span> <span class="n">Lz</span>
-                        <span class="n">flag</span> <span class="o">=</span> <span class="mi">1</span>
-                    <span class="c1"># if b_new</span>
-                    <span class="n">Ys</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">b_new</span>
-                    <span class="c1"># print(b_new)</span>
-                    <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
-
-                    <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">b_new</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">b_new</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span> <span class="p">[</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">b_new</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]</span>
-
-            <span class="k">return</span> <span class="n">Xs</span><span class="p">,</span> <span class="n">Ys</span>
-
         <span class="c1"># Each branch is a permutation, so it is a configuration that actually</span>
         <span class="c1"># exists. Sampling each atom from its row of Gamma is not: two atoms would</span>
         <span class="c1"># pick the same site.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">branches</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">weight</span><span class="p">,</span> <span class="n">perm</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_branches</span><span class="p">(</span><span class="n">gamma_mod</span><span class="p">):</span>
-            <span class="n">gperm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">gamma_mod</span><span class="p">)</span>
-            <span class="n">gperm</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">),</span> <span class="n">perm</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">N</span>
-            <span class="n">Xs_b</span><span class="p">,</span> <span class="n">Ys_b</span> <span class="o">=</span> <span class="n">build_config</span><span class="p">(</span><span class="n">gperm</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">branches</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">weight</span><span class="p">,</span> <span class="n">Xs_b</span><span class="p">,</span> <span class="n">Ys_b</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">branches</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_permutation_branch</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">perm</span><span class="p">,</span> <span class="n">weight</span><span class="p">)</span>
+                         <span class="k">for</span> <span class="n">weight</span><span class="p">,</span> <span class="n">perm</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_branches</span><span class="p">(</span><span class="n">gamma_mod</span><span class="p">)]</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">initial_atoms_transformed_region</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">branches</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">final_atoms_transformed_region</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">branches</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="min_shuffle.map_from_reference">
+<a class="viewcode-back" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.map_from_reference">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">map_from_reference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">patterns</span><span class="p">,</span> <span class="n">require_periodic</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">            Builds the shuffle by stamping down a reference pattern instead of solving</span>
+<span class="sd">            transport for this system.</span>
+
+<span class="sd">            What a disconnection leaves behind inside its loop is one CSL cell's worth</span>
+<span class="sd">            of shuffle, repeated. `patterns` holds that cell, solved once on the</span>
+<span class="sd">            smallest system there is; here each atom inside the loop is handed the</span>
+<span class="sd">            displacement its position in the cell calls for, and atoms outside the</span>
+<span class="sd">            loop -- which the GB has not reached -- are left where they are.</span>
+
+<span class="sd">            Those displacements are a guess, not an answer: they are read off an</span>
+<span class="sd">            unrelaxed periodic ideal, while this system's atoms have relaxed, and the</span>
+<span class="sd">            two disconnection cores are not periodic at all. So the guess is only used</span>
+<span class="sd">            to aim an exact assignment, which costs O(N^3) once rather than the</span>
+<span class="sd">            unbounded number of O(N^2) Sinkhorn sweeps a full solve needs, and which</span>
+<span class="sd">            is guaranteed to return a permutation whatever the guess was worth.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                patterns (list of shuffle_pattern): One per branch of the reference</span>
+<span class="sd">                    solve. Branch j here is branch j of the reference stamped onto</span>
+<span class="sd">                    every cell, so a chain keeps one mechanism throughout.</span>
+<span class="sd">                require_periodic (bool): Refuse a reference whose copies of the cell</span>
+<span class="sd">                    disagree, rather than pick one of them arbitrarily.</span>
+
+<span class="sd">            Raises:</span>
+<span class="sd">                ValueError: If `patterns` is empty, or a pattern fails its check and</span>
+<span class="sd">                    `require_periodic` is set.</span>
+
+<span class="sd">            Sets:</span>
+<span class="sd">                self.branches (list): (weight, Xs, Ys) per alternative configuration.</span>
+<span class="sd">                self.initial_atoms_transformed_region (np.ndarray)</span>
+<span class="sd">                self.final_atoms_transformed_region (np.ndarray)</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">patterns</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"No reference patterns supplied. Run the reference "</span>
+                             <span class="s2">"system through min_shuffle.run() and take "</span>
+                             <span class="s2">"reference_patterns() from it."</span><span class="p">)</span>
+        <span class="n">ctx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shuffle_domain</span><span class="p">()</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="n">ctx</span><span class="p">[</span><span class="s2">"N"</span><span class="p">]</span>
+        <span class="n">inside</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inside_loop</span><span class="p">(</span><span class="n">ctx</span><span class="p">[</span><span class="s2">"Xbasis"</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">branches</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="n">patterns</span><span class="p">:</span>
+            <span class="n">pattern</span><span class="o">.</span><span class="n">check</span><span class="p">(</span><span class="n">raise_on_failure</span><span class="o">=</span><span class="n">require_periodic</span><span class="p">)</span>
+            <span class="n">disp</span><span class="p">,</span> <span class="n">distances</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="n">ctx</span><span class="p">[</span><span class="s2">"Xbasis"</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">gb_location</span><span class="p">)</span>
+            <span class="n">match_distance</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">distances</span><span class="o">.</span><span class="n">max</span><span class="p">())</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">distances</span><span class="p">)</span> <span class="k">else</span> <span class="mf">0.0</span>
+            <span class="c1"># Outside the loop the GB has not passed, so nothing shuffles there.</span>
+            <span class="n">targets</span> <span class="o">=</span> <span class="n">ctx</span><span class="p">[</span><span class="s2">"Xbasis"</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">inside</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">],</span> <span class="n">disp</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+            <span class="n">row</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="n">linear_sum_assignment</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cost_matrix</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">targets</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">branches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_permutation_branch</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">pattern</span><span class="o">.</span><span class="n">weight</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"   Branch </span><span class="si">%d</span><span class="s2">: </span><span class="si">%d</span><span class="s2"> atoms (</span><span class="si">%d</span><span class="s2"> inside the loop), keyed to the reference "</span>
+                  <span class="s2">"to within </span><span class="si">%.2f</span><span class="s2"> A"</span> <span class="o">%</span> <span class="p">(</span><span class="n">pattern</span><span class="o">.</span><span class="n">branch</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">inside</span><span class="o">.</span><span class="n">sum</span><span class="p">()),</span> <span class="n">match_distance</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">reg_used</span> <span class="o">=</span> <span class="n">patterns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">reg_used</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sinkhorn_converged</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initial_atoms_transformed_region</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">branches</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">final_atoms_transformed_region</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">branches</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_inside_loop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">            Which atoms sit inside the disconnection loop.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                y (np.ndarray): (N,) coordinates along the GB period direction.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                np.ndarray: (N,) boolean mask. All True when no loop was recorded,</span>
+<span class="sd">                    which is the fully transformed boundary a reference system is.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">loop_start</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">loop_end</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">y</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loop_start</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">y</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">loop_end</span><span class="p">)</span>
+
+<div class="viewcode-block" id="min_shuffle.reference_patterns">
+<a class="viewcode-back" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.reference_patterns">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">reference_patterns</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tilt_repeat</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">            The elementary shuffle this solve found, ready to stamp onto larger systems.</span>
+
+<span class="sd">            Only meaningful for a system whose boundary is transformed all the way</span>
+<span class="sd">            across, since that is the state whose shuffle is one CSL cell repeated.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                tilt_repeat (float): CSL repeat along the tilt axis, in angstroms.</span>
+
+<span class="sd">            Raises:</span>
+<span class="sd">                ValueError: If no solution has been computed.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                list of shuffle_pattern: One per branch, heaviest first.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">branches</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Nothing solved yet. Run run() first."</span><span class="p">)</span>
+        <span class="n">box</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shuffle_domain</span><span class="p">()[</span><span class="s2">"box"</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">shuffle_pattern</span><span class="o">.</span><span class="n">from_solution</span><span class="p">(</span><span class="n">Xs</span><span class="p">,</span> <span class="n">Ys</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gb_location</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">period</span><span class="p">,</span>
+                                              <span class="n">tilt_repeat</span><span class="p">,</span> <span class="n">box</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="n">weight</span><span class="p">,</span> <span class="n">branch</span><span class="o">=</span><span class="n">i</span><span class="p">,</span>
+                                              <span class="n">reg_used</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">reg_used</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">weight</span><span class="p">,</span> <span class="n">Xs</span><span class="p">,</span> <span class="n">Ys</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">branches</span><span class="p">)]</span></div>
 
 
 <div class="viewcode-block" id="min_shuffle.branch_folder">
@@ -997,8 +1290,10 @@
                     <span class="n">j</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">Xs_dict</span><span class="p">[</span><span class="n">atom_id</span><span class="p">][</span><span class="mi">4</span><span class="p">])</span>
                     <span class="n">final_atoms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">atom_id</span><span class="p">,</span> <span class="n">grain_num</span><span class="p">,</span> <span class="n">Ys</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">Ys</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">Ys</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]))</span>
                 <span class="k">elif</span> <span class="n">atom_id</span> <span class="ow">in</span> <span class="n">final_dict</span><span class="p">:</span>
-                    <span class="n">index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">final_dict</span><span class="p">[</span><span class="n">atom_id</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span><span class="o">-</span><span class="mi">1</span>
-                    <span class="n">final_atoms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">final</span><span class="p">[</span><span class="n">index</span><span class="p">,:])</span>
+                    <span class="c1"># Take the row the id maps to. Using the id as a row index instead</span>
+                    <span class="c1"># assumes ids run 1..N with no gaps, which stops being true as soon</span>
+                    <span class="c1"># as LAMMPS culls an overlapping atom.</span>
+                    <span class="n">final_atoms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">final_dict</span><span class="p">[</span><span class="n">atom_id</span><span class="p">])</span>
             <span class="n">final_atoms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">final_atoms</span><span class="p">)</span>
 
             <span class="c1"># One folder per branch, each holding a complete chain under the usual</span>

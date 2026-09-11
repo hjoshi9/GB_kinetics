@@ -81,6 +81,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../GBKineticsRunController.html">GBKineticsRunController module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../GBKineticsRunController.html#src.GBKineticsRunController.runGBkinetics"><code class="docutils literal notranslate"><span class="pre">runGBkinetics()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../GBKineticsRunController.html#src.GBKineticsRunController.runGridSearch"><code class="docutils literal notranslate"><span class="pre">runGridSearch()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../GBKineticsRunController.html#src.GBKineticsRunController.solve_reference_shuffle"><code class="docutils literal notranslate"><span class="pre">solve_reference_shuffle()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../IO.html">IO module</a><ul>
@@ -100,6 +101,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.create_disconnection_containing_bicrystal"><code class="docutils literal notranslate"><span class="pre">bicrystal.create_disconnection_containing_bicrystal()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.create_fix_eco_orientationfile"><code class="docutils literal notranslate"><span class="pre">bicrystal.create_fix_eco_orientationfile()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.create_flat_gb_bicrystal"><code class="docutils literal notranslate"><span class="pre">bicrystal.create_flat_gb_bicrystal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.dipole_decomposition"><code class="docutils literal notranslate"><span class="pre">bicrystal.dipole_decomposition()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.ordered_write"><code class="docutils literal notranslate"><span class="pre">bicrystal.ordered_write()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.write"><code class="docutils literal notranslate"><span class="pre">bicrystal.write()</span></code></a></li>
 </ul>
@@ -135,10 +137,12 @@
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.format_input"><code class="docutils literal notranslate"><span class="pre">min_shuffle.format_input()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.gb_info"><code class="docutils literal notranslate"><span class="pre">min_shuffle.gb_info()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.load_data"><code class="docutils literal notranslate"><span class="pre">min_shuffle.load_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.map_from_reference"><code class="docutils literal notranslate"><span class="pre">min_shuffle.map_from_reference()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.pbcdist"><code class="docutils literal notranslate"><span class="pre">min_shuffle.pbcdist()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.pbcwrap"><code class="docutils literal notranslate"><span class="pre">min_shuffle.pbcwrap()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.plot_min_shuffle_2d"><code class="docutils literal notranslate"><span class="pre">min_shuffle.plot_min_shuffle_2d()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.plot_min_shuffle_3d"><code class="docutils literal notranslate"><span class="pre">min_shuffle.plot_min_shuffle_3d()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.reference_patterns"><code class="docutils literal notranslate"><span class="pre">min_shuffle.reference_patterns()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.replicate"><code class="docutils literal notranslate"><span class="pre">min_shuffle.replicate()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.run"><code class="docutils literal notranslate"><span class="pre">min_shuffle.run()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.write_images"><code class="docutils literal notranslate"><span class="pre">min_shuffle.write_images()</span></code></a></li>
@@ -192,6 +196,28 @@
 <li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.write_lammps_gridsearch_input"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.write_lammps_gridsearch_input()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.write_lammps_neb_input_script"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.write_lammps_neb_input_script()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.write_minimization_input"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.write_minimization_input()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../shuffle_pattern.html">shuffle_pattern module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.keys"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.keys</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.displacements"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.displacements</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.period"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.period</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.tilt_repeat"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.tilt_repeat</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.weight"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.weight</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.branch"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.branch</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.spread"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.spread</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.consensus"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.consensus</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.split_sites"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.split_sites</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.reg_used"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.reg_used</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.gb_location"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.gb_location</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.__init__"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.check"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.check()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.from_solution"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.from_solution()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.lookup"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.lookup()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.reduce"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.reduce()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -527,15 +553,10 @@
         <span class="c1"># Decompose dislocation dipole in case of a stepped boundary</span>
         <span class="n">disconnection_start</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
         <span class="n">disconnection_stop</span>  <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">image_number</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">size_along_period</span><span class="p">:</span>
-            <span class="n">nodes_modified</span> <span class="o">=</span> <span class="p">[</span><span class="n">nodes</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">number_of_dipoles</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">transition_node_start</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">nodes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">gb_position</span><span class="p">],</span> <span class="p">[</span><span class="n">nodes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">nodes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]])</span>
-                <span class="n">transition_node_stop</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">nodes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">nodes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span> <span class="p">[</span><span class="n">nodes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">gb_position</span><span class="p">]])</span>
-                <span class="n">nodes_modified</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">transition_node_start</span><span class="p">)</span>
-                <span class="n">nodes_modified</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">transition_node_stop</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">nodes_modified</span> <span class="o">=</span> <span class="p">[</span><span class="n">nodes</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="n">period</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="n">period</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])]</span>
+        <span class="n">nodes_modified</span> <span class="o">=</span> <span class="n">bicrystal</span><span class="o">.</span><span class="n">dipole_decomposition</span><span class="p">(</span>
+            <span class="n">nodes</span><span class="p">,</span> <span class="n">gb_position</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span>
+            <span class="n">is_final_image</span><span class="o">=</span><span class="n">image_number</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">size_along_period</span><span class="p">,</span>
+            <span class="n">number_of_dipoles</span><span class="o">=</span><span class="n">number_of_dipoles</span><span class="p">)</span>
 
         <span class="n">disconnection_start</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">disconnection_start</span><span class="p">,</span> <span class="o">-</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
         <span class="n">disconnection_stop</span>  <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">disconnection_stop</span> <span class="p">,</span>  <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
@@ -590,6 +611,42 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">grain1</span> <span class="o">=</span> <span class="n">gA</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">grain2</span> <span class="o">=</span> <span class="n">gB</span></div>
+
+
+<div class="viewcode-block" id="bicrystal.dipole_decomposition">
+<a class="viewcode-back" href="../../bicrystal.html#src.bicrystal.bicrystal.dipole_decomposition">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dipole_decomposition</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">gb_position</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span> <span class="n">is_final_image</span><span class="p">,</span>
+                             <span class="n">number_of_dipoles</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">            The dislocation dipoles whose solid angle gives an image its plastic field.</span>
+
+<span class="sd">            A stepped boundary is not one dipole: the two ends of the loop rise from</span>
+<span class="sd">            the flat GB to the stepped plane, so each contributes a short dipole of</span>
+<span class="sd">            its own. The last image is the whole boundary stepped over, and is widened</span>
+<span class="sd">            by a quarter period each way instead.</span>
+
+<span class="sd">            Split out so that a system built by replication raises the same field as</span>
+<span class="sd">            one built from the reference lattice.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                nodes (np.ndarray): 2x2 array of disconnection node coordinates.</span>
+<span class="sd">                gb_position (float): x of the flat GB plane.</span>
+<span class="sd">                period (float): CSL period along the GB.</span>
+<span class="sd">                is_final_image (bool): Whether this is the fully stepped boundary.</span>
+<span class="sd">                number_of_dipoles (int): 1 keeps only the glide dipole; more add the</span>
+<span class="sd">                    two risers.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                list of np.ndarray: The dipoles, each a 2x2 of node coordinates.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">is_final_image</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">nodes</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="n">period</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="n">period</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])]</span>
+        <span class="n">dipoles</span> <span class="o">=</span> <span class="p">[</span><span class="n">nodes</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">number_of_dipoles</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">dipoles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">nodes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">gb_position</span><span class="p">],</span> <span class="p">[</span><span class="n">nodes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">nodes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]]))</span>
+            <span class="n">dipoles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">nodes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">nodes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span> <span class="p">[</span><span class="n">nodes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">gb_position</span><span class="p">]]))</span>
+        <span class="k">return</span> <span class="n">dipoles</span></div>
 
 
 <div class="viewcode-block" id="bicrystal.create_fix_eco_orientationfile">

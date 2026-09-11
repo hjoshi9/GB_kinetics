@@ -81,6 +81,7 @@
 <li class="toctree-l2"><a class="reference internal" href="GBKineticsRunController.html">GBKineticsRunController module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="GBKineticsRunController.html#src.GBKineticsRunController.runGBkinetics"><code class="docutils literal notranslate"><span class="pre">runGBkinetics()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="GBKineticsRunController.html#src.GBKineticsRunController.runGridSearch"><code class="docutils literal notranslate"><span class="pre">runGridSearch()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="GBKineticsRunController.html#src.GBKineticsRunController.solve_reference_shuffle"><code class="docutils literal notranslate"><span class="pre">solve_reference_shuffle()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="IO.html">IO module</a><ul>
@@ -100,6 +101,7 @@
 <li class="toctree-l4"><a class="reference internal" href="bicrystal.html#src.bicrystal.bicrystal.create_disconnection_containing_bicrystal"><code class="docutils literal notranslate"><span class="pre">bicrystal.create_disconnection_containing_bicrystal()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="bicrystal.html#src.bicrystal.bicrystal.create_fix_eco_orientationfile"><code class="docutils literal notranslate"><span class="pre">bicrystal.create_fix_eco_orientationfile()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="bicrystal.html#src.bicrystal.bicrystal.create_flat_gb_bicrystal"><code class="docutils literal notranslate"><span class="pre">bicrystal.create_flat_gb_bicrystal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="bicrystal.html#src.bicrystal.bicrystal.dipole_decomposition"><code class="docutils literal notranslate"><span class="pre">bicrystal.dipole_decomposition()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="bicrystal.html#src.bicrystal.bicrystal.ordered_write"><code class="docutils literal notranslate"><span class="pre">bicrystal.ordered_write()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="bicrystal.html#src.bicrystal.bicrystal.write"><code class="docutils literal notranslate"><span class="pre">bicrystal.write()</span></code></a></li>
 </ul>
@@ -135,10 +137,12 @@
 <li class="toctree-l4"><a class="reference internal" href="min_shuffle.html#src.min_shuffle.min_shuffle.format_input"><code class="docutils literal notranslate"><span class="pre">min_shuffle.format_input()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="min_shuffle.html#src.min_shuffle.min_shuffle.gb_info"><code class="docutils literal notranslate"><span class="pre">min_shuffle.gb_info()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="min_shuffle.html#src.min_shuffle.min_shuffle.load_data"><code class="docutils literal notranslate"><span class="pre">min_shuffle.load_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="min_shuffle.html#src.min_shuffle.min_shuffle.map_from_reference"><code class="docutils literal notranslate"><span class="pre">min_shuffle.map_from_reference()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="min_shuffle.html#src.min_shuffle.min_shuffle.pbcdist"><code class="docutils literal notranslate"><span class="pre">min_shuffle.pbcdist()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="min_shuffle.html#src.min_shuffle.min_shuffle.pbcwrap"><code class="docutils literal notranslate"><span class="pre">min_shuffle.pbcwrap()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="min_shuffle.html#src.min_shuffle.min_shuffle.plot_min_shuffle_2d"><code class="docutils literal notranslate"><span class="pre">min_shuffle.plot_min_shuffle_2d()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="min_shuffle.html#src.min_shuffle.min_shuffle.plot_min_shuffle_3d"><code class="docutils literal notranslate"><span class="pre">min_shuffle.plot_min_shuffle_3d()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="min_shuffle.html#src.min_shuffle.min_shuffle.reference_patterns"><code class="docutils literal notranslate"><span class="pre">min_shuffle.reference_patterns()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="min_shuffle.html#src.min_shuffle.min_shuffle.replicate"><code class="docutils literal notranslate"><span class="pre">min_shuffle.replicate()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="min_shuffle.html#src.min_shuffle.min_shuffle.run"><code class="docutils literal notranslate"><span class="pre">min_shuffle.run()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="min_shuffle.html#src.min_shuffle.min_shuffle.write_images"><code class="docutils literal notranslate"><span class="pre">min_shuffle.write_images()</span></code></a></li>
@@ -196,6 +200,28 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="shuffle_pattern.html">shuffle_pattern module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.keys"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.keys</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.displacements"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.displacements</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.period"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.period</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.tilt_repeat"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.tilt_repeat</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.weight"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.weight</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.branch"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.branch</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.spread"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.spread</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.consensus"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.consensus</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.split_sites"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.split_sites</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.reg_used"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.reg_used</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.gb_location"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.gb_location</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.__init__"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.check"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.check()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.from_solution"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.from_solution()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.lookup"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.lookup()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.reduce"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.reduce()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -236,6 +262,7 @@
  | <a href="#F"><strong>F</strong></a>
  | <a href="#G"><strong>G</strong></a>
  | <a href="#I"><strong>I</strong></a>
+ | <a href="#K"><strong>K</strong></a>
  | <a href="#L"><strong>L</strong></a>
  | <a href="#M"><strong>M</strong></a>
  | <a href="#N"><strong>N</strong></a>
@@ -260,6 +287,8 @@
         <li><a href="min_shuffle.html#src.min_shuffle.min_shuffle.__init__">(src.min_shuffle.min_shuffle method)</a>
 </li>
         <li><a href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.__init__">(src.runLAMMPS.run_LAMMPS method)</a>
+</li>
+        <li><a href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.__init__">(src.shuffle_pattern.shuffle_pattern method)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -305,6 +334,8 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="min_shuffle.html#src.min_shuffle.min_shuffle.box_minshuf">box_minshuf (src.min_shuffle.min_shuffle attribute)</a>
 </li>
+      <li><a href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.branch">branch (src.shuffle_pattern.shuffle_pattern attribute)</a>
+</li>
       <li><a href="min_shuffle.html#src.min_shuffle.min_shuffle.branch_folder">branch_folder() (src.min_shuffle.min_shuffle static method)</a>
 </li>
       <li><a href="min_shuffle.html#src.min_shuffle.min_shuffle.branches">branches (src.min_shuffle.min_shuffle attribute)</a>
@@ -319,10 +350,14 @@
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="bicrystal.html#src.bicrystal.bicrystal.create_disconnection_containing_bicrystal">create_disconnection_containing_bicrystal() (src.bicrystal.bicrystal method)</a>
+      <li><a href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.check">check() (src.shuffle_pattern.shuffle_pattern method)</a>
+</li>
+      <li><a href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.consensus">consensus (src.shuffle_pattern.shuffle_pattern attribute)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="bicrystal.html#src.bicrystal.bicrystal.create_disconnection_containing_bicrystal">create_disconnection_containing_bicrystal() (src.bicrystal.bicrystal method)</a>
+</li>
       <li><a href="bicrystal.html#src.bicrystal.bicrystal.create_fix_eco_orientationfile">create_fix_eco_orientationfile() (src.bicrystal.bicrystal method)</a>
 </li>
       <li><a href="bicrystal.html#src.bicrystal.bicrystal.create_flat_gb_bicrystal">create_flat_gb_bicrystal() (src.bicrystal.bicrystal method)</a>
@@ -333,6 +368,8 @@
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="bicrystal.html#src.bicrystal.bicrystal.dipole_decomposition">dipole_decomposition() (src.bicrystal.bicrystal static method)</a>
+</li>
       <li><a href="plastic_slip.html#plastic_slip.dislocation_dipole">dislocation_dipole (class in plastic_slip)</a>
 </li>
       <li><a href="plastic_slip.html#plastic_slip.dislocation_dipole.dislocation_distance">dislocation_distance (plastic_slip.dislocation_dipole attribute)</a>
@@ -346,6 +383,8 @@
       <li><a href="min_shuffle.html#src.min_shuffle.min_shuffle.dislocation_start">dislocation_start (src.min_shuffle.min_shuffle attribute)</a>
 </li>
       <li><a href="plastic_slip.html#plastic_slip.dislocation_dipole.dislocation_vector">dislocation_vector (plastic_slip.dislocation_dipole attribute)</a>
+</li>
+      <li><a href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.displacements">displacements (src.shuffle_pattern.shuffle_pattern attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -379,6 +418,8 @@
 </li>
       <li><a href="min_shuffle.html#src.min_shuffle.min_shuffle.format_input">format_input() (src.min_shuffle.min_shuffle method)</a>
 </li>
+      <li><a href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.from_solution">from_solution() (src.shuffle_pattern.shuffle_pattern class method)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -390,7 +431,11 @@
       <li><a href="min_shuffle.html#src.min_shuffle.min_shuffle.gb_info">gb_info() (src.min_shuffle.min_shuffle method)</a>
 </li>
       <li><a href="min_shuffle.html#src.min_shuffle.min_shuffle.gb_location">gb_location (src.min_shuffle.min_shuffle attribute)</a>
+
+      <ul>
+        <li><a href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.gb_location">(src.shuffle_pattern.shuffle_pattern attribute)</a>
 </li>
+      </ul></li>
       <li><a href="bicrystallography.html#bicrystallography.bicrystallography.gb_props">gb_props() (bicrystallography.bicrystallography method)</a>
 </li>
       <li><a href="bicrystal.html#src.bicrystal.bicrystal.grain1">grain1 (src.bicrystal.bicrystal attribute)</a>
@@ -399,10 +444,10 @@
 </li>
       <li><a href="bicrystal.html#src.bicrystal.bicrystal.grain1_orientation">grain1_orientation (src.bicrystal.bicrystal attribute)</a>
 </li>
-      <li><a href="bicrystal.html#src.bicrystal.bicrystal.grain2">grain2 (src.bicrystal.bicrystal attribute)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="bicrystal.html#src.bicrystal.bicrystal.grain2">grain2 (src.bicrystal.bicrystal attribute)</a>
+</li>
       <li><a href="bicrystal.html#src.bicrystal.bicrystal.grain2_flatgb">grain2_flatgb (src.bicrystal.bicrystal attribute)</a>
 </li>
       <li><a href="bicrystal.html#src.bicrystal.bicrystal.grain2_orientation">grain2_orientation (src.bicrystal.bicrystal attribute)</a>
@@ -447,6 +492,14 @@
   </ul></td>
 </tr></table>
 
+<h2 id="K">K</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.keys">keys (src.shuffle_pattern.shuffle_pattern attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
 <h2 id="L">L</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -458,12 +511,12 @@
 </li>
       <li><a href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.lammps_serial">lammps_serial (src.runLAMMPS.run_LAMMPS property)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="bicrystal.html#src.bicrystal.bicrystal.lat_par">lat_par (src.bicrystal.bicrystal attribute)</a>
 </li>
       <li><a href="bicrystal.html#src.bicrystal.bicrystal.lat_Vec">lat_Vec (src.bicrystal.bicrystal attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="bicrystallography.html#bicrystallography.bicrystallography.lattice_parameter">lattice_parameter (bicrystallography.bicrystallography attribute)</a>
 
       <ul>
@@ -472,12 +525,20 @@
       </ul></li>
       <li><a href="min_shuffle.html#src.min_shuffle.min_shuffle.load_data">load_data() (src.min_shuffle.min_shuffle method)</a>
 </li>
+      <li><a href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.lookup">lookup() (src.shuffle_pattern.shuffle_pattern method)</a>
+</li>
+      <li><a href="min_shuffle.html#src.min_shuffle.min_shuffle.loop_end">loop_end (src.min_shuffle.min_shuffle attribute)</a>
+</li>
+      <li><a href="min_shuffle.html#src.min_shuffle.min_shuffle.loop_start">loop_start (src.min_shuffle.min_shuffle attribute)</a>
+</li>
   </ul></td>
 </tr></table>
 
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="min_shuffle.html#src.min_shuffle.min_shuffle.map_from_reference">map_from_reference() (src.min_shuffle.min_shuffle method)</a>
+</li>
       <li><a href="min_shuffle.html#src.min_shuffle.min_shuffle">min_shuffle (class in src.min_shuffle)</a>
 </li>
       <li><a href="bicrystallography.html#bicrystallography.bicrystallography.misorientation">misorientation (bicrystallography.bicrystallography attribute)</a>
@@ -505,6 +566,8 @@
         <li><a href="min_shuffle.html#module-src.min_shuffle">src.min_shuffle</a>
 </li>
         <li><a href="runLAMMPS.html#module-src.runLAMMPS">src.runLAMMPS</a>
+</li>
+        <li><a href="shuffle_pattern.html#module-src.shuffle_pattern">src.shuffle_pattern</a>
 </li>
       </ul></li>
   </ul></td>
@@ -552,7 +615,11 @@
       <li><a href="min_shuffle.html#src.min_shuffle.min_shuffle.pbcwrap">pbcwrap() (src.min_shuffle.min_shuffle method)</a>
 </li>
       <li><a href="plastic_slip.html#plastic_slip.dislocation_dipole.period">period (plastic_slip.dislocation_dipole attribute)</a>
+
+      <ul>
+        <li><a href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.period">(src.shuffle_pattern.shuffle_pattern attribute)</a>
 </li>
+      </ul></li>
       <li><a href="plastic_slip.html#plastic_slip.dislocation_dipole.plastic_displacement">plastic_displacement() (plastic_slip.dislocation_dipole method)</a>
 </li>
       <li>
@@ -588,12 +655,22 @@
 </li>
       <li><a href="IO.html#IO.read_neb_output_data">read_neb_output_data() (in module IO)</a>
 </li>
+      <li><a href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.reduce">reduce() (src.shuffle_pattern.shuffle_pattern static method)</a>
+</li>
+      <li><a href="min_shuffle.html#src.min_shuffle.min_shuffle.reference_patterns">reference_patterns() (src.min_shuffle.min_shuffle method)</a>
+</li>
+      <li><a href="min_shuffle.html#src.min_shuffle.min_shuffle.reg_used">reg_used (src.min_shuffle.min_shuffle attribute)</a>
+
+      <ul>
+        <li><a href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.reg_used">(src.shuffle_pattern.shuffle_pattern attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="min_shuffle.html#src.min_shuffle.min_shuffle.replicate">replicate() (src.min_shuffle.min_shuffle method)</a>
 </li>
       <li><a href="executables.html#src.executables.report">report() (in module src.executables)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="min_shuffle.html#src.min_shuffle.min_shuffle.run">run() (src.min_shuffle.min_shuffle method)</a>
 </li>
       <li><a href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.run_grid_search">run_grid_search() (src.runLAMMPS.run_LAMMPS method)</a>
@@ -614,17 +691,27 @@
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern">shuffle_pattern (class in src.shuffle_pattern)</a>
+</li>
       <li><a href="bicrystallography.html#bicrystallography.bicrystallography.sigma">sigma (bicrystallography.bicrystallography attribute)</a>
 
       <ul>
         <li><a href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.sigma">(src.runLAMMPS.run_LAMMPS attribute)</a>
 </li>
       </ul></li>
+      <li><a href="min_shuffle.html#src.min_shuffle.min_shuffle.sinkhorn_converged">sinkhorn_converged (src.min_shuffle.min_shuffle attribute)</a>
+</li>
       <li><a href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.size_along_gb_period">size_along_gb_period (src.runLAMMPS.run_LAMMPS attribute)</a>
 </li>
       <li><a href="bicrystal.html#src.bicrystal.bicrystal.size_along_period">size_along_period (src.bicrystal.bicrystal attribute)</a>
 </li>
       <li><a href="bicrystal.html#src.bicrystal.bicrystal.size_along_tilt_axis">size_along_tilt_axis (src.bicrystal.bicrystal attribute)</a>
+</li>
+      <li><a href="GBKineticsRunController.html#src.GBKineticsRunController.solve_reference_shuffle">solve_reference_shuffle() (in module src.GBKineticsRunController)</a>
+</li>
+      <li><a href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.split_sites">split_sites (src.shuffle_pattern.shuffle_pattern attribute)</a>
+</li>
+      <li><a href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.spread">spread (src.shuffle_pattern.shuffle_pattern attribute)</a>
 </li>
       <li>
     src.bicrystal
@@ -663,6 +750,13 @@
         <li><a href="runLAMMPS.html#module-src.runLAMMPS">module</a>
 </li>
       </ul></li>
+      <li>
+    src.shuffle_pattern
+
+      <ul>
+        <li><a href="shuffle_pattern.html#module-src.shuffle_pattern">module</a>
+</li>
+      </ul></li>
       <li><a href="min_shuffle.html#src.min_shuffle.min_shuffle.step_height">step_height (src.min_shuffle.min_shuffle attribute)</a>
 
       <ul>
@@ -679,6 +773,10 @@
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.tilt_repeat">tilt_repeat (src.shuffle_pattern.shuffle_pattern attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="min_shuffle.html#src.min_shuffle.min_shuffle.types_minshuf">types_minshuf (src.min_shuffle.min_shuffle attribute)</a>
 </li>
   </ul></td>
@@ -687,16 +785,18 @@
 <h2 id="W">W</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.weight">weight (src.shuffle_pattern.shuffle_pattern attribute)</a>
+</li>
       <li><a href="bicrystal.html#src.bicrystal.bicrystal.write">write() (src.bicrystal.bicrystal method)</a>
 </li>
       <li><a href="IO.html#IO.write_gridsearch_results">write_gridsearch_results() (in module IO)</a>
 </li>
       <li><a href="min_shuffle.html#src.min_shuffle.min_shuffle.write_images">write_images() (src.min_shuffle.min_shuffle method)</a>
 </li>
-      <li><a href="IO.html#IO.write_lammps_datafile">write_lammps_datafile() (in module IO)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="IO.html#IO.write_lammps_datafile">write_lammps_datafile() (in module IO)</a>
+</li>
       <li><a href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.write_lammps_gridsearch_input">write_lammps_gridsearch_input() (src.runLAMMPS.run_LAMMPS method)</a>
 </li>
       <li><a href="runLAMMPS.html#src.runLAMMPS.run_LAMMPS.write_lammps_neb_input_script">write_lammps_neb_input_script() (src.runLAMMPS.run_LAMMPS method)</a>

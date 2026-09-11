@@ -1,0 +1,607 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.shuffle_pattern &mdash; GB Kinetics 2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=60dbed4a"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            GB Kinetics
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../download.html">Download</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../usage.html#pre-installed-programs">Pre-installed programs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage.html#install-gb-kinetics">Install GB Kinetics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../usage.html#windows">Windows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage.html#mac-linux">Mac/Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage.html#workflow">Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage.html#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../theory.html">Theory</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../theory.html#construction-of-stgb-microstate">Construction of STGB microstate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../theory.html#enumeration-of-disconnection-modes">Enumeration of disconnection modes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../theory.html#construction-of-atomistic-gb-migration-images">Construction of atomistic GB migration images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../theory.html#mapping-the-atomic-shuffles">Mapping the atomic shuffles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../theory.html#evaluation-of-the-energy-barrier-and-trajectories">Evaluation of the energy barrier and trajectories</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../theory.html#references">References</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../data.html">Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../example_gs.html">Grid Search Example</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../example_gs.html#output">Output</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../example_gbkinetics.html">GB Kinetics Example</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../example_gbkinetics.html#user-input">User input</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../example_gbkinetics.html#command-line-output">Command line Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../example_gbkinetics.html#output">Output</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../example_gbkinetics.html#references">References</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Source</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../GBKineticsRunController.html">GBKineticsRunController module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../GBKineticsRunController.html#src.GBKineticsRunController.runGBkinetics"><code class="docutils literal notranslate"><span class="pre">runGBkinetics()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../GBKineticsRunController.html#src.GBKineticsRunController.runGridSearch"><code class="docutils literal notranslate"><span class="pre">runGridSearch()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../GBKineticsRunController.html#src.GBKineticsRunController.solve_reference_shuffle"><code class="docutils literal notranslate"><span class="pre">solve_reference_shuffle()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../IO.html">IO module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../IO.html#IO.find_gb_location"><code class="docutils literal notranslate"><span class="pre">find_gb_location()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../IO.html#IO.read_LAMMPS_datafile"><code class="docutils literal notranslate"><span class="pre">read_LAMMPS_datafile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../IO.html#IO.read_LAMMPS_dumpfile"><code class="docutils literal notranslate"><span class="pre">read_LAMMPS_dumpfile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../IO.html#IO.read_gridsearch_results"><code class="docutils literal notranslate"><span class="pre">read_gridsearch_results()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../IO.html#IO.read_neb_output_data"><code class="docutils literal notranslate"><span class="pre">read_neb_output_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../IO.html#IO.write_LAMMPSoutput_tstep"><code class="docutils literal notranslate"><span class="pre">write_LAMMPSoutput_tstep()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../IO.html#IO.write_gridsearch_results"><code class="docutils literal notranslate"><span class="pre">write_gridsearch_results()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../IO.html#IO.write_lammps_datafile"><code class="docutils literal notranslate"><span class="pre">write_lammps_datafile()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../bicrystal.html">bicrystal module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal"><code class="docutils literal notranslate"><span class="pre">bicrystal</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.__init__"><code class="docutils literal notranslate"><span class="pre">bicrystal.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.create_disconnection_containing_bicrystal"><code class="docutils literal notranslate"><span class="pre">bicrystal.create_disconnection_containing_bicrystal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.create_fix_eco_orientationfile"><code class="docutils literal notranslate"><span class="pre">bicrystal.create_fix_eco_orientationfile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.create_flat_gb_bicrystal"><code class="docutils literal notranslate"><span class="pre">bicrystal.create_flat_gb_bicrystal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.dipole_decomposition"><code class="docutils literal notranslate"><span class="pre">bicrystal.dipole_decomposition()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.ordered_write"><code class="docutils literal notranslate"><span class="pre">bicrystal.ordered_write()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.write"><code class="docutils literal notranslate"><span class="pre">bicrystal.write()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../bicrystallography.html">bicrystallography module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../bicrystallography.html#bicrystallography.bicrystallography"><code class="docutils literal notranslate"><span class="pre">bicrystallography</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystallography.html#bicrystallography.bicrystallography.sigma"><code class="docutils literal notranslate"><span class="pre">bicrystallography.sigma</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystallography.html#bicrystallography.bicrystallography.misorientation"><code class="docutils literal notranslate"><span class="pre">bicrystallography.misorientation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystallography.html#bicrystallography.bicrystallography.inclination"><code class="docutils literal notranslate"><span class="pre">bicrystallography.inclination</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystallography.html#bicrystallography.bicrystallography.axis"><code class="docutils literal notranslate"><span class="pre">bicrystallography.axis</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystallography.html#bicrystallography.bicrystallography.lattice_parameter"><code class="docutils literal notranslate"><span class="pre">bicrystallography.lattice_parameter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystallography.html#bicrystallography.bicrystallography.__init__"><code class="docutils literal notranslate"><span class="pre">bicrystallography.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystallography.html#bicrystallography.bicrystallography.gb_props"><code class="docutils literal notranslate"><span class="pre">bicrystallography.gb_props()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../executables.html">executables module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../executables.html#src.executables.STYLES_MINIMIZATION"><code class="docutils literal notranslate"><span class="pre">STYLES_MINIMIZATION</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../executables.html#src.executables.STYLES_NEB"><code class="docutils literal notranslate"><span class="pre">STYLES_NEB</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../executables.html#src.executables.find_lammps_mpi"><code class="docutils literal notranslate"><span class="pre">find_lammps_mpi()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../executables.html#src.executables.find_lammps_serial"><code class="docutils literal notranslate"><span class="pre">find_lammps_serial()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../executables.html#src.executables.find_mpirun"><code class="docutils literal notranslate"><span class="pre">find_mpirun()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../executables.html#src.executables.report"><code class="docutils literal notranslate"><span class="pre">report()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../min_shuffle.html">min_shuffle module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle"><code class="docutils literal notranslate"><span class="pre">min_shuffle</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.__init__"><code class="docutils literal notranslate"><span class="pre">min_shuffle.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.branch_folder"><code class="docutils literal notranslate"><span class="pre">min_shuffle.branch_folder()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.format_input"><code class="docutils literal notranslate"><span class="pre">min_shuffle.format_input()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.gb_info"><code class="docutils literal notranslate"><span class="pre">min_shuffle.gb_info()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.load_data"><code class="docutils literal notranslate"><span class="pre">min_shuffle.load_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.map_from_reference"><code class="docutils literal notranslate"><span class="pre">min_shuffle.map_from_reference()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.pbcdist"><code class="docutils literal notranslate"><span class="pre">min_shuffle.pbcdist()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.pbcwrap"><code class="docutils literal notranslate"><span class="pre">min_shuffle.pbcwrap()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.plot_min_shuffle_2d"><code class="docutils literal notranslate"><span class="pre">min_shuffle.plot_min_shuffle_2d()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.plot_min_shuffle_3d"><code class="docutils literal notranslate"><span class="pre">min_shuffle.plot_min_shuffle_3d()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.reference_patterns"><code class="docutils literal notranslate"><span class="pre">min_shuffle.reference_patterns()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.replicate"><code class="docutils literal notranslate"><span class="pre">min_shuffle.replicate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.run"><code class="docutils literal notranslate"><span class="pre">min_shuffle.run()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.write_images"><code class="docutils literal notranslate"><span class="pre">min_shuffle.write_images()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../plastic_slip.html">plastic_slip module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../plastic_slip.html#plastic_slip.dislocation_dipole"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../plastic_slip.html#plastic_slip.dislocation_dipole.dislocation_points"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.dislocation_points</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../plastic_slip.html#plastic_slip.dislocation_dipole.period"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.period</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../plastic_slip.html#plastic_slip.dislocation_dipole.burgers_vector"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.burgers_vector</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../plastic_slip.html#plastic_slip.dislocation_dipole.dislocation_vector"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.dislocation_vector</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../plastic_slip.html#plastic_slip.dislocation_dipole.dislocation_distance"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.dislocation_distance</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../plastic_slip.html#plastic_slip.dislocation_dipole.__init__"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../plastic_slip.html#plastic_slip.dislocation_dipole.plastic_displacement"><code class="docutils literal notranslate"><span class="pre">dislocation_dipole.plastic_displacement()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../runLAMMPS.html">runLAMMPS module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.folder"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.folder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.element"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.element</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.lattice_parameter"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.lattice_parameter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.sigma"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.sigma</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.misorientation"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.misorientation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.inclination"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.inclination</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.size_along_gb_period"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.size_along_gb_period</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.potential"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.potential</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.mpi_location"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.mpi_location</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.lammps_location"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.lammps_location</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.output_filename_gridsearch"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.output_filename_gridsearch</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.gridsearch_output_setting"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.gridsearch_output_setting</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.gridsearch_output_folder"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.gridsearch_output_folder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.lammps_input_filename"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.lammps_input_filename</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.neb_images"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.neb_images</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.number_of_images_provided"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.number_of_images_provided</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.burgers_vec"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.burgers_vec</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.step_height"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.step_height</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.neb_output_folder"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.neb_output_folder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.__init__"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.lammps_mpi"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.lammps_mpi</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.lammps_serial"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.lammps_serial</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.mpirun"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.mpirun</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.post_process_gridsearch_data"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.post_process_gridsearch_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.post_process_neb_output"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.post_process_neb_output()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.run_grid_search"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.run_grid_search()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.run_minimization"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.run_minimization()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.run_neb_calc"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.run_neb_calc()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.write_lammps_gridsearch_input"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.write_lammps_gridsearch_input()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.write_lammps_neb_input_script"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.write_lammps_neb_input_script()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.write_minimization_input"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.write_minimization_input()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../shuffle_pattern.html">shuffle_pattern module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.keys"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.keys</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.displacements"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.displacements</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.period"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.period</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.tilt_repeat"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.tilt_repeat</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.weight"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.weight</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.branch"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.branch</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.spread"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.spread</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.consensus"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.consensus</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.split_sites"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.split_sites</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.reg_used"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.reg_used</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.gb_location"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.gb_location</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.__init__"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.check"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.check()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.from_solution"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.from_solution()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.lookup"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.lookup()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.reduce"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.reduce()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">GB Kinetics</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">src.shuffle_pattern</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for src.shuffle_pattern</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.spatial</span><span class="w"> </span><span class="kn">import</span> <span class="n">cKDTree</span>
+
+
+<div class="viewcode-block" id="shuffle_pattern">
+<a class="viewcode-back" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">shuffle_pattern</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">        The elementary shuffle that moves the GB by one step, in a form that can be</span>
+<span class="sd">        stamped onto a system of any size.</span>
+
+<span class="sd">        The transformation a disconnection leaves behind it is the same everywhere</span>
+<span class="sd">        inside its loop: one slab of grain A has become grain B. That transformation</span>
+<span class="sd">        is periodic in the GB plane -- period `p` along the GB period direction and</span>
+<span class="sd">        the CSL repeat `c` along the tilt axis -- so the whole of it is contained in a</span>
+<span class="sd">        single CSL cell. Solving optimal transport on a larger system re-derives the</span>
+<span class="sd">        same cell over and over, at a cost that grows as the square of the atom count.</span>
+
+<span class="sd">        This class holds the displacement field of that one cell, keyed by where an</span>
+<span class="sd">        atom sits inside it. `min_shuffle.map_from_reference` looks a displacement up</span>
+<span class="sd">        for every atom of a large system instead of solving transport again.</span>
+
+<span class="sd">        Attributes:</span>
+<span class="sd">            keys (np.ndarray): (M,3) reduced positions, the lookup coordinates. Column</span>
+<span class="sd">                0 is x measured from the GB, columns 1 and 2 are y and z folded into</span>
+<span class="sd">                one CSL cell.</span>
+<span class="sd">            displacements (np.ndarray): (M,3) shuffle displacement at each key.</span>
+<span class="sd">            period (float): CSL period along the GB (`p`), in angstroms.</span>
+<span class="sd">            tilt_repeat (float): CSL repeat along the tilt axis (`c`), in angstroms.</span>
+<span class="sd">            weight (float): Weight this branch carried in the reference solve.</span>
+<span class="sd">            branch (int): Index of the reference branch this pattern came from.</span>
+<span class="sd">            spread (float): Largest disagreement, in angstroms, among the copies of</span>
+<span class="sd">                a site that voted together. Zero for a pattern that is cleanly one</span>
+<span class="sd">                CSL cell repeated; see `_condense`.</span>
+<span class="sd">            consensus (float): Smallest share of a site's copies that backed the</span>
+<span class="sd">                displacement chosen for it. 1.0 when every site was unanimous.</span>
+<span class="sd">            split_sites (int): How many sites were not unanimous.</span>
+<span class="sd">            reg_used (float): Regularization the reference solve converged at.</span>
+<span class="sd">            gb_location (float): x of the GB in the system this was solved on. Keys</span>
+<span class="sd">                measure x from it, so anything looking a displacement up in the</span>
+<span class="sd">                reference's own frame -- a replica of it, say -- must key against this</span>
+<span class="sd">                and not against the nominal GB plane.</span>
+<span class="sd">    """</span>
+
+    <span class="c1"># Two atoms closer than this once folded into the cell are the same site.</span>
+    <span class="n">_KEY_TOLERANCE</span> <span class="o">=</span> <span class="mf">0.5</span>
+    <span class="c1"># Copies of a site whose displacements differ by less than this (A) voted the</span>
+    <span class="c1"># same way. Well under the nearest-neighbour distance, well over relaxation.</span>
+    <span class="n">_AGREE_TOLERANCE</span> <span class="o">=</span> <span class="mf">0.5</span>
+    <span class="c1"># Above this spread (A) even the copies that agreed do not really agree.</span>
+    <span class="n">_SPREAD_LIMIT</span> <span class="o">=</span> <span class="mf">0.5</span>
+    <span class="c1"># A site carried by this share of its copies or less has no majority (a 2-2 tie</span>
+    <span class="c1"># included), so which mechanism the cell holds would come down to the solver's</span>
+    <span class="c1"># arbitrary split rather than to the structure.</span>
+    <span class="n">_CONSENSUS_LIMIT</span> <span class="o">=</span> <span class="mf">0.5</span>
+
+<div class="viewcode-block" id="shuffle_pattern.__init__">
+<a class="viewcode-back" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">keys</span><span class="p">,</span> <span class="n">displacements</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span> <span class="n">tilt_repeat</span><span class="p">,</span>
+                 <span class="n">weight</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">branch</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">spread</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">reg_used</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">consensus</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">split_sites</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">gb_location</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">keys</span> <span class="o">=</span> <span class="n">keys</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">displacements</span> <span class="o">=</span> <span class="n">displacements</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">period</span> <span class="o">=</span> <span class="n">period</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tilt_repeat</span> <span class="o">=</span> <span class="n">tilt_repeat</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">=</span> <span class="n">weight</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">branch</span> <span class="o">=</span> <span class="n">branch</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spread</span> <span class="o">=</span> <span class="n">spread</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reg_used</span> <span class="o">=</span> <span class="n">reg_used</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">consensus</span> <span class="o">=</span> <span class="n">consensus</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">split_sites</span> <span class="o">=</span> <span class="n">split_sites</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gb_location</span> <span class="o">=</span> <span class="n">gb_location</span>
+        <span class="c1"># check() is called once per image; the verdict is about the reference, so it</span>
+        <span class="c1"># is worth saying once.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reported</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tree</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tree_disp</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="shuffle_pattern.reduce">
+<a class="viewcode-back" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.reduce">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">reduce</span><span class="p">(</span><span class="n">positions</span><span class="p">,</span> <span class="n">gb_location</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span> <span class="n">tilt_repeat</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">            Folds positions into one CSL cell to get lookup keys.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                positions (np.ndarray): (N,3) atomic positions.</span>
+<span class="sd">                gb_location (float): x of the GB plane, which x is measured from so</span>
+<span class="sd">                    that systems whose GB relaxed to slightly different places still</span>
+<span class="sd">                    key the same.</span>
+<span class="sd">                period (float): CSL period along the GB.</span>
+<span class="sd">                tilt_repeat (float): CSL repeat along the tilt axis.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                np.ndarray: (N,3) keys.</span>
+<span class="sd">        """</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">positions</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">keys</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">positions</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">gb_location</span>
+        <span class="n">keys</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="n">positions</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">period</span><span class="p">)</span>
+        <span class="n">keys</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="n">positions</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">tilt_repeat</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">keys</span></div>
+
+
+<div class="viewcode-block" id="shuffle_pattern.from_solution">
+<a class="viewcode-back" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.from_solution">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_solution</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">Xs</span><span class="p">,</span> <span class="n">Ys</span><span class="p">,</span> <span class="n">gb_location</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span> <span class="n">tilt_repeat</span><span class="p">,</span> <span class="n">box</span><span class="p">,</span>
+                      <span class="n">weight</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">branch</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">reg_used</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">            Builds a pattern from one branch of a solved reference system.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                Xs (np.ndarray): Initial atom rows of a `min_shuffle` branch; columns</span>
+<span class="sd">                    0:3 are positions.</span>
+<span class="sd">                Ys (np.ndarray): Where those atoms shuffle to, wrapped back into the</span>
+<span class="sd">                    reference box.</span>
+<span class="sd">                gb_location (float): x of the GB plane in the reference system.</span>
+<span class="sd">                period (float): CSL period along the GB.</span>
+<span class="sd">                tilt_repeat (float): CSL repeat along the tilt axis.</span>
+<span class="sd">                box (np.ndarray): (3,2) reference shuffle box. `Ys` is wrapped into</span>
+<span class="sd">                    it, so an atom that shuffled across a face reads back as having</span>
+<span class="sd">                    crossed the whole box; the displacement is taken as the minimum</span>
+<span class="sd">                    image along the two periodic directions to undo that.</span>
+<span class="sd">                weight (float): Weight of this branch in the reference solve.</span>
+<span class="sd">                branch (int): Index of this branch.</span>
+<span class="sd">                reg_used (float): Regularization the reference solve converged at.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                shuffle_pattern: The condensed elementary cell.</span>
+<span class="sd">        """</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">Xs</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)[:,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">Ys</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)[:,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">disp</span> <span class="o">=</span> <span class="n">Y</span> <span class="o">-</span> <span class="n">X</span>
+        <span class="n">lengths</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">box</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">box</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)[:,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">axis</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>                      <span class="c1"># y and z are the periodic ones</span>
+            <span class="n">disp</span><span class="p">[:,</span> <span class="n">axis</span><span class="p">]</span> <span class="o">-=</span> <span class="n">lengths</span><span class="p">[</span><span class="n">axis</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">disp</span><span class="p">[:,</span> <span class="n">axis</span><span class="p">]</span> <span class="o">/</span> <span class="n">lengths</span><span class="p">[</span><span class="n">axis</span><span class="p">])</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">gb_location</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span> <span class="n">tilt_repeat</span><span class="p">)</span>
+        <span class="n">keys</span><span class="p">,</span> <span class="n">disp</span><span class="p">,</span> <span class="n">spread</span><span class="p">,</span> <span class="n">consensus</span><span class="p">,</span> <span class="n">split_sites</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_condense</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">disp</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span>
+                                                                   <span class="n">tilt_repeat</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">disp</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span> <span class="n">tilt_repeat</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">branch</span><span class="p">,</span> <span class="n">spread</span><span class="p">,</span> <span class="n">reg_used</span><span class="p">,</span>
+                   <span class="n">consensus</span><span class="p">,</span> <span class="n">split_sites</span><span class="p">,</span> <span class="n">gb_location</span><span class="p">)</span></div>
+
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_condense</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">keys</span><span class="p">,</span> <span class="n">displacements</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span> <span class="n">tilt_repeat</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">            Merges the copies of each site into the one displacement they agree on.</span>
+
+<span class="sd">            A reference system holds several copies of the CSL cell, translations of</span>
+<span class="sd">            one another, so a site's copies must shuffle identically. Where they do</span>
+<span class="sd">            not, the transport problem had more than one optimum and the solver split</span>
+<span class="sd">            the copies between them -- a genuinely different mechanism is what the</span>
+<span class="sd">            branches are for, not something a single cell should average over. So the</span>
+<span class="sd">            displacement most copies voted for wins, and the dissent is recorded.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                keys (np.ndarray): (N,3) reduced positions.</span>
+<span class="sd">                displacements (np.ndarray): (N,3) displacement at each.</span>
+<span class="sd">                period (float): CSL period along the GB.</span>
+<span class="sd">                tilt_repeat (float): CSL repeat along the tilt axis.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                tuple: (keys, displacements, spread, consensus, split_sites) with one</span>
+<span class="sd">                    row per distinct site, the largest disagreement inside a winning</span>
+<span class="sd">                    vote, the smallest majority any site was carried by, and how many</span>
+<span class="sd">                    sites were not unanimous.</span>
+<span class="sd">        """</span>
+        <span class="n">groups</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_group</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span> <span class="n">tilt_repeat</span><span class="p">)</span>
+        <span class="n">out_keys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">groups</span><span class="p">),</span> <span class="mi">3</span><span class="p">))</span>
+        <span class="n">out_disp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">groups</span><span class="p">),</span> <span class="mi">3</span><span class="p">))</span>
+        <span class="n">spread</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">consensus</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="n">split_sites</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">members</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">groups</span><span class="p">):</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">displacements</span><span class="p">[</span><span class="n">members</span><span class="p">]</span>
+            <span class="n">winner</span><span class="p">,</span> <span class="n">backing</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_vote</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+            <span class="n">out_keys</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">keys</span><span class="p">[</span><span class="n">members</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+            <span class="n">out_disp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">winner</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">backing</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">spread</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">spread</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="n">backing</span><span class="p">]</span> <span class="o">-</span> <span class="n">winner</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()))</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">backing</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">members</span><span class="p">):</span>
+                <span class="n">split_sites</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">consensus</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">consensus</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">backing</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">members</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">out_keys</span><span class="p">,</span> <span class="n">out_disp</span><span class="p">,</span> <span class="n">spread</span><span class="p">,</span> <span class="n">consensus</span><span class="p">,</span> <span class="n">split_sites</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_vote</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">            The displacement the most copies of a site agree on.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                d (np.ndarray): (k,3) displacements of one site's copies.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                tuple: (winner, backing) -- the mean of the largest cluster of</span>
+<span class="sd">                    mutually-agreeing copies, and their row indices. Ties go to the</span>
+<span class="sd">                    smaller displacement, so the choice does not depend on ordering.</span>
+<span class="sd">        """</span>
+        <span class="n">best_rows</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">best_disp</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">d</span><span class="p">)):</span>
+            <span class="n">rows</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">d</span> <span class="o">-</span> <span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_AGREE_TOLERANCE</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">candidate</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="n">rows</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">best_rows</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">best_rows</span><span class="p">)</span>
+                    <span class="ow">or</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">best_rows</span><span class="p">)</span>
+                        <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">candidate</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">best_disp</span><span class="p">))):</span>
+                <span class="n">best_rows</span><span class="p">,</span> <span class="n">best_disp</span> <span class="o">=</span> <span class="n">rows</span><span class="p">,</span> <span class="n">candidate</span>
+        <span class="k">return</span> <span class="n">best_disp</span><span class="p">,</span> <span class="n">best_rows</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_group</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span> <span class="n">tilt_repeat</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">            Groups keys that name the same site, wrapping y and z.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                keys (np.ndarray): (N,3) reduced positions.</span>
+<span class="sd">                period (float): CSL period along the GB.</span>
+<span class="sd">                tilt_repeat (float): CSL repeat along the tilt axis.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                list of np.ndarray: Row indices of `keys`, one array per site.</span>
+<span class="sd">        """</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="n">cKDTree</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">boxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="c1"># y and z are periodic in the folded cell, so a site sitting on the 0/period</span>
+        <span class="c1"># face has neighbours at the far face. Query against shifted copies to catch</span>
+        <span class="c1"># them rather than relying on cKDTree's boxsize, which needs x periodic too.</span>
+        <span class="n">shifts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="n">dy</span> <span class="o">*</span> <span class="n">period</span><span class="p">,</span> <span class="n">dz</span> <span class="o">*</span> <span class="n">tilt_repeat</span><span class="p">]</span>
+                           <span class="k">for</span> <span class="n">dy</span> <span class="ow">in</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">dz</span> <span class="ow">in</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)])</span>
+        <span class="n">seen</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">keys</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+        <span class="n">groups</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">keys</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">seen</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                <span class="k">continue</span>
+            <span class="n">members</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">shifts</span><span class="p">:</span>
+                <span class="n">members</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">tree</span><span class="o">.</span><span class="n">query_ball_point</span><span class="p">(</span><span class="n">keys</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">s</span><span class="p">,</span>
+                                                     <span class="n">shuffle_pattern</span><span class="o">.</span><span class="n">_KEY_TOLERANCE</span><span class="p">))</span>
+            <span class="n">members</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">m</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">members</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">seen</span><span class="p">[</span><span class="n">m</span><span class="p">]))</span>
+            <span class="n">seen</span><span class="p">[</span><span class="n">members</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">groups</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">members</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">groups</span>
+
+<div class="viewcode-block" id="shuffle_pattern.lookup">
+<a class="viewcode-back" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.lookup">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">lookup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">positions</span><span class="p">,</span> <span class="n">gb_location</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">            Displacement of the elementary shuffle at each of `positions`.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                positions (np.ndarray): (N,3) atomic positions in the target system.</span>
+<span class="sd">                gb_location (float): x of the GB plane in the target system.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                tuple: (displacements, distances) -- the (N,3) displacements and, per</span>
+<span class="sd">                    atom, how far in angstroms it sat from the reference site it was</span>
+<span class="sd">                    keyed to. Large values mean the target is not the reference system</span>
+<span class="sd">                    repeated; they also mark atoms outside the slab the reference</span>
+<span class="sd">                    shuffle was solved over, whose displacement is meaningless.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tree</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># Pad with the eight wrapped copies so a target atom near a cell face</span>
+            <span class="c1"># matches the reference site across the face.</span>
+            <span class="n">shifts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="n">dy</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">period</span><span class="p">,</span> <span class="n">dz</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">tilt_repeat</span><span class="p">]</span>
+                               <span class="k">for</span> <span class="n">dy</span> <span class="ow">in</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">dz</span> <span class="ow">in</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)])</span>
+            <span class="n">padded</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">keys</span> <span class="o">+</span> <span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">shifts</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_tree</span> <span class="o">=</span> <span class="n">cKDTree</span><span class="p">(</span><span class="n">padded</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_tree_disp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">displacements</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">shifts</span><span class="p">))</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">positions</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span> <span class="n">gb_location</span><span class="p">,</span>
+                           <span class="bp">self</span><span class="o">.</span><span class="n">period</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tilt_repeat</span><span class="p">)</span>
+        <span class="n">dist</span><span class="p">,</span> <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tree</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tree_disp</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">dist</span></div>
+
+
+<div class="viewcode-block" id="shuffle_pattern.check">
+<a class="viewcode-back" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.check">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raise_on_failure</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">            Reports whether this pattern really is one CSL cell repeated.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                raise_on_failure (bool): Raise instead of returning False.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                bool: True if the copies of the cell in the reference solve agreed</span>
+<span class="sd">                    well enough for one of them to stand for all.</span>
+
+<span class="sd">            Raises:</span>
+<span class="sd">                ValueError: If they did not and `raise_on_failure` is set.</span>
+<span class="sd">        """</span>
+        <span class="n">problem</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">spread</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_SPREAD_LIMIT</span><span class="p">:</span>
+            <span class="n">problem</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"copies that voted together still disagree by up to </span><span class="si">%.2f</span><span class="s2"> A"</span>
+                       <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">spread</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">consensus</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_CONSENSUS_LIMIT</span><span class="p">:</span>
+            <span class="n">problem</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"</span><span class="si">%d</span><span class="s2"> site(s) had no majority -- the closest was carried by only "</span>
+                       <span class="s2">"</span><span class="si">%.0f%%</span><span class="s2"> of its copies"</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">split_sites</span><span class="p">,</span> <span class="mi">100</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">consensus</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">problem</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">split_sites</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reported</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_reported</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="c1"># Expected: a transport problem with several optima splits equivalent</span>
+                <span class="c1"># copies between them. The majority is the cell; the alternatives are</span>
+                <span class="c1"># what the other branches hold.</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">"   Reference branch </span><span class="si">%d</span><span class="s2">: </span><span class="si">%d</span><span class="s2"> of </span><span class="si">%d</span><span class="s2"> site(s) were not unanimous, "</span>
+                      <span class="s2">"carried by </span><span class="si">%.0f%%</span><span class="s2"> of their copies; majority taken."</span>
+                      <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">branch</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">split_sites</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">keys</span><span class="p">),</span>
+                         <span class="mi">100</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">consensus</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">"Reference branch </span><span class="si">%d</span><span class="s2"> is not a single CSL cell repeated: </span><span class="si">%s</span><span class="s2">. Stamping it "</span>
+            <span class="s2">"onto a larger system would impose one copy's shuffle everywhere. Lower "</span>
+            <span class="s2">"regularizationParameter so the reference solve picks one mechanism, or "</span>
+            <span class="s2">"turn off map_shuffle_from_reference."</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">branch</span><span class="p">,</span> <span class="n">problem</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">raise_on_failure</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"WARNING: "</span> <span class="o">+</span> <span class="n">message</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="s2">"shuffle_pattern(branch=</span><span class="si">%d</span><span class="s2">, sites=</span><span class="si">%d</span><span class="s2">, weight=</span><span class="si">%.3f</span><span class="s2">, spread=</span><span class="si">%.3f</span><span class="s2"> A, "</span>
+                <span class="s2">"consensus=</span><span class="si">%.2f</span><span class="s2">)"</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">branch</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">keys</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="p">,</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">spread</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">consensus</span><span class="p">))</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Himanshu Joshi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -81,6 +81,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../GBKineticsRunController.html">GBKineticsRunController module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../GBKineticsRunController.html#src.GBKineticsRunController.runGBkinetics"><code class="docutils literal notranslate"><span class="pre">runGBkinetics()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../GBKineticsRunController.html#src.GBKineticsRunController.runGridSearch"><code class="docutils literal notranslate"><span class="pre">runGridSearch()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../GBKineticsRunController.html#src.GBKineticsRunController.solve_reference_shuffle"><code class="docutils literal notranslate"><span class="pre">solve_reference_shuffle()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../IO.html">IO module</a><ul>
@@ -100,6 +101,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.create_disconnection_containing_bicrystal"><code class="docutils literal notranslate"><span class="pre">bicrystal.create_disconnection_containing_bicrystal()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.create_fix_eco_orientationfile"><code class="docutils literal notranslate"><span class="pre">bicrystal.create_fix_eco_orientationfile()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.create_flat_gb_bicrystal"><code class="docutils literal notranslate"><span class="pre">bicrystal.create_flat_gb_bicrystal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.dipole_decomposition"><code class="docutils literal notranslate"><span class="pre">bicrystal.dipole_decomposition()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.ordered_write"><code class="docutils literal notranslate"><span class="pre">bicrystal.ordered_write()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../bicrystal.html#src.bicrystal.bicrystal.write"><code class="docutils literal notranslate"><span class="pre">bicrystal.write()</span></code></a></li>
 </ul>
@@ -135,10 +137,12 @@
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.format_input"><code class="docutils literal notranslate"><span class="pre">min_shuffle.format_input()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.gb_info"><code class="docutils literal notranslate"><span class="pre">min_shuffle.gb_info()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.load_data"><code class="docutils literal notranslate"><span class="pre">min_shuffle.load_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.map_from_reference"><code class="docutils literal notranslate"><span class="pre">min_shuffle.map_from_reference()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.pbcdist"><code class="docutils literal notranslate"><span class="pre">min_shuffle.pbcdist()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.pbcwrap"><code class="docutils literal notranslate"><span class="pre">min_shuffle.pbcwrap()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.plot_min_shuffle_2d"><code class="docutils literal notranslate"><span class="pre">min_shuffle.plot_min_shuffle_2d()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.plot_min_shuffle_3d"><code class="docutils literal notranslate"><span class="pre">min_shuffle.plot_min_shuffle_3d()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.reference_patterns"><code class="docutils literal notranslate"><span class="pre">min_shuffle.reference_patterns()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.replicate"><code class="docutils literal notranslate"><span class="pre">min_shuffle.replicate()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.run"><code class="docutils literal notranslate"><span class="pre">min_shuffle.run()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../min_shuffle.html#src.min_shuffle.min_shuffle.write_images"><code class="docutils literal notranslate"><span class="pre">min_shuffle.write_images()</span></code></a></li>
@@ -192,6 +196,28 @@
 <li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.write_lammps_gridsearch_input"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.write_lammps_gridsearch_input()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.write_lammps_neb_input_script"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.write_lammps_neb_input_script()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.write_minimization_input"><code class="docutils literal notranslate"><span class="pre">run_LAMMPS.write_minimization_input()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../shuffle_pattern.html">shuffle_pattern module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.keys"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.keys</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.displacements"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.displacements</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.period"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.period</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.tilt_repeat"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.tilt_repeat</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.weight"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.weight</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.branch"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.branch</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.spread"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.spread</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.consensus"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.consensus</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.split_sites"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.split_sites</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.reg_used"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.reg_used</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.gb_location"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.gb_location</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.__init__"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.check"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.check()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.from_solution"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.from_solution()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.lookup"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.lookup()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../shuffle_pattern.html#src.shuffle_pattern.shuffle_pattern.reduce"><code class="docutils literal notranslate"><span class="pre">shuffle_pattern.reduce()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -357,7 +383,8 @@
 
 <div class="viewcode-block" id="run_LAMMPS.write_minimization_input">
 <a class="viewcode-back" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.write_minimization_input">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">write_minimization_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">dispy</span><span class="p">,</span> <span class="n">dispz</span><span class="p">,</span><span class="n">minimization_along_gb_directions</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">write_minimization_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">dispy</span><span class="p">,</span> <span class="n">dispz</span><span class="p">,</span><span class="n">minimization_along_gb_directions</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                 <span class="n">preconditioned</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">"""</span>
 <span class="sd">            Writes a LAMMPS input script for energy minimization with optional box relaxation.</span>
 
@@ -367,6 +394,10 @@
 <span class="sd">                dispz (float): Displacement along tilt axis.</span>
 <span class="sd">                minimization_along_gb_directions (bool): If True, performs additional minimization</span>
 <span class="sd">                    steps with box relaxation along y and z directions.</span>
+<span class="sd">                preconditioned (bool): The structure already carries the rigid grain</span>
+<span class="sd">                    displacement, because it was replicated from a relaxed cell that</span>
+<span class="sd">                    had it applied. Applying it again would shift the grains twice, so</span>
+<span class="sd">                    it is left out.</span>
 <span class="sd">        """</span>
         <span class="n">sigma</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span>
         <span class="n">mis</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">misorientation</span>
@@ -384,6 +415,11 @@
         <span class="n">min_output_movie</span> <span class="o">=</span> <span class="n">file_name</span> <span class="o">+</span> <span class="s2">"_minmov"</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">output_filename</span> <span class="o">=</span> <span class="n">min_outputfile</span>
         <span class="n">images</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">size</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">preconditioned</span><span class="p">:</span>
+            <span class="n">displace_line</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"# Grains are already displaced: this structure was replicated from a</span><span class="se">\n</span><span class="s2">"</span>
+                             <span class="s2">"# relaxed cell that had the shift applied, so it is not applied again."</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">displace_line</span> <span class="o">=</span> <span class="s2">"displace_atoms upper move 0 $</span><span class="si">{dispy}</span><span class="s2"> $</span><span class="si">{dispz}</span><span class="s2"> units box"</span>
         <span class="k">if</span> <span class="n">minimization_along_gb_directions</span><span class="p">:</span>
             <span class="n">extra_minimization_script</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"""</span>
 <span class="s2">#-------- Minimize with box relaxation in y direction -------------</span>
@@ -446,10 +482,14 @@
 <span class="s2">compute eng all reduce sum c_energy</span>
 
 <span class="s2">#---------- Displace top part for lowest energy structure ----------</span>
-<span class="s2">delete_atoms overlap 1 upper upper</span>
-<span class="s2">delete_atoms overlap 1 lower lower</span>
-<span class="s2">delete_atoms overlap 0.1 upper lower</span>
-<span class="s2">displace_atoms upper move 0 $</span><span class="se">{{</span><span class="s2">dispy</span><span class="se">}}</span><span class="s2"> $</span><span class="se">{{</span><span class="s2">dispz</span><span class="se">}}</span><span class="s2"> units box</span>
+<span class="s2"># compress no is essential: delete_atoms renumbers surviving atoms by default, and</span>
+<span class="s2"># min_shuffle pairs the flat and stepped configurations by atom ID alone. Letting</span>
+<span class="s2"># LAMMPS recompress IDs makes atom N a different site in the two files, which reads</span>
+<span class="s2"># back as atoms having crossed the whole crystal during minimization.</span>
+<span class="s2">delete_atoms overlap 1 upper upper compress no</span>
+<span class="s2">delete_atoms overlap 1 lower lower compress no</span>
+<span class="s2">delete_atoms overlap 0.1 upper lower compress no</span>
+<span class="si">{</span><span class="n">displace_line</span><span class="si">}</span>
 
 <span class="s2"># Apply fix to tether centroid of the system to the center</span>
 
@@ -573,9 +613,9 @@
 <span class="s2">variable peBULK equal c_pebulk</span>
 <span class="s2">variable atomsGB equal count(GB)</span>
 <span class="s2">variable atomsBULK equal count(BULK)</span>
-<span class="s2">delete_atoms overlap 1 upper upper</span>
-<span class="s2">delete_atoms overlap 1 lower lower</span>
-<span class="s2">delete_atoms overlap 0.1 upper lower</span>
+<span class="s2">delete_atoms overlap 1 upper upper compress no</span>
+<span class="s2">delete_atoms overlap 1 lower lower compress no</span>
+<span class="s2">delete_atoms overlap 0.1 upper lower compress no</span>
 <span class="s2">displace_atoms upper move 0 $</span><span class="se">{{</span><span class="s2">dispy</span><span class="se">}}</span><span class="s2"> $</span><span class="se">{{</span><span class="s2">dispz</span><span class="se">}}</span><span class="s2"> units box</span>
 <span class="s2">thermo 500</span>
 <span class="s2">thermo_style custom step temp pe lx ly lz press pxx pyy pzz c_eatoms</span>
@@ -736,7 +776,8 @@
 
 <div class="viewcode-block" id="run_LAMMPS.run_minimization">
 <a class="viewcode-back" href="../../runLAMMPS.html#src.runLAMMPS.run_LAMMPS.run_minimization">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">run_minimization</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file_name</span><span class="p">,</span><span class="n">disp_along_gb_period</span><span class="p">,</span><span class="n">disp_along_tilt_axis</span><span class="p">,</span><span class="n">minimization_along_gb_directions</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run_minimization</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">file_name</span><span class="p">,</span><span class="n">disp_along_gb_period</span><span class="p">,</span><span class="n">disp_along_tilt_axis</span><span class="p">,</span><span class="n">minimization_along_gb_directions</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                         <span class="n">preconditioned</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">"""</span>
 <span class="sd">            Runs a minimization calculation using LAMMPS.</span>
 
@@ -745,6 +786,8 @@
 <span class="sd">                disp_along_gb_period (float): Displacement along grain boundary period.</span>
 <span class="sd">                disp_along_tilt_axis (float): Displacement along tilt axis.</span>
 <span class="sd">                minimization_along_gb_directions (bool, optional): Whether to perform box relaxations (default: False).</span>
+<span class="sd">                preconditioned (bool, optional): Skip the rigid grain displacement</span>
+<span class="sd">                    because the structure already carries it (default: False).</span>
 
 <span class="sd">            Returns:</span>
 <span class="sd">                str: Filename of the minimized structure output.</span>
@@ -755,7 +798,8 @@
         <span class="n">dispy</span> <span class="o">=</span> <span class="n">disp_along_gb_period</span>
         <span class="n">dispz</span> <span class="o">=</span> <span class="n">disp_along_tilt_axis</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">"========================== Minimizing using LAMMPS =========================="</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">write_minimization_input</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">dispy</span><span class="p">,</span> <span class="n">dispz</span><span class="p">,</span><span class="n">minimization_along_gb_directions</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write_minimization_input</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">dispy</span><span class="p">,</span> <span class="n">dispz</span><span class="p">,</span><span class="n">minimization_along_gb_directions</span><span class="p">,</span>
+                                      <span class="n">preconditioned</span><span class="p">)</span>
         <span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lammps_serial</span> <span class="o">+</span> <span class="s2">" -in "</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">lammps_input_filename</span>
         <span class="c1">#subprocess.run([command], shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">command</span><span class="p">],</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">)</span>

@@ -14,3 +14,4 @@ This section contains documentation for all major modules in the GB Kinetics pro
    min_shuffle
    plastic_slip
    runLAMMPS
+   shuffle_pattern
